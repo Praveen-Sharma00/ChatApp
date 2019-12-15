@@ -5,8 +5,15 @@
   "main": "index.js",
   "dependencies": {
     "@babel/polyfill": "^7.7.0",
+    "chalk": "^3.0.0",
+    "compression": "^1.7.4",
+    "connect-mongodb-session": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "ejs": "^3.0.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "mongoose": "^5.8.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.5",
