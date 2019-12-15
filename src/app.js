@@ -10,6 +10,7 @@ import './modules/globals'
 import {defaultRoutes} from './routes/default'
 import {authRoutes} from './routes/auth'
 import {dashboardRoutes} from "./routes/chat";
+import {userRoutes} from "./routes/user";
 
 dotenv.config({
     path: path.join(__dirname, '..', 'config.env')
@@ -61,6 +62,7 @@ app.use((req,res,next)=>{
 app.use(defaultRoutes)
 app.use(authRoutes)
 app.use(dashboardRoutes)
+app.use(userRoutes)
 /********************************************************************* */
 
 export default app

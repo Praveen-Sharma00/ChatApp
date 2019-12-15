@@ -25,6 +25,8 @@ var _auth = require("./routes/auth");
 
 var _chat = require("./routes/chat");
 
+var _user = require("./routes/user");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv.default.config({
@@ -76,6 +78,7 @@ app.use((req, res, next) => {
 app.use(_default2.defaultRoutes);
 app.use(_auth.authRoutes);
 app.use(_chat.dashboardRoutes);
+app.use(_user.userRoutes);
 /********************************************************************* */
 
 var _default = app;
