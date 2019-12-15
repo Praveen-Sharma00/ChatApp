@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.defaultController = void 0;
 
 const main = (req, res) => {
-  res.redirect('/login');
+  res.render('index');
 };
 
 let defaultController = {

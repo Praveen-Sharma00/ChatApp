@@ -1,6 +1,6 @@
 
 const main = (req,res)=>{
-    res.redirect('/login')
+    res.render('index')
 }
 
 export let defaultController={

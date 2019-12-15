@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- Material Kit CSS -->
     <link href="assets/css/material-kit.css?v=2.0.6" rel="stylesheet" />
-    <link href="assets/css/main.css" rel="stylesheet" />
+
 
 </head>
 
@@ -42,54 +42,51 @@
                         <div class="tab-pane active" id="login" role="tabpanel">
                             <!-- <p class="card-text">It is the seventh most populous city in Italy, at the heart of a metropolitan area of about one million people. </p>
                             <a href="#" class="card-link text-danger">Read more</a> -->
-
-
+                            <form name="loginForm" id="loginForm" method="POST" action="/login" onsubmit="return ValidateLogin();">
                             <div class="form-group label-floating has-success" >
                                 <label for="lemail">Email address</label>
-                                <input type="lemail" class="form-control form-control-success" id="lemail" aria-describedby="emailHelp" placeholder="Enter email">
-                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                <input type="lemail" class="form-control " name="lemail" id="lemail" placeholder="Enter email">
+
                             </div>
                             <div class="form-group label-floating has-success">
                                 <label for="lpassword">Password</label>
-                                <input type="lpassword" class="form-control" id="lpassword" placeholder="Password">
+                                <input type="password" class="form-control" name="lpassword" id="lpassword" placeholder="Password">
                             </div>
 
 
-                            <button onclick="return ValidateLogin()" class="btn btn-success">Go ahead</button>
-
+                            <button type="submit" class="btn btn-success">Go ahead</button>
+                            </form>
 
                         </div>
 
                         <div class="tab-pane" id="signup" role="tabpanel" aria-labelledby="signup-tab">
                             <!-- <p class="card-text">First settled around 1000 BCE and then founded as the Etruscan Felsina about 500 BCE, it was occupied by the Boii in the 4th century BCE and became a Roman colony and municipium with the name of Bononia in 196 BCE. </p>
                             <a href="#" class="card-link text-danger">Read more</a> -->
-
+                            <form name="signupForm" id="signupForm" method="POST" action="/signup" onsubmit="return ValidateSignup();">
                             <div class="form-row">
                                 <div class="form-group col-md-6 label-floating has-success">
                                     <label for="fname">Firstname</label>
-                                    <input type="text" class="form-control" id="fname" name="fname" placeholder="">
+                                    <input type="text" class="form-control" id="fname" name="sfname" placeholder="">
                                 </div>
                                 <div class="form-group col-md-6 label-floating has-success">
                                     <label for="lname">Lastname</label>
-                                    <input type="text" class="form-control" id="lname" placeholder="">
+                                    <input type="text" class="form-control" id="lname" name="slname" placeholder="">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col label-floating has-success">
                                     <label for="semail">Email</label>
-                                    <input type="email" class="form-control" id="semail" placeholder="">
+                                    <input type="email" class="form-control" id="semail" name="semail" placeholder="">
                                 </div>
-
                             </div>
                             <div class="form-row">
                                 <div class="form-group col label-floating has-success">
                                     <label for="spassword">Password</label>
-                                    <input type="password" class="form-control" id="spassword" placeholder="">
+                                    <input type="password" class="form-control" id="spassword" name="spassword" placeholder="">
                                 </div>
                             </div>
-
-                            <button  onclick="ValidateSignup()" class="btn btn-success">Get started</button>
-
+                            <button type="submit" class="btn btn-success">Get started</button>
+                            </form>
                         </div>
 
 

@@ -47,6 +47,10 @@ const expressStore = new MongoDBStore({
   uri: process.env.DATABASE_URL,
   collection: 'sessions'
 });
+app.use(_express.default.urlencoded({
+  extended: false
+}));
+app.use(_express.default.json());
 app.use((0, _cors.default)());
 app.use((0, _compression.default)());
 app.use(session({
@@ -60,7 +64,11 @@ app.use(_express.default.static(_path.default.join(__dirname, '..', 'public')));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.set('views', _path.default.join(__dirname, '..', 'public', 'views'));
+/************************ROUTE MIDDLEWARES***************************** */
+
 app.use(_default2.defaultRoutes);
 app.use(_auth.authRoutes);
+/********************************************************************* */
+
 var _default = app;
 exports.default = _default;
