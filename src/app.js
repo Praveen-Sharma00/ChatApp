@@ -9,6 +9,7 @@ import './modules/globals'
 
 import {defaultRoutes} from './routes/default'
 import {authRoutes} from './routes/auth'
+import {dashboardRoutes} from "./routes/chat";
 
 dotenv.config({
     path: path.join(__dirname, '..', 'config.env')
@@ -52,8 +53,14 @@ app.set('views', path.join(__dirname, '..', 'public', 'views'))
 
 
 /************************ROUTE MIDDLEWARES***************************** */
+app.use((req,res,next)=>{
+    res.locals.isAuthenticated = req.session.isLoggedIn
+    res.locals.user = req.session.user
+    next()
+})
 app.use(defaultRoutes)
 app.use(authRoutes)
+app.use(dashboardRoutes)
 /********************************************************************* */
 
 export default app

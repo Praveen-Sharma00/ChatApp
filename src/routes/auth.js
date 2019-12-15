@@ -12,4 +12,8 @@ router
     .route('/signup')
     .post(authController.postSignup)
 
+router
+    .route('/logout')
+    .post(authController.destroySession)
+
 export let authRoutes = router;

@@ -23,6 +23,8 @@ var _default2 = require("./routes/default");
 
 var _auth = require("./routes/auth");
 
+var _chat = require("./routes/chat");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv.default.config({
@@ -66,8 +68,14 @@ app.set('view engine', 'html');
 app.set('views', _path.default.join(__dirname, '..', 'public', 'views'));
 /************************ROUTE MIDDLEWARES***************************** */
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.user = req.session.user;
+  next();
+});
 app.use(_default2.defaultRoutes);
 app.use(_auth.authRoutes);
+app.use(_chat.dashboardRoutes);
 /********************************************************************* */
 
 var _default = app;

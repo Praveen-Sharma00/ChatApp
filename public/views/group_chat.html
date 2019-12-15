@@ -79,7 +79,7 @@
                             <li><i class="fas fa-user-circle"></i> View profile</li>
                             <li><i class="fas fa-users"></i> Add to close friends</li>
                             <li><i class="fas fa-plus"></i> Add to group</li>
-                            <li><i class="fas fa-ban"></i> Block</li>
+                            <li><form method="POST" action="/logout"><button type="submit" class="btn btn-danger" ><i class="fas fa-ban"></i> Logout</button></form></li>
                         </ul>
                     </div>
                 </div>
@@ -174,6 +174,7 @@
         </div>
     </div>
 </div>
+
 <script>
     $(document).ready(function () {
         $('#action_menu_btn').click(function () {
