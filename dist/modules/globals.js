@@ -8,6 +8,6 @@ global.log = console.log;
 global.red = _chalk.default.red;
 global.green = _chalk.default.green;
 global.yellow = _chalk.default.yellow;
-global.success = green.bold.underline;
+global.success = green.bold;
 global.warning = yellow.bold;
 global.error = red.bold;
