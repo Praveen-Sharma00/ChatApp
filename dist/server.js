@@ -15,9 +15,8 @@ io.on('connection', socket => {
   socket.on('user_connected', user => {
     console.log(user.name + " is connected");
   });
-  socket.on('new_message', (user, text) => {
-    console.log(user._id);
-    console.log(text);
+  socket.on('new_message', data => {
+    console.log(data); // console.log(text)
   });
 });
 server.listen(process.env.PORT, () => {

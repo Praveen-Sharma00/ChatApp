@@ -16,7 +16,7 @@ sendMessage=function () {
     let text = document.getElementById('message').value
     // console.log(text)
     console.log(currentUser)
-    // socket.emit('new_message',(currentUser,text))
+    socket.emit('new_message',{u:currentUser,t:text})
 
 }
 
