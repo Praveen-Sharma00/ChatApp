@@ -7,6 +7,8 @@ exports.userController = void 0;
 
 var _User = _interopRequireDefault(require("../models/User"));
 
+var _Group = _interopRequireDefault(require("../models/Group"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const getCurrentUser = (req, res) => {
@@ -71,9 +73,27 @@ const getContacts = async (req, res) => {
   });
 };
 
+const addGroup = async (req, res) => {
+  const admin = req.session.user._id;
+  const group_name = req.body.name;
+  const members = req.body.members;
+  console.log(members);
+  const newGroup = new _Group.default({
+    name: group_name,
+    admins: [admin],
+    members: members
+  });
+  await newGroup.save();
+  res.send({
+    msg: 'Group created',
+    success: 200
+  });
+};
+
 let userController = {
   getCurrentUser: getCurrentUser,
   addContact: addContact,
-  getContacts: getContacts
+  getContacts: getContacts,
+  addGroup: addGroup
 };
 exports.userController = userController;

@@ -1,4 +1,5 @@
 import User from "../models/User"
+import Group from "../models/Group"
 
 const getCurrentUser = (req, res) => {
     res.send({
@@ -56,8 +57,27 @@ const getContacts = async (req, res) => {
         msg: 'No contacts found !'
     })
 }
+const addGroup = async(req,res)=>{
+    const admin = req.session.user._id
+    const group_name = req.body.name
+    const members = req.body.members
+    console.log(members)
+    const newGroup = new Group({
+        name:group_name,
+        admins:[admin],
+        members:members
+    })
+    await newGroup.save()
+
+    res.send({
+        msg:'Group created',
+        success:200
+    })
+}
 export let userController = {
     getCurrentUser: getCurrentUser,
     addContact: addContact,
-    getContacts: getContacts
+    getContacts: getContacts,
+    addGroup:addGroup
 }
+

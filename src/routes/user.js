@@ -15,5 +15,9 @@ router
 router
     .route('/contacts')
     .get(userController.getContacts)
-    
+
+router
+    .route('/group')
+    .post(userController.addGroup)
+
 export let userRoutes = router;
