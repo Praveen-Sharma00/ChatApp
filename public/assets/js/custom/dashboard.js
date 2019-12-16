@@ -11,7 +11,6 @@
     console.log(contacts)
 
     if (contacts.length > 0) {
-
         var options = generateOptions(contacts);
         var select = '<select class="form-control members bg-info" id="example-getting-started" multiple="multiple">' + options + '</select>';
         document.getElementById("member_select").innerHTML += select;
