@@ -20,6 +20,7 @@ io.on('connection', socket => {
   //     socket.broadcast.to("fun").emit("new_msg",text)
   // })
   socket.on('join', data => {
+    console.log(data.name + " is Online !");
     socket.join("fun");
   });
   socket.on("new_msg", data => {
