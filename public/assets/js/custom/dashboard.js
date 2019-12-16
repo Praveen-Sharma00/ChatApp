@@ -2,9 +2,7 @@
     const generateOptions = (arr) => {
         let str = "";
         arr.forEach((e) => {
-            str += '<option value="' + e._id + '">' + e.nick_name + '</option>';
-
-            // $('#example-getting-started').append('<option value="'+e._id+'">'+e.nick_name+'</option>');
+            str += '<option value="' + e._id + '">' + e.nick_name + '</option>'
         })
         return str;
     }
@@ -22,8 +20,11 @@
         $('#example-getting-started').multiselect();
     });
 })()
+
+
 async function addGroup() {
-    var members = $('#example-getting-started').val();
+    // var members = $('#example-getting-started').val();
+    var members = $('#member-list').val();
     var name = $('#group_name').val()
     if(members.length ===0 || name ===''){
         return alert('Fill all fields')
@@ -41,14 +42,12 @@ async function addGroup() {
     const data = await response.json()
     console.log(data)
     if (data.error) {
-        //  return alert(data.error)
         return alert(data.msg)
     } else if (data.success) {
         name=""
         members=""
         return alert('Group created')
     }
-
 }
 async function addContact() {
     const name = document.getElementById('nick_name').value
