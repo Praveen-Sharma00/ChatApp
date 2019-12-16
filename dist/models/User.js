@@ -22,7 +22,11 @@ const userSchema = new _mongoose.default.Schema({
   },
   password: {
     type: String
-  }
+  },
+  Contacts: [{
+    _id: _mongoose.default.Schema.Types.ObjectId,
+    name: String
+  }]
 });
 userSchema.pre('save', async function () {
   const _user = this;

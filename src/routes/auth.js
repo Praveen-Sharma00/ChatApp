@@ -14,6 +14,6 @@ router
 
 router
     .route('/logout')
-    .post(authController.destroySession)
+    .post(authController.protectRoute,authController.destroySession)
 
 export let authRoutes = router;

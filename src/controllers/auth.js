@@ -17,7 +17,7 @@ const postLogin = async (req,res)=>{
             process.exit()
         }
     })
-    res.redirect('/group-chat')
+    res.redirect('/dashboard')
 }
 
 const postSignup = async (req,res)=>{
@@ -36,8 +36,14 @@ const destroySession = async (req,res)=>{
     })
     return res.redirect('/')
 }
+const protectRoute = async (req,res,next)=>{
+    if(req.session.isLoggedIn)
+        return next()
+    return res.redirect('/')
+}
 export let authController={
     postLogin,
     postSignup,
-    destroySession
+    destroySession,
+    protectRoute
 }

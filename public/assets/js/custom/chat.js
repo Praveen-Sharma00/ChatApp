@@ -37,6 +37,7 @@ let socket = io();
             '                                 clasbroadcasts="rounded-circle user_img_msg">' +
             '                        </div>' +
             '                    </div>';
+            document.getElementById('message').value="";
         socket.emit('new_msg', {currentUser,text})
     }
 })()

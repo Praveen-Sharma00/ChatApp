@@ -13,7 +13,11 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String
-    }
+    },
+    Contacts:[{
+        _id:mongoose.Schema.Types.ObjectId,
+        name:String
+    }]
 })
 
 userSchema.pre('save', async function () {
