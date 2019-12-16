@@ -24,7 +24,7 @@
 
 async function addGroup() {
     // var members = $('#example-getting-started').val();
-    var members = $('#member-list').val();
+    var members = $('#example-getting-started').val();
     var name = $('#group_name').val()
     if(members.length ===0 || name ===''){
         return alert('Fill all fields')
