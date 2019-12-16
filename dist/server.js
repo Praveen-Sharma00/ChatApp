@@ -8,15 +8,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 let server = _http.default.createServer(_app.default);
 
-const io = require('socket.io')(server);
+const socketio = require('socket.io');
 
+const io = socketio(server);
 io.on('connection', socket => {
-  console.log('Someone connected');
-  socket.on('user_connected', user => {
-    console.log(user.name + " is connected");
+  // socket.on('user_connected',(data)=>{
+  //     console.log(data + " is online! ")
+  //     socket.join("fun")
+  // })
+  // socket.on("new_msg",(text)=>{
+  //     socket.broadcast.to("fun").emit("new_msg",text)
+  // })
+  socket.on('join', data => {
+    socket.join("fun");
   });
-  socket.on('new_message', data => {
-    console.log(data); // console.log(text)
+  socket.on("new_msg", data => {
+    socket.broadcast.to("fun").emit('new_msg', data);
   });
 });
 server.listen(process.env.PORT, () => {

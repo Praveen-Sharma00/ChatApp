@@ -2,16 +2,21 @@ import app from './app'
 import http from 'http'
 
 let server  = http.createServer(app)
-
-const io = require('socket.io')(server)
+const socketio = require('socket.io')
+const io=socketio(server)
 io.on('connection',(socket)=>{
-    console.log('Someone connected')
-    socket.on('user_connected',(user)=>{
-        console.log(user.name + " is connected")
+    // socket.on('user_connected',(data)=>{
+    //     console.log(data + " is online! ")
+    //     socket.join("fun")
+    // })
+    // socket.on("new_msg",(text)=>{
+    //     socket.broadcast.to("fun").emit("new_msg",text)
+    // })
+    socket.on('join',(data)=>{
+        socket.join("fun")
     })
-    socket.on('new_message',(data)=>{
-        console.log(data)
-        // console.log(text)
+    socket.on("new_msg",(data)=>{
+        socket.broadcast.to("fun").emit('new_msg',data)
     })
 })
 server.listen(process.env.PORT,()=>{
