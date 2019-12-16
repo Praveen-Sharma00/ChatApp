@@ -33,7 +33,7 @@ const postLogin = async (req, res) => {
 
 const postSignup = async (req, res) => {
   const userObj = {
-    name: req.body.sfname + req.body.slname,
+    name: req.body.sfname + " " + req.body.slname,
     email: req.body.semail,
     password: req.body.spassword
   };

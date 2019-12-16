@@ -199,8 +199,8 @@ body, html {
 }
 
 .msg_cotainer {
-    margin-top: auto;
-    margin-bottom: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 10px;
     border-radius: 4px;
     background-color: #82ccdd;
@@ -215,7 +215,7 @@ body, html {
 }
 
 .msg_cotainer_send {
-    margin-top: auto;
+    margin-top: 10px;
     margin-bottom: auto;
     margin-right: 10px;
     border-radius: 4px;
@@ -223,6 +223,7 @@ body, html {
     padding: 6px;
     position: relative;
     font-size: 0.8em;
+    min-width: 20px !important;
 }
 
 .msg_time {
@@ -231,6 +232,7 @@ body, html {
     bottom: -15px;
     color: rgba(255, 255, 255, 0.5);
     font-size: 10px;
+    min-width: max-content;
 }
 
 .msg_time_send {
@@ -239,6 +241,7 @@ body, html {
     bottom: -15px;
     color: rgba(255, 255, 255, 0.5);
     font-size: 10px;
+    min-width: max-content;
 }
 
 .user_name {
