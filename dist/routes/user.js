@@ -14,5 +14,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const router = _express.default.Router();
 
 router.route('/user').get(_user.userController.getCurrentUser);
+router.route('/contact').post(_user.userController.addContact);
 let userRoutes = router;
 exports.userRoutes = userRoutes;

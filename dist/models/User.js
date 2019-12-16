@@ -25,7 +25,8 @@ const userSchema = new _mongoose.default.Schema({
   },
   Contacts: [{
     _id: _mongoose.default.Schema.Types.ObjectId,
-    name: String
+    nick_name: String,
+    email: String
   }]
 });
 userSchema.pre('save', async function () {

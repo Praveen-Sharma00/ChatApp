@@ -16,7 +16,8 @@ const userSchema = new mongoose.Schema({
     },
     Contacts:[{
         _id:mongoose.Schema.Types.ObjectId,
-        name:String
+        nick_name:String,
+        email:String
     }]
 })
 
