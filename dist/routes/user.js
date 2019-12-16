@@ -15,5 +15,6 @@ const router = _express.default.Router();
 
 router.route('/user').get(_user.userController.getCurrentUser);
 router.route('/contact').post(_user.userController.addContact);
+router.route('/contacts').get(_user.userController.getContacts);
 let userRoutes = router;
 exports.userRoutes = userRoutes;

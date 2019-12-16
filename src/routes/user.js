@@ -12,6 +12,8 @@ router
     .route('/contact')
     .post(userController.addContact)
 
-
-
+router
+    .route('/contacts')
+    .get(userController.getContacts)
+    
 export let userRoutes = router;

@@ -39,11 +39,25 @@ const addContact = async (req, res) => {
     })
     await obj.save()
     res.send({
-        success:200,
-        msg:'Contact added!'
+        success: 200,
+        msg: 'Contact added!'
+    })
+}
+const getContacts = async (req, res) => {
+    const currentUser = req.session.user
+    // console.log(currentUser)
+    const obj = await User.findOne({ _id: currentUser._id })
+    const contacts = obj.Contacts
+    // console.log(contacts)
+    if (contacts.length > 0)
+        return res.send(contacts)
+    res.send({
+        error: 404,
+        msg: 'No contacts found !'
     })
 }
 export let userController = {
     getCurrentUser: getCurrentUser,
-    addContact: addContact
+    addContact: addContact,
+    getContacts: getContacts
 }

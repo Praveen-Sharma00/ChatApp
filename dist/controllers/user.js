@@ -56,8 +56,24 @@ const addContact = async (req, res) => {
   });
 };
 
+const getContacts = async (req, res) => {
+  const currentUser = req.session.user; // console.log(currentUser)
+
+  const obj = await _User.default.findOne({
+    _id: currentUser._id
+  });
+  const contacts = obj.Contacts; // console.log(contacts)
+
+  if (contacts.length > 0) return res.send(contacts);
+  res.send({
+    error: 404,
+    msg: 'No contacts found !'
+  });
+};
+
 let userController = {
   getCurrentUser: getCurrentUser,
-  addContact: addContact
+  addContact: addContact,
+  getContacts: getContacts
 };
 exports.userController = userController;
