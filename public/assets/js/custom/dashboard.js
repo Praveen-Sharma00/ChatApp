@@ -68,7 +68,6 @@ async function addContact() {
     const data = await response.json()
     console.log(data)
     if (data.error) {
-        //  return alert(data.error)
         return alert(data.msg)
     } else if (data.success) {
         email = ""

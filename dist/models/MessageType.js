@@ -12,8 +12,12 @@ var _User = _interopRequireDefault(require("./User"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const messageTypeSchema = new _mongoose.default.Schema({
+  type_id: {
+    type: Number
+  },
   name: {
-    type: String
+    type: String,
+    unique: true
   }
 });
 

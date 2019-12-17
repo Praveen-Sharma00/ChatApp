@@ -3,8 +3,12 @@ import User from "./User"
 
 
 const messageTypeSchema = new mongoose.Schema({
+    type_id:{
+        type: Number
+    },
     name: {
-        type: String
+        type: String,
+        unique:true
     }
 })
 

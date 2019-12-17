@@ -130,8 +130,8 @@ background-color: rgba(19, 255, 30, 0.692) !important;
 .contacts li {
     width: 100% !important;
     padding: 0px 10px;
-    margin-bottom: 5px !important;
-    border:1px solid rgba(73, 73, 73, 0.411);
+    margin-bottom: 1px !important;
+    border-bottom:1px solid rgba(73, 73, 73, 0.411);
 }
 .contacts li:hover {
     -webkit-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);

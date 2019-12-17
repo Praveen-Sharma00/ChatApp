@@ -9,6 +9,8 @@ var _User = _interopRequireDefault(require("../models/User"));
 
 var _Group = _interopRequireDefault(require("../models/Group"));
 
+var _Conversation = _interopRequireDefault(require("../models/Conversation"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const getCurrentUser = (req, res) => {
@@ -24,11 +26,14 @@ const addContact = async (req, res) => {
   const nick_name = req.body.name.trim();
   const user = await _User.default.findOne({
     email
-  });
+  }); // console.log(user)
+
   const obj = await _User.default.findOne({
     _id: req.session.user._id
-  });
+  }); // console.log(obj)
+
   const existingContacts = obj.Contacts;
+  console.log(existingContacts);
 
   if (!user) {
     return res.send({
@@ -36,7 +41,8 @@ const addContact = async (req, res) => {
       msg: 'No profile exists !'
     });
   } else if (existingContacts.length > 0) {
-    const c = existingContacts.map(e => e.email === email);
+    const c = existingContacts.filter(e => e.email === email);
+    console.log(c);
 
     if (c.length > 0) {
       return res.send({
@@ -90,10 +96,22 @@ const addGroup = async (req, res) => {
   });
 };
 
+const getChats = async (req, res) => {
+  const senderID = req.session.user._id;
+  const receiverID = req.body.id;
+  const conversations = await _Conversation.default.getAllChatsBetweenUsers(senderID, receiverID);
+  console.log(conversations);
+  res.send({
+    success: 200,
+    data: conversations
+  });
+};
+
 let userController = {
   getCurrentUser: getCurrentUser,
   addContact: addContact,
   getContacts: getContacts,
-  addGroup: addGroup
+  addGroup: addGroup,
+  getChats: getChats
 };
 exports.userController = userController;

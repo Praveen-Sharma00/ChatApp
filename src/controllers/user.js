@@ -1,5 +1,6 @@
 import User from "../models/User"
 import Group from "../models/Group"
+import Conversation from "../models/Conversation";
 
 const getCurrentUser = (req, res) => {
     res.send({
@@ -8,6 +9,7 @@ const getCurrentUser = (req, res) => {
         email: req.session.user.email
     })
 }
+
 const addContact = async (req, res) => {
     const email = req.body.email.trim()
     const nick_name = req.body.name.trim()
@@ -60,6 +62,8 @@ const getContacts = async (req, res) => {
         msg: 'No contacts found !'
     })
 }
+
+
 const addGroup = async(req,res)=>{
     const admin = req.session.user._id
     const group_name = req.body.name
@@ -77,10 +81,23 @@ const addGroup = async(req,res)=>{
         success:200
     })
 }
+
+const getChats = async(req,res)=>{
+    const senderID = req.session.user._id
+    const receiverID=req.body.id
+    const conversations = await Conversation.getAllChatsBetweenUsers(senderID,receiverID)
+    console.log(conversations)
+    res.send({
+        success:200,
+        data:conversations
+    })
+}
+
 export let userController = {
     getCurrentUser: getCurrentUser,
     addContact: addContact,
     getContacts: getContacts,
-    addGroup:addGroup
+    addGroup:addGroup,
+    getChats:getChats
 }
 

@@ -1,19 +1,34 @@
 import mongoose from 'mongoose'
-import MessageType from "./MessageType";
+
 import User from "./User"
 
 const conversationSchema = new mongoose.Schema({
     between_users :[mongoose.Schema.Types.ObjectId],
-    type : MessageType._id,
+    conversation_type : {
+        type:Number
+    },
     messages:[{
         text:String,
-        user_id:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'User'
+        sender:{
+            id:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'User'
+            },
+            name:String
         },
         timestamp:Number
     }]
 })
 
+conversationSchema.statics.getAllChatsBetweenUsers= async (sender,receiver)=>{
+    let a,b;
+    if(sender<receiver){
+        a=sender;b=receiver;
+    }else{
+        b=sender;a=receiver;
+    }
+    const conversations = await Conversation.find({between_users: [a,b]})
+    return conversations
+}
 const Conversation = mongoose.model('Conversation',conversationSchema)
 export default Conversation

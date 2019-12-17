@@ -2,7 +2,7 @@ import express from 'express'
 
 const router = express.Router()
 
-import { userController } from "../controllers/user";
+import {userController} from "../controllers/user";
 
 router
     .route('/user')
@@ -19,5 +19,9 @@ router
 router
     .route('/group')
     .post(userController.addGroup)
+
+router
+    .route('/chats')
+    .post(userController.getChats)
 
 export let userRoutes = router;

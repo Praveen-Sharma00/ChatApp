@@ -17,5 +17,6 @@ router.route('/user').get(_user.userController.getCurrentUser);
 router.route('/contact').post(_user.userController.addContact);
 router.route('/contacts').get(_user.userController.getContacts);
 router.route('/group').post(_user.userController.addGroup);
+router.route('/chats').post(_user.userController.getChats);
 let userRoutes = router;
 exports.userRoutes = userRoutes;
