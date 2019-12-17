@@ -24,4 +24,8 @@ router
     .route('/chats')
     .post(userController.getChats)
 
+router
+    .route('/group_chats')
+    .get(userController.getGroupChats)
+
 export let userRoutes = router;

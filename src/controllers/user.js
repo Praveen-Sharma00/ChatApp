@@ -65,11 +65,21 @@ const getContacts = async (req, res) => {
     })
 }
 
-
 const addGroup = async(req,res)=>{
     const admin = req.session.user._id
     const group_name = req.body.name
     const members = req.body.members
+    members.push(admin)
+    const existingGroup = await Group.findOne({
+        name:group_name
+    })
+
+    if(existingGroup){
+       return res.send({
+            msg:'Group already exists',
+            error:404
+        })
+    }
     console.log(members)
     const newGroup = new Group({
         name:group_name,
@@ -93,6 +103,12 @@ const getChats = async(req,res)=>{
         success:200,
         data:conversations
     })
+}
+
+const getGroupChats = async (req,res)=>{
+    const messages = await Conversation.getAllGroupChats("default")
+    console.log(messages)
+    res.send(messages)
 }
 const updateIndividualMessages = async function(senderName,senderID,receiverID,text,type){
     let a,b;
@@ -137,13 +153,29 @@ const updateIndividualMessages = async function(senderName,senderID,receiverID,t
     }
     return true
 }
+const updateGroupMessage = async (id,name,text)=>{
+    const existingConversation = await Conversation.findOne({group_id:mongoose.Types.ObjectId("5df8baf67355e44d5a3eca81")})
+    console.log(existingConversation)
+    existingConversation.messages.push({
+        text:text,
+        sender:{
+            id:mongoose.Types.ObjectId(id),
+            name:name
+        },
+        timestamp:(moment().format('MMMM Do YYYY, h:mm:ss a')).toString()
+    })
 
+    await existingConversation.save()
+    return true
+}
 export let userController = {
     getCurrentUser: getCurrentUser,
     addContact: addContact,
     getContacts: getContacts,
     addGroup:addGroup,
     getChats:getChats,
-    updateIndividualMessages:updateIndividualMessages
+    getGroupChats:getGroupChats,
+    updateIndividualMessages:updateIndividualMessages,
+    updateGroupMessage:updateGroupMessage
 }
 

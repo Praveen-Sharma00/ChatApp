@@ -1,6 +1,8 @@
 import app from './app'
 import http from 'http'
 import {userController} from "./controllers/user";
+import Group from "./models/Group";
+import Conversation from "./models/Conversation";
 
 
 let server = http.createServer(app)
@@ -26,14 +28,19 @@ singleChat.on('connection', function (singleSocket) {
 });
 
 const groupChat = io.of('/group-chat')
-groupChat.on('connection',function (socket){
+groupChat.on('connection',function (socket) {
     let groupName;
-    socket.on('join',(data)=>{
+    socket.on('join', (data) => {
         groupName = data.groupName
         socket.join(groupName)
     })
-    socket.on("new_msg", async (data)=>{
-        socket.broadcast.to(groupName).emit("new_msg",data)
+    socket.on("new_msg", async (data) => {
+        console.log(data)
+        let response = await userController.updateGroupMessage(data.currentUser.id, data.currentUser.name,data.text)
+        if (response) {
+            socket.broadcast.to(groupName).emit("new_msg", data)
+            console.log('done')
+        }
     })
 })
 
@@ -46,6 +53,7 @@ groupChat.on('connection',function (socket){
 //         socket.broadcast.to("fun").emit('new_msg', data)
 //     })
 // })
+
 server.listen(process.env.PORT, () => {
     console.log(success('Server running on PORT ' + process.env.PORT))
 })

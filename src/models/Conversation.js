@@ -4,6 +4,7 @@ import User from "./User"
 
 const conversationSchema = new mongoose.Schema({
     between_users :[mongoose.Schema.Types.ObjectId],
+    group_id:mongoose.Schema.Types.ObjectId,
     conversation_type : {
         type:Number
     },
@@ -28,6 +29,11 @@ conversationSchema.statics.getAllChatsBetweenUsers= async (sender,receiver)=>{
         b=sender;a=receiver;
     }
     const conversations = await Conversation.find({between_users: [a,b]})
+    return conversations
+}
+
+conversationSchema.statics.getAllGroupChats = async (name)=>{
+    const conversations = await Conversation.findOne({group_id:mongoose.Types.ObjectId("5df8baf67355e44d5a3eca81")})
     return conversations
 }
 const Conversation = mongoose.model('Conversation',conversationSchema)

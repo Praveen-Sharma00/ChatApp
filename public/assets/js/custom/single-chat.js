@@ -57,7 +57,8 @@ var senderID;var senderName;
         chatBox.innerHTML=""
         if(_response.data.length === 0){
             chatBox.innerHTML="<p class='text-center text-info'>Start the conversation</p>"
-        }else{
+        }
+        else{
             _response.data[0].messages.forEach((e)=>{
                 if(e.sender.id === _id){
                     chatBox.innerHTML += ' <div class="d-flex justify-content-start mb-4">' +

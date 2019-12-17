@@ -6,6 +6,10 @@ var _http = _interopRequireDefault(require("http"));
 
 var _user = require("./controllers/user");
 
+var _Group = _interopRequireDefault(require("./models/Group"));
+
+var _Conversation = _interopRequireDefault(require("./models/Conversation"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 let server = _http.default.createServer(_app.default);
@@ -23,7 +27,7 @@ singleChat.on('connection', function (singleSocket) {
   });
   singleSocket.on("new_msg", async msg => {
     console.log(msg);
-    let response = await _user.userController.updateMessages(msg.senderName, msg.senderID, msg.receiverID, msg.text, 1);
+    let response = await _user.userController.updateIndividualMessages(msg.senderName, msg.senderID, msg.receiverID, msg.text, 1);
 
     if (response) {
       console.log('Done');
@@ -42,7 +46,13 @@ groupChat.on('connection', function (socket) {
     socket.join(groupName);
   });
   socket.on("new_msg", async data => {
-    socket.broadcast.to(groupName).emit("new_msg", data);
+    console.log(data);
+    let response = await _user.userController.updateGroupMessage(data.currentUser.id, data.currentUser.name, data.text);
+
+    if (response) {
+      socket.broadcast.to(groupName).emit("new_msg", data);
+      console.log('done');
+    }
   });
 }); // io.on('connection', (socket) => {
 //     socket.on('join', (data) => {

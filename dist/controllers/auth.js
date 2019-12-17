@@ -7,7 +7,11 @@ exports.authController = void 0;
 
 var _User = _interopRequireDefault(require("../models/User"));
 
+var _Group = _interopRequireDefault(require("../models/Group"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const mongoose = require('mongoose');
 
 const postLogin = async (req, res) => {
   const email = req.body.lemail.trim();
@@ -32,13 +36,20 @@ const postLogin = async (req, res) => {
 };
 
 const postSignup = async (req, res) => {
+  var id = mongoose.Types.ObjectId();
   const userObj = {
+    _id: id,
     name: req.body.sfname + " " + req.body.slname,
     email: req.body.semail,
     password: req.body.spassword
   };
   const newUser = new _User.default(userObj);
-  newUser.save();
+  await newUser.save();
+  let r = await _Group.default.findOne({
+    name: 'default'
+  });
+  r.members.push(id);
+  await r.save();
   res.redirect('/');
 };
 

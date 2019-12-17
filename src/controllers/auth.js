@@ -1,5 +1,7 @@
 import User from '../models/User'
+import Group from "../models/Group";
 
+const mongoose =require('mongoose')
 const postLogin = async (req,res)=>{
     const email = req.body.lemail.trim()
     const password = req.body.lpassword.trim()
@@ -21,13 +23,20 @@ const postLogin = async (req,res)=>{
 }
 
 const postSignup = async (req,res)=>{
+    var id = mongoose.Types.ObjectId()
     const userObj={
+        _id:id,
          name:req.body.sfname + " " +req.body.slname,
          email:req.body.semail,
          password:req.body.spassword
     }
     const newUser = new User(userObj);
-    newUser.save()
+   await newUser.save()
+    let r=await Group.findOne({name:'default'})
+            r.members.push(id)
+      await  r.save()
+
+
     res.redirect('/')
 }
 const destroySession = async (req,res)=>{

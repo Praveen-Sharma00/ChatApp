@@ -13,6 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const conversationSchema = new _mongoose.default.Schema({
   between_users: [_mongoose.default.Schema.Types.ObjectId],
+  group_id: _mongoose.default.Schema.Types.ObjectId,
   conversation_type: {
     type: Number
   },
@@ -42,6 +43,13 @@ conversationSchema.statics.getAllChatsBetweenUsers = async (sender, receiver) =>
 
   const conversations = await Conversation.find({
     between_users: [a, b]
+  });
+  return conversations;
+};
+
+conversationSchema.statics.getAllGroupChats = async name => {
+  const conversations = await Conversation.findOne({
+    group_id: _mongoose.default.Types.ObjectId("5df8baf67355e44d5a3eca81")
   });
   return conversations;
 };
