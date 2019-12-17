@@ -49,8 +49,8 @@ async function addGroup() {
     }
 }
 async function addContact() {
-    const name = document.getElementById('nick_name').value
-    const email = document.getElementById('email').value
+    let name = document.getElementById('nick_name').value
+    let email = document.getElementById('email').value
 
     if (name === "" || email === "") {
         return alert("Fill all fields")
@@ -73,6 +73,6 @@ async function addContact() {
     } else if (data.success) {
         email = ""
         name = ""
-        return alert('Contact added')
+        return alert(data.msg)
     }
 }

@@ -15,9 +15,11 @@ const addContact = async (req, res) => {
     const user = await User.findOne({
         email
     })
-
+    // console.log(user)
     const obj = await User.findOne({ _id: req.session.user._id })
+    // console.log(obj)
     const existingContacts = obj.Contacts
+    console.log(existingContacts)
 
     if (!user) {
         return res.send({
@@ -25,7 +27,8 @@ const addContact = async (req, res) => {
             msg: 'No profile exists !'
         })
     } else if (existingContacts.length > 0) {
-        const c = existingContacts.map((e) => (e.email === email))
+        const c = existingContacts.filter(e => e.email === email)
+        console.log(c)
         if (c.length > 0) {
             return res.send({
                 error: 404,
