@@ -1,11 +1,11 @@
 let currentUser;
-let socket = io();
+const groupChatSocket=io('/group-chat');
 
 (async () => {
     const response = await fetch('http://localhost:3000/user')
     const currentUser = await response.json()
-    socket.emit('join', currentUser)
-    socket.on('new_msg', (data) => {
+    groupChatSocket.emit('join', {groupName:"default",currentUser})
+    groupChatSocket.on('new_msg', (data) => {
         let text = data.text
         let chatBox = document.getElementById("chat_box")
         chatBox.innerHTML += ' <div class="d-flex justify-content-start mb-4">' +
@@ -38,7 +38,7 @@ let socket = io();
             '                        </div>' +
             '                    </div>';
             document.getElementById('message').value="";
-        socket.emit('new_msg', {currentUser,text})
+        groupChatSocket.emit('new_msg', {groupName:"default",currentUser,text})
     }
 
     

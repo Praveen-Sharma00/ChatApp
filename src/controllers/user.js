@@ -94,7 +94,7 @@ const getChats = async(req,res)=>{
         data:conversations
     })
 }
-const updateMessages = async function(senderName,senderID,receiverID,text,type){
+const updateIndividualMessages = async function(senderName,senderID,receiverID,text,type){
     let a,b;
     if(senderID<receiverID){
         a=senderID;b=receiverID;
@@ -144,6 +144,6 @@ export let userController = {
     getContacts: getContacts,
     addGroup:addGroup,
     getChats:getChats,
-    updateMessages:updateMessages
+    updateIndividualMessages:updateIndividualMessages
 }
 

@@ -27,20 +27,33 @@ singleChat.on('connection', function (singleSocket) {
 
     if (response) {
       console.log('Done');
-      singleSocket.broadcast.to(roomName).emit('new_msg', msg.text);
-    } // singleSocket.broadcast.to(roomName).emit('new_msg',data.text)
-
+      singleSocket.broadcast.to(roomName).emit('new_msg', {
+        name: msg.senderName,
+        text: msg.text
+      });
+    }
   });
 });
-io.on('connection', socket => {
+const groupChat = io.of('/group-chat');
+groupChat.on('connection', function (socket) {
+  let groupName;
   socket.on('join', data => {
-    console.log(data.name + " is Online !");
-    socket.join("fun");
+    groupName = data.groupName;
+    socket.join(groupName);
   });
-  socket.on("new_msg", data => {
-    socket.broadcast.to("fun").emit('new_msg', data);
+  socket.on("new_msg", async data => {
+    socket.broadcast.to(groupName).emit("new_msg", data);
   });
-});
+}); // io.on('connection', (socket) => {
+//     socket.on('join', (data) => {
+//         console.log(data.name + " is Online !")
+//         socket.join("fun")
+//     })
+//     socket.on("new_msg", (data) => {
+//         socket.broadcast.to("fun").emit('new_msg', data)
+//     })
+// })
+
 server.listen(process.env.PORT, () => {
   console.log(success('Server running on PORT ' + process.env.PORT));
 });

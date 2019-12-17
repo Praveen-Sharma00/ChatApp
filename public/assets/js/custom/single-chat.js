@@ -1,4 +1,5 @@
 const singleChatSocket=io('/chat');
+let chatBox = document.getElementById("chat_box")
 var senderID;var senderName;
 (async () => {
     const response = await fetch('http://localhost:3000/contacts')
@@ -14,9 +15,19 @@ var senderID;var senderName;
         let text = document.getElementById('message').value
         let chatBox = document.getElementById("chat_box")
         singleChatSocket.emit('new_msg', {senderName,senderID,receiverID,text})
+         chatBox.innerHTML+=' <div class="d-flex justify-content-end mb-4">' +
+             '                        <div class="msg_cotainer_send">' +
+             '<span class="user_name"> Me</span>' +
+             '<p>' + text + '</p>' +
+             '                            <span class="msg_time_send">'+moment().format("hh:mm A")+'</span>' +
+             '                        </div>\n' +
+
+             '                    </div>'
     }
 
     ShowChatWindow = async (person)=> {
+        let chatBox = document.getElementById("chat_box")
+        chatBox.innerHTML="";
         let a,b;
         console.log(senderID)
         if(senderID<person.id){
@@ -28,7 +39,7 @@ var senderID;var senderName;
 
         const _id = person.id
         console.log(_id)
-        let chatBox = document.getElementById("chat_box")
+
         let sendBtn = document.querySelector(".send_btn").setAttribute("id",_id)
         console.log(sendBtn)
         const response = await fetch('http://localhost:3000/chats',{
@@ -47,7 +58,6 @@ var senderID;var senderName;
         if(_response.data.length === 0){
             chatBox.innerHTML="<p class='text-center text-info'>Start the conversation</p>"
         }else{
-
             _response.data[0].messages.forEach((e)=>{
                 if(e.sender.id === _id){
                     chatBox.innerHTML += ' <div class="d-flex justify-content-start mb-4">' +
@@ -109,7 +119,14 @@ var senderID;var senderName;
     ul.innerHTML += str;
 })()
 singleChatSocket.on("new_msg",(data)=>{
-    console.log(data)
+    chatBox.innerHTML += ' <div class="d-flex justify-content-start mb-4">' +
+        '                        <div class="msg_cotainer">' +
+        '<span class="user_name">'+data.name+'</span>' +
+        '<p>' + data.text + '</p>' +
+        '<span class="msg_time">'+moment().format("hh:mm A")+'</span>' +
+        '                        </div>\n' +
+
+        '                    </div>'
 })
 
 
