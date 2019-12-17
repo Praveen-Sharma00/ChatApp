@@ -1,9 +1,33 @@
 import app from './app'
 import http from 'http'
+import {userController} from "./controllers/user";
+
 
 let server  = http.createServer(app)
 const socketio = require('socket.io')
 const io=socketio(server)
+
+const singleChat = io.of('/chat');
+singleChat.on('connection', function(singleSocket){
+    let roomName;
+    console.log('Someone connected');
+    singleSocket.on('join',(data)=>{
+        roomName=data.a+" "+data.b
+        singleSocket.join(roomName)
+    })
+    singleSocket.on("new_msg",async(msg)=>{
+        console.log(msg)
+        let response=await userController.updateMessages(msg.senderName,msg.senderID,msg.receiverID,msg.text,1)
+        if(response){
+            console.log('Done')
+            singleSocket.broadcast.to(roomName).emit('new_msg',msg.text)
+        }
+
+        // singleSocket.broadcast.to(roomName).emit('new_msg',data.text)
+    })
+
+});
+
 io.on('connection',(socket)=>{
     socket.on('join',(data)=>{
         console.log(data.name + " is Online !")

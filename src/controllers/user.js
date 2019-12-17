@@ -1,7 +1,7 @@
 import User from "../models/User"
 import Group from "../models/Group"
 import Conversation from "../models/Conversation";
-
+import * as moment from 'moment'
 const getCurrentUser = (req, res) => {
     res.send({
         id: req.session.user._id,
@@ -92,12 +92,51 @@ const getChats = async(req,res)=>{
         data:conversations
     })
 }
+const updateMessages = async function(senderName,senderID,receiverID,text,type){
+    let a,b;
+    if(senderID<receiverID){
+        a=senderID;b=receiverID;
+    }else{
+        a=receiverID;b=senderID;
+    }
+   const conversation = await Conversation.getAllChatsBetweenUsers(senderID,receiverID)
+    if(conversation.length === 0){
+        const newConversation = new Conversation({
+            between_users:[mongoose.Types.ObjectId(a),mongoose.Types.ObjectId(b)],
+            conversation_type:parseInt(type),
+            messages:[{
+                text:text,
+                sender:{
+                    id:mongoose.Types.ObjectId(senderID),
+                    name:senderName
+                },
+                timestamp:moment().format('MMMM Do YYYY, h:mm:ss a')
+            }]
+        })
+        await newConversation.save()
+    }else{
+        const existingConversation = Conversation.findOne({
+            between_users:[mongoose.Types.ObjectId(a),mongoose.Types.ObjectId(b)]
+        })
+        existingConversation.messages.push({
+            text:text,
+            sender:{
+                id:mongoose.Types.ObjectId(senderID),
+                name:senderName
+            },
+            timestamp:moment().format('MMMM Do YYYY, h:mm:ss a')
+        })
+        await existingConversation.save()
+    }
+    return true
+}
 
 export let userController = {
     getCurrentUser: getCurrentUser,
     addContact: addContact,
     getContacts: getContacts,
     addGroup:addGroup,
-    getChats:getChats
+    getChats:getChats,
+    updateMessages:updateMessages
 }
 
