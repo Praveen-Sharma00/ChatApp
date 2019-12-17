@@ -25,7 +25,7 @@ const conversationSchema = new _mongoose.default.Schema({
       },
       name: String
     },
-    timestamp: Number
+    timestamp: String
   }]
 });
 

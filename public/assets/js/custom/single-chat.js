@@ -42,21 +42,24 @@ var senderID;var senderName;
         })
         const _response = await response.json()
         console.log(_response)
+        console.log(_response.data[0])
+        chatBox.innerHTML=""
         if(_response.data.length === 0){
             chatBox.innerHTML="<p class='text-center text-info'>Start the conversation</p>"
         }else{
+
             _response.data[0].messages.forEach((e)=>{
                 if(e.sender.id === _id){
-                    chatBox.innerHTML = ' <div class="d-flex justify-content-start mb-4">' +
+                    chatBox.innerHTML += ' <div class="d-flex justify-content-start mb-4">' +
                         '                        <div class="msg_cotainer">' +
                         '<span class="user_name">'+e.sender.name+'</span>' +
                         '<p>' + e.text + '</p>' +
-                        '<span class="msg_time">'+moment(e.timestamp.toString()).format("hh:mm A")+'</span>' +
+                        '<span class="msg_time">'+e.timestamp+'</span>' +
                         '                        </div>\n' +
 
                         '                    </div>'
                 }else{
-                    chatBox.innerHTML=' <div class="d-flex justify-content-end mb-4">' +
+                    chatBox.innerHTML +=' <div class="d-flex justify-content-end mb-4">' +
                         '                        <div class="msg_cotainer_send">' +
                         '<span class="user_name"> Me</span>' +
                         '<p>' + e.text + '</p>' +

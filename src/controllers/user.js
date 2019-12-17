@@ -1,7 +1,9 @@
 import User from "../models/User"
 import Group from "../models/Group"
 import Conversation from "../models/Conversation";
-import * as moment from 'moment'
+
+const moment = require('moment')
+import mongoose from 'mongoose'
 const getCurrentUser = (req, res) => {
     res.send({
         id: req.session.user._id,
@@ -110,21 +112,26 @@ const updateMessages = async function(senderName,senderID,receiverID,text,type){
                     id:mongoose.Types.ObjectId(senderID),
                     name:senderName
                 },
-                timestamp:moment().format('MMMM Do YYYY, h:mm:ss a')
+                timestamp:(moment().format('MMMM Do YYYY, h:mm:ss a')).toString()
             }]
         })
         await newConversation.save()
     }else{
-        const existingConversation = Conversation.findOne({
-            between_users:[mongoose.Types.ObjectId(a),mongoose.Types.ObjectId(b)]
+        // const existingConversation = Conversation.findOne({
+        //     between_users:[mongoose.Types.ObjectId(a.toString()),mongoose.Types.ObjectId(b.toString())]
+        // })
+
+        const existingConversation = await Conversation.findOne({
+            between_users:[a,b]
         })
+        console.log(existingConversation.conversation_type)
         existingConversation.messages.push({
             text:text,
             sender:{
                 id:mongoose.Types.ObjectId(senderID),
                 name:senderName
             },
-            timestamp:moment().format('MMMM Do YYYY, h:mm:ss a')
+            timestamp: (moment().format('MMMM Do YYYY, h:mm:ss a')).toString()
         })
         await existingConversation.save()
     }

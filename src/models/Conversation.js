@@ -16,7 +16,7 @@ const conversationSchema = new mongoose.Schema({
             },
             name:String
         },
-        timestamp:Number
+        timestamp:String
     }]
 })
 

@@ -11,7 +11,11 @@ var _Group = _interopRequireDefault(require("../models/Group"));
 
 var _Conversation = _interopRequireDefault(require("../models/Conversation"));
 
+var _mongoose = _interopRequireDefault(require("mongoose"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const moment = require('moment');
 
 const getCurrentUser = (req, res) => {
   res.send({
@@ -107,11 +111,61 @@ const getChats = async (req, res) => {
   });
 };
 
+const updateMessages = async function (senderName, senderID, receiverID, text, type) {
+  let a, b;
+
+  if (senderID < receiverID) {
+    a = senderID;
+    b = receiverID;
+  } else {
+    a = receiverID;
+    b = senderID;
+  }
+
+  const conversation = await _Conversation.default.getAllChatsBetweenUsers(senderID, receiverID);
+
+  if (conversation.length === 0) {
+    const newConversation = new _Conversation.default({
+      between_users: [_mongoose.default.Types.ObjectId(a), _mongoose.default.Types.ObjectId(b)],
+      conversation_type: parseInt(type),
+      messages: [{
+        text: text,
+        sender: {
+          id: _mongoose.default.Types.ObjectId(senderID),
+          name: senderName
+        },
+        timestamp: moment().format('MMMM Do YYYY, h:mm:ss a').toString()
+      }]
+    });
+    await newConversation.save();
+  } else {
+    // const existingConversation = Conversation.findOne({
+    //     between_users:[mongoose.Types.ObjectId(a.toString()),mongoose.Types.ObjectId(b.toString())]
+    // })
+    const existingConversation = await _Conversation.default.findOne({
+      between_users: [a, b]
+    });
+    console.log(existingConversation.conversation_type);
+    existingConversation.messages.push({
+      text: text,
+      sender: {
+        id: _mongoose.default.Types.ObjectId(senderID),
+        name: senderName
+      },
+      timestamp: moment().format('MMMM Do YYYY, h:mm:ss a').toString()
+    });
+    await existingConversation.save();
+  }
+
+  return true;
+};
+
 let userController = {
   getCurrentUser: getCurrentUser,
   addContact: addContact,
   getContacts: getContacts,
   addGroup: addGroup,
-  getChats: getChats
+  getChats: getChats,
+  updateMessages: updateMessages
 };
 exports.userController = userController;
