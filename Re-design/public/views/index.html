@@ -2,9 +2,102 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Welcome !</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="assets/img/mdb-favicon.ico" type="image/x-icon">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="assets/css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row h-80">
+        <div class="col-5 mx-auto mt-5">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs list-inline justify-content-center card-header-tabs" id="bologna-list"
+                        role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#signup" role="tab" aria-controls="signup"
+                               aria-selected="true">Signup</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#login" role="tab" aria-controls="login" aria-selected="false">Login</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content mt-3">
+                        <div class="tab-pane active" id="signup" role="tabpanel">
+                            <!-- Default form register -->
+                            <form class="text-center border border-light p-5" action="/signup" >
+                                <div class="form-row mb-4 md-form">
+                                    <div class="col">
+                                        <input type="text" id="sname" class="form-control">
+                                        <label for="sname">Name</label>
+                                    </div>
+                                </div>
+                                <div class="form-row mb-4 md-form">
+                                    <div class="col">
+                                        <!-- E-mail -->
+                                        <input type="email" id="semail" class="form-control">
+                                        <label for="semail">Email</label>
+                                    </div>
+                                </div>
+                                <div class="form-row mb-4 md-form">
+                                    <div class="col">
+                                        <!-- Password -->
+                                        <input type="password" id="spassword" class="form-control">
+                                        <label for="spassword">Password</label>
+                                    </div>
+                                </div>
+                                <!-- Sign up button -->
+                                <button class="btn btn-info my-4 btn-block" type="submit">Sign in</button>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="login" role="tabpanel" aria-labelledby="login-tab">
+                            <form name="loginForm" id="loginForm" method="POST" action="/login" >
+                                <div class="md-form">
+                                    <i class="fas fa-envelope prefix"></i>
+                                    <input type="text" id="lemail" class="form-control">
+                                    <label for="lemail">Email</label>
+                                </div>
+                                <div class="md-form">
+                                    <i class="fas fa-lock prefix"></i>
+                                    <input type="password" id="lpassword" class="form-control">
+                                    <label for="lpassword">Password</label>
+                                </div>
+                                <button type="submit" class="btn btn-success">Go ahead</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- jQuery -->
+<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="assets/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="assets/js/mdb.min.js"></script>
+<!-- Your custom scripts (optional) -->
+<script type="text/javascript">
+    $('#bologna-list a').on('click', function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+</script>
 
 </body>
 </html>
