@@ -5,27 +5,34 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.authController = void 0;
 
+var _auth = _interopRequireDefault(require("../services/auth"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 const postLogin = async (req, res) => {
   res.send('Login');
 };
 
 const postSignup = async (req, res) => {
-  res.send('Signup');
+  const _authService = new _auth.default();
+
+  const response = await _authService.createUser(req.body);
+  console.log(response);
+
+  if (response.error) {
+    return res.send(response.message);
+  } else if (response.success) {
+    return res.redirect('/');
+  }
 };
 
 const destroySession = async (req, res) => {
   res.send('Destroy');
 };
 
-const protectRoute = async (req, res, next) => {
-  if (req.session.isLoggedIn) return next();
-  return res.redirect('/');
-};
-
 let authController = {
   postLogin,
   postSignup,
-  destroySession,
-  protectRoute
+  destroySession
 };
 exports.authController = authController;

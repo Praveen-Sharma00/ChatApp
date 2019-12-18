@@ -43,7 +43,7 @@ const conversationSchema = new _mongoose.default.Schema({
 //     return conversations
 // }
 
-const Conversation = _mongoose.default.model('Conversation', conversationSchema);
+const ConversationModel = _mongoose.default.model('Conversation', conversationSchema);
 
-var _default = Conversation;
+var _default = ConversationModel;
 exports.default = _default;

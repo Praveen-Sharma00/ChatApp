@@ -36,5 +36,5 @@ const conversationSchema = new mongoose.Schema({
 //     const conversations = await Conversation.findOne({group_id: mongoose.Types.ObjectId("5df9c531f699661b00c97df6")})
 //     return conversations
 // }
-const Conversation = mongoose.model('Conversation', conversationSchema)
-export default Conversation
+const ConversationModel = mongoose.model('Conversation', conversationSchema)
+export default ConversationModel

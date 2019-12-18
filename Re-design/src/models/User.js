@@ -29,7 +29,7 @@ userSchema.pre('save', async function () {
 })
 
 userSchema.statics.findByCredentials = async (email, password) => {
-    const user = await User.findOne({
+    const user = await UserModel.findOne({
         email
     })
     if (!user) {
@@ -44,6 +44,6 @@ userSchema.statics.findByCredentials = async (email, password) => {
     return user
 }
 
-const User = mongoose.model('User', userSchema)
+const UserModel = mongoose.model('User', userSchema)
 
-export default User
+export default UserModel

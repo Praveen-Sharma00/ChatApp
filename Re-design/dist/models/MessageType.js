@@ -19,7 +19,7 @@ const messageTypeSchema = new _mongoose.default.Schema({
   }
 });
 
-const MessageType = _mongoose.default.model('MessageType', messageTypeSchema);
+const MessageTypeModel = _mongoose.default.model('MessageType', messageTypeSchema);
 
-var _default = MessageType;
+var _default = MessageTypeModel;
 exports.default = _default;

@@ -34,12 +34,6 @@ const expressStore = new MongoDBStore({
     collection: 'sessions'
 })
 
-app.use(express.static(path.join(__dirname, '..', 'public')))
-app.engine('html', require('ejs').renderFile)
-app.set('view engine', 'html')
-app.set('views', path.join(__dirname, '..', 'public', 'views'))
-
-
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(cors())
@@ -50,18 +44,26 @@ app.use(session({
     secret: 'CloudSurfer',
     store: expressStore
 }))
-app.use((req,res,next)=>{
-    res.locals.isAuthenticated = req.session.isLoggedIn
-    res.locals.user = req.session.user
-    next()
-})
+
+
+app.use(express.static(path.join(__dirname, '..', 'public')))
+app.engine('html', require('ejs').renderFile)
+app.set('view engine', 'html')
+app.set('views', path.join(__dirname, '..', 'public', 'views'))
+
+
+
 
 
 
 
 
 /************************ROUTE MIDDLEWARES***************************** */
-
+app.use((req,res,next)=>{
+    res.locals.isAuthenticated = req.session.isLoggedIn
+    res.locals.user = req.session.user
+    next()
+})
 app.use(defaultRoutes)
 app.use(authRoutes)
 // app.use(dashboardRoutes)

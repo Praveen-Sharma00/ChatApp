@@ -13,6 +13,6 @@ const groupSchema = new mongoose.Schema({
     }]
 })
 
-const Group = mongoose.model('Group', groupSchema)
+const GroupModel = mongoose.model('Group', groupSchema)
 
-export default Group
+export default GroupModel

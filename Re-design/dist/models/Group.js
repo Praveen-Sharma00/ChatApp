@@ -21,7 +21,7 @@ const groupSchema = new _mongoose.default.Schema({
   }]
 });
 
-const Group = _mongoose.default.model('Group', groupSchema);
+const GroupModel = _mongoose.default.model('Group', groupSchema);
 
-var _default = Group;
+var _default = GroupModel;
 exports.default = _default;

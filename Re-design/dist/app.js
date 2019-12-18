@@ -17,7 +17,7 @@ var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
-require("./modules/globals");
+require("./utils/globals");
 
 var _auth = require("./routes/auth");
 
@@ -47,10 +47,6 @@ const expressStore = new MongoDBStore({
   uri: process.env.DATABASE_URL,
   collection: 'sessions'
 });
-app.use(_express.default.static(_path.default.join(__dirname, '..', 'public')));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
-app.set('views', _path.default.join(__dirname, '..', 'public', 'views'));
 app.use(_express.default.urlencoded({
   extended: false
 }));
@@ -63,13 +59,17 @@ app.use(session({
   secret: 'CloudSurfer',
   store: expressStore
 }));
+app.use(_express.default.static(_path.default.join(__dirname, '..', 'public')));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+app.set('views', _path.default.join(__dirname, '..', 'public', 'views'));
+/************************ROUTE MIDDLEWARES***************************** */
+
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
   res.locals.user = req.session.user;
   next();
 });
-/************************ROUTE MIDDLEWARES***************************** */
-
 app.use(_default2.defaultRoutes);
 app.use(_auth.authRoutes); // app.use(dashboardRoutes)
 // app.use(userRoutes)

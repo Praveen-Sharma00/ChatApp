@@ -10,5 +10,5 @@ const messageTypeSchema = new mongoose.Schema({
     }
 })
 
-const MessageType = mongoose.model('MessageType', messageTypeSchema)
-export default MessageType
+const MessageTypeModel = mongoose.model('MessageType', messageTypeSchema)
+export default MessageTypeModel
