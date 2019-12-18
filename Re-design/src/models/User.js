@@ -15,8 +15,8 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     contacts: [{
-        _id: mongoose.Schema.Types.ObjectId,
-        nick_name: String,
+        id: mongoose.Schema.Types.ObjectId,
+        name: String,
         email: String
     }]
 })
@@ -27,16 +27,19 @@ userSchema.pre('save', async function () {
         _user.password = await bcrypt.hash(_user.password, 12)
     }
 })
+
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({
-        email: email
+        email
     })
     if (!user) {
         return
     }
-    const isMatch = await bcrypt.compare(password, user.password)
-    if (!isMatch) {
-        return
+    if (password !== undefined) {
+        const isMatch = await bcrypt.compare(password, user.password)
+        if (!isMatch) {
+            return
+        }
     }
     return user
 }
