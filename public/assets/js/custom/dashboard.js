@@ -1,4 +1,11 @@
 (async () => {
+
+    // const user = await fetch('http://localhost:3000/user')
+    // const currentUser = await user.json()
+    //
+    // let socket = io()
+    // socket.emit('user_online',currentUser)
+
     const generateOptions = (arr) => {
         let str = "";
         arr.forEach((e) => {
@@ -48,6 +55,7 @@ async function addGroup() {
         return alert('Group created')
     }
 }
+
 async function addContact() {
     let name = document.getElementById('nick_name').value
     let email = document.getElementById('email').value

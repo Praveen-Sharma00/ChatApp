@@ -11,9 +11,11 @@ import {defaultRoutes} from './routes/default'
 import {authRoutes} from './routes/auth'
 import {dashboardRoutes} from "./routes/chat";
 import {userRoutes} from "./routes/user";
+import Group from "./models/Group";
+import Conversation from "./models/Conversation";
 
 
-
+const moment = require('moment')
 dotenv.config({
     path: path.join(__dirname, '..', 'config.env')
 })
@@ -61,23 +63,7 @@ app.use((req,res,next)=>{
     res.locals.user = req.session.user
     next()
 })
-// app.get('/sample',async(req,res)=>{
-//     const c=new Conversation({
-//   between_users:[mongoose.Types.ObjectId("5df85c4c21627c11e1cbbb1a"),mongoose.Types.ObjectId("5df85c7521627c11e1cbbb1c")],
-//         conversation_type:1,
-//         messages:[{
-//            text:'Hello amit',
-//             sender:{
-//                id:mongoose.Types.ObjectId("5df85c4c21627c11e1cbbb1a"),
-//                 name:"Praveen"
-//             },
-//             timestamp:13132434234
-//         }]
-//
-//     })
-//
-//     await c.save()
-// })
+
 app.use(defaultRoutes)
 app.use(authRoutes)
 app.use(dashboardRoutes)

@@ -27,7 +27,13 @@ var _chat = require("./routes/chat");
 
 var _user = require("./routes/user");
 
+var _Group = _interopRequireDefault(require("./models/Group"));
+
+var _Conversation = _interopRequireDefault(require("./models/Conversation"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const moment = require('moment');
 
 _dotenv.default.config({
   path: _path.default.join(__dirname, '..', 'config.env')
@@ -74,24 +80,7 @@ app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
   res.locals.user = req.session.user;
   next();
-}); // app.get('/sample',async(req,res)=>{
-//     const c=new Conversation({
-//   between_users:[mongoose.Types.ObjectId("5df85c4c21627c11e1cbbb1a"),mongoose.Types.ObjectId("5df85c7521627c11e1cbbb1c")],
-//         conversation_type:1,
-//         messages:[{
-//            text:'Hello amit',
-//             sender:{
-//                id:mongoose.Types.ObjectId("5df85c4c21627c11e1cbbb1a"),
-//                 name:"Praveen"
-//             },
-//             timestamp:13132434234
-//         }]
-//
-//     })
-//
-//     await c.save()
-// })
-
+});
 app.use(_default2.defaultRoutes);
 app.use(_auth.authRoutes);
 app.use(_chat.dashboardRoutes);

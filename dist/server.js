@@ -20,7 +20,6 @@ const io = socketio(server);
 const singleChat = io.of('/chat');
 singleChat.on('connection', function (singleSocket) {
   let roomName;
-  console.log('Someone connected');
   singleSocket.on('join', data => {
     roomName = data.a + " " + data.b;
     singleSocket.join(roomName);
@@ -54,16 +53,7 @@ groupChat.on('connection', function (socket) {
       console.log('done');
     }
   });
-}); // io.on('connection', (socket) => {
-//     socket.on('join', (data) => {
-//         console.log(data.name + " is Online !")
-//         socket.join("fun")
-//     })
-//     socket.on("new_msg", (data) => {
-//         socket.broadcast.to("fun").emit('new_msg', data)
-//     })
-// })
-
+});
 server.listen(process.env.PORT, () => {
   console.log(success('Server running on PORT ' + process.env.PORT));
 });

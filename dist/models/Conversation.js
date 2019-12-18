@@ -49,7 +49,7 @@ conversationSchema.statics.getAllChatsBetweenUsers = async (sender, receiver) =>
 
 conversationSchema.statics.getAllGroupChats = async name => {
   const conversations = await Conversation.findOne({
-    group_id: _mongoose.default.Types.ObjectId("5df8baf67355e44d5a3eca81")
+    group_id: _mongoose.default.Types.ObjectId("5df9c531f699661b00c97df6")
   });
   return conversations;
 };

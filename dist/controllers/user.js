@@ -180,7 +180,7 @@ const updateIndividualMessages = async function (senderName, senderID, receiverI
 
 const updateGroupMessage = async (id, name, text) => {
   const existingConversation = await _Conversation.default.findOne({
-    group_id: _mongoose.default.Types.ObjectId("5df8baf67355e44d5a3eca81")
+    group_id: _mongoose.default.Types.ObjectId("5df9c531f699661b00c97df6")
   });
   console.log(existingConversation);
   existingConversation.messages.push({

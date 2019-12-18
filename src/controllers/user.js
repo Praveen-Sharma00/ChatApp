@@ -154,7 +154,7 @@ const updateIndividualMessages = async function(senderName,senderID,receiverID,t
     return true
 }
 const updateGroupMessage = async (id,name,text)=>{
-    const existingConversation = await Conversation.findOne({group_id:mongoose.Types.ObjectId("5df8baf67355e44d5a3eca81")})
+    const existingConversation = await Conversation.findOne({group_id:mongoose.Types.ObjectId("5df9c531f699661b00c97df6")})
     console.log(existingConversation)
     existingConversation.messages.push({
         text:text,

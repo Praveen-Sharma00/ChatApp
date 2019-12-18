@@ -31,7 +31,7 @@ const postSignup = async (req,res)=>{
          password:req.body.spassword
     }
     const newUser = new User(userObj);
-   await newUser.save()
+    await newUser.save()
     let r=await Group.findOne({name:'default'})
             r.members.push(id)
       await  r.save()
