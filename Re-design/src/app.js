@@ -4,7 +4,7 @@ import compression from 'compression'
 import path from 'path'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import './modules/globals'
+import './utils/globals'
 
 
 import {authRoutes} from "./routes/auth";
