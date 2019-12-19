@@ -2,9 +2,144 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title><%= user.name %></title>
+    <!-- MDB icon -->
+    <link rel="icon" href="assets/img/mdb-favicon.ico" type="image/x-icon">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="assets/css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="assets/css/bootstrap-multiselect.css" rel="stylesheet">
 </head>
 <body>
-hello from dashboard
+<!--Navbar -->
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark  primary-color">
+    <a class="navbar-brand " href="#">Ping.io</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+            aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/chat">Personal Chat</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/group_chat">Group Chat</a>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                     aria-labelledby="navbarDropdownMenuLink-333">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--/.Navbar -->
+
+<!--Container-->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center">Add Contact</h4>
+                </div>
+                <div class="card-body">
+                    <div name="addContactForm" id="addContactForm" class="text-center border border-light p-4">
+                        <div class="form-row mb-4 md-form">
+                            <div class="col">
+                                <input type="text" id="name" name="name" class="form-control">
+                                <label for="name">Name</label>
+                            </div>
+                        </div>
+                        <div class="form-row mb-4 md-form">
+                            <div class="col">
+                                <input type="email" id="email" name="email" class="form-control">
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+                        <button class="btn btn-info my-4 btn-block" onclick="return addContact();">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center">Create Group</h4>
+                </div>
+                <div class="card-body">
+                    <div name="addGroupForm" id="addGroupForm" class="text-center border border-light p-4"
+                    >
+                        <div class="form-row mb-4 md-form">
+                            <div class="col">
+                                <input type="text" id="group_name" name="name" class="form-control">
+                                <label for="group_name">Group Name</label>
+                            </div>
+                        </div>
+                        <div class="form-row mb-4">
+                            <div class="col">
+                                <select class="bg-info" id="members" multiple="multiple">
+                                    <option value="a">A</option>
+                                    <option value="b">B</option>
+                                    <option value="c">C</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <button class="btn btn-info my-4 btn-block" onclick="return addGroup()">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/.Container-->
+
+<!-- jQuery -->
+<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="assets/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="assets/js/mdb.min.js"></script>
+<script src="assets/js/bootstrap-multiselect.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#members').multiselect({
+            buttonText: function (options, select) {
+                if (options.length === 0) {
+                    return 'Select members';
+                } else if (options.length > 4) {
+                    return 'More than 3 members selected!';
+                }
+            }
+        });
+    });
+</script>
+
+<script src="assets/js/custom/dashboard.js"></script>
 </body>
 </html>

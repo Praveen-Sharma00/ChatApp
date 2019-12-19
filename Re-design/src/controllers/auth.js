@@ -3,7 +3,7 @@ import AuthService from '../services/auth';
 const _authService = new AuthService()
 
 const postLogin = async (req, res) => {
-    const response = await _authService.findUser(req.body)
+    const response = await _authService.loginUser(req.body)
     if(!response.success){
         return res.send(response.error.message)
     }else{
@@ -14,7 +14,7 @@ const postLogin = async (req, res) => {
 }
 
 const postSignup = async (req, res)=>{
-    const response = await _authService.createUser(req.body)
+    const response = await _authService.registerUser(req.body)
     if (!response.success) {
         return res.send(response.error.message)
     } else {

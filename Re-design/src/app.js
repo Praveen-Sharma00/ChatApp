@@ -10,6 +10,7 @@ import './utils/globals'
 import {authRoutes} from "./routes/auth";
 import {defaultRoutes} from "./routes/default";
 import {userRoutes} from "./routes/user";
+import {apiRoutes} from "./routes/api";
 
 
 dotenv.config({
@@ -43,7 +44,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     secret: 'CloudSurfer',
-    store: expressStore
+    store: expressStore,
+    cookie: { maxAge: 60000 }
 }))
 
 
@@ -51,12 +53,6 @@ app.use(express.static(path.join(__dirname, '..', 'public')))
 app.engine('html', require('ejs').renderFile)
 app.set('view engine', 'html')
 app.set('views', path.join(__dirname, '..', 'public', 'views'))
-
-
-
-
-
-
 
 
 /************************ROUTE MIDDLEWARES***************************** */
@@ -68,6 +64,7 @@ app.use((req,res,next)=>{
 app.use(defaultRoutes)
 app.use(authRoutes)
 app.use(userRoutes)
+app.use('/api/v1',apiRoutes)
 // app.use(userRoutes)
 /********************************************************************* */
 

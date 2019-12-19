@@ -2,7 +2,7 @@ import UserModel from '../models/User'
 
 export default class AuthService {
 
-    async createUser(user) {
+    async registerUser(user) {
         const {name, email, password} = user
         const _result = await UserModel.findByCredentials(email)
         let _newUser;
@@ -17,7 +17,7 @@ export default class AuthService {
         }
     }
 
-    async findUser(credentials) {
+    async loginUser(credentials) {
         const {email, password} = credentials
         const _userRecord = await UserModel.findByCredentials(email, password)
         if (!_userRecord) {
