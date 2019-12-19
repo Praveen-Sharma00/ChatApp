@@ -1,5 +1,5 @@
 import UserModel from '../models/User'
-import mongoose from 'mongoose'
+
 
 export default class UserDetailService {
     async getUserContacts(currentUser) {
@@ -29,8 +29,11 @@ export default class UserDetailService {
 
     async updateUserContact(currentUser, details) {
         const {name, email} = details
-       
-        const contactUser = await UserModel.findByCredentials(email)
+        if(email === currentUser.email){
+            return ({success: false, error: {message: 'You can\'t add yourself !'}})
+        }
+        else{
+            const contactUser = await UserModel.findByCredentials(email)
         if(!contactUser){
             return ({success: false, error: {message: 'The contact you\'re trying to add doesn\'t use this app!'}})
         }
@@ -46,6 +49,7 @@ export default class UserDetailService {
             return ({success: true, error: {},data:{}})
         } else {
             return ({success: false, error: {message: 'Contact Already exists !'}})
+        }
         }
     }
 }
