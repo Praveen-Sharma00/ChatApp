@@ -7,8 +7,6 @@ exports.default = void 0;
 
 var _User = _interopRequireDefault(require("../models/User"));
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class UserDetailService {
@@ -71,40 +69,49 @@ class UserDetailService {
       name,
       email
     } = details;
-    console.log(name, " ", email);
-    const contactUser = await _User.default.findByCredentials(email);
 
-    if (!contactUser) {
+    if (email === currentUser.email) {
       return {
         success: false,
         error: {
-          message: 'The contact you\'re trying to add doesn\'t use this app!'
+          message: 'You can\'t add yourself !'
         }
-      };
-    }
-
-    const currentUserObj = await _User.default.findByCredentials(currentUser.email);
-    const searchResult = await this.findContact(currentUser, email);
-
-    if (!searchResult.success) {
-      currentUserObj.contacts.push({
-        _id: contactUser.id,
-        name,
-        email
-      });
-      await currentUserObj.save();
-      return {
-        success: true,
-        error: {},
-        data: {}
       };
     } else {
-      return {
-        success: false,
-        error: {
-          message: 'Contact Already exists !'
-        }
-      };
+      const contactUser = await _User.default.findByCredentials(email);
+
+      if (!contactUser) {
+        return {
+          success: false,
+          error: {
+            message: 'The contact you\'re trying to add doesn\'t use this app!'
+          }
+        };
+      }
+
+      const currentUserObj = await _User.default.findByCredentials(currentUser.email);
+      const searchResult = await this.findContact(currentUser, email);
+
+      if (!searchResult.success) {
+        currentUserObj.contacts.push({
+          _id: contactUser.id,
+          name,
+          email
+        });
+        await currentUserObj.save();
+        return {
+          success: true,
+          error: {},
+          data: {}
+        };
+      } else {
+        return {
+          success: false,
+          error: {
+            message: 'Contact Already exists !'
+          }
+        };
+      }
     }
   }
 

@@ -1,9 +1,9 @@
-(async()=>{
+let start=async()=>{
     const data = await fetch('http://localhost:3000/api/v1/user/contacts')
     const response = await  data.json()
     console.log(response)
-})()
-
+}
+(async()=>await start())()
 
 async function addContact(){
     let name = document.getElementById("name").value
@@ -22,7 +22,8 @@ async function addContact(){
         })
     })
     const response = await request.json()
-    console.log(response)
+    await start()
+    
 }
 async function addGroup(){
     let group_name = document.getElementById("group_name").value
@@ -30,4 +31,5 @@ async function addGroup(){
     if(group_name === "" || members.length ===0){
         return alert('Fill all fields')
     }
+   
 }
