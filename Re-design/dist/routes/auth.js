@@ -17,6 +17,6 @@ const router = _express.default.Router();
 
 router.route('/login').post(_auth.authController.postLogin);
 router.route('/signup').post(_auth.authController.postSignup);
-router.route('/logout').post(_auth2.authenticate, _auth.authController.destroySession);
+router.route('/logout').post(_auth2.checkSession, _auth.authController.destroySession);
 let authRoutes = router;
 exports.authRoutes = authRoutes;

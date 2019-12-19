@@ -23,6 +23,8 @@ var _auth = require("./routes/auth");
 
 var _default2 = require("./routes/default");
 
+var _user = require("./routes/user");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv.default.config({
@@ -71,8 +73,8 @@ app.use((req, res, next) => {
   next();
 });
 app.use(_default2.defaultRoutes);
-app.use(_auth.authRoutes); // app.use(dashboardRoutes)
-// app.use(userRoutes)
+app.use(_auth.authRoutes);
+app.use(_user.userRoutes); // app.use(userRoutes)
 
 /********************************************************************* */
 

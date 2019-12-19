@@ -9,6 +9,7 @@ import './utils/globals'
 
 import {authRoutes} from "./routes/auth";
 import {defaultRoutes} from "./routes/default";
+import {userRoutes} from "./routes/user";
 
 
 dotenv.config({
@@ -66,7 +67,7 @@ app.use((req,res,next)=>{
 })
 app.use(defaultRoutes)
 app.use(authRoutes)
-// app.use(dashboardRoutes)
+app.use(userRoutes)
 // app.use(userRoutes)
 /********************************************************************* */
 

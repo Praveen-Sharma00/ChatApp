@@ -11,7 +11,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 class AuthService {
   async createUser(user) {
-    console.log(user);
     const {
       name,
       email,
@@ -20,22 +19,53 @@ class AuthService {
 
     const _result = await _User.default.findByCredentials(email);
 
-    let new_user;
+    let _newUser;
 
     if (!_result) {
-      new_user = new _User.default({
+      _newUser = new _User.default({
         name,
         email,
         password
       });
-      await new_user.save();
+      await _newUser.save();
       return {
-        success: 201
+        success: true,
+        error: {}
       };
     } else {
       return {
-        error: 400,
-        message: 'A user with e-mail already exists !'
+        success: false,
+        error: {
+          message: 'A user with e-mail already exists !'
+        }
+      };
+    }
+  }
+
+  async findUser(credentials) {
+    const {
+      email,
+      password
+    } = credentials;
+
+    const _userRecord = await _User.default.findByCredentials(email, password);
+
+    if (!_userRecord) {
+      return {
+        success: false,
+        error: {
+          message: 'Invalid Credentials!'
+        }
+      };
+    } else {
+      let user = _userRecord.toObject();
+
+      return {
+        success: true,
+        error: {},
+        data: {
+          user
+        }
       };
     }
   }

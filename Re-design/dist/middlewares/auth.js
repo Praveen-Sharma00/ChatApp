@@ -1,9 +1,9 @@
 "use strict";
 
-exports.authenticate = async (req, res, next) => {
+exports.checkSession = async (req, res, next) => {
   if (req.session.isLoggedIn) {
     return next();
   }
 
-  res.redirect('/');
+  return res.redirect('/');
 };
