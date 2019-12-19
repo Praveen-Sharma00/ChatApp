@@ -12,19 +12,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const _authService = new _auth.default();
 
 const postLogin = async (req, res) => {
-  const response = await _authService.findUser(req.body);
+  const response = await _authService.loginUser(req.body);
 
   if (!response.success) {
     return res.send(response.error.message);
   } else {
     req.session.isLoggedIn = true;
     req.session.user = response.data.user;
+    console.log(req.session.user);
     return res.redirect('/dashboard');
   }
 };
 
 const postSignup = async (req, res) => {
-  const response = await _authService.createUser(req.body);
+  const response = await _authService.registerUser(req.body);
 
   if (!response.success) {
     return res.send(response.error.message);
@@ -34,7 +35,10 @@ const postSignup = async (req, res) => {
 };
 
 const destroySession = async (req, res) => {
-  res.send('Destroy');
+  req.session.destroy(err => {
+    console.log(err);
+  });
+  return res.redirect('/');
 };
 
 let authController = {

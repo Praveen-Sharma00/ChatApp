@@ -1,11 +1,16 @@
 import express from 'express'
+
 import {userController} from "../controllers/user";
+import {checkSession} from '../middlewares/auth'
+
+const api = express.Router()
+
+api
+    .route('/user/contacts')
+    .get(userController.getUserContacts)
+    .post(checkSession,userController.updateUserContact)
 
 
-const router = express.Router()
-
-router
-    .route('/user',userController)
-export let apiRoutes = router;
+export let apiRoutes = api;
 
 

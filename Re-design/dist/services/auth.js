@@ -10,7 +10,7 @@ var _User = _interopRequireDefault(require("../models/User"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class AuthService {
-  async createUser(user) {
+  async registerUser(user) {
     const {
       name,
       email,
@@ -42,7 +42,7 @@ class AuthService {
     }
   }
 
-  async findUser(credentials) {
+  async loginUser(credentials) {
     const {
       email,
       password
