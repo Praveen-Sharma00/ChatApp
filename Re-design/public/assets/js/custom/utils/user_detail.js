@@ -47,4 +47,20 @@ class UserData {
         const response = await this.doGetRequest('http://localhost:3000/api/v1/user/chats/' + recipientId)
         return response
     }
+    async updateIndividualConversation(recipientId,text){
+        const response = await this.doPostRequest('http://localhost:3000/api/v1/user/chats/'+recipientId,{
+            text:text
+        })
+        return response
+    }
+    async getGroupConversation(groupId) {
+        const response = await this.doGetRequest('http://localhost:3000/api/v1/user/chats/group/' + groupId)
+        return response
+    }
+    async updateGroupConversation(groupId,text){
+        const response = await this.doPostRequest('http://localhost:3000/api/v1/user/chats/group/'+groupId,{
+            text:text
+        })
+        return response
+    }
 }

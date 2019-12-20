@@ -21,6 +21,8 @@ api
     .route('/user/chats/:secondUserId')
     .get(userController.getConversationBetweenUsers)
     .post(userController.updateIndividualConversation)
+
+
 // .post(checkSession, userController.createGroup)
 api
     .route('/user/chats/group/:groupId')

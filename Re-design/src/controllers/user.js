@@ -59,14 +59,16 @@ const getGroupConversations = async(req,res)=>{
 const updateIndividualConversation = async (req,res)=>{
     const {user} = req.session
     const senderId = user._id
-    const receiverId = req.body.to
+    const receiverId = req.params.secondUserId
+
     const text = req.body.text.trim()
     const response = await _userDetailService.updateIndividualConversation(senderId,receiverId,text)
     return res.send(response)
 }
 const updateGroupConversation = async (req,res)=>{
     const {user}=req.session
-    const {groupId,text} = req.body
+    const {text} = req.body
+    const groupId = req.params.groupId
     const response = await _userDetailService.updateGroupConversation(user,groupId,text)
     return res.send(response)
 }
