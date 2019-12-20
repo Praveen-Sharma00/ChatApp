@@ -1,7 +1,12 @@
 import UserModel from '../models/User'
 import GroupModel from "../models/Group";
+import ConversationModel from "../models/Conversation";
 
 import mongoose from 'mongoose'
+import Conversation from "../../../Bad-Design/src/models/Conversation";
+
+const moment = require('moment')
+
 
 export default class UserDetailService {
 
@@ -95,5 +100,113 @@ export default class UserDetailService {
         })
         await newGroup.save()
         return ({success: true, error: {}, data: {}})
+    }
+
+    async getConversationBetweenUsers(currentUser, secondUserId) {
+        if (secondUserId === null || secondUserId === "") {
+            return ({success: false, error: {message: 'Invalid req params !'}})
+        }
+        const {_id: userID} = currentUser
+        let a = currentUser._id, b = secondUserId;
+        if (currentUser._id > secondUserId) {
+            [a, b] = [b, a]
+        }
+        const _result = await ConversationModel.findOne({
+            between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)],
+            conversation_type: 1
+        }).select('messages')
+        if (!_result || _result.length === 0) {
+            return ({success: false, error: {message: 'No Conversations so far !'}})
+        } else {
+            let messages = _result.messages
+            return ({success: true, error: {}, data: {messages}})
+        }
+    }
+
+    async updateIndividualConversation(senderId, receiverID, text) {
+        const {name = senderName} = await UserModel.findOne({_id: mongoose.Types.ObjectId(senderId)})
+        let a = senderId, b = receiverID;
+        if (a > b) {
+            [a, b] = [b, a]
+        }
+        const conversation = await ConversationModel.findOne({between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)]})
+        if (!conversation) {
+            const newConversation = new ConversationModel({
+                between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)],
+                conversation_type: 1,
+                messages: [{
+                    text: text,
+                    sender: {
+                        id: mongoose.Types.ObjectId(senderId),
+                        name: senderName
+                    },
+                    timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
+                }]
+            })
+            await newConversation.save()
+        } else {
+            const existingConversation = await ConversationModel.findOne({
+                between_users: [a, b]
+            })
+            existingConversation.messages.push({
+                text: text,
+                sender: {
+                    id: mongoose.Types.ObjectId(senderId),
+                    name: senderName
+                },
+                timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
+            })
+            await existingConversation.save()
+        }
+        return ({success: true, error: {}, data: {}})
+    }
+
+    async updateGroupConversation(sender, groupId, text) {
+        const conversation = await ConversationModel.findOne({group_id: mongoose.Types.ObjectId(groupId)})
+        if (!conversation) {
+            const newConversation = new ConversationModel({
+                between_users: [],
+                conversation_type: 2,
+                messages: [{
+                    text: text,
+                    sender: {
+                        id: mongoose.Types.ObjectId(sender._id),
+                        name: sender.name
+                    },
+                    timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
+                }]
+            })
+            await newConversation.save()
+        } else {
+            const existingConversation = await ConversationModel.findOne({
+                group_id: mongoose.Types.ObjectId(groupId)
+            })
+            existingConversation.messages.push({
+                text: text,
+                sender: {
+                    id: mongoose.Types.ObjectId(sender._id),
+                    name: sender.name
+                },
+                timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
+            })
+            await existingConversation.save()
+        }
+        return ({success: true, error: {}, data: {}})
+    }
+
+    async getGroupConversations(groupId) {
+        if (groupId === null || groupId === "") {
+            return ({success: false, error: {message: 'Invalid req params !'}})
+        }
+        const _result = await ConversationModel.findOne({
+            group_id: mongoose.Types.ObjectId(groupId),
+            conversation_type: 2
+        }).select('messages')
+        if (!_result || _result.length === 0) {
+            return ({success: false, error: {message: 'No Conversations so far !'}})
+        } else {
+            let messages = _result.messages
+            return ({success: true, error: {}, data: {messages}})
+        }
     }
 }

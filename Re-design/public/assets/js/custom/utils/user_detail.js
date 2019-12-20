@@ -42,4 +42,9 @@ class UserData {
         const response = await this.doGetRequest('http://localhost:3000/api/v1/user/groups')
         return response
     }
+
+    async getConversationBetweenUsers(recipientId) {
+        const response = await this.doGetRequest('http://localhost:3000/api/v1/user/chats/' + recipientId)
+        return response
+    }
 }
