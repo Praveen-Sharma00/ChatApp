@@ -8,6 +8,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const server = _http.default.createServer(_app.default);
 
+const socketio = require('socket.io');
+
+const io = socketio(server);
 server.listen(process.env.PORT, () => {
   console.log(success("Server listening on PORT " + process.env.PORT));
 });

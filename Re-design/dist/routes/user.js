@@ -16,7 +16,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const router = _express.default.Router();
 
 router.route('/dashboard').get(_auth.checkSession, _user.userController.dashboard);
-router.route('/chat').get(_auth.checkSession, _user.userController.personalChat);
-router.route('/group_chat').get(_auth.checkSession, _user.userController.groupChat);
+router.route('/chat').get(_auth.checkSession, _user.userController.chat);
 let userRoutes = router;
 exports.userRoutes = userRoutes;

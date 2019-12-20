@@ -10,10 +10,7 @@ router
     .get(checkSession, userController.dashboard)
 router
     .route('/chat')
-    .get(checkSession, userController.personalChat)
-router
-    .route('/group_chat')
-    .get(checkSession, userController.groupChat)
+    .get(checkSession, userController.chat)
 
 
 export let userRoutes = router;

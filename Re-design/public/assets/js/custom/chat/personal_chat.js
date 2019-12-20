@@ -47,6 +47,8 @@ const populateBasicGroupData = async()=>{
 
     if(obj.length >0){
         group_list.innerHTML=list
+    }else{
+        group_list.innerHTML="<p class='text-center mt-5'>No Groups</p>"
     }
 }
 

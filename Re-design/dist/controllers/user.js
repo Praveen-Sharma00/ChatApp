@@ -15,12 +15,8 @@ const dashboard = async (req, res) => {
   res.render('dashboard');
 };
 
-const personalChat = async (req, res) => {
-  res.render('chat/personal');
-};
-
-const groupChat = async (req, res) => {
-  res.render('chat/group');
+const chat = async (req, res) => {
+  res.render('chat/chat');
 };
 
 const getCurrentUser = async (req, res) => {
@@ -76,8 +72,7 @@ const createGroup = async (req, res) => {
 
 let userController = {
   dashboard,
-  personalChat,
-  groupChat,
+  chat,
   getCurrentUser,
   getUserContacts,
   updateUserContact,

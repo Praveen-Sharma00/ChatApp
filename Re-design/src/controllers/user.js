@@ -5,13 +5,9 @@ const _userDetailService = new UserDetailService()
 const dashboard = async (req, res) => {
     res.render('dashboard')
 }
-const personalChat = async (req,res)=>{
-    res.render('chat/personal')
+const chat = async (req,res)=>{
+    res.render('chat/chat')
 }
-const groupChat = async (req,res)=>{
-    res.render('chat/group')
-}
-
 
 const getCurrentUser = async(req,res)=>{
     const {user}= req.session
@@ -51,8 +47,7 @@ const createGroup = async (req, res) => {
 
 export let userController = {
     dashboard,
-    personalChat,
-    groupChat,
+    chat,
     getCurrentUser,
     getUserContacts,
     updateUserContact,
