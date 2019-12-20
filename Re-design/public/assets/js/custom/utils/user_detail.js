@@ -21,7 +21,7 @@ class UserData {
     }
 
     async getCurrentUser() {
-        const response = await this.doGetRequest('http://localhost:3000/api/v1/user')
+        const response = await this.doGetRequest('http://localhost:3000/api/v1/user/')
         return response
     }
 

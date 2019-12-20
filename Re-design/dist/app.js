@@ -66,6 +66,7 @@ app.use(session({
 
 }));
 app.use(_express.default.static(_path.default.join(__dirname, '..', 'public')));
+app.use('/assets', _express.default.static(_path.default.join(__dirname, '..', 'public', 'assets')));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.set('views', _path.default.join(__dirname, '..', 'public', 'views'));

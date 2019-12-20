@@ -15,6 +15,21 @@ const dashboard = async (req, res) => {
   res.render('dashboard');
 };
 
+const personalChat = async (req, res) => {
+  res.render('chat/personal');
+};
+
+const groupChat = async (req, res) => {
+  res.render('chat/group');
+};
+
+const getCurrentUser = async (req, res) => {
+  const {
+    user
+  } = req.session;
+  return res.send(user);
+};
+
 const getUserContacts = async (req, res) => {
   const {
     user
@@ -41,6 +56,15 @@ const getUserGroups = async (req, res) => {
   return res.send(response);
 };
 
+const getAdminGroups = async (req, res) => {
+  const {
+    user
+  } = req.session;
+  const response = await _userDetailService.getAdminGroups(user);
+  console.log(response);
+  return res.send(response);
+};
+
 const createGroup = async (req, res) => {
   const {
     user
@@ -52,9 +76,13 @@ const createGroup = async (req, res) => {
 
 let userController = {
   dashboard,
+  personalChat,
+  groupChat,
+  getCurrentUser,
   getUserContacts,
   updateUserContact,
   getUserGroups,
-  createGroup
+  createGroup,
+  getAdminGroups
 };
 exports.userController = userController;

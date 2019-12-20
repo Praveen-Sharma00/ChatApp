@@ -6,7 +6,7 @@ import {checkSession} from '../middlewares/auth'
 const api = express.Router()
 api
     .route('/user')
-    .get(userController.getCurrentUser)
+    .get(checkSession,userController.getCurrentUser)
 
 api
     .route('/user/contacts')

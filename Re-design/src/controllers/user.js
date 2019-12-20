@@ -14,8 +14,8 @@ const groupChat = async (req,res)=>{
 
 
 const getCurrentUser = async(req,res)=>{
-    const {user}=req.session
-    return user
+    const {user}= req.session
+    return res.send(user)
 }
 
 const getUserContacts = async (req, res) => {

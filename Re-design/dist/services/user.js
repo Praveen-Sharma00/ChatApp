@@ -180,13 +180,6 @@ class UserDetailService {
   }
 
   async createGroup(currentUser, groupDetailObj) {
-    /*
-    * Get current user , group details
-    * Fetch all groups of existing user (Re-usable)
-    * Compare new details with existing data
-    * if found --> error
-    * else --> add
-    * */
     const temp = await this.getAdminGroups(currentUser);
     const groups = temp.data.obj;
 
