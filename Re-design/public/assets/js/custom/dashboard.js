@@ -1,9 +1,31 @@
-let start=async()=>{
-    const data = await fetch('http://localhost:3000/api/v1/user/contacts')
-    const response = await  data.json()
-    console.log(response)
+const _user = new UserData()
+
+let generateOptions = async ()=>{
+    const response = await _user.getUserContacts()
+    const Contacts = response.data.contacts
+    let options=""
+    Contacts.forEach((c)=>{options+='<option value='+c._id+'>'+c.name+'</option>';
+    })
+    return options
 }
-(async()=>await start())()
+let populateMembers = async()=>{
+    const select = document.getElementById("member-select")
+    select.innerHTML = '<select class="bg-info" id="members" multiple="multiple">'+await generateOptions()+'</select>'
+    $(document).ready(function () {
+        $('#members').multiselect({
+            buttonText: function (options, select) {
+                if (options.length === 0) {
+                    return 'Select members';
+                } else if (options.length > 4) {
+                    return 'More than 3 members selected!';
+                }
+            }
+        });
+    });
+}
+
+(async()=>await populateMembers())()
+
 
 async function addContact(){
     let name = document.getElementById("name").value
@@ -22,8 +44,10 @@ async function addContact(){
         })
     })
     const response = await request.json()
-    await start()
-    
+    if(response.success){
+        alert('Contact added successfully !')
+    }
+    await populateMembers()
 }
 async function addGroup(){
     let group_name = document.getElementById("group_name").value
@@ -31,5 +55,10 @@ async function addGroup(){
     if(group_name === "" || members.length ===0){
         return alert('Fill all fields')
     }
-   
+    const response = await _user.createGroup(group_name,members)
+    if(response.success){
+        alert('Group created Successfully')
+    }else{
+        alert(response.error.message)
+    }
 }

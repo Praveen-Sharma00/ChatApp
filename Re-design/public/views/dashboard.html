@@ -14,6 +14,7 @@
     <!-- Your custom styles (optional) -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="assets/css/bootstrap-multiselect.css" rel="stylesheet">
+    <script src="assets/js/custom/utils/user_detail.js"></script>
 </head>
 <body>
 <!--Navbar -->
@@ -100,13 +101,12 @@
                             </div>
                         </div>
                         <div class="form-row mb-4">
-                            <div class="col">
-                                <select class="bg-info" id="members" multiple="multiple">
-                                    <option value="a">A</option>
-                                    <option value="b">B</option>
-                                    <option value="c">C</option>
-                                </select>
-
+                            <div class="col" id="member-select">
+<!--                                <select class="bg-info" id="members" multiple="multiple">-->
+<!--                                    <option value="a">A</option>-->
+<!--                                    <option value="b">B</option>-->
+<!--                                    <option value="c">C</option>-->
+<!--                                </select>-->
                             </div>
                         </div>
                         <button class="btn btn-info my-4 btn-block" onclick="return addGroup()">Add</button>
@@ -127,20 +127,7 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="assets/js/mdb.min.js"></script>
 <script src="assets/js/bootstrap-multiselect.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#members').multiselect({
-            buttonText: function (options, select) {
-                if (options.length === 0) {
-                    return 'Select members';
-                } else if (options.length > 4) {
-                    return 'More than 3 members selected!';
-                }
-            }
-        });
-    });
-</script>
-
 <script src="assets/js/custom/dashboard.js"></script>
+
 </body>
 </html>

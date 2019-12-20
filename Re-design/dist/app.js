@@ -61,10 +61,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: 'CloudSurfer',
-  store: expressStore,
-  cookie: {
-    maxAge: 60000
-  }
+  store: expressStore // ,
+  // cookie: { maxAge: 60000 }
+
 }));
 app.use(_express.default.static(_path.default.join(__dirname, '..', 'public')));
 app.engine('html', require('ejs').renderFile);

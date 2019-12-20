@@ -7,6 +7,10 @@ exports.default = void 0;
 
 var _User = _interopRequireDefault(require("../models/User"));
 
+var _Group = _interopRequireDefault(require("../models/Group"));
+
+var _mongoose = _interopRequireDefault(require("mongoose"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class UserDetailService {
@@ -113,6 +117,106 @@ class UserDetailService {
         };
       }
     }
+  } // async getUserGroups(currentUser){
+  //     const {_id:userID} = currentUser
+  //     const _result = await GroupModel.findOne({_id:userID})
+  // }
+
+
+  async getUserGroups(currentUser) {
+    const {
+      _id: userID
+    } = currentUser;
+
+    const _result = await _Group.default.find({
+      members: currentUser._id
+    });
+
+    if (!_result) {
+      return {
+        success: false,
+        error: {
+          message: 'No Groups found !'
+        }
+      };
+    } else {
+      let obj = _result;
+      return {
+        success: true,
+        error: {},
+        data: {
+          obj
+        }
+      };
+    }
+  }
+
+  async getAdminGroups(currentUser) {
+    const {
+      _id: userID
+    } = currentUser;
+
+    const _result = await _Group.default.find({
+      admins: currentUser._id
+    });
+
+    if (!_result) {
+      return {
+        success: false,
+        error: {
+          message: 'No Groups found !'
+        }
+      };
+    } else {
+      let obj = _result;
+      return {
+        success: true,
+        error: {},
+        data: {
+          obj
+        }
+      };
+    }
+  }
+
+  async createGroup(currentUser, groupDetailObj) {
+    /*
+    * Get current user , group details
+    * Fetch all groups of existing user (Re-usable)
+    * Compare new details with existing data
+    * if found --> error
+    * else --> add
+    * */
+    const temp = await this.getAdminGroups(currentUser);
+    const groups = temp.data.obj;
+
+    for (let i = 0; i < groups.length; i++) {
+      if (groups[i].name === groupDetailObj.name) {
+        return {
+          success: false,
+          error: {
+            message: 'A group with same name already exists !'
+          }
+        };
+      }
+    }
+
+    let membersArr = [];
+    groupDetailObj.members.forEach(e => {
+      membersArr.push(_mongoose.default.Types.ObjectId(e));
+    });
+    membersArr.push(_mongoose.default.Types.ObjectId(currentUser._id));
+    const newGroup = new _Group.default({
+      name: groupDetailObj.name,
+      admins: [currentUser._id],
+      members: membersArr
+    });
+    await newGroup.save();
+    return {
+      success: true,
+      error: {},
+      data: {}
+    };
   }
 
 }

@@ -32,9 +32,29 @@ const updateUserContact = async (req, res) => {
   return res.send(response);
 };
 
+const getUserGroups = async (req, res) => {
+  const {
+    user
+  } = req.session;
+  const response = await _userDetailService.getUserGroups(user);
+  console.log(response);
+  return res.send(response);
+};
+
+const createGroup = async (req, res) => {
+  const {
+    user
+  } = req.session;
+  const groupDetailObj = req.body;
+  const response = await _userDetailService.createGroup(user, groupDetailObj);
+  return res.send(response);
+};
+
 let userController = {
   dashboard,
   getUserContacts,
-  updateUserContact
+  updateUserContact,
+  getUserGroups,
+  createGroup
 };
 exports.userController = userController;
