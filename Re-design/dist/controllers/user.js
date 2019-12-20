@@ -48,7 +48,6 @@ const getUserGroups = async (req, res) => {
     user
   } = req.session;
   const response = await _userDetailService.getUserGroups(user);
-  console.log(response);
   return res.send(response);
 };
 
@@ -57,7 +56,6 @@ const getAdminGroups = async (req, res) => {
     user
   } = req.session;
   const response = await _userDetailService.getAdminGroups(user);
-  console.log(response);
   return res.send(response);
 };
 

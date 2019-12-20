@@ -9,7 +9,6 @@ const postLogin = async (req, res) => {
     }else{
         req.session.isLoggedIn = true
         req.session.user = response.data.user
-        console.log(req.session.user)
         return res.redirect('/dashboard')
     }
 }

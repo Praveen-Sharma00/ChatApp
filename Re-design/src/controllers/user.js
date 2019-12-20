@@ -29,13 +29,11 @@ const updateUserContact = async (req, res) => {
 const getUserGroups = async (req, res) => {
     const {user} = req.session
     const response = await _userDetailService.getUserGroups(user)
-    console.log(response)
     return res.send(response)
 }
 const getAdminGroups = async (req, res) => {
     const {user} = req.session
     const response = await _userDetailService.getAdminGroups(user)
-    console.log(response)
     return res.send(response)
 }
 const createGroup = async (req, res) => {

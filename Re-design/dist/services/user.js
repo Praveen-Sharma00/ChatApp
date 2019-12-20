@@ -45,9 +45,7 @@ class UserDetailService {
   async findContact(currentUser, email) {
     const _all = await this.getUserContacts(currentUser);
 
-    const _result = _all.data.contacts.find(e => e.email == email); // console.log(_all.data.contacts.find(e=>e.email==="amit@gmail.com"))
-    // console.log(_result)
-
+    const _result = _all.data.contacts.find(e => e.email == email);
 
     if (!_result) {
       return {
@@ -117,11 +115,7 @@ class UserDetailService {
         };
       }
     }
-  } // async getUserGroups(currentUser){
-  //     const {_id:userID} = currentUser
-  //     const _result = await GroupModel.findOne({_id:userID})
-  // }
-
+  }
 
   async getUserGroups(currentUser) {
     const {

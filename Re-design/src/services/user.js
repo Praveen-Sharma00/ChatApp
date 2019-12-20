@@ -20,8 +20,6 @@ export default class UserDetailService {
 
         const _all = await this.getUserContacts(currentUser)
         const _result = _all.data.contacts.find(e => e.email == email)
-        // console.log(_all.data.contacts.find(e=>e.email==="amit@gmail.com"))
-        // console.log(_result)
         if (!_result) {
             return ({success: false, error: {message: 'No such contact!'}})
         } else {
@@ -55,10 +53,6 @@ export default class UserDetailService {
         }
     }
 
-    // async getUserGroups(currentUser){
-    //     const {_id:userID} = currentUser
-    //     const _result = await GroupModel.findOne({_id:userID})
-    // }
     async getUserGroups(currentUser) {
         const {_id: userID} = currentUser
         const _result = await GroupModel.find({members: currentUser._id})
