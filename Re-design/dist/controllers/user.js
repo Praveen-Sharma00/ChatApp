@@ -68,6 +68,45 @@ const createGroup = async (req, res) => {
   return res.send(response);
 };
 
+const getConversationBetweenUsers = async (req, res) => {
+  const {
+    user
+  } = req.session;
+  const currentUserId = user._id;
+  const secondUserId = req.params.secondUserId;
+  const response = await _userDetailService.getConversationBetweenUsers(currentUserId, secondUserId);
+  console.log(response);
+  return res.send(response);
+};
+
+const getGroupConversations = async (req, res) => {
+  const id = req.params.groupId;
+  const response = await _userDetailService.getGroupConversations(id);
+  return res.send(response);
+};
+
+const updateIndividualConversation = async (req, res) => {
+  const {
+    user
+  } = req.session;
+  const receiverId = req.params.secondUserId;
+  const text = req.body.text.trim();
+  const response = await _userDetailService.updateIndividualConversation(user._id, receiverId, text);
+  return res.send(response);
+};
+
+const updateGroupConversation = async (req, res) => {
+  const {
+    user
+  } = req.session;
+  const {
+    text
+  } = req.body;
+  const groupId = req.params.groupId;
+  const response = await _userDetailService.updateGroupConversation(user._id, groupId, text);
+  return res.send(response);
+};
+
 let userController = {
   dashboard,
   chat,
@@ -76,6 +115,10 @@ let userController = {
   updateUserContact,
   getUserGroups,
   createGroup,
-  getAdminGroups
+  getAdminGroups,
+  getConversationBetweenUsers,
+  getGroupConversations,
+  updateGroupConversation,
+  updateIndividualConversation
 };
 exports.userController = userController;

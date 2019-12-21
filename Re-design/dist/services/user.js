@@ -9,9 +9,13 @@ var _User = _interopRequireDefault(require("../models/User"));
 
 var _Group = _interopRequireDefault(require("../models/Group"));
 
+var _Conversation = _interopRequireDefault(require("../models/Conversation"));
+
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const moment = require('moment');
 
 class UserDetailService {
   async getUserContacts(currentUser) {
@@ -204,6 +208,180 @@ class UserDetailService {
       error: {},
       data: {}
     };
+  }
+
+  async getConversationBetweenUsers(currentUserId, secondUserId) {
+    if (secondUserId === null || secondUserId === "") {
+      return {
+        success: false,
+        error: {
+          message: 'Invalid req params !'
+        }
+      };
+    }
+
+    let a = currentUserId;
+    let b = secondUserId;
+
+    if (currentUserId > secondUserId) {
+      [a, b] = [b, a];
+    }
+
+    const _result = await _Conversation.default.findOne({
+      between_users: [_mongoose.default.Types.ObjectId(a), _mongoose.default.Types.ObjectId(b)],
+      conversation_type: 1
+    });
+
+    console.log(_result);
+
+    if (_result === null || _result.length === 0) {
+      return {
+        success: false,
+        error: {
+          message: 'No Conversations so far !'
+        }
+      };
+    } else {
+      let messages = _result.messages;
+      return {
+        success: true,
+        error: {},
+        data: {
+          messages
+        }
+      };
+    }
+  }
+
+  async updateIndividualConversation(senderId, receiverID, text) {
+    const user = await _User.default.findOne({
+      _id: _mongoose.default.Types.ObjectId(senderId)
+    }); // console.log(result)
+
+    let a = senderId,
+        b = receiverID;
+
+    if (a > b) {
+      [a, b] = [b, a];
+    }
+
+    const conversation = await _Conversation.default.findOne({
+      between_users: [_mongoose.default.Types.ObjectId(a), _mongoose.default.Types.ObjectId(b)]
+    });
+
+    if (!conversation) {
+      const newConversation = new _Conversation.default({
+        between_users: [_mongoose.default.Types.ObjectId(a), _mongoose.default.Types.ObjectId(b)],
+        conversation_type: 1,
+        messages: [{
+          text: text,
+          sender: {
+            id: _mongoose.default.Types.ObjectId(user._id),
+            name: user.name
+          },
+          timestamp: moment().format('MMMM Do YYYY, h:mm A').toString()
+        }]
+      });
+      await newConversation.save();
+    } else {
+      const existingConversation = await _Conversation.default.findOne({
+        between_users: [a, b]
+      });
+      existingConversation.messages.push({
+        text: text,
+        sender: {
+          id: _mongoose.default.Types.ObjectId(user._id),
+          name: user.name
+        },
+        timestamp: moment().format('MMMM Do YYYY, h:mm A').toString()
+      });
+      await existingConversation.save();
+    }
+
+    return {
+      success: true,
+      error: {},
+      data: {}
+    };
+  }
+
+  async updateGroupConversation(senderId, groupId, text) {
+    const user = await _User.default.findOne({
+      _id: _mongoose.default.Types.ObjectId(senderId)
+    });
+    const conversation = await _Conversation.default.findOne({
+      group_id: _mongoose.default.Types.ObjectId(groupId)
+    });
+
+    if (!conversation) {
+      const newConversation = new _Conversation.default({
+        between_users: [],
+        group_id: _mongoose.default.Types.ObjectId(groupId),
+        conversation_type: 2,
+        messages: [{
+          text: text,
+          sender: {
+            id: _mongoose.default.Types.ObjectId(user._id),
+            name: user.name
+          },
+          timestamp: moment().format('MMMM Do YYYY, h:mm A').toString()
+        }]
+      });
+      await newConversation.save();
+    } else {
+      const existingConversation = await _Conversation.default.findOne({
+        group_id: _mongoose.default.Types.ObjectId(groupId)
+      });
+      existingConversation.messages.push({
+        text: text,
+        sender: {
+          id: _mongoose.default.Types.ObjectId(user._id),
+          name: user.name
+        },
+        timestamp: moment().format('MMMM Do YYYY, h:mm A').toString()
+      });
+      await existingConversation.save();
+    }
+
+    return {
+      success: true,
+      error: {},
+      data: {}
+    };
+  }
+
+  async getGroupConversations(groupId) {
+    if (groupId === null || groupId === "") {
+      return {
+        success: false,
+        error: {
+          message: 'Invalid req params !'
+        }
+      };
+    }
+
+    const _result = await _Conversation.default.findOne({
+      group_id: _mongoose.default.Types.ObjectId(groupId),
+      conversation_type: 2
+    }).select('messages');
+
+    if (!_result || _result.length === 0) {
+      return {
+        success: false,
+        error: {
+          message: 'No Conversations so far !'
+        }
+      };
+    } else {
+      let messages = _result.messages;
+      return {
+        success: true,
+        error: {},
+        data: {
+          messages
+        }
+      };
+    }
   }
 
 }

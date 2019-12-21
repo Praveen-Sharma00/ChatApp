@@ -4,7 +4,13 @@ var _app = _interopRequireDefault(require("./app"));
 
 var _http = _interopRequireDefault(require("http"));
 
+var _mongoose = _interopRequireDefault(require("mongoose"));
+
+var _user = _interopRequireDefault(require("./services/user"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const _userDetailService = new _user.default();
 
 const server = _http.default.createServer(_app.default);
 
@@ -28,7 +34,7 @@ io.on('connection', function (socket) {
 
     socket.join(roomName);
   });
-  socket.on('new_msg', metadata => {
+  socket.on('new_msg', async metadata => {
     let _room;
 
     let a = metadata.sender._id;
@@ -39,6 +45,14 @@ io.on('connection', function (socket) {
       _room = a + "," + b;
     } else {
       _room = b + "";
+    }
+
+    let res;
+
+    if (metadata.type === "individual") {
+      res = await _userDetailService.updateIndividualConversation(metadata.sender._id, metadata.receiver, metadata.text);
+    } else if (metadata.type === "group") {
+      res = await _userDetailService.updateGroupConversation(metadata.sender._id, metadata.receiver, metadata.text);
     }
 
     socket.broadcast.to(_room).emit('new_msg', {

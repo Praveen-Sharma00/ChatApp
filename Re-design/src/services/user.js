@@ -3,7 +3,7 @@ import GroupModel from "../models/Group";
 import ConversationModel from "../models/Conversation";
 
 import mongoose from 'mongoose'
-import Conversation from "../../../Bad-Design/src/models/Conversation";
+
 
 const moment = require('moment')
 
@@ -102,20 +102,21 @@ export default class UserDetailService {
         return ({success: true, error: {}, data: {}})
     }
 
-    async getConversationBetweenUsers(currentUser, secondUserId) {
+    async getConversationBetweenUsers(currentUserId, secondUserId) {
         if (secondUserId === null || secondUserId === "") {
             return ({success: false, error: {message: 'Invalid req params !'}})
         }
-        const {_id: userID} = currentUser
-        let a = currentUser._id, b = secondUserId;
-        if (currentUser._id > secondUserId) {
+        let a = currentUserId
+        let b = secondUserId
+        if (currentUserId > secondUserId) {
             [a, b] = [b, a]
         }
         const _result = await ConversationModel.findOne({
-            between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)],
+            between_users: [mongoose.Types.ObjectId(a),mongoose.Types.ObjectId(b)],
             conversation_type: 1
-        }).select('messages')
-        if (!_result || _result.length === 0) {
+        })
+        console.log(_result)
+        if (_result===null || _result.length === 0) {
             return ({success: false, error: {message: 'No Conversations so far !'}})
         } else {
             let messages = _result.messages
@@ -124,7 +125,8 @@ export default class UserDetailService {
     }
 
     async updateIndividualConversation(senderId, receiverID, text) {
-        const {name = senderName} = await UserModel.findOne({_id: mongoose.Types.ObjectId(senderId)})
+        const user = await UserModel.findOne({_id: mongoose.Types.ObjectId(senderId)})
+        // console.log(result)
         let a = senderId, b = receiverID;
         if (a > b) {
             [a, b] = [b, a]
@@ -137,8 +139,8 @@ export default class UserDetailService {
                 messages: [{
                     text: text,
                     sender: {
-                        id: mongoose.Types.ObjectId(senderId),
-                        name: senderName
+                        id: mongoose.Types.ObjectId(user._id),
+                        name: user.name
                     },
                     timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
                 }]
@@ -151,8 +153,8 @@ export default class UserDetailService {
             existingConversation.messages.push({
                 text: text,
                 sender: {
-                    id: mongoose.Types.ObjectId(senderId),
-                    name: senderName
+                    id: mongoose.Types.ObjectId(user._id),
+                    name: user.name
                 },
                 timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
             })
@@ -161,17 +163,20 @@ export default class UserDetailService {
         return ({success: true, error: {}, data: {}})
     }
 
-    async updateGroupConversation(sender, groupId, text) {
+    async updateGroupConversation(senderId, groupId, text) {
+        const user = await UserModel.findOne({_id: mongoose.Types.ObjectId(senderId)})
+
         const conversation = await ConversationModel.findOne({group_id: mongoose.Types.ObjectId(groupId)})
         if (!conversation) {
             const newConversation = new ConversationModel({
                 between_users: [],
+                group_id:mongoose.Types.ObjectId(groupId),
                 conversation_type: 2,
                 messages: [{
                     text: text,
                     sender: {
-                        id: mongoose.Types.ObjectId(sender._id),
-                        name: sender.name
+                        id: mongoose.Types.ObjectId(user._id),
+                        name: user.name
                     },
                     timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
                 }]
@@ -184,8 +189,8 @@ export default class UserDetailService {
             existingConversation.messages.push({
                 text: text,
                 sender: {
-                    id: mongoose.Types.ObjectId(sender._id),
-                    name: sender.name
+                    id: mongoose.Types.ObjectId(user._id),
+                    name: user.name
                 },
                 timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
             })

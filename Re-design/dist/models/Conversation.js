@@ -5,13 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
+const mongoose = require('mongoose');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const conversationSchema = new _mongoose.default.Schema({
-  between_users: [_mongoose.default.Schema.Types.ObjectId],
-  group_id: _mongoose.default.Schema.Types.ObjectId,
+const conversationSchema = new mongoose.Schema({
+  between_users: [mongoose.Schema.Types.ObjectId],
+  group_id: mongoose.Schema.Types.ObjectId,
   conversation_type: {
     type: Number
   },
@@ -19,7 +17,7 @@ const conversationSchema = new _mongoose.default.Schema({
     text: String,
     sender: {
       id: {
-        type: _mongoose.default.Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId
       },
       name: String
     },
@@ -43,7 +41,6 @@ const conversationSchema = new _mongoose.default.Schema({
 //     return conversations
 // }
 
-const ConversationModel = _mongoose.default.model('Conversation', conversationSchema);
-
+const ConversationModel = mongoose.model('Conversation', conversationSchema);
 var _default = ConversationModel;
 exports.default = _default;

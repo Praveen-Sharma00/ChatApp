@@ -1,6 +1,9 @@
 import app from './app'
 import http from 'http'
+import mongoose from 'mongoose'
+import UserDetailService from "./services/user";
 
+const _userDetailService = new UserDetailService()
 const server = http.createServer(app)
 const socketio = require('socket.io')
 const io = socketio(server)
@@ -22,7 +25,7 @@ io.on('connection',function (socket) {
         }
         socket.join(roomName)
     })
-    socket.on('new_msg',(metadata)=>{
+    socket.on('new_msg',async (metadata)=>{
         let _room;
         let a=metadata.sender._id
         let b=metadata.receiver
@@ -32,6 +35,12 @@ io.on('connection',function (socket) {
             _room=a+","+b
         }else{
             _room=b+""
+        }
+        let res;
+        if(metadata.type === "individual"){
+            res = await _userDetailService.updateIndividualConversation(metadata.sender._id,metadata.receiver,metadata.text)
+        }else if(metadata.type === "group"){
+            res = await _userDetailService.updateGroupConversation(metadata.sender._id,metadata.receiver,metadata.text)
         }
         socket.broadcast.to(_room).emit('new_msg',{text:metadata.text})
     })
