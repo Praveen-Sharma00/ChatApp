@@ -46,6 +46,54 @@ class UserDetailService {
     }
   }
 
+  async getGroupUserDetails(groupId) {
+    const obj = await _Group.default.findOne({
+      _id: groupId
+    });
+    console.log(obj);
+    const membersArr = [];
+    const {
+      members
+    } = obj;
+
+    if (members.length === 0) {
+      return {
+        success: false,
+        error: {
+          message: 'No Group members !'
+        }
+      };
+    } // members.forEach(async(e) => {
+    //     let _result = await UserModel.findOne({
+    //         _id: mongoose.Types.ObjectId(e)
+    //     })
+    //     console.log(_result)
+    //     membersArr.push(_result)
+    // })
+
+
+    for (let i = 0; i < members.length; i++) {
+      //    UserModel.findOne({
+      //       _id:mongoose.Types.ObjectId(members[i])
+      //   }).select('_id name email').then((result)=>{
+      //       membersArr.push(result)
+      //   })
+      const result = await _User.default.findOne({
+        _id: members[i]
+      }).select('-password');
+      membersArr.push(result);
+    } // console.log(membersArr)
+
+
+    return {
+      success: true,
+      error: {},
+      data: {
+        membersArr
+      }
+    };
+  }
+
   async findContact(currentUser, email) {
     const _all = await this.getUserContacts(currentUser);
 
@@ -175,6 +223,37 @@ class UserDetailService {
         }
       };
     }
+  }
+
+  async getGroupMembers(groupId) {
+    if (groupId === null || groupId === "") {
+      return {
+        success: false,
+        error: {
+          message: 'Invalid route params !'
+        }
+      };
+    }
+
+    const response = await getGroupUserDetails(groupId);
+    const members = response.data.membersArr;
+
+    if (members.length === 0) {
+      return {
+        success: false,
+        error: {
+          message: response.error.message
+        }
+      };
+    }
+
+    return {
+      success: true,
+      error: {},
+      data: {
+        members
+      }
+    };
   }
 
   async createGroup(currentUser, groupDetailObj) {

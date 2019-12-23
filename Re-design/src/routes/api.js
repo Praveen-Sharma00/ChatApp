@@ -1,7 +1,7 @@
 import express from 'express'
 
-import {userController} from "../controllers/user";
-import {checkSession} from '../middlewares/auth'
+import { userController } from "../controllers/user";
+import { checkSession } from '../middlewares/auth'
 
 const api = express.Router()
 api
@@ -16,6 +16,10 @@ api
     .route('/user/groups')
     .get(userController.getUserGroups)
     .post(checkSession, userController.createGroup)
+api
+    .route('/user/group/:groupId')
+    .get(userController.getGroupMembers)
+    // .post(checkSession, userController.createGroup)
 
 api
     .route('/user/chats/:secondUserId')

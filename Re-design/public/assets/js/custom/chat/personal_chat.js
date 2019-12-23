@@ -49,9 +49,7 @@ var socket;
             })
         }
     }
-    tell= (id)=>{
-        alert(id)
-    }
+   
     
     startConversation = async (id) => {
         $("li#"+id).addClass("active").siblings().removeClass("active")
@@ -114,6 +112,8 @@ var socket;
         }
         conversationType = "group"
     }
+
+
     $(".tab-btn").click(function(e){
         $(this).addClass("active-tab").siblings().removeClass("active-tab")
     })
@@ -125,8 +125,11 @@ var socket;
     loadGroupData = async () => {
         await populateBasicGroupData()
     }
-
-
+    tell= async (id)=>{
+       const response = await _user.getMembersOfGroup(id)
+       console.log(response)
+    }
+    
     newMessage = () => {
 
         message = $(".message-input input").val()

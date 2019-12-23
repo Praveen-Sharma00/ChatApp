@@ -59,6 +59,12 @@ const getAdminGroups = async (req, res) => {
   return res.send(response);
 };
 
+const getGroupMembers = async (req, res) => {
+  const groupId = req.params.groupId;
+  const response = await _userDetailService.getGroupUserDetails(groupId);
+  return res.send(response);
+};
+
 const createGroup = async (req, res) => {
   const {
     user
@@ -116,6 +122,7 @@ let userController = {
   getUserGroups,
   createGroup,
   getAdminGroups,
+  getGroupMembers,
   getConversationBetweenUsers,
   getGroupConversations,
   updateGroupConversation,
