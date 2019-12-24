@@ -41,6 +41,7 @@ const getAdminGroups = async (req, res) => {
     return res.send(response)
 }
 const getGroupMembers = async(req,res)=>{
+    console.log(req.params)
     const groupId=req.params.groupId
     const response = await _userDetailService.getGroupUserDetails(groupId)
     return res.send(response)

@@ -30,21 +30,9 @@ export default class UserDetailService {
         if (members.length === 0) {
             return ({ success: false, error: { message: 'No Group members !' } })
         }
-        // members.forEach(async(e) => {
-        //     let _result = await UserModel.findOne({
-        //         _id: mongoose.Types.ObjectId(e)
-        //     })
-        //     console.log(_result)
-        //     membersArr.push(_result)
-        // })
         for (let i=0;i<members.length;i++){
-        //    UserModel.findOne({
-        //       _id:mongoose.Types.ObjectId(members[i])
-        //   }).select('_id name email').then((result)=>{
-        //       membersArr.push(result)
-        //   })
             const result = await UserModel.findOne({
-                _id:members[i]
+                _id:members[i]._id
             }).select('-password -contacts')
             membersArr.push(result)
 
@@ -91,7 +79,9 @@ export default class UserDetailService {
 
     async getUserGroups(currentUser) {
         const { _id: userID } = currentUser
-        const _result = await GroupModel.find({ members: currentUser._id })
+
+        const _result = await GroupModel.aggregate([{$unwind: "$members"}, {$match:{"members._id" : currentUser._id}}] )
+        console.log(_result)
         if (!_result) {
             return ({ success: false, error: { message: 'No Groups found !' } })
         } else {
@@ -114,7 +104,7 @@ export default class UserDetailService {
         if (groupId === null || groupId === "") {
             return ({ success: false, error: { message: 'Invalid route params !' } })
         }
-        const response = await getGroupUserDetails(groupId)
+        const response = await this.getGroupUserDetails(groupId)
         const members = response.data.membersArr
         if (members.length === 0) {
             return ({ success: false, error: { message: response.error.message } })
@@ -129,11 +119,21 @@ export default class UserDetailService {
                 return ({ success: false, error: { message: 'A group with same name already exists !' } })
             }
         }
+        // console.log(groupDetailObj)
         let membersArr = [];
         groupDetailObj.members.forEach((e) => {
-            membersArr.push(mongoose.Types.ObjectId(e))
+            membersArr.push({
+                _id:mongoose.Types.ObjectId(e),
+                isAdmin:false,
+                permissions:[]
+            })
         })
-        membersArr.push(mongoose.Types.ObjectId(currentUser._id))
+        membersArr.push({
+            _id:mongoose.Types.ObjectId(currentUser._id),
+            isAdmin:true,
+            permissions: []
+        })
+        console.log(membersArr)
         const newGroup = new GroupModel({
             name: groupDetailObj.name,
             admins: [currentUser._id],

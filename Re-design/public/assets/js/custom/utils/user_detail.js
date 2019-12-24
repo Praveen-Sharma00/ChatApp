@@ -65,7 +65,12 @@ class UserData {
     }
 
     async getMembersOfGroup(groupId){
+        console.log(groupId)
         const response = await this.doGetRequest('http://localhost:3000/api/v1/user/group/'+groupId)
+        return response
+    }
+    async getAdminGroups(){
+        const response = await this.doGetRequest('http://localhost:3000/api/v1/admin/groups')
         return response
     }
     
