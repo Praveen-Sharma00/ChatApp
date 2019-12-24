@@ -31,6 +31,7 @@ const populateGroupList = async () => {
 }
 const populateDataTable = async (groupId) => {
     let listTableBody = document.getElementById("member-list")
+    listTableBody.innerHTML=""
     listTableBody.innerHTML+=await generateGroupMemberListTable(groupId)
 }
 (async () => {
