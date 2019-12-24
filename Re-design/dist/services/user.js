@@ -80,7 +80,7 @@ class UserDetailService {
       //   })
       const result = await _User.default.findOne({
         _id: members[i]
-      }).select('-password');
+      }).select('-password -contacts');
       membersArr.push(result);
     } // console.log(membersArr)
 

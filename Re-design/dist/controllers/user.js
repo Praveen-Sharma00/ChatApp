@@ -19,6 +19,10 @@ const chat = async (req, res) => {
   res.render('chat/chat');
 };
 
+const configurePage = async (req, res) => {
+  res.render('settings');
+};
+
 const getCurrentUser = async (req, res) => {
   const {
     user
@@ -116,6 +120,7 @@ const updateGroupConversation = async (req, res) => {
 let userController = {
   dashboard,
   chat,
+  configurePage,
   getCurrentUser,
   getUserContacts,
   updateUserContact,

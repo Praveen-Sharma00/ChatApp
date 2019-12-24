@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= user.name %></title>
+    <!-- MDB icon -->
+    <link rel="icon" href="../assets/img/mdb-favicon.ico" type="image/x-icon">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="../assets/css/mdb.min.css">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="../assets/css/bootstrap-multiselect.css" rel="stylesheet">
+    <script src="../assets/js/custom/utils/user_detail.js"></script>
+</head>
+<body>
+<!--Navbar -->
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark  primary-color">
+    <a class="navbar-brand " href="#">Ping.io</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+            aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/dashboard">Home
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+        </ul>
+        <form method="POST" class="ml-auto" action="/logout">
+            <button type="button" class="col-sm-12 btn btn-light">Logout</button>
+        </form>
+
+    </div>
+</nav>
+<!--/.Navbar -->
+
+<!--Container-->
+<div class="container mt-5">
+
+</div>
+<!--/.Container-->
+
+<!-- jQuery -->
+<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="../assets/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="../assets/js/mdb.min.js"></script>
+<script src="../assets/js/bootstrap-multiselect.js"></script>
+<script src="../assets/js/custom/dashboard.js"></script>
+
+</body>
+</html>

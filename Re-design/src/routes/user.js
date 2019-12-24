@@ -9,6 +9,10 @@ router
     .route('/dashboard')
     .get(checkSession, userController.dashboard)
 router
+    .route('/dashboard/settings')
+    .get(checkSession, userController.configurePage)
+
+router
     .route('/chat')
     .get(checkSession, userController.chat)
 

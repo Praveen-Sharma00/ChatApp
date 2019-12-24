@@ -10,7 +10,9 @@ const dashboard = async (req, res) => {
 const chat = async (req, res) => {
     res.render('chat/chat')
 }
-
+const configurePage = async(req,res)=>{
+    res.render('settings')
+}
 const getCurrentUser = async (req, res) => {
     const {user} = req.session
     return res.send(user)
@@ -84,6 +86,7 @@ const updateGroupConversation = async (req,res)=>{
 export let userController = {
     dashboard,
     chat,
+    configurePage,
 
     getCurrentUser,
 
