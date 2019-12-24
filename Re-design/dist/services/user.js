@@ -50,7 +50,6 @@ class UserDetailService {
     const obj = await _Group.default.findOne({
       _id: groupId
     });
-    console.log(obj);
     const membersArr = [];
     const {
       members
@@ -63,28 +62,20 @@ class UserDetailService {
           message: 'No Group members !'
         }
       };
-    } // members.forEach(async(e) => {
-    //     let _result = await UserModel.findOne({
-    //         _id: mongoose.Types.ObjectId(e)
-    //     })
-    //     console.log(_result)
-    //     membersArr.push(_result)
-    // })
-
+    }
 
     for (let i = 0; i < members.length; i++) {
-      //    UserModel.findOne({
-      //       _id:mongoose.Types.ObjectId(members[i])
-      //   }).select('_id name email').then((result)=>{
-      //       membersArr.push(result)
-      //   })
-      const result = await _User.default.findOne({
-        _id: members[i]
-      }).select('-password -contacts');
+      let result = await _User.default.findOne({
+        _id: members[i]._id
+      }).select('-password -contacts'); // const newObj = {...result,isAdmin:members[i].isAdmin,permissions: members[i].permissions}
+
+      result = result.toObject();
+      result["isAdmin"] = members[i]["isAdmin"];
+      result["permissions"] = members[i]["permissions"];
       membersArr.push(result);
-    } // console.log(membersArr)
+    }
 
-
+    console.log(membersArr);
     return {
       success: true,
       error: {},
@@ -174,9 +165,15 @@ class UserDetailService {
       _id: userID
     } = currentUser;
 
-    const _result = await _Group.default.find({
-      members: currentUser._id
-    });
+    const _result = await _Group.default.aggregate([{
+      $unwind: "$members"
+    }, {
+      $match: {
+        "members._id": currentUser._id
+      }
+    }]);
+
+    console.log(_result);
 
     if (!_result) {
       return {
@@ -235,7 +232,7 @@ class UserDetailService {
       };
     }
 
-    const response = await getGroupUserDetails(groupId);
+    const response = await this.getGroupUserDetails(groupId);
     const members = response.data.membersArr;
 
     if (members.length === 0) {
@@ -269,13 +266,23 @@ class UserDetailService {
           }
         };
       }
-    }
+    } // console.log(groupDetailObj)
+
 
     let membersArr = [];
     groupDetailObj.members.forEach(e => {
-      membersArr.push(_mongoose.default.Types.ObjectId(e));
+      membersArr.push({
+        _id: _mongoose.default.Types.ObjectId(e),
+        isAdmin: false,
+        permissions: []
+      });
     });
-    membersArr.push(_mongoose.default.Types.ObjectId(currentUser._id));
+    membersArr.push({
+      _id: _mongoose.default.Types.ObjectId(currentUser._id),
+      isAdmin: true,
+      permissions: []
+    });
+    console.log(membersArr);
     const newGroup = new _Group.default({
       name: groupDetailObj.name,
       admins: [currentUser._id],

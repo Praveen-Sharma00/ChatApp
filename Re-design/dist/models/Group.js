@@ -14,7 +14,16 @@ const groupSchema = new _mongoose.default.Schema({
     type: String
   },
   members: [{
-    type: _mongoose.default.Schema.Types.ObjectId
+    _id: {
+      type: _mongoose.default.Schema.Types.ObjectId
+    },
+    isAdmin: {
+      type: Boolean
+    },
+    permissions: [{
+      type: String,
+      enum: ['ReadOnly', 'NoImageUpload']
+    }]
   }],
   admins: [{
     type: _mongoose.default.Schema.Types.ObjectId

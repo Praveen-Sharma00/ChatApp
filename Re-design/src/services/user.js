@@ -20,26 +20,33 @@ export default class UserDetailService {
             return ({ success: true, error: {}, data: { contacts } })
         }
     }
+
     async getGroupUserDetails(groupId) {
         const obj = await GroupModel.findOne({
             _id: groupId
         })
-        console.log(obj)
         const membersArr = []
         const { members } = obj
+
         if (members.length === 0) {
             return ({ success: false, error: { message: 'No Group members !' } })
         }
-        for (let i=0;i<members.length;i++){
-            const result = await UserModel.findOne({
-                _id:members[i]._id
+        for (let i = 0; i < members.length; i++) {
+            let result = await UserModel.findOne({
+                _id: members[i]._id
             }).select('-password -contacts')
-            membersArr.push(result)
 
+            // const newObj = {...result,isAdmin:members[i].isAdmin,permissions: members[i].permissions}
+            result = result.toObject()
+            result["isAdmin"] = members[i]["isAdmin"]
+            result["permissions"] = members[i]["permissions"]
+
+            membersArr.push(result)
         }
-        // console.log(membersArr)
+        console.log(membersArr)
         return ({ success: true, error: {}, data: { membersArr } })
     }
+
     async findContact(currentUser, email) {
 
         const _all = await this.getUserContacts(currentUser)
@@ -80,7 +87,7 @@ export default class UserDetailService {
     async getUserGroups(currentUser) {
         const { _id: userID } = currentUser
 
-        const _result = await GroupModel.aggregate([{$unwind: "$members"}, {$match:{"members._id" : currentUser._id}}] )
+        const _result = await GroupModel.aggregate([{ $unwind: "$members" }, { $match: { "members._id": currentUser._id } }])
         console.log(_result)
         if (!_result) {
             return ({ success: false, error: { message: 'No Groups found !' } })
@@ -100,6 +107,7 @@ export default class UserDetailService {
             return ({ success: true, error: {}, data: { obj } })
         }
     }
+
     async getGroupMembers(groupId) {
         if (groupId === null || groupId === "") {
             return ({ success: false, error: { message: 'Invalid route params !' } })
@@ -111,6 +119,7 @@ export default class UserDetailService {
         }
         return ({ success: true, error: {}, data: { members } })
     }
+
     async createGroup(currentUser, groupDetailObj) {
         const temp = await this.getAdminGroups(currentUser)
         const groups = temp.data.obj
@@ -123,14 +132,14 @@ export default class UserDetailService {
         let membersArr = [];
         groupDetailObj.members.forEach((e) => {
             membersArr.push({
-                _id:mongoose.Types.ObjectId(e),
-                isAdmin:false,
-                permissions:[]
+                _id: mongoose.Types.ObjectId(e),
+                isAdmin: false,
+                permissions: []
             })
         })
         membersArr.push({
-            _id:mongoose.Types.ObjectId(currentUser._id),
-            isAdmin:true,
+            _id: mongoose.Types.ObjectId(currentUser._id),
+            isAdmin: true,
             permissions: []
         })
         console.log(membersArr)

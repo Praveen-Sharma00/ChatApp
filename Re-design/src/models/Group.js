@@ -6,7 +6,9 @@ const groupSchema = new mongoose.Schema({
         type: String
     },
     members: [{
-        type: mongoose.Schema.Types.ObjectId
+        _id: { type: mongoose.Schema.Types.ObjectId },
+        isAdmin: { type: Boolean },
+        permissions: [{ type: String, enum: ['ReadOnly', 'NoImageUpload'] }]
     }],
     admins: [{
         type: mongoose.Schema.Types.ObjectId

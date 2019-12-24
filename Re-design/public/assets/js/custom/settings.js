@@ -7,16 +7,31 @@ const generateGroupList = async () => {
     })
     return str
 }
-const generateGroupMemberList = async (groupId) => {
+
+const generateGroupMemberListTable = async (groupId) => {
     const response = await _user.getMembersOfGroup(groupId)
-    console.log(response)
+    const members = response.data.members
+    let str=""
+    if(response.success){
+        members.forEach((e,i)=>{
+            str+='<tr>\n' +
+                ' <th scope="row">'+(i+1)+'</th>\n' +
+                ' <td>'+e.name+'</td>\n' +
+                ' <td>'+e.email+'</td>\n' +
+                ' <td>'+e.isAdmin+'</td>\n' +
+                ' <td>@mdo</td>\n' +
+                '</tr>'
+        })
+    }
+    return str
 }
 const populateGroupList = async () => {
     const list = document.getElementById('group_list')
     list.innerHTML += await generateGroupList()
 }
 const populateDataTable = async (groupId) => {
-    await generateGroupMemberList(groupId)
+    let listTableBody = document.getElementById("member-list")
+    listTableBody.innerHTML+=await generateGroupMemberListTable(groupId)
 }
 (async () => {
     await populateGroupList()

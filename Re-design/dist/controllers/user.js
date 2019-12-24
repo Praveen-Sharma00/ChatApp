@@ -64,10 +64,9 @@ const getAdminGroups = async (req, res) => {
 };
 
 const getGroupMembers = async (req, res) => {
-  console.log(req.params);
+  // console.log(req.params)
   const groupId = req.params.groupId;
-  console.log(groupId);
-  const response = await _userDetailService.getGroupUserDetails(groupId);
+  const response = await _userDetailService.getGroupMembers(groupId);
   return res.send(response);
 };
 
