@@ -7,7 +7,6 @@ const generateGroupList = async () => {
     })
     return str
 }
-
 const generateGroupMemberListTable = async (groupId) => {
     const response = await _user.getMembersOfGroup(groupId)
     const members = response.data.members
@@ -19,7 +18,7 @@ const generateGroupMemberListTable = async (groupId) => {
                 ' <td>'+e.name+'</td>\n' +
                 ' <td>'+e.email+'</td>\n' +
                 ' <td>'+e.isAdmin+'</td>\n' +
-                ' <td>@mdo</td>\n' +
+                ' <td><button class="btn-sm btn-primary"><i class="fas fa-shield-alt"></i>Make Admin</button></td>\n' +
                 '</tr>'
         })
     }
