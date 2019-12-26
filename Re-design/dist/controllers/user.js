@@ -128,8 +128,7 @@ const updatePermissions = async (req, res) => {
   const {
     permissions,
     userId
-  } = req.body;
-  console.log("-----------".groupId, permissions, userId); // console.log(groupId,"----",permissions)
+  } = req.body; // console.log(groupId,"----",permissions)
   // process.exit()
 
   const response = await _userDetailService.updatePermissions(user._id, groupId, userId, permissions);

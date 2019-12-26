@@ -288,26 +288,39 @@ export default class UserDetailService {
         const _r = permissions
 
         if(_r.includes("Admin")){
-            newAdmins.push(userId)
-            group.members.filter(m=>m._id == userId)[0].isAdmin = true
+            if(!newAdmins.includes(userId)){
+                group.members.filter(m=>m._id == userId)[0] .isAdmin = true
+                newAdmins.push(userId)
+            }
         }else if(_r.includes("~Admin")){
             const index=newAdmins.indexOf(userId)
-            newAdmins.splice(index,1)
-            group.members.find(m=>m._id == userId)[0].isAdmin = false
+            if(index>-1){
+                newAdmins.splice(index,1)
+            }
+
+            group.members.filter(m=>m._id == userId)[0].isAdmin = false
         }
 
         if(_r.includes("ReadOnly")){
-            newPermissions.push("ReadOnly")
+            if(!newPermissions.includes("ReadOnly"))
+                newPermissions.push("ReadOnly")
         }else if(_r.includes("~ReadOnly")){
             const index=newPermissions.indexOf("ReadOnly")
-            newPermissions.splice(index,1)
+            if(index>-1){
+                newPermissions.splice(index,1)
+            }
+
         }
 
         if(_r.includes("NoImageUpload")){
-            newPermissions.push("NoImageUpload")
+            if(!newPermissions.includes("NoImageUpload"))
+                newPermissions.push("NoImageUpload")
         }else if(_r.includes("~NoImageUpload")){
             const index=newPermissions.indexOf("NoImageUpload")
-            newPermissions.splice(index,1)
+            if(index>-1){
+                newPermissions.splice(index,1)
+            }
+
         }
 
         group.admins = newAdmins
