@@ -19,7 +19,7 @@ api
 api
     .route('/user/group/:groupId')
     .get(userController.getGroupMembers)
-    // .post(checkSession, userController.createGroup)
+    .post(checkSession, userController.updatePermissions)
 
 api
     .route('/user/chats/:secondUserId')

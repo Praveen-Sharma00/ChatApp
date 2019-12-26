@@ -468,6 +468,69 @@ class UserDetailService {
         }
       };
     }
+  } // async findGroup(groupId){
+  //     const _result = await GroupModel.findOne({
+  //         _id:mongoose.Types.ObjectId(groupId)
+  //     })
+  //     if(_result){
+  //         return ({success:false,error:{message:'No group found'}})
+  //     }
+  //     const groupObj = _result
+  //     return ({success:true,error:{},data:{groupObj}})
+  // }
+
+
+  async updatePermissions(currentUserId, groupId, userId, permissions) {
+    const group = await _Group.default.findOne({
+      _id: groupId
+    });
+    const isPresent = group.admins.includes(currentUserId);
+
+    if (!isPresent) {
+      return {
+        success: false,
+        error: {
+          message: "You\'re not authorized "
+        }
+      };
+    }
+
+    const newAdmins = group.admins;
+    const newPermissions = group.members.filter(m => m._id == userId)[0].permissions;
+    const _r = permissions;
+
+    if (_r.includes("Admin")) {
+      newAdmins.push(userId);
+      group.members.filter(m => m._id == userId)[0].isAdmin = true;
+    } else if (_r.includes("~Admin")) {
+      const index = newAdmins.indexOf(userId);
+      newAdmins.splice(index, 1);
+      group.members.find(m => m._id == userId)[0].isAdmin = false;
+    }
+
+    if (_r.includes("ReadOnly")) {
+      newPermissions.push("ReadOnly");
+    } else if (_r.includes("~ReadOnly")) {
+      const index = newPermissions.indexOf("ReadOnly");
+      newPermissions.splice(index, 1);
+    }
+
+    if (_r.includes("NoImageUpload")) {
+      newPermissions.push("NoImageUpload");
+    } else if (_r.includes("~NoImageUpload")) {
+      const index = newPermissions.indexOf("NoImageUpload");
+      newPermissions.splice(index, 1);
+    }
+
+    group.admins = newAdmins; // group.members.find((m)=>m._id === userId).permissions = newPermissions
+
+    group.members.filter(m => m._id == userId)[0].permissions = newPermissions;
+    await group.save();
+    return {
+      success: true,
+      error: {},
+      data: {}
+    };
   }
 
 }

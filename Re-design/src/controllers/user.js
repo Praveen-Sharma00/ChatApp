@@ -84,6 +84,17 @@ const updateGroupConversation = async (req,res)=>{
     const response = await _userDetailService.updateGroupConversation(user._id,groupId,text)
     return res.send(response)
 }
+const updatePermissions = async(req,res)=>{
+    const {user} = req.session
+    const {groupId}=req.params
+    const {permissions,userId} = req.body
+    console.log("-----------".groupId,permissions,userId)
+    // console.log(groupId,"----",permissions)
+    // process.exit()
+    const response = await _userDetailService.updatePermissions(user._id,groupId,userId,permissions)
+    return res.send(response)
+}
+
 export let userController = {
     dashboard,
     chat,
@@ -98,6 +109,7 @@ export let userController = {
     createGroup,
     getAdminGroups,
     getGroupMembers,
+    updatePermissions,
 
     getConversationBetweenUsers,
     getGroupConversations,

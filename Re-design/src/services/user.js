@@ -11,13 +11,13 @@ const moment = require('moment')
 export default class UserDetailService {
 
     async getUserContacts(currentUser) {
-        const { _id: userID } = currentUser
-        const _result = await UserModel.findOne({ _id: userID }).select('contacts')
+        const {_id: userID} = currentUser
+        const _result = await UserModel.findOne({_id: userID}).select('contacts')
         if (!_result) {
-            return ({ success: false, error: { message: 'No contacts!' } })
+            return ({success: false, error: {message: 'No contacts!'}})
         } else {
             let contacts = _result.contacts
-            return ({ success: true, error: {}, data: { contacts } })
+            return ({success: true, error: {}, data: {contacts}})
         }
     }
 
@@ -26,10 +26,10 @@ export default class UserDetailService {
             _id: groupId
         })
         const membersArr = []
-        const { members } = obj
+        const {members} = obj
 
         if (members.length === 0) {
-            return ({ success: false, error: { message: 'No Group members !' } })
+            return ({success: false, error: {message: 'No Group members !'}})
         }
         for (let i = 0; i < members.length; i++) {
             let result = await UserModel.findOne({
@@ -44,7 +44,7 @@ export default class UserDetailService {
             membersArr.push(result)
         }
         console.log(membersArr)
-        return ({ success: true, error: {}, data: { membersArr } })
+        return ({success: true, error: {}, data: {membersArr}})
     }
 
     async findContact(currentUser, email) {
@@ -52,21 +52,21 @@ export default class UserDetailService {
         const _all = await this.getUserContacts(currentUser)
         const _result = _all.data.contacts.find(e => e.email == email)
         if (!_result) {
-            return ({ success: false, error: { message: 'No such contact!' } })
+            return ({success: false, error: {message: 'No such contact!'}})
         } else {
             let contact = _result
-            return ({ success: true, error: {}, data: { contact } })
+            return ({success: true, error: {}, data: {contact}})
         }
     }
 
     async updateUserContact(currentUser, details) {
-        const { name, email } = details
+        const {name, email} = details
         if (email === currentUser.email) {
-            return ({ success: false, error: { message: 'You can\'t add yourself !' } })
+            return ({success: false, error: {message: 'You can\'t add yourself !'}})
         } else {
             const contactUser = await UserModel.findByCredentials(email)
             if (!contactUser) {
-                return ({ success: false, error: { message: 'The contact you\'re trying to add doesn\'t use this app!' } })
+                return ({success: false, error: {message: 'The contact you\'re trying to add doesn\'t use this app!'}})
             }
             const currentUserObj = await UserModel.findByCredentials(currentUser.email)
             const searchResult = await this.findContact(currentUser, email)
@@ -77,47 +77,47 @@ export default class UserDetailService {
                     email
                 })
                 await currentUserObj.save()
-                return ({ success: true, error: {}, data: {} })
+                return ({success: true, error: {}, data: {}})
             } else {
-                return ({ success: false, error: { message: 'Contact Already exists !' } })
+                return ({success: false, error: {message: 'Contact Already exists !'}})
             }
         }
     }
 
     async getUserGroups(currentUser) {
-        const { _id: userID } = currentUser
+        const {_id: userID} = currentUser
 
-        const _result = await GroupModel.aggregate([{ $unwind: "$members" }, { $match: { "members._id": currentUser._id } }])
+        const _result = await GroupModel.aggregate([{$unwind: "$members"}, {$match: {"members._id": currentUser._id}}])
         console.log(_result)
         if (!_result) {
-            return ({ success: false, error: { message: 'No Groups found !' } })
+            return ({success: false, error: {message: 'No Groups found !'}})
         } else {
             let obj = _result
-            return ({ success: true, error: {}, data: { obj } })
+            return ({success: true, error: {}, data: {obj}})
         }
     }
 
     async getAdminGroups(currentUser) {
-        const { _id: userID } = currentUser
-        const _result = await GroupModel.find({ admins: currentUser._id })
+        const {_id: userID} = currentUser
+        const _result = await GroupModel.find({admins: currentUser._id})
         if (!_result) {
-            return ({ success: false, error: { message: 'No Groups found !' } })
+            return ({success: false, error: {message: 'No Groups found !'}})
         } else {
             let obj = _result
-            return ({ success: true, error: {}, data: { obj } })
+            return ({success: true, error: {}, data: {obj}})
         }
     }
 
     async getGroupMembers(groupId) {
         if (groupId === null || groupId === "") {
-            return ({ success: false, error: { message: 'Invalid route params !' } })
+            return ({success: false, error: {message: 'Invalid route params !'}})
         }
         const response = await this.getGroupUserDetails(groupId)
         const members = response.data.membersArr
         if (members.length === 0) {
-            return ({ success: false, error: { message: response.error.message } })
+            return ({success: false, error: {message: response.error.message}})
         }
-        return ({ success: true, error: {}, data: { members } })
+        return ({success: true, error: {}, data: {members}})
     }
 
     async createGroup(currentUser, groupDetailObj) {
@@ -125,7 +125,7 @@ export default class UserDetailService {
         const groups = temp.data.obj
         for (let i = 0; i < groups.length; i++) {
             if (groups[i].name === groupDetailObj.name) {
-                return ({ success: false, error: { message: 'A group with same name already exists !' } })
+                return ({success: false, error: {message: 'A group with same name already exists !'}})
             }
         }
         // console.log(groupDetailObj)
@@ -149,12 +149,12 @@ export default class UserDetailService {
             members: membersArr
         })
         await newGroup.save()
-        return ({ success: true, error: {}, data: {} })
+        return ({success: true, error: {}, data: {}})
     }
 
     async getConversationBetweenUsers(currentUserId, secondUserId) {
         if (secondUserId === null || secondUserId === "") {
-            return ({ success: false, error: { message: 'Invalid req params !' } })
+            return ({success: false, error: {message: 'Invalid req params !'}})
         }
         let a = currentUserId
         let b = secondUserId
@@ -167,21 +167,21 @@ export default class UserDetailService {
         })
         console.log(_result)
         if (_result === null || _result.length === 0) {
-            return ({ success: false, error: { message: 'No Conversations so far !' } })
+            return ({success: false, error: {message: 'No Conversations so far !'}})
         } else {
             let messages = _result.messages
-            return ({ success: true, error: {}, data: { messages } })
+            return ({success: true, error: {}, data: {messages}})
         }
     }
 
     async updateIndividualConversation(senderId, receiverID, text) {
-        const user = await UserModel.findOne({ _id: mongoose.Types.ObjectId(senderId) })
+        const user = await UserModel.findOne({_id: mongoose.Types.ObjectId(senderId)})
         // console.log(result)
         let a = senderId, b = receiverID;
         if (a > b) {
             [a, b] = [b, a]
         }
-        const conversation = await ConversationModel.findOne({ between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)] })
+        const conversation = await ConversationModel.findOne({between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)]})
         if (!conversation) {
             const newConversation = new ConversationModel({
                 between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)],
@@ -210,13 +210,13 @@ export default class UserDetailService {
             })
             await existingConversation.save()
         }
-        return ({ success: true, error: {}, data: {} })
+        return ({success: true, error: {}, data: {}})
     }
 
     async updateGroupConversation(senderId, groupId, text) {
-        const user = await UserModel.findOne({ _id: mongoose.Types.ObjectId(senderId) })
+        const user = await UserModel.findOne({_id: mongoose.Types.ObjectId(senderId)})
 
-        const conversation = await ConversationModel.findOne({ group_id: mongoose.Types.ObjectId(groupId) })
+        const conversation = await ConversationModel.findOne({group_id: mongoose.Types.ObjectId(groupId)})
         if (!conversation) {
             const newConversation = new ConversationModel({
                 between_users: [],
@@ -246,22 +246,75 @@ export default class UserDetailService {
             })
             await existingConversation.save()
         }
-        return ({ success: true, error: {}, data: {} })
+        return ({success: true, error: {}, data: {}})
     }
 
     async getGroupConversations(groupId) {
         if (groupId === null || groupId === "") {
-            return ({ success: false, error: { message: 'Invalid req params !' } })
+            return ({success: false, error: {message: 'Invalid req params !'}})
         }
         const _result = await ConversationModel.findOne({
             group_id: mongoose.Types.ObjectId(groupId),
             conversation_type: 2
         }).select('messages')
         if (!_result || _result.length === 0) {
-            return ({ success: false, error: { message: 'No Conversations so far !' } })
+            return ({success: false, error: {message: 'No Conversations so far !'}})
         } else {
             let messages = _result.messages
-            return ({ success: true, error: {}, data: { messages } })
+            return ({success: true, error: {}, data: {messages}})
         }
+    }
+
+    // async findGroup(groupId){
+    //     const _result = await GroupModel.findOne({
+    //         _id:mongoose.Types.ObjectId(groupId)
+    //     })
+    //     if(_result){
+    //         return ({success:false,error:{message:'No group found'}})
+    //     }
+    //     const groupObj = _result
+    //     return ({success:true,error:{},data:{groupObj}})
+    // }
+
+    async updatePermissions(currentUserId, groupId, userId,permissions) {
+        const group = await GroupModel.findOne({_id:groupId})
+        const isPresent = group.admins.includes(currentUserId)
+        if (!isPresent) {
+            return ({success: false, error: {message: "You\'re not authorized "}})
+        }
+        const newAdmins=group.admins
+        const newPermissions=group.members.filter(m=>m._id==userId)[0].permissions
+
+        const _r = permissions
+
+        if(_r.includes("Admin")){
+            newAdmins.push(userId)
+            group.members.filter(m=>m._id == userId)[0].isAdmin = true
+        }else if(_r.includes("~Admin")){
+            const index=newAdmins.indexOf(userId)
+            newAdmins.splice(index,1)
+            group.members.find(m=>m._id == userId)[0].isAdmin = false
+        }
+
+        if(_r.includes("ReadOnly")){
+            newPermissions.push("ReadOnly")
+        }else if(_r.includes("~ReadOnly")){
+            const index=newPermissions.indexOf("ReadOnly")
+            newPermissions.splice(index,1)
+        }
+
+        if(_r.includes("NoImageUpload")){
+            newPermissions.push("NoImageUpload")
+        }else if(_r.includes("~NoImageUpload")){
+            const index=newPermissions.indexOf("NoImageUpload")
+            newPermissions.splice(index,1)
+        }
+
+        group.admins = newAdmins
+        // group.members.find((m)=>m._id === userId).permissions = newPermissions
+        group.members.filter((m)=>m._id == userId)[0].permissions = newPermissions
+
+        await group.save()
+        return ({success: true, error: {}, data: {}})
     }
 }
