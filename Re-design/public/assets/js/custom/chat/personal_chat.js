@@ -1,4 +1,3 @@
-
 var socket;
 (async () => {
     socket = io()
@@ -6,23 +5,23 @@ var socket;
     const currentUser = await _user.getCurrentUser()
     var conversationType;
     var receiverId;
-    $(".message-input").css("display","none")
-    $(".contact-profile").css("display","none")
+    $(".message-input").css("display", "none")
+    $(".contact-profile").css("display", "none")
     socket.emit('login', currentUser)
-    scrollToBottom=()=>{
-        $(".messages").animate({ scrollTop: $(".messages")[0].scrollHeight }, 0);
+    scrollToBottom = () => {
+        $(".messages").animate({scrollTop: $(".messages")[0].scrollHeight}, 0);
     }
     showConversation = async (type, id) => {
-        
+
         // $("li.contact").on('click', function (e) {
         //     $(this).addClass("active").siblings().removeClass("active")
         //     $("#tab-name").html($(this).attr("name"))
         // })
         const _r = await _user.getUserPermissions(id)
         console.log(_r)
-        if(_r.data.permissions["ReadOnly"] && type === "group")
+        if (_r.data.permissions["ReadOnly"] && type === "group")
             $(".message-input").hide()
-        else{
+        else {
             $(".message-input").show()
         }
 
@@ -42,7 +41,7 @@ var socket;
         } else {
             $(".edit").show()
             response = await _user.getGroupConversation(id)
-            $(".edit").attr("id",id)
+            $(".edit").attr("id", id)
         }
 
         if (!response.success) {
@@ -62,21 +61,21 @@ var socket;
             })
         }
     }
-   
-    
+
+
     startConversation = async (id) => {
-        $("li#"+id).addClass("active").siblings().removeClass("active")
-        $("#tab-name").html($("li#"+id).attr("name"))
-        
+        $("li#" + id).addClass("active").siblings().removeClass("active")
+        $("#tab-name").html($("li#" + id).attr("name"))
+
         receiverId = id
         await showConversation(conversationType, id)
-        socket.emit('join', { sender: currentUser, rec_id: id, type: conversationType })
+        socket.emit('join', {sender: currentUser, rec_id: id, type: conversationType})
     }
     const generateListHTML = (arr) => {
         let str = ""
         arr.forEach((e) => {
             str += ' <li class="contact " name="' + e.name + '" id="' + e._id + '" onclick="startConversation(this.id)">\n' +
-                '                    <div class="wrap" id="_'+e._id+'">\n' +
+                '                    <div class="wrap" id="_' + e._id + '">\n' +
                 // '                        <span class="contact-status online"></span>\n' +
                 '                        <img src="http://emilcarlsson.se/assets/louislitt.png" alt=""/>\n' +
                 '                        <div class="meta">\n' +
@@ -90,8 +89,8 @@ var socket;
     }
 
     const populateBasicUserData = async () => {
-        const { data } = await _user.getUserContacts()
-        const { contacts } = data
+        const {data} = await _user.getUserContacts()
+        const {contacts} = data
 
         let contact_list = document.getElementById("list")
         let user_name = document.getElementById("user_name")
@@ -105,12 +104,12 @@ var socket;
             contact_list.innerHTML = "<p class='text-center mt-5'>No contacts</p>"
         }
         conversationType = "individual"
-    
+
     }
-    
+
     const populateBasicGroupData = async () => {
         const response = await _user.getUserGroups()
-        const { obj } = response.data
+        const {obj} = response.data
 
         let group_list = document.getElementById("list")
         let user_name = document.getElementById("user_name")
@@ -127,7 +126,7 @@ var socket;
     }
 
 
-    $(".tab-btn").click(function(e){
+    $(".tab-btn").click(function (e) {
         $(this).addClass("active-tab").siblings().removeClass("active-tab")
     })
     await populateBasicUserData()
@@ -138,15 +137,15 @@ var socket;
     loadGroupData = async () => {
         await populateBasicGroupData()
     }
-    tell= async (id)=>{
-       const response = await _user.getMembersOfGroup(id)
-       console.log(response)
+    tell = async (id) => {
+        const response = await _user.getMembersOfGroup(id)
+        console.log(response)
     }
-    
+
     newMessage = () => {
 
         message = $(".message-input input").val()
-        socket.emit('new_msg', { sender: currentUser, receiver: receiverId, type: conversationType, text: message })
+        socket.emit('new_msg', {sender: currentUser, receiver: receiverId, type: conversationType, text: message})
         if ($.trim(message) === '') {
             return false;
         }

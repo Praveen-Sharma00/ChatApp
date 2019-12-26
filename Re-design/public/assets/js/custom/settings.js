@@ -100,11 +100,13 @@ const setPermission=async(userId)=>{
     }else{
         permissions.push("~NoImageUpload")
     }
+
     if(c){
         permissions.push("ReadOnly")
     }else{
         permissions.push("~ReadOnly")
     }
+
     console.log(permissions)
     const response=await _user.updatePermissions(currentGroupId,userId,permissions)
     console.log(response)
@@ -114,6 +116,7 @@ const setPermission=async(userId)=>{
         alert('Some error occurred')
     }
 }
+
 (async () => {
     await populateGroupList()
 })()

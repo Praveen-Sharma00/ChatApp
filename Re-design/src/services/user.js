@@ -276,76 +276,76 @@ export default class UserDetailService {
     //     return ({success:true,error:{},data:{groupObj}})
     // }
 
-    async updatePermissions(currentUserId, groupId, userId,permissions) {
-        const group = await GroupModel.findOne({_id:groupId})
+    async updatePermissions(currentUserId, groupId, userId, permissions) {
+        const group = await GroupModel.findOne({_id: groupId})
         const isPresent = group.admins.includes(currentUserId)
         if (!isPresent) {
             return ({success: false, error: {message: "You\'re not authorized "}})
         }
-        const newAdmins=group.admins
-        const newPermissions=group.members.filter(m=>m._id==userId)[0].permissions
+        const newAdmins = group.admins
+        const newPermissions = group.members.filter(m => m._id == userId)[0].permissions
 
         const _r = permissions
 
-        if(_r.includes("Admin")){
-            if(!newAdmins.includes(userId)){
-                group.members.filter(m=>m._id == userId)[0] .isAdmin = true
+        if (_r.includes("Admin")) {
+            if (!newAdmins.includes(userId)) {
+                group.members.filter(m => m._id == userId)[0].isAdmin = true
                 newAdmins.push(userId)
             }
-        }else if(_r.includes("~Admin")){
-            const index=newAdmins.indexOf(userId)
-            if(index>-1){
-                newAdmins.splice(index,1)
+        } else if (_r.includes("~Admin")) {
+            const index = newAdmins.indexOf(userId)
+            if (index > -1) {
+                newAdmins.splice(index, 1)
             }
 
-            group.members.filter(m=>m._id == userId)[0].isAdmin = false
+            group.members.filter(m => m._id == userId)[0].isAdmin = false
         }
 
-        if(_r.includes("ReadOnly")){
-            if(!newPermissions.includes("ReadOnly"))
+        if (_r.includes("ReadOnly")) {
+            if (!newPermissions.includes("ReadOnly"))
                 newPermissions.push("ReadOnly")
-        }else if(_r.includes("~ReadOnly")){
-            const index=newPermissions.indexOf("ReadOnly")
-            if(index>-1){
-                newPermissions.splice(index,1)
+        } else if (_r.includes("~ReadOnly")) {
+            const index = newPermissions.indexOf("ReadOnly")
+            if (index > -1) {
+                newPermissions.splice(index, 1)
             }
 
         }
 
-        if(_r.includes("NoImageUpload")){
-            if(!newPermissions.includes("NoImageUpload"))
+        if (_r.includes("NoImageUpload")) {
+            if (!newPermissions.includes("NoImageUpload"))
                 newPermissions.push("NoImageUpload")
-        }else if(_r.includes("~NoImageUpload")){
-            const index=newPermissions.indexOf("NoImageUpload")
-            if(index>-1){
-                newPermissions.splice(index,1)
+        } else if (_r.includes("~NoImageUpload")) {
+            const index = newPermissions.indexOf("NoImageUpload")
+            if (index > -1) {
+                newPermissions.splice(index, 1)
             }
 
         }
 
         group.admins = newAdmins
         // group.members.find((m)=>m._id === userId).permissions = newPermissions
-        group.members.filter((m)=>m._id == userId)[0].permissions = newPermissions
+        group.members.filter((m) => m._id == userId)[0].permissions = newPermissions
 
         await group.save()
         return ({success: true, error: {}, data: {}})
     }
 
-    async getUserPermissions(userId,groupId){
+    async getUserPermissions(userId, groupId) {
         let _result = await GroupModel.aggregate([{$unwind: "$members"}, {$match: {"members._id": userId}}])
 
-        let permissions ={}
-        permissions["isAdmin"]=_result[0].members.isAdmin
-        if(_result[0].members.permissions===undefined){
+        let permissions = {}
+        permissions["isAdmin"] = _result[0].members.isAdmin
+        if (_result[0].members.permissions === undefined) {
             console.log("HERE")
-            permissions["ReadOnly"]= false
-            permissions["NoImageUpload"]=false
-        }else{
-            console.log(".....",_result[0].members.permissions.includes("ReadOnly"))
-            permissions["ReadOnly"]= _result[0].members.permissions.includes("ReadOnly")
-            permissions["NoImageUpload"]=_result[0].members.permissions.includes("NoImageUpload")
+            permissions["ReadOnly"] = false
+            permissions["NoImageUpload"] = false
+        } else {
+            console.log(".....", _result[0].members.permissions.includes("ReadOnly"))
+            permissions["ReadOnly"] = _result[0].members.permissions.includes("ReadOnly")
+            permissions["NoImageUpload"] = _result[0].members.permissions.includes("NoImageUpload")
         }
 
-        return ({success:true,error:{},data:{permissions}})
+        return ({success: true, error: {}, data: {permissions}})
     }
 }

@@ -1,6 +1,7 @@
 class UserData {
     constructor() {
     }
+
     baseUrl = 'http://localhost:3000'
 
     async doGetRequest(url) {
@@ -79,17 +80,17 @@ class UserData {
         const response = await this.doGetRequest('/api/v1/admin/groups')
         return response
     }
-    async updatePermissions(groupId,userId,permissions){
-        const response = await this.doPostRequest('/api/v1/user/group/' + groupId,{
+
+    async updatePermissions(groupId, userId, permissions) {
+        const response = await this.doPostRequest('/api/v1/user/group/' + groupId, {
             permissions,
             userId
         })
-
-        return response
-    }
-    async getUserPermissions(groupId){
-        const response = await this.doGetRequest('/api/v1/user/group/'+groupId+'/permissions')
         return response
     }
 
+    async getUserPermissions(groupId) {
+        const response = await this.doGetRequest('/api/v1/user/group/' + groupId + '/permissions')
+        return response
+    }
 }
