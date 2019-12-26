@@ -20,10 +20,10 @@ var socket;
         // })
         const _r = await _user.getUserPermissions(id)
         console.log(_r)
-        if(!_r.data.permissions["ReadOnly"])
-            $(".message-input").show()
-        else{
+        if(_r.data.permissions["ReadOnly"] && type === "group")
             $(".message-input").hide()
+        else{
+            $(".message-input").show()
         }
 
         $(".contact-profile").show()
