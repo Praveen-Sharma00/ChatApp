@@ -26,6 +26,12 @@ var socket;
             $(".message-input").show()
         }
 
+        // if(_r.data.permissions["NoImageUpload"] && type==="group"){
+        //     $("#attachment").hide()
+        // }else{
+        //     $("#attachment").show()
+        // }
+
         $(".contact-profile").show()
 
 
