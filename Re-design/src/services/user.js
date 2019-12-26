@@ -330,4 +330,22 @@ export default class UserDetailService {
         await group.save()
         return ({success: true, error: {}, data: {}})
     }
+
+    async getUserPermissions(userId,groupId){
+        let _result = await GroupModel.aggregate([{$unwind: "$members"}, {$match: {"members._id": userId}}])
+
+        let permissions ={}
+        permissions["isAdmin"]=_result[0].members.isAdmin
+        if(_result[0].members.permissions===undefined){
+            console.log("HERE")
+            permissions["ReadOnly"]= false
+            permissions["NoImageUpload"]=false
+        }else{
+            console.log(".....",_result[0].members.permissions.includes("ReadOnly"))
+            permissions["ReadOnly"]= _result[0].members.permissions.includes("ReadOnly")
+            permissions["NoImageUpload"]=_result[0].members.permissions.includes("NoImageUpload")
+        }
+
+        return ({success:true,error:{},data:{permissions}})
+    }
 }

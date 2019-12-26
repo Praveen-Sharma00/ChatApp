@@ -93,7 +93,13 @@ const updatePermissions = async(req,res)=>{
     const response = await _userDetailService.updatePermissions(user._id,groupId,userId,permissions)
     return res.send(response)
 }
+const getUserPermissions=async(req,res)=>{
+    const {user}=req.session
+    const {groupId}=req.params
+    const response = await _userDetailService.getUserPermissions(user._id,groupId)
 
+    return res.send(response)
+}
 export let userController = {
     dashboard,
     chat,
@@ -109,6 +115,7 @@ export let userController = {
     getAdminGroups,
     getGroupMembers,
     updatePermissions,
+    getUserPermissions,
 
     getConversationBetweenUsers,
     getGroupConversations,

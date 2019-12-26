@@ -87,5 +87,9 @@ class UserData {
 
         return response
     }
+    async getUserPermissions(groupId){
+        const response = await this.doGetRequest('/api/v1/user/group/'+groupId+'/permissions')
+        return response
+    }
 
 }

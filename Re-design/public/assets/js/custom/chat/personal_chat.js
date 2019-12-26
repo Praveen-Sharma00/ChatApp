@@ -18,8 +18,15 @@ var socket;
         //     $(this).addClass("active").siblings().removeClass("active")
         //     $("#tab-name").html($(this).attr("name"))
         // })
-        $(".message-input").show()
-    $(".contact-profile").show()
+        const _r = await _user.getUserPermissions(id)
+        console.log(_r)
+        if(!_r.data.permissions["ReadOnly"])
+            $(".message-input").show()
+        else{
+            $(".message-input").hide()
+        }
+
+        $(".contact-profile").show()
 
 
         let response;
