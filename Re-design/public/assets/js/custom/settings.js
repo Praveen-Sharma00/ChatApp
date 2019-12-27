@@ -14,6 +14,7 @@ const generateGroupList = async () => {
 
 const generateGroupMemberListTable = async (groupId) => {
     currentGroupId = groupId
+    const currentUser = await _user.getCurrentUser()
     const response = await _user.getMembersOfGroup(groupId)
     const members = response.data.members
     let str = ""
@@ -54,24 +55,28 @@ const generateGroupMemberListTable = async (groupId) => {
                 cColor = "primary"
                 cTitle = "Click to Make Read-Only user"
             }
-            str += '<tr>\n' +
-                ' <th scope="row">' + (i + 1) + '</th>\n' +
-                ' <td>' + members[i].name + '</td>\n' +
-                ' <td>' + members[i].email + '</td>\n' +
-                ' <td>' + members[i].isAdmin + '</td>\n' +
-                ' <td><div class="d-inline btn-group-sm btn-group-toggle" id="permissions" data-toggle="buttons">' +
-                '  <label class="btn btn-' + aColor + '"  name="' + i + '" onclick="toggleAdmin(this)" data-toggle="tooltip" title="' + aTitle + '">' +
-                '<input type="checkbox" name="options" id="admin" autocomplete="off"><i class="fas fa-shield-alt" ></i>' +
-                '  </label>' +
-                '  <label class="btn btn-' + bColor + '"  name="' + i + '" onclick="toggleUpload(this)" data-toggle="tooltip" title="' + bTitle + '">' +
-                '    <input type="checkbox" name="options" id="uploads" autocomplete="off"><i class="fas fa-file-upload" ></i>' +
-                '  </label>' +
-                '  <label class="btn btn-' + cColor + '"  name="' + i + '" onclick="toggleRead(this)" data-toggle="tooltip" title="' + cTitle + '">' +
-                '    <input type="checkbox" name="options"  id="readOnly" autocomplete="off"><i class="far fa-eye" ></i>' +
-                '  </label>' +
-                '</div>' +
-                '&nbsp;&nbsp;&nbsp;&nbsp;<button name=' + i + ' id="' + members[i]._id + '" class="d-inline btn-sm btn-outline-success waves-effect" data-toggle="tooltip"data-placement="top" title="Submit" onclick="setPermission(this.id,this.name)" ><i class="fa fa-check" aria-hidden="true"></i></button></td>' +
-                '</tr>'
+            if(currentUser._id==members[i]._id){
+                continue;
+            }else{
+                str += '<tr>\n' +
+                    ' <th scope="row">' + (i + 1) + '</th>\n' +
+                    ' <td>' + members[i].name + '</td>\n' +
+                    ' <td>' + members[i].email + '</td>\n' +
+                    ' <td>' + members[i].isAdmin + '</td>\n' +
+                    ' <td><div class="d-inline btn-group-sm btn-group-toggle" id="permissions" data-toggle="buttons">' +
+                    '  <label class="btn btn-' + aColor + '"  name="' + i + '" onclick="toggleAdmin(this)" data-toggle="tooltip" title="' + aTitle + '">' +
+                    '<input type="checkbox" name="options" id="admin" autocomplete="off"><i class="fas fa-shield-alt" ></i>' +
+                    '  </label>' +
+                    '  <label class="btn btn-' + bColor + '"  name="' + i + '" onclick="toggleUpload(this)" data-toggle="tooltip" title="' + bTitle + '">' +
+                    '    <input type="checkbox" name="options" id="uploads" autocomplete="off"><i class="fas fa-file-upload" ></i>' +
+                    '  </label>' +
+                    '  <label class="btn btn-' + cColor + '"  name="' + i + '" onclick="toggleRead(this)" data-toggle="tooltip" title="' + cTitle + '">' +
+                    '    <input type="checkbox" name="options"  id="readOnly" autocomplete="off"><i class="far fa-eye" ></i>' +
+                    '  </label>' +
+                    '</div>' +
+                    '&nbsp;&nbsp;&nbsp;&nbsp;<button name=' + i + ' id="' + members[i]._id + '" class="d-inline btn-sm btn-outline-success waves-effect" data-toggle="tooltip"data-placement="top" title="Submit" onclick="setPermission(this.id,this.name)" ><i class="fa fa-check" aria-hidden="true"></i></button></td>' +
+                    '</tr>'
+            }
         }
     }
     return str
