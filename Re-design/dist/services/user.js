@@ -524,10 +524,10 @@ class UserDetailService {
       }
     }
 
-    if (_r.includes("NoImageUpload")) {
-      if (!newPermissions.includes("NoImageUpload")) newPermissions.push("NoImageUpload");
-    } else if (_r.includes("~NoImageUpload")) {
-      const index = newPermissions.indexOf("NoImageUpload");
+    if (_r.includes("BlockUploads")) {
+      if (!newPermissions.includes("BlockUploads")) newPermissions.push("BlockUploads");
+    } else if (_r.includes("~BlockUploads")) {
+      const index = newPermissions.indexOf("BlockUploads");
 
       if (index > -1) {
         newPermissions.splice(index, 1);
@@ -560,11 +560,11 @@ class UserDetailService {
     if (_result[0].members.permissions === undefined) {
       console.log("HERE");
       permissions["ReadOnly"] = false;
-      permissions["NoImageUpload"] = false;
+      permissions["BlockUploads"] = false;
     } else {
       console.log(".....", _result[0].members.permissions.includes("ReadOnly"));
       permissions["ReadOnly"] = _result[0].members.permissions.includes("ReadOnly");
-      permissions["NoImageUpload"] = _result[0].members.permissions.includes("NoImageUpload");
+      permissions["BlockUploads"] = _result[0].members.permissions.includes("BlockUploads");
     }
 
     return {
