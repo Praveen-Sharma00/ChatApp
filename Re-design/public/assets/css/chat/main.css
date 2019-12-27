@@ -830,13 +830,11 @@ body {
     border: 1px solid #dfdfdf;
     padding:12px;
     height: 70%;
-
     box-shadow: 0 0 0 4px rgba(255,255,255,1);
     transition: background 0.2s, color 0.2s;
 
 }
 .attachment_icons:hover{
-
     background: rgba(255,255,255,1);
     color: #64bb5d;
     cursor: pointer;
