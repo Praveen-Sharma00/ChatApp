@@ -1,3 +1,7 @@
+var currentGroupId;
+var currentState = []
+var modifiedState = []
+
 const generateGroupList = async () => {
     const response = await _user.getAdminGroups()
     let str = ""
@@ -7,16 +11,13 @@ const generateGroupList = async () => {
     })
     return str
 }
-var currentGroupId;
-var currentState = []
-var modifiedState = []
+
 const generateGroupMemberListTable = async (groupId) => {
     currentGroupId = groupId
     const response = await _user.getMembersOfGroup(groupId)
     const members = response.data.members
     let str = ""
     if (response.success) {
-
         for (let i = 0; i < members.length; i++) {
             currentState.push({
                 IsAdmin: members[i].isAdmin,
@@ -89,60 +90,30 @@ const populateDataTable = async (groupId) => {
 }
 const toggleAdmin = (i) => {
     const index = parseInt(i.getAttribute("name"))
-    console.log(i)
     modifiedState[index].IsAdmin = !modifiedState[index].IsAdmin
-    console.log(modifiedState[index])
 }
 const toggleRead = (i) => {
-    console.log(i)
     const index = parseInt(i.getAttribute("name"))
     modifiedState[index].IsReadOnly = !modifiedState[index].IsReadOnly
-    // console.log(modifiedState[index].IsReadOnly)
-    console.log(modifiedState[index])
 }
 const toggleUpload = (i) => {
-    console.log(i)
     const index = parseInt(i.getAttribute("name"))
     modifiedState[index].IsUploadBlocked = !modifiedState[index].IsUploadBlocked
-    // console.log(modifiedState[index].IsUploadBlocked)
-    console.log(modifiedState[index])
 }
 
 const setPermission = async (userId, i) => {
     const index = parseInt(i)
     let permissions = []
-    // console.log("Init data "+ currentState[index]["IsAdmin"],  currentState[index]["IsUploadBlocked"],currentState[index]["IsReadOnly"]
-    // )
-    // console.log("Init state "+
-    //     modifiedState[index]["IsAdmin"],
-    //     modifiedState[index]["IsUploadBlocked"],
-    //     modifiedState[index]["IsReadOnly"]
-    // )
-    console.log(modifiedState[i].IsAdmin, modifiedState[i].IsReadOnly, modifiedState[i].IsUploadBlocked)
+
     if (modifiedState[index].IsAdmin) {
         currentState[index].IsAdmin = !currentState[index].IsAdmin
-        console.log(currentState[index].IsAdmin)
     }
     if (modifiedState[index].IsReadOnly) {
         currentState[index].IsReadOnly = !currentState[index].IsReadOnly
-        console.log(currentState[index].IsReadOnly)
     }
     if (modifiedState[index].IsUploadBlocked) {
         currentState[index].IsUploadBlocked = !currentState[index].IsUploadBlocked
-        console.log(currentState[index].IsUploadBlocked)
     }
-    // console.log("After data "+
-    //     currentState[index]["IsAdmin"],
-    //     currentState[index]["IsUploadBlocked"],
-    //     currentState[index]["IsReadOnly"]
-    //
-    // )
-    // console.log("After state "+
-    //     modifiedState[index]["IsAdmin"],
-    //     modifiedState[index]["IsUploadBlocked"],
-    //    modifiedState[index]["IsReadOnly"]
-    //
-    // )
     if (currentState[index].IsAdmin) {
         permissions.push("Admin")
     } else {
@@ -159,14 +130,8 @@ const setPermission = async (userId, i) => {
     } else {
         permissions.push("~BlockUploads")
     }
-    // currentState[index]["IsAdmin"] ? permissions.push("Admin") : permissions.push("~Admin")
-    // currentState[index]["IsReadOnly"] ? permissions.push("ReadOnly") : permissions.push("~ReadOnly")
-    // currentState[index]["IsUploadBlocked"] ? permissions.push("BlockUploads") : permissions.push("~BlockUploads")
-    console.log(permissions)
-
     const response = await _user.updatePermissions(currentGroupId, userId, permissions)
     permissions = null
-    console.log(response)
     if (response.success) {
         await populateDataTable(currentGroupId)
 

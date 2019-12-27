@@ -4,9 +4,7 @@ import ConversationModel from "../models/Conversation";
 
 import mongoose from 'mongoose'
 
-
 const moment = require('moment')
-
 
 export default class UserDetailService {
 
@@ -43,7 +41,6 @@ export default class UserDetailService {
 
             membersArr.push(result)
         }
-        console.log(membersArr)
         return ({success: true, error: {}, data: {membersArr}})
     }
 
@@ -85,10 +82,7 @@ export default class UserDetailService {
     }
 
     async getUserGroups(currentUser) {
-        const {_id: userID} = currentUser
-
         const _result = await GroupModel.aggregate([{$unwind: "$members"}, {$match: {"members._id": currentUser._id}}])
-        console.log(_result)
         if (!_result) {
             return ({success: false, error: {message: 'No Groups found !'}})
         } else {
@@ -128,7 +122,6 @@ export default class UserDetailService {
                 return ({success: false, error: {message: 'A group with same name already exists !'}})
             }
         }
-        // console.log(groupDetailObj)
         let membersArr = [];
         groupDetailObj.members.forEach((e) => {
             membersArr.push({
@@ -142,7 +135,6 @@ export default class UserDetailService {
             isAdmin: true,
             permissions: []
         })
-        console.log(membersArr)
         const newGroup = new GroupModel({
             name: groupDetailObj.name,
             admins: [currentUser._id],
@@ -165,7 +157,6 @@ export default class UserDetailService {
             between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)],
             conversation_type: 1
         })
-        console.log(_result)
         if (_result === null || _result.length === 0) {
             return ({success: false, error: {message: 'No Conversations so far !'}})
         } else {
@@ -176,7 +167,6 @@ export default class UserDetailService {
 
     async updateIndividualConversation(senderId, receiverID, text) {
         const user = await UserModel.findOne({_id: mongoose.Types.ObjectId(senderId)})
-        // console.log(result)
         let a = senderId, b = receiverID;
         if (a > b) {
             [a, b] = [b, a]
@@ -322,26 +312,33 @@ export default class UserDetailService {
             }
 
         }
-
         group.admins = newAdmins
-        // group.members.find((m)=>m._id === userId).permissions = newPermissions
         group.members.filter((m) => m._id == userId)[0].permissions = newPermissions
-
         await group.save()
         return ({success: true, error: {}, data: {}})
     }
 
-    async getUserPermissions(userId, groupId) {
-        let _result = await GroupModel.aggregate([{$unwind: "$members"}, {$match: {"members._id": userId}}])
 
+    async getUserPermissions(userId, groupId) {
+        // let _result = await GroupModel.aggregate([{$unwind: "$members"}, {$match: {
+        //     $and:[{"_id":groupId},{"members._id": userId}]
+        //     }}])
+        let _result = await GroupModel.aggregate([
+            {
+                $unwind: "$members"
+            },
+            {$match:
+                    {
+                        "_id":mongoose.Types.ObjectId(groupId),
+                        "members._id": mongoose.Types.ObjectId(userId)
+                    }
+            }])
         let permissions = {}
         permissions["isAdmin"] = _result[0].members.isAdmin
         if (_result[0].members.permissions === undefined) {
-            console.log("HERE")
             permissions["ReadOnly"] = false
             permissions["BlockUploads"] = false
         } else {
-            console.log(".....", _result[0].members.permissions.includes("ReadOnly"))
             permissions["ReadOnly"] = _result[0].members.permissions.includes("ReadOnly")
             permissions["BlockUploads"] = _result[0].members.permissions.includes("BlockUploads")
         }

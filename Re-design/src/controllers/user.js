@@ -94,7 +94,6 @@ const getUserPermissions = async (req, res) => {
     const {user} = req.session
     const {groupId} = req.params
     const response = await _userDetailService.getUserPermissions(user._id, groupId)
-
     return res.send(response)
 }
 export let userController = {
