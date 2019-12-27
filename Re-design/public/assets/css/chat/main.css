@@ -821,3 +821,6 @@ body {
 .active-tab {
     background-color: rgba(0, 188, 212, 0.35) !important;
 }
+.block{
+    display: none !important;
+}

@@ -12,27 +12,18 @@ var socket;
         $(".messages").animate({scrollTop: $(".messages")[0].scrollHeight}, 0);
     }
     showConversation = async (type, id) => {
-
-        // $("li.contact").on('click', function (e) {
-        //     $(this).addClass("active").siblings().removeClass("active")
-        //     $("#tab-name").html($(this).attr("name"))
-        // })
         const _r = await _user.getUserPermissions(id)
-        console.log(_r)
-        if (_r.data.permissions["ReadOnly"] && type === "group")
+        if (_r.data.permissions["ReadOnly"] && type === "group") {
             $(".message-input").hide()
-        else {
+        } else if (!_r.data.permissions["ReadOnly"] && type === "group") {
             $(".message-input").show()
+            if (!_r.data.permissions["BlockUploads"]) {
+                $(".attachment").removeClass("block")
+            } else {
+                $(".attachment").addClass("block")
+            }
         }
-
-        // if(_r.data.permissions["NoImageUpload"] && type==="group"){
-        //     $("#attachment").hide()
-        // }else{
-        //     $("#attachment").show()
-        // }
-
         $(".contact-profile").show()
-
 
         let response;
         if (type === "individual") {
@@ -61,7 +52,6 @@ var socket;
             })
         }
     }
-
 
     startConversation = async (id) => {
         $("li#" + id).addClass("active").siblings().removeClass("active")

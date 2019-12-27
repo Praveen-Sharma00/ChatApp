@@ -40,7 +40,6 @@ const getAdminGroups = async (req, res) => {
     return res.send(response)
 }
 const getGroupMembers = async (req, res) => {
-    // console.log(req.params)
     const groupId = req.params.groupId
     const response = await _userDetailService.getGroupMembers(groupId)
     return res.send(response)
@@ -56,9 +55,7 @@ const getConversationBetweenUsers = async (req, res) => {
     const {user} = req.session
     const currentUserId = user._id
     const secondUserId = req.params.secondUserId
-
     const response = await _userDetailService.getConversationBetweenUsers(currentUserId, secondUserId)
-    console.log(response)
     return res.send(response)
 }
 const getGroupConversations = async (req, res) => {
