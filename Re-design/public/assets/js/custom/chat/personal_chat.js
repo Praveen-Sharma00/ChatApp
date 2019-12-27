@@ -12,17 +12,22 @@ var socket;
         $(".messages").animate({scrollTop: $(".messages")[0].scrollHeight}, 0);
     }
     showConversation = async (type, id) => {
-        const _r = await _user.getUserPermissions(id)
-        if (_r.data.permissions["ReadOnly"] && type === "group") {
-            $(".message-input").hide()
-        } else if (!_r.data.permissions["ReadOnly"] && type === "group") {
-            $(".message-input").show()
-            if (!_r.data.permissions["BlockUploads"]) {
-                $(".attachment").removeClass("block")
-            } else {
-                $(".attachment").addClass("block")
+        if(type ==="group"){
+            const _r = await _user.getUserPermissions(id)
+            if (_r.data.permissions["ReadOnly"] ) {
+                $(".message-input").hide()
+            } else if (!_r.data.permissions["ReadOnly"] ) {
+                $(".message-input").show()
+                if (!_r.data.permissions["BlockUploads"]) {
+                    $(".attachment").removeClass("block")
+                } else {
+                    $(".attachment").addClass("block")
+                }
             }
+        }else if(type==="individual"){
+            $(".message-input").show()
         }
+
         $(".contact-profile").show()
 
         let response;
