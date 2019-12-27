@@ -28,23 +28,14 @@
     } catch (e) {
     }</script>
     <script src="assets/js/custom/utils/user_detail.js"></script>
-
-
-    <!-- Material Design Bootstrap -->
-    <link rel="stylesheet" href="../assets/css/mdb.min.css">
 </head>
 <body>
 <div id="frame">
     <div id="sidepanel">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col mx-auto text-center ">
-                    <a href="/dashboard" class="  btn btn-primary">
-                        <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;&nbsp;<span
-                            class="d-none d-md-inline-block">Go to dashboard</span></a>
-                </div>
-            </div>
-
+        <div>
+            <a href="/dashboard" class="col-12 btn btn-primary">
+                <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>&nbsp;&nbsp;<span
+                    class="d-none d-md-inline-block">Go to dashboard</span></a>
         </div>
         <div id="profile">
             <div class="wrap">
@@ -132,27 +123,29 @@
         <div class="message-input">
             <div class="wrap">
                 <input type="text" class="text_box" placeholder="Write your message..."/>
-                <i class="fa fa-paperclip attachment" id="attachment" data-toggle="modal" data-target="#attachmentModal" aria-hidden="true"></i>
+                <i class="fa fa-paperclip attachment" id="attachment" data-toggle="modal" data-target="#frameModalBottom" aria-hidden="true"></i>
                 <button class="submit "><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>
         </div>
     </div>
 </div>
 <!-- Frame Modal Bottom -->
-<div class="modal fade bottom" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="attachmentModal"
+<div class="modal fade bottom" id="frameModalBottom" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
+
+    <!-- Add class .modal-frame and then add class .modal-bottom (or other classes from list above) to set a position to the modal -->
     <div class="modal-dialog modal-frame modal-bottom" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row d-flex justify-content-center align-items-center">
-                    <p class="pt-3 pr-2 ml-auto">
-                        <i class="attachment_icons fa fa-file fa-3x" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <i class="attachment_icons fa fa-file-image-o fa-3x" aria-hidden="true"></i>
 
-<!--                        <i class="btn btn-primary fa fa-file fa-3x" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;-->
-<!--                        <i class="btn btn-primary fa fa-file-image-o fa-3x" aria-hidden="true"></i>-->
+                    <p class="pt-3 pr-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit nisi quo
+                        provident fugiat reprehenderit nostrum
+                        quos..
                     </p>
-                    <i class="attachment_icons fa fa-times-circle ml-auto fa-3x" data-dismiss="modal"></i>
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -199,14 +192,6 @@ $("#status-options ul li").click(function () {
     $("#status-options").removeClass("active");
 });
 </script>
-<!-- jQuery -->
-<script type="text/javascript" src="../assets/js/jquery.min.js"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript" src="../assets/js/popper.min.js"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript" src="../assets/js/mdb.min.js"></script>
 </body>
 
 </html>
