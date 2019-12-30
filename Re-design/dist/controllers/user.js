@@ -100,7 +100,7 @@ const updateIndividualConversation = async (req, res) => {
   } = req.session;
   const receiverId = req.params.secondUserId;
   const text = req.body.text.trim();
-  const response = await _userDetailService.updateIndividualConversation(user._id, receiverId, text);
+  const response = await _userDetailService.updateIndividualConversation(user._id, receiverId, text, '', '');
   return res.send(response);
 };
 
@@ -112,7 +112,7 @@ const updateGroupConversation = async (req, res) => {
     text
   } = req.body;
   const groupId = req.params.groupId;
-  const response = await _userDetailService.updateGroupConversation(user._id, groupId, text);
+  const response = await _userDetailService.updateGroupConversation(user._id, groupId, text, '', '');
   return res.send(response);
 };
 

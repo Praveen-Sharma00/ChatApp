@@ -328,7 +328,7 @@ class UserDetailService {
     }
   }
 
-  async updateIndividualConversation(senderId, receiverID, text) {
+  async updateIndividualConversation(senderId, receiverID, text, message_type, media_type) {
     const user = await _User.default.findOne({
       _id: _mongoose.default.Types.ObjectId(senderId)
     });
@@ -337,6 +337,35 @@ class UserDetailService {
 
     if (a > b) {
       [a, b] = [b, a];
+    }
+
+    let msg_type = "";
+    let md_type = "";
+    let md_loc = "";
+
+    if (message_type === "text") {
+      msg_type = "text";
+    } else {
+      msg_type = "media";
+    }
+
+    let text_ = "";
+
+    if (media_type === "image") {
+      md_type = "image";
+      text_ = "";
+      md_loc = text;
+    } else if (media_type === "pdf") {
+      md_type = "pdf";
+      text_ = "";
+      md_loc = text;
+    } else if (media_type === "doc") {
+      md_type = "doc";
+      text_ = "";
+      md_loc = text;
+    } else {
+      md_type = "default";
+      text_ = text;
     }
 
     const conversation = await _Conversation.default.findOne({
@@ -348,7 +377,12 @@ class UserDetailService {
         between_users: [_mongoose.default.Types.ObjectId(a), _mongoose.default.Types.ObjectId(b)],
         conversation_type: 1,
         messages: [{
-          text: text,
+          text: text_,
+          message_type: msg_type,
+          media: {
+            object_type: md_type,
+            object_location: md_loc
+          },
           sender: {
             id: _mongoose.default.Types.ObjectId(user._id),
             name: user.name
@@ -362,7 +396,12 @@ class UserDetailService {
         between_users: [a, b]
       });
       existingConversation.messages.push({
-        text: text,
+        text: text_,
+        message_type: msg_type,
+        media: {
+          object_type: md_type,
+          object_location: md_loc
+        },
         sender: {
           id: _mongoose.default.Types.ObjectId(user._id),
           name: user.name
@@ -379,10 +418,39 @@ class UserDetailService {
     };
   }
 
-  async updateGroupConversation(senderId, groupId, text) {
+  async updateGroupConversation(senderId, groupId, text, message_type, media_type) {
     const user = await _User.default.findOne({
       _id: _mongoose.default.Types.ObjectId(senderId)
     });
+    let msg_type = "";
+    let md_type = "";
+    let md_loc = "";
+
+    if (message_type === "text") {
+      msg_type = "text";
+    } else {
+      msg_type = "media";
+    }
+
+    let text_ = "";
+
+    if (media_type === "image") {
+      md_type = "image";
+      text_ = "";
+      md_loc = text;
+    } else if (media_type === "pdf") {
+      md_type = "pdf";
+      text_ = "";
+      md_loc = text;
+    } else if (media_type === "doc") {
+      md_type = "doc";
+      text_ = "";
+      md_loc = text;
+    } else {
+      md_type = "default";
+      text_ = text;
+    }
+
     const conversation = await _Conversation.default.findOne({
       group_id: _mongoose.default.Types.ObjectId(groupId)
     });
@@ -393,7 +461,12 @@ class UserDetailService {
         group_id: _mongoose.default.Types.ObjectId(groupId),
         conversation_type: 2,
         messages: [{
-          text: text,
+          text: text_,
+          message_type: msg_type,
+          media: {
+            object_type: md_type,
+            object_location: md_loc
+          },
           sender: {
             id: _mongoose.default.Types.ObjectId(user._id),
             name: user.name
@@ -407,10 +480,15 @@ class UserDetailService {
         group_id: _mongoose.default.Types.ObjectId(groupId)
       });
       existingConversation.messages.push({
-        text: text,
+        text: text_,
         sender: {
           id: _mongoose.default.Types.ObjectId(user._id),
           name: user.name
+        },
+        message_type: msg_type,
+        media: {
+          object_type: md_type,
+          object_location: md_loc
         },
         timestamp: moment().format('MMMM Do YYYY, h:mm A').toString()
       });

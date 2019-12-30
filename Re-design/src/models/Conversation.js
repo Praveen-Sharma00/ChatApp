@@ -1,6 +1,24 @@
 const mongoose = require('mongoose')
 
 
+// const conversationSchema = new mongoose.Schema({
+//     between_users: [mongoose.Schema.Types.ObjectId],
+//     group_id: mongoose.Schema.Types.ObjectId,
+//     conversation_type: {
+//         type: Number
+//     },
+//     messages: [{
+//         text: String,
+//
+//         sender: {
+//             id: {
+//                 type: mongoose.Schema.Types.ObjectId
+//             },
+//             name: String
+//         },
+//         sentAt: String
+//     }]
+// })
 const conversationSchema = new mongoose.Schema({
     between_users: [mongoose.Schema.Types.ObjectId],
     group_id: mongoose.Schema.Types.ObjectId,
@@ -9,6 +27,19 @@ const conversationSchema = new mongoose.Schema({
     },
     messages: [{
         text: String,
+        message_type:{
+            type:String,
+            enum:["text","media"]
+        },
+        media:{
+            object_type:{
+                type:String,
+                enum:["image","pdf","doc","default"]
+            },
+            object_location:{
+                type:String
+            }
+        },
         sender: {
             id: {
                 type: mongoose.Schema.Types.ObjectId
@@ -18,7 +49,6 @@ const conversationSchema = new mongoose.Schema({
         sentAt: String
     }]
 })
-
 // conversationSchema.statics.getAllChatsBetweenUsers = async (sender, receiver) => {
 //     let a, b;
 //     if (sender < receiver) {
