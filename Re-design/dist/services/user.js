@@ -545,6 +545,7 @@ class UserDetailService {
       }
     }]);
 
+    console.log(_result);
     let permissions = {};
     permissions["isAdmin"] = _result[0].members.isAdmin;
 
