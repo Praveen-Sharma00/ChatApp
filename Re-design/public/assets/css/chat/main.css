@@ -821,3 +821,32 @@ body {
 .active-tab {
     background-color: rgba(0, 188, 212, 0.35) !important;
 }
+.block{
+    display: none !important;
+}
+.attachment_icons{
+    background-color: white;
+    border-radius: 75%;
+    border: 1px solid #dfdfdf;
+    padding:12px;
+    height: 70%;
+    box-shadow: 0 0 0 4px rgba(255,255,255,1);
+    transition: background 0.2s, color 0.2s;
+
+}
+.attachment_icons:hover{
+    background: rgba(255,255,255,1);
+    color: #64bb5d;
+    cursor: pointer;
+}
+.attachment_icons:hover:before {
+    animation: spinAround 2s linear infinite;
+}
+@keyframes spinAround {
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

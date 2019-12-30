@@ -71,7 +71,6 @@ class UserData {
     }
 
     async getMembersOfGroup(groupId) {
-        console.log(groupId)
         const response = await this.doGetRequest('/api/v1/user/group/' + groupId)
         return response
     }

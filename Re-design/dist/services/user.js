@@ -75,7 +75,6 @@ class UserDetailService {
       membersArr.push(result);
     }
 
-    console.log(membersArr);
     return {
       success: true,
       error: {},
@@ -161,10 +160,6 @@ class UserDetailService {
   }
 
   async getUserGroups(currentUser) {
-    const {
-      _id: userID
-    } = currentUser;
-
     const _result = await _Group.default.aggregate([{
       $unwind: "$members"
     }, {
@@ -172,8 +167,6 @@ class UserDetailService {
         "members._id": currentUser._id
       }
     }]);
-
-    console.log(_result);
 
     if (!_result) {
       return {
@@ -266,8 +259,7 @@ class UserDetailService {
           }
         };
       }
-    } // console.log(groupDetailObj)
-
+    }
 
     let membersArr = [];
     groupDetailObj.members.forEach(e => {
@@ -282,7 +274,6 @@ class UserDetailService {
       isAdmin: true,
       permissions: []
     });
-    console.log(membersArr);
     const newGroup = new _Group.default({
       name: groupDetailObj.name,
       admins: [currentUser._id],
@@ -318,8 +309,6 @@ class UserDetailService {
       conversation_type: 1
     });
 
-    console.log(_result);
-
     if (_result === null || _result.length === 0) {
       return {
         success: false,
@@ -342,8 +331,7 @@ class UserDetailService {
   async updateIndividualConversation(senderId, receiverID, text) {
     const user = await _User.default.findOne({
       _id: _mongoose.default.Types.ObjectId(senderId)
-    }); // console.log(result)
-
+    });
     let a = senderId,
         b = receiverID;
 
@@ -524,18 +512,17 @@ class UserDetailService {
       }
     }
 
-    if (_r.includes("NoImageUpload")) {
-      if (!newPermissions.includes("NoImageUpload")) newPermissions.push("NoImageUpload");
-    } else if (_r.includes("~NoImageUpload")) {
-      const index = newPermissions.indexOf("NoImageUpload");
+    if (_r.includes("BlockUploads")) {
+      if (!newPermissions.includes("BlockUploads")) newPermissions.push("BlockUploads");
+    } else if (_r.includes("~BlockUploads")) {
+      const index = newPermissions.indexOf("BlockUploads");
 
       if (index > -1) {
         newPermissions.splice(index, 1);
       }
     }
 
-    group.admins = newAdmins; // group.members.find((m)=>m._id === userId).permissions = newPermissions
-
+    group.admins = newAdmins;
     group.members.filter(m => m._id == userId)[0].permissions = newPermissions;
     await group.save();
     return {
@@ -546,11 +533,15 @@ class UserDetailService {
   }
 
   async getUserPermissions(userId, groupId) {
+    // let _result = await GroupModel.aggregate([{$unwind: "$members"}, {$match: {
+    //     $and:[{"_id":groupId},{"members._id": userId}]
+    //     }}])
     let _result = await _Group.default.aggregate([{
       $unwind: "$members"
     }, {
       $match: {
-        "members._id": userId
+        "_id": _mongoose.default.Types.ObjectId(groupId),
+        "members._id": _mongoose.default.Types.ObjectId(userId)
       }
     }]);
 
@@ -558,13 +549,11 @@ class UserDetailService {
     permissions["isAdmin"] = _result[0].members.isAdmin;
 
     if (_result[0].members.permissions === undefined) {
-      console.log("HERE");
       permissions["ReadOnly"] = false;
-      permissions["NoImageUpload"] = false;
+      permissions["BlockUploads"] = false;
     } else {
-      console.log(".....", _result[0].members.permissions.includes("ReadOnly"));
       permissions["ReadOnly"] = _result[0].members.permissions.includes("ReadOnly");
-      permissions["NoImageUpload"] = _result[0].members.permissions.includes("NoImageUpload");
+      permissions["BlockUploads"] = _result[0].members.permissions.includes("BlockUploads");
     }
 
     return {

@@ -22,7 +22,7 @@ const groupSchema = new _mongoose.default.Schema({
     },
     permissions: [{
       type: String,
-      enum: ['ReadOnly', 'NoImageUpload']
+      enum: ['ReadOnly', 'BlockUploads']
     }]
   }],
   admins: [{
