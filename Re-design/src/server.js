@@ -42,7 +42,7 @@ io.on('connection',function (socket) {
         }else if(metadata.type === "group"){
             res = await _userDetailService.updateGroupConversation(metadata.sender._id,metadata.receiver,metadata.text)
         }
-        socket.broadcast.to(_room).emit('new_msg',{text:metadata.text})
+        socket.broadcast.to(_room).emit('new_msg',{text:metadata.text,message_type:metadata.message_type,media_type:metadata.media_type})
     })
 })
 server.listen(process.env.PORT,()=>{

@@ -109,9 +109,23 @@ app.post('/upload', uploadFile.single('media'), (req, res) => {
     });
   }
 
+  let ext = _path.default.extname(req.file.filename).split('.')[1];
+
+  console.log(ext);
+  let media_type = "";
+
+  if (ext === "jpg" || ext === "JPG" || ext === "jpeg" || ext === "JPEG" || ext === "png" || ext === "PNG" || ext === "gif" || ext === "GIF") {
+    media_type = "image";
+  } else if (ext === "pdf" || ext === "PDF") {
+    media_type = "pdf";
+  } else {
+    media_type = "doc";
+  }
+
   res.send({
     success: true,
-    filename: req.file.filename
+    filename: req.file.filename,
+    media_type: media_type
   });
 }); // app.use(userRoutes)
 
