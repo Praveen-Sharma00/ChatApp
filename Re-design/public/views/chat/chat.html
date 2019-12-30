@@ -132,7 +132,8 @@
         <div class="message-input">
             <div class="wrap">
                 <input type="text" class="text_box" placeholder="Write your message..."/>
-                <i class="fa fa-paperclip attachment" id="attachment" data-toggle="modal" data-target="#attachmentModal" aria-hidden="true"></i>
+                <i class="fa fa-paperclip attachment" id="attachment" data-toggle="modal" data-target="#attachmentModal"
+                   aria-hidden="true"></i>
                 <button class="submit "><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
             </div>
         </div>
@@ -145,26 +146,27 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row d-flex justify-content-center align-items-center">
-<!--                    <p class="pt-3 pr-2 mx-auto">-->
-<!--&lt;!&ndash;                        <i class="attachment_icons fa fa-file fa-3x" data-toggle="modal" data-target="#attachmentModal" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
-<!--&lt;!&ndash;                        <i class="attachment_icons fa fa-file-image-o fa-3x" aria-hidden="true"></i>&ndash;&gt;-->
-<!--                   -->
-<!--&lt;!&ndash;                        <i class="btn btn-primary fa fa-file fa-3x" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
-<!--&lt;!&ndash;                        <i class="btn btn-primary fa fa-file-image-o fa-3x" aria-hidden="true"></i>&ndash;&gt;-->
-<!--                    </p>-->
-                    <div class="mx-auto input-group col-sm-10 col-md-6">
-<!--                        <div class="input-group-prepend">-->
-<!--                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>-->
-<!--                        </div>-->
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroupFile01"
-                                   aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-
-                        </div>
+                    <!--                    <p class="pt-3 pr-2 mx-auto">-->
+                    <!--&lt;!&ndash;                        <i class="attachment_icons fa fa-file fa-3x" data-toggle="modal" data-target="#attachmentModal" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+                    <!--&lt;!&ndash;                        <i class="attachment_icons fa fa-file-image-o fa-3x" aria-hidden="true"></i>&ndash;&gt;-->
+                    <!--                   -->
+                    <!--&lt;!&ndash;                        <i class="btn btn-primary fa fa-file fa-3x" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+                    <!--&lt;!&ndash;                        <i class="btn btn-primary fa fa-file-image-o fa-3x" aria-hidden="true"></i>&ndash;&gt;-->
+                    <!--                    </p>-->
+                    <div class="ml-auto input-group col-sm-12 col-md-6">
+                        <form enctype="multipart/form-data" method="POST" onsubmit="return upload()">
+                            <!--                        <div class="input-group-prepend">-->
+                            <!--                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>-->
+                            <!--                        </div>-->
+                            <div class=" custom-file">
+                                <input type="file" name="media" class="form-control-file custom-file-input" id="fileUpload" onchange="upload()"
+                                       aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" for="fileUpload">Choose file</label>
+                            </div>
+                            <!-- <button class="ml-auto form-control-file btn btn-primary" type="submit">Submit</button> -->
+                        </form>
                     </div>
-                    <div class="mx-auto col-2"><button class="btn btn-primary">Submit</button></div>
-<!--                    <i class="attachment_icons fa fa-times-circle ml-auto fa-3x" data-dismiss="modal"></i>-->
+                    <!--                    <i class="attachment_icons fa fa-times-circle ml-auto fa-3x" data-dismiss="modal"></i>-->
                 </div>
             </div>
         </div>

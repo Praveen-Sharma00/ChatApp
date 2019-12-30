@@ -9,14 +9,14 @@ var socket;
     $(".contact-profile").css("display", "none")
     socket.emit('login', currentUser)
     scrollToBottom = () => {
-        $(".messages").animate({scrollTop: $(".messages")[0].scrollHeight}, 0);
+        $(".messages").animate({ scrollTop: $(".messages")[0].scrollHeight }, 0);
     }
     showConversation = async (type, id) => {
-        if(type ==="group"){
+        if (type === "group") {
             const _r = await _user.getUserPermissions(id)
-            if (_r.data.permissions["ReadOnly"] ) {
+            if (_r.data.permissions["ReadOnly"]) {
                 $(".message-input").hide()
-            } else if (!_r.data.permissions["ReadOnly"] ) {
+            } else if (!_r.data.permissions["ReadOnly"]) {
                 $(".message-input").show()
                 if (!_r.data.permissions["BlockUploads"]) {
                     $(".attachment").removeClass("block")
@@ -24,7 +24,7 @@ var socket;
                     $(".attachment").addClass("block")
                 }
             }
-        }else if(type==="individual"){
+        } else if (type === "individual") {
             $(".message-input").show()
         }
 
@@ -64,7 +64,7 @@ var socket;
 
         receiverId = id
         await showConversation(conversationType, id)
-        socket.emit('join', {sender: currentUser, rec_id: id, type: conversationType})
+        socket.emit('join', { sender: currentUser, rec_id: id, type: conversationType })
     }
     const generateListHTML = (arr) => {
         let str = ""
@@ -84,8 +84,8 @@ var socket;
     }
 
     const populateBasicUserData = async () => {
-        const {data} = await _user.getUserContacts()
-        const {contacts} = data
+        const { data } = await _user.getUserContacts()
+        const { contacts } = data
 
         let contact_list = document.getElementById("list")
         let user_name = document.getElementById("user_name")
@@ -104,7 +104,7 @@ var socket;
 
     const populateBasicGroupData = async () => {
         const response = await _user.getUserGroups()
-        const {obj} = response.data
+        const { obj } = response.data
 
         let group_list = document.getElementById("list")
         let user_name = document.getElementById("user_name")
@@ -140,7 +140,7 @@ var socket;
     newMessage = () => {
 
         message = $(".message-input input").val()
-        socket.emit('new_msg', {sender: currentUser, receiver: receiverId, type: conversationType, text: message})
+        socket.emit('new_msg', { sender: currentUser, receiver: receiverId, type: conversationType, text: message })
         if ($.trim(message) === '') {
             return false;
         }
@@ -164,5 +164,29 @@ var socket;
         // $('.contact.active .preview').html('<span>You: </span>' + message);
         scrollToBottom()
     })
+
+    upload = async () => {
+        // socket.emit('new_msg', {sender: currentUser, receiver: receiverId, type: conversationType, message_type:"media",text: message})
+        // if ($.trim(message) === '') {
+        //     return false;
+        // }
+        // $('<li class="sent media"><p>' + message + '</p></li>').appendTo($('.messages ul'));
+        // $('.message-input input').val(null);
+        // // $('.contact.active .preview').html('<span>You: </span>' + message);
+        // scrollToBottom()
+
+        const fileInput = document.getElementById("fileUpload")
+        let formData = new FormData();
+        let file = fileInput.files[0];
+        formData.append("media", file);
+
+        let r=await _user.uploadFile(formData)
+        let filename=""
+        if(r.success){
+            filename=r.filename
+            console.log(filename)
+        }
+        return false
+    }
 })()
 

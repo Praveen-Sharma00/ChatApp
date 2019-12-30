@@ -14,12 +14,25 @@ class UserData {
     async doPostRequest(url, body) {
         const data = await fetch(this.baseUrl + url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // },
             body: JSON.stringify(body)
         })
         const response = await data.json()
+        return response
+    }
+    async doUploadPostRequest(formData){
+        // const data = await fetch(this.baseUrl+'/upload',{
+        //     method:'POST',
+        //     headers:{
+        //         'Content-Type':'multipart/form-data'
+        //     },
+        //     body:body
+        // })
+
+        const data = await fetch('/upload/', { method: "POST", body: formData });
+        const response=await data.json()
         return response
     }
 
@@ -90,6 +103,11 @@ class UserData {
 
     async getUserPermissions(groupId) {
         const response = await this.doGetRequest('/api/v1/user/group/' + groupId + '/permissions')
+        return response
+    }
+
+    async uploadFile (data){
+        const  response=await this.doUploadPostRequest(data)
         return response
     }
 }
