@@ -10,8 +10,12 @@ const groupSchema = new mongoose.Schema({
         isAdmin: { type: Boolean },
         permissions: [{ type: String, enum: ['ReadOnly', 'BlockUploads'] }]
     }],
-    admins: [{
-        type: mongoose.Schema.Types.ObjectId
+    // admins: [{
+    //     type: mongoose.Schema.Types.ObjectId
+    // }]
+    admins:[{
+        _id:mongoose.Schema.Types.ObjectId,
+        level:Number
     }]
 })
 
