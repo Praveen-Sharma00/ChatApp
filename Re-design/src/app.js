@@ -13,6 +13,7 @@ import {userRoutes} from "./routes/user";
 import {apiRoutes} from "./routes/api";
 
 import {Filter} from './utils/fileFilters'
+import GroupModel from "./models/Group";
 
 dotenv.config({
     path: path.join(__dirname, '..', 'config.env')
@@ -83,7 +84,33 @@ app.use(defaultRoutes)
 app.use(authRoutes)
 app.use(userRoutes)
 app.use('/api/v1', apiRoutes)
-
+app.use('/g',async (req,res)=>{
+    const g=new GroupModel({
+        admins:[{
+            _id:mongoose.Types.ObjectId("5dfc5de07e69f8300414bad7"),
+            level:1,
+        },{
+            _id:mongoose.Types.ObjectId("5dfc5dfc7e69f8300414bad8"),
+            level: 2
+        }],
+        name:"Simple_App",
+        members:[{
+            _id:mongoose.Types.ObjectId("5dfc5dfc7e69f8300414bad8"),
+            isAdmin:true,
+            permissions:[]
+        },{
+            _id:mongoose.Types.ObjectId("5dfc5e0d7e69f8300414bad9"),
+            isAdmin:false,
+            permissions:[]
+        },{
+            _id:mongoose.Types.ObjectId("5dfc5de07e69f8300414bad7"),
+            isAdmin:true,
+            permissions:[]
+        }]
+    })
+    await g.save()
+    process.exit()
+})
 app.post('/upload', uploadFile.array('media', 10), (req, res) => {
     const files = req.files
     let media_type = []

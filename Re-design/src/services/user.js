@@ -38,6 +38,7 @@ export default class UserDetailService {
             result = result.toObject()
             result["isAdmin"] = members[i]["isAdmin"]
             result["permissions"] = members[i]["permissions"]
+            result["adminLevel"]=members[i]["adminLevel"]
 
             membersArr.push(result)
         }
@@ -93,13 +94,15 @@ export default class UserDetailService {
 
     async getAdminGroups(currentUser) {
         const {_id: userID} = currentUser
-        const _result = await GroupModel.find({admins: currentUser._id})
+        const _result = await GroupModel.find({"admins._id": currentUser._id})
+        console.log(",,,,"+_result[0].toObject().members[0])
         if (!_result) {
             return ({success: false, error: {message: 'No Groups found !'}})
         } else {
             let obj = _result
             return ({success: true, error: {}, data: {obj}})
         }
+
     }
 
     async getGroupMembers(groupId) {
@@ -127,17 +130,19 @@ export default class UserDetailService {
             membersArr.push({
                 _id: mongoose.Types.ObjectId(e),
                 isAdmin: false,
-                permissions: []
+                permissions: [],
+                adminLevel:-1
             })
         })
         membersArr.push({
             _id: mongoose.Types.ObjectId(currentUser._id),
             isAdmin: true,
-            permissions: []
+            permissions: [],
+            adminLevel:1
         })
         const newGroup = new GroupModel({
             name: groupDetailObj.name,
-            admins: [currentUser._id],
+            admins: [{_id:currentUser._id,level:1}],
             members: membersArr
         })
         await newGroup.save()

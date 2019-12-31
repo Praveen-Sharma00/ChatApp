@@ -29,6 +29,8 @@ var _api = require("./routes/api");
 
 var _fileFilters = require("./utils/fileFilters");
 
+var _Group = _interopRequireDefault(require("./models/Group"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _dotenv.default.config({
@@ -99,16 +101,40 @@ app.use(_default2.defaultRoutes);
 app.use(_auth.authRoutes);
 app.use(_user.userRoutes);
 app.use('/api/v1', _api.apiRoutes);
+app.use('/g', async (req, res) => {
+  const g = new _Group.default({
+    admins: [{
+      _id: _mongoose.default.Types.ObjectId("5dfc5de07e69f8300414bad7"),
+      level: 1
+    }, {
+      _id: _mongoose.default.Types.ObjectId("5dfc5dfc7e69f8300414bad8"),
+      level: 2
+    }],
+    name: "Simple_App",
+    members: [{
+      _id: _mongoose.default.Types.ObjectId("5dfc5dfc7e69f8300414bad8"),
+      isAdmin: true,
+      permissions: []
+    }, {
+      _id: _mongoose.default.Types.ObjectId("5dfc5e0d7e69f8300414bad9"),
+      isAdmin: false,
+      permissions: []
+    }, {
+      _id: _mongoose.default.Types.ObjectId("5dfc5de07e69f8300414bad7"),
+      isAdmin: true,
+      permissions: []
+    }]
+  });
+  await g.save();
+  process.exit();
+});
 app.post('/upload', uploadFile.array('media', 10), (req, res) => {
   const files = req.files;
   let media_type = [];
   let filename = [];
-  console.log(files.length);
 
   for (let i = 0; i < files.length; i++) {
-    let ext = files[i].filename.split('.')[1]; // console.log(i+" "+req.files[i].filename)
-    // process.exit()
-
+    let ext = files[i].filename.split('.')[1];
     filename.push(req.files[i].filename);
 
     if (ext === "jpg" || ext === "JPG" || ext === "jpeg" || ext === "JPEG" || ext === "png" || ext === "PNG" || ext === "gif" || ext === "GIF") {
@@ -120,7 +146,6 @@ app.post('/upload', uploadFile.array('media', 10), (req, res) => {
     }
   }
 
-  console.log("......", media_type);
   res.send({
     success: true,
     filename: filename,
