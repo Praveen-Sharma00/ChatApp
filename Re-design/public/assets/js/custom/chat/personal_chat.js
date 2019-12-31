@@ -53,13 +53,13 @@ var socket;
                         scrollToBottom()
                     } else if (msg.message_type === "media") {
                         if (msg.media.object_type === "image") {
-                            $('<li class="sent media_image"><a href="http://localhost:3000/uploads/' + msg.object_location + '"><img src="http://localhost:3000/uploads/' + msg.text + '"></a><br></li>').appendTo($('.messages ul'));
+                            $('<li class="sent media_image"><a href="http://localhost:3000/uploads/' + msg.media.object_location + '"><img src="http://localhost:3000/uploads/' + msg.media.object_location + '"></a><br></li>').appendTo($('.messages ul'));
                             scrollToBottom()
                         } else if (msg.media.object_type === "pdf") {
-                            $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + msg.object_location + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
+                            $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + msg.media.object_location + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
                             scrollToBottom()
                         } else if (msg.media.object_type === "doc") {
-                            $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + msg.object_location + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
+                            $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + msg.media.object_location + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
                             scrollToBottom()
                         }
                     }
@@ -70,7 +70,7 @@ var socket;
                         scrollToBottom()
                     } else if (msg.message_type === "media") {
                         if (msg.media.object_type === "image") {
-                            $('<li class="replies media_image"><a href="http://localhost:3000/uploads/' + msg.text + '"><img src="http://localhost:3000/uploads/' + msg.text + '"></a><br></li>').appendTo($('.messages ul'));
+                            $('<li class="replies media_image"><a href="http://localhost:3000/uploads/' + msg.media.object_location + '"><img src="http://localhost:3000/uploads/' + msg.media.object_location + '"></a><br></li>').appendTo($('.messages ul'));
                             scrollToBottom()
                         } else if (msg.media.object_type === "pdf") {
                             $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + msg.media.object_location + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
@@ -217,7 +217,7 @@ var socket;
                 $('<li class="replies media_image"><a href="http://localhost:3000/uploads/' + data.text + '"><img src="http://localhost:3000/uploads/' + data.text + '"></a><br></li>').appendTo($('.messages ul'));
             } else if (data.media_type === "pdf") {
                 $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
-            } else if (r.media_type === "doc") {
+            } else if (data.media_type === "doc") {
                 $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
             }
             // $('<li class="replies media_upload"><p><a href="http://localhost:3000/uploads/'+data.text+'">Media Received</a></p></li>').appendTo($('.messages ul'));
@@ -257,9 +257,6 @@ var socket;
                 media_type: r.media_type,
                 text: filename
             })
-            // if ($.trim(message) === '') {
-            //     return false;
-            // }
             if (r.media_type === "image") {
                 $('<li class="sent media_image"><a href="http://localhost:3000/uploads/' + filename + '"><img src="http://localhost:3000/uploads/' + filename + '"></a></li><br>').appendTo($('.messages ul'));
             } else if (r.media_type === "pdf") {

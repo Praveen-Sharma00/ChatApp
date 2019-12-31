@@ -135,6 +135,9 @@ const setPermission = async (userId, i) => {
     } else {
         permissions.push("~BlockUploads")
     }
+    console.log(permissions)
+    console.log(currentGroupId)
+    console.log(userId)
     const response = await _user.updatePermissions(currentGroupId, userId, permissions)
     permissions = null
     if (response.success) {

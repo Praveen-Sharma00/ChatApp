@@ -14,9 +14,9 @@ class UserData {
     async doPostRequest(url, body) {
         const data = await fetch(this.baseUrl + url, {
             method: 'POST',
-            // headers: {
-            //     'Content-Type': 'application/json'
-            // },
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(body)
         })
         const response = await data.json()
@@ -94,6 +94,7 @@ class UserData {
     }
 
     async updatePermissions(groupId, userId, permissions) {
+        console.log(groupId,"+ ",userId,"+ ",permissions)
         const response = await this.doPostRequest('/api/v1/user/group/' + groupId, {
             permissions,
             userId
