@@ -22,9 +22,10 @@ class UserData {
         const response = await data.json()
         return response
     }
-    async doUploadPostRequest(formData){
-        const data = await fetch('/upload/', { method: "POST", body: formData });
-        const response=await data.json()
+
+    async doUploadPostRequest(formData) {
+        const data = await fetch('/upload/', {method: "POST", body: formData});
+        const response = await data.json()
         return response
     }
 
@@ -86,7 +87,7 @@ class UserData {
     }
 
     async updatePermissions(groupId, userId, permissions) {
-        console.log(groupId,"+ ",userId,"+ ",permissions)
+        console.log(groupId, "+ ", userId, "+ ", permissions)
         const response = await this.doPostRequest('/api/v1/user/group/' + groupId, {
             permissions,
             userId
@@ -99,9 +100,9 @@ class UserData {
         return response
     }
 
-    async uploadFile (data){
+    async uploadFile(data) {
         console.log(data)
-        const  response=await this.doUploadPostRequest(data)
+        const response = await this.doUploadPostRequest(data)
         return response
     }
 }

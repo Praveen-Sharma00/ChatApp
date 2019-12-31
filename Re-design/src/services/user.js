@@ -166,7 +166,6 @@ export default class UserDetailService {
     }
 
     async updateIndividualConversation(senderId, receiverID, text, message_type, media_type) {
-        // process.exit()
         const user = await UserModel.findOne({_id: mongoose.Types.ObjectId(senderId)})
         let a = senderId, b = receiverID;
         if (a > b) {
@@ -178,7 +177,7 @@ export default class UserDetailService {
         let text_ = ""
         if (message_type === "text") {
             msg_type = "text"
-            text_=text
+            text_ = text
             md_type[0] = "default"
         } else {
             msg_type = "media"
@@ -198,7 +197,6 @@ export default class UserDetailService {
                 }
             }
         }
-
 
 
         const conversation = await ConversationModel.findOne({between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)]})
@@ -251,8 +249,8 @@ export default class UserDetailService {
         let text_ = ""
         if (message_type === "text") {
             msg_type = "text"
-            md_type[0]="default"
-            text_=text
+            md_type[0] = "default"
+            text_ = text
         } else {
             msg_type = "media"
             for (let i = 0; i < media_type.length; i++) {
@@ -271,7 +269,6 @@ export default class UserDetailService {
                 }
             }
         }
-
 
 
         const conversation = await ConversationModel.findOne({group_id: mongoose.Types.ObjectId(groupId)})

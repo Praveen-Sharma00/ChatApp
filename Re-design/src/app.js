@@ -25,15 +25,15 @@ const multer = require('multer')
 
 
 let storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, path.join(__dirname, '..', 'public','uploads'));
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '..', 'public', 'uploads'));
     },
-    filename: function(req, file, cb) {
-        cb(null, "file" + '-' +Date.now()+path.extname(file.originalname) );
+    filename: function (req, file, cb) {
+        cb(null, "file" + '-' + Date.now() + path.extname(file.originalname));
     }
 });
 
-let uploadFile = multer({ storage: storage,fileFilter:Filter })
+let uploadFile = multer({storage: storage, fileFilter: Filter})
 mongoose.connect(
     process.env.DATABASE_URL, {
         useNewUrlParser: true,
@@ -51,7 +51,7 @@ const expressStore = new MongoDBStore({
     collection: 'sessions'
 })
 
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(cors())
 app.use(compression())
@@ -67,14 +67,14 @@ app.use(session({
 
 app.use(express.static(path.join(__dirname, '..', 'public')))
 // app.use('/uploads', express.static(path.join(__dirname, '..', 'public','uploads')));
-app.use('/assets',express.static(path.join(__dirname, '..', 'public','assets')))
+app.use('/assets', express.static(path.join(__dirname, '..', 'public', 'assets')))
 app.engine('html', require('ejs').renderFile)
 app.set('view engine', 'html')
 app.set('views', path.join(__dirname, '..', 'public', 'views'))
 
 
 /************************ROUTE MIDDLEWARES***************************** */
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn
     res.locals.user = req.session.user
     next()
@@ -82,29 +82,24 @@ app.use((req,res,next)=>{
 app.use(defaultRoutes)
 app.use(authRoutes)
 app.use(userRoutes)
-app.use('/api/v1',apiRoutes)
+app.use('/api/v1', apiRoutes)
 
-app.post('/upload',uploadFile.array('media',10),(req,res)=>{
-   const files = req.files
-   let media_type=[]
-    let filename=[]
-    console.log(files.length)
-    for(let i=0;i<files.length;i++){
-        let ext=(files[i].filename).split('.')[1]
-        // console.log(i+" "+req.files[i].filename)
-        // process.exit()
+app.post('/upload', uploadFile.array('media', 10), (req, res) => {
+    const files = req.files
+    let media_type = []
+    let filename = []
+    for (let i = 0; i < files.length; i++) {
+        let ext = (files[i].filename).split('.')[1]
         filename.push(req.files[i].filename)
-        if(ext==="jpg"||ext==="JPG"||ext==="jpeg"||ext==="JPEG"||ext==="png"||ext==="PNG"||ext==="gif"||ext==="GIF"){
+        if (ext === "jpg" || ext === "JPG" || ext === "jpeg" || ext === "JPEG" || ext === "png" || ext === "PNG" || ext === "gif" || ext === "GIF") {
             media_type.push("image")
-        }else if(ext==="pdf" || ext ==="PDF"){
+        } else if (ext === "pdf" || ext === "PDF") {
             media_type.push("pdf")
-        }else {
+        } else {
             media_type.push("doc")
         }
     }
-    console.log("......",media_type)
-
-   res.send({success:true,filename:filename,media_type:media_type})
+    res.send({success: true, filename: filename, media_type: media_type})
 })
 // app.use(userRoutes)
 /********************************************************************* */

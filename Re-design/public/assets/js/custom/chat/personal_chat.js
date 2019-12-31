@@ -180,10 +180,7 @@ var socket;
     loadGroupData = async () => {
         await populateBasicGroupData()
     }
-    tell = async (id) => {
-        const response = await _user.getMembersOfGroup(id)
-        console.log(response)
-    }
+
 
     newMessage = () => {
 
@@ -214,7 +211,6 @@ var socket;
         }
     });
     socket.on('new_msg', (data) => {
-        console.log(data)
         if (data.message_type === "text") {
             $('<li class="replies"><p>' + data.text + '</p></li>').appendTo($('.messages ul'));
         } else if (data.message_type === "media") {
@@ -249,7 +245,7 @@ var socket;
         const fileInput = document.getElementById("fileUpload")
         let formData = new FormData();
         let file = fileInput.files;
-        for(let i=0;i<file.length;i++){
+        for (let i = 0; i < file.length; i++) {
             formData.append("media", file[i]);
         }
 
@@ -258,9 +254,6 @@ var socket;
         if (r.success) {
 
             filename = r.filename
-            console.log("______",filename)
-            console.log("media : ",r.media_type)
-            console.log(filename)
             socket.emit('new_msg', {
                 sender: currentUser,
                 receiver: receiverId,

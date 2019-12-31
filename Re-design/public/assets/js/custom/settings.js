@@ -55,9 +55,9 @@ const generateGroupMemberListTable = async (groupId) => {
                 cColor = "primary"
                 cTitle = "Click to Make Read-Only user"
             }
-            if(currentUser._id==members[i]._id){
+            if (currentUser._id == members[i]._id) {
                 continue;
-            }else{
+            } else {
                 str += '<tr>\n' +
                     ' <th scope="row">' + (i + 1) + '</th>\n' +
                     ' <td>' + members[i].name + '</td>\n' +
