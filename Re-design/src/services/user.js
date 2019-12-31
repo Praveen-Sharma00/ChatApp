@@ -409,7 +409,6 @@ export default class UserDetailService {
                         "members._id": mongoose.Types.ObjectId(userId)
                     }
             }])
-        console.log(_result)
         let permissions = {}
         permissions["isAdmin"] = _result[0].members.isAdmin
         if (_result[0].members.permissions === undefined) {
