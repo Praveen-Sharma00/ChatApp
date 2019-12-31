@@ -33,11 +33,11 @@ const conversationSchema = new mongoose.Schema({
         },
         media:{
             object_type:{
-                type:String,
+                type:[String],
                 enum:["image","pdf","doc","default"]
             },
             object_location:{
-                type:String
+                type:[String]
             }
         },
         sender: {

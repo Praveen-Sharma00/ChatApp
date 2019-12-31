@@ -84,21 +84,27 @@ app.use(authRoutes)
 app.use(userRoutes)
 app.use('/api/v1',apiRoutes)
 
-app.post('/upload',uploadFile.single('media'),(req,res)=>{
-   if(req.fileValidationError){
-       return res.send({success:false,error:{message:'Invalid file format'}})
-   }
-   let ext = path.extname(req.file.filename).split('.')[1]
-    console.log(ext)
-    let media_type=""
-    if(ext==="jpg"||ext==="JPG"||ext==="jpeg"||ext==="JPEG"||ext==="png"||ext==="PNG"||ext==="gif"||ext==="GIF"){
-        media_type="image"
-    }else if(ext==="pdf" || ext ==="PDF"){
-        media_type="pdf"
-    }else {
-        media_type="doc"
+app.post('/upload',uploadFile.array('media',10),(req,res)=>{
+   const files = req.files
+   let media_type=[]
+    let filename=[]
+    console.log(files.length)
+    for(let i=0;i<files.length;i++){
+        let ext=(files[i].filename).split('.')[1]
+        // console.log(i+" "+req.files[i].filename)
+        // process.exit()
+        filename.push(req.files[i].filename)
+        if(ext==="jpg"||ext==="JPG"||ext==="jpeg"||ext==="JPEG"||ext==="png"||ext==="PNG"||ext==="gif"||ext==="GIF"){
+            media_type.push("image")
+        }else if(ext==="pdf" || ext ==="PDF"){
+            media_type.push("pdf")
+        }else {
+            media_type.push("doc")
+        }
     }
-   res.send({success:true,filename:req.file.filename,media_type:media_type})
+    console.log("......",media_type)
+
+   res.send({success:true,filename:filename,media_type:media_type})
 })
 // app.use(userRoutes)
 /********************************************************************* */

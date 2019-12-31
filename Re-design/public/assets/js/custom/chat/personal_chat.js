@@ -52,16 +52,19 @@ var socket;
                         $('<li class="sent"><p>' + msg.text + '</p></li>').appendTo($('.messages ul'));
                         scrollToBottom()
                     } else if (msg.message_type === "media") {
-                        if (msg.media.object_type === "image") {
-                            $('<li class="sent media_image"><a href="http://localhost:3000/uploads/' + msg.media.object_location + '"><img src="http://localhost:3000/uploads/' + msg.media.object_location + '"></a><br></li>').appendTo($('.messages ul'));
-                            scrollToBottom()
-                        } else if (msg.media.object_type === "pdf") {
-                            $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + msg.media.object_location + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
-                            scrollToBottom()
-                        } else if (msg.media.object_type === "doc") {
-                            $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + msg.media.object_location + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
-                            scrollToBottom()
+                        for (let i = 0; i < msg.media.object_type.length; i++) {
+                            if (msg.media.object_type[i] === "image") {
+                                $('<li class="sent media_image"><a href="http://localhost:3000/uploads/' + msg.media.object_location[i] + '"><img src="http://localhost:3000/uploads/' + msg.media.object_location[i] + '"></a><br></li>').appendTo($('.messages ul'));
+                                scrollToBottom()
+                            } else if (msg.media.object_type[i] === "pdf") {
+                                $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + msg.media.object_location[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
+                                scrollToBottom()
+                            } else if (msg.media.object_type[i] === "doc") {
+                                $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + msg.media.object_location[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
+                                scrollToBottom()
+                            }
                         }
+
                     }
 
                 } else {
@@ -69,15 +72,17 @@ var socket;
                         $('<li class="replies"><p>' + msg.text + '</p></li>').appendTo($('.messages ul'));
                         scrollToBottom()
                     } else if (msg.message_type === "media") {
-                        if (msg.media.object_type === "image") {
-                            $('<li class="replies media_image"><a href="http://localhost:3000/uploads/' + msg.media.object_location + '"><img src="http://localhost:3000/uploads/' + msg.media.object_location + '"></a><br></li>').appendTo($('.messages ul'));
-                            scrollToBottom()
-                        } else if (msg.media.object_type === "pdf") {
-                            $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + msg.media.object_location + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
-                            scrollToBottom()
-                        } else if (msg.media.object_type === "doc") {
-                            $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + msg.media.object_location + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
-                            scrollToBottom()
+                        for (let i = 0; i < msg.media.object_type.length; i++) {
+                            if (msg.media.object_type[i] === "image") {
+                                $('<li class="replies media_image"><a href="http://localhost:3000/uploads/' + msg.media.object_location[i] + '"><img src="http://localhost:3000/uploads/' + msg.media.object_location[i] + '"></a><br></li>').appendTo($('.messages ul'));
+                                scrollToBottom()
+                            } else if (msg.media.object_type[i] === "pdf") {
+                                $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + msg.media.object_location[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
+                                scrollToBottom()
+                            } else if (msg.media.object_type[i] === "doc") {
+                                $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + msg.media.object_location[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
+                                scrollToBottom()
+                            }
                         }
                         // $('<li class="replies media_upload"><p><a href="http://localhost:3000/uploads/'+data.text+'">Media Received</a></p></li>').appendTo($('.messages ul'));
                     }
@@ -188,7 +193,7 @@ var socket;
             receiver: receiverId,
             type: conversationType,
             message_type: "text",
-            media_type: "",
+            media_type: [],
             text: message
         })
         if ($.trim(message) === '') {
@@ -213,13 +218,16 @@ var socket;
         if (data.message_type === "text") {
             $('<li class="replies"><p>' + data.text + '</p></li>').appendTo($('.messages ul'));
         } else if (data.message_type === "media") {
-            if (data.media_type === "image") {
-                $('<li class="replies media_image"><a href="http://localhost:3000/uploads/' + data.text + '"><img src="http://localhost:3000/uploads/' + data.text + '"></a><br></li>').appendTo($('.messages ul'));
-            } else if (data.media_type === "pdf") {
-                $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
-            } else if (data.media_type === "doc") {
-                $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
+            for (let i = 0; i < data.media_type.length; i++) {
+                if (data.media_type[i] === "image") {
+                    $('<li class="replies media_image"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/uploads/' + data.text[i] + '"></a><br></li>').appendTo($('.messages ul'));
+                } else if (data.media_type[i] === "pdf") {
+                    $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
+                } else if (data.media_type[i] === "doc") {
+                    $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
+                }
             }
+
             // $('<li class="replies media_upload"><p><a href="http://localhost:3000/uploads/'+data.text+'">Media Received</a></p></li>').appendTo($('.messages ul'));
         }
 
@@ -240,14 +248,18 @@ var socket;
 
         const fileInput = document.getElementById("fileUpload")
         let formData = new FormData();
-        let file = fileInput.files[0];
-        formData.append("media", file);
+        let file = fileInput.files;
+        for(let i=0;i<file.length;i++){
+            formData.append("media", file[i]);
+        }
 
         let r = await _user.uploadFile(formData)
         let filename = ""
         if (r.success) {
-            console.log(r)
+
             filename = r.filename
+            console.log("______",filename)
+            console.log("media : ",r.media_type)
             console.log(filename)
             socket.emit('new_msg', {
                 sender: currentUser,
@@ -257,13 +269,16 @@ var socket;
                 media_type: r.media_type,
                 text: filename
             })
-            if (r.media_type === "image") {
-                $('<li class="sent media_image"><a href="http://localhost:3000/uploads/' + filename + '"><img src="http://localhost:3000/uploads/' + filename + '"></a></li><br>').appendTo($('.messages ul'));
-            } else if (r.media_type === "pdf") {
-                $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + filename + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
-            } else if (r.media_type === "doc") {
-                $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + filename + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
+            for (let i = 0; i < r.media_type.length; i++) {
+                if (r.media_type[i] === "image") {
+                    $('<li class="sent media_image"><a href="http://localhost:3000/uploads/' + filename[i] + '"><img src="http://localhost:3000/uploads/' + filename[i] + '"></a></li><br>').appendTo($('.messages ul'));
+                } else if (r.media_type[i] === "pdf") {
+                    $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + filename[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
+                } else if (r.media_type[i] === "doc") {
+                    $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + filename[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
+                }
             }
+
             $('.message-input input').val(null);
             // $('.contact.active .preview').html('<span>You: </span>' + message);
             scrollToBottom()

@@ -329,6 +329,7 @@ class UserDetailService {
   }
 
   async updateIndividualConversation(senderId, receiverID, text, message_type, media_type) {
+    // process.exit()
     const user = await _User.default.findOne({
       _id: _mongoose.default.Types.ObjectId(senderId)
     });
@@ -340,32 +341,32 @@ class UserDetailService {
     }
 
     let msg_type = "";
-    let md_type = "";
-    let md_loc = "";
+    let md_type = [];
+    let md_loc = [];
+    let text_ = "";
 
     if (message_type === "text") {
       msg_type = "text";
+      text_ = text;
+      md_type[0] = "default";
     } else {
       msg_type = "media";
-    }
 
-    let text_ = "";
-
-    if (media_type === "image") {
-      md_type = "image";
-      text_ = "";
-      md_loc = text;
-    } else if (media_type === "pdf") {
-      md_type = "pdf";
-      text_ = "";
-      md_loc = text;
-    } else if (media_type === "doc") {
-      md_type = "doc";
-      text_ = "";
-      md_loc = text;
-    } else {
-      md_type = "default";
-      text_ = text;
+      for (let i = 0; i < media_type.length; i++) {
+        if (media_type[i] === "image") {
+          md_type[i] = "image";
+          text_ = "";
+          md_loc[i] = text[i];
+        } else if (media_type[i] === "pdf") {
+          md_type[i] = "pdf";
+          text_ = "";
+          md_loc[i] = text[i];
+        } else if (media_type[i] === "doc") {
+          md_type[i] = "doc";
+          text_ = "";
+          md_loc[i] = text[i];
+        }
+      }
     }
 
     const conversation = await _Conversation.default.findOne({
@@ -423,32 +424,32 @@ class UserDetailService {
       _id: _mongoose.default.Types.ObjectId(senderId)
     });
     let msg_type = "";
-    let md_type = "";
-    let md_loc = "";
+    let md_type = [];
+    let md_loc = [];
+    let text_ = "";
 
     if (message_type === "text") {
       msg_type = "text";
+      md_type[0] = "default";
+      text_ = text;
     } else {
       msg_type = "media";
-    }
 
-    let text_ = "";
-
-    if (media_type === "image") {
-      md_type = "image";
-      text_ = "";
-      md_loc = text;
-    } else if (media_type === "pdf") {
-      md_type = "pdf";
-      text_ = "";
-      md_loc = text;
-    } else if (media_type === "doc") {
-      md_type = "doc";
-      text_ = "";
-      md_loc = text;
-    } else {
-      md_type = "default";
-      text_ = text;
+      for (let i = 0; i < media_type.length; i++) {
+        if (media_type[i] === "image") {
+          md_type[i] = "image";
+          text_ = "";
+          md_loc[i] = text[i];
+        } else if (media_type[i] === "pdf") {
+          md_type[i] = "pdf";
+          text_ = "";
+          md_loc[i] = text[i];
+        } else if (media_type[i] === "doc") {
+          md_type[i] = "doc";
+          text_ = "";
+          md_loc = text[i];
+        }
+      }
     }
 
     const conversation = await _Conversation.default.findOne({
