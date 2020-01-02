@@ -85,9 +85,11 @@ class UserData {
         const response = await this.doGetRequest('/api/v1/admin/groups')
         return response
     }
-
+    async getGroupAdmins(groupId){
+        const response = await this.doGetRequest('/api/v1/group/'+groupId+'/admins')
+        return response
+    }
     async updatePermissions(groupId, userId, permissions) {
-        console.log(groupId, "+ ", userId, "+ ", permissions)
         const response = await this.doPostRequest('/api/v1/user/group/' + groupId, {
             permissions,
             userId

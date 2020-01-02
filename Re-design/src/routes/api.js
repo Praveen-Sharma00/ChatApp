@@ -37,7 +37,9 @@ api
     .get(userController.getGroupConversations)
     .post(userController.updateGroupConversation)
 
-
+api
+    .route('/group/:groupId/admins')
+    .get(userController.getGroupAdmins)
 api
     .route('/admin/groups')
     .get(userController.getAdminGroups)

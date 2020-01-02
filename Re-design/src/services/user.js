@@ -95,7 +95,6 @@ export default class UserDetailService {
     async getAdminGroups(currentUser) {
         const {_id: userID} = currentUser
         const _result = await GroupModel.find({"admins._id": currentUser._id})
-        console.log(",,,," + _result[0].toObject().members[0])
         if (!_result) {
             return ({success: false, error: {message: 'No Groups found !'}})
         } else {
@@ -103,6 +102,15 @@ export default class UserDetailService {
             return ({success: true, error: {}, data: {obj}})
         }
 
+    }
+    async getGroupAdmins(groupId){
+        if (groupId === null || groupId === "") {
+            return ({success: false, error: {message: 'Invalid route params !'}})
+        }
+        const obj = await GroupModel.findOne({
+            _id:groupId
+        }).select('admins')
+        return ({success: true, error: {}, data: {obj}})
     }
 
     async getGroupMembers(groupId) {
@@ -251,15 +259,21 @@ export default class UserDetailService {
         let msg_type = ""
         let md_type = []
         let md_loc = []
-        let msg_status = ""
+        let msg_status = "pending"
         let text_ = ""
         if (message_type === "text") {
             msg_type = "text"
             md_type[0] = "default"
             text_ = text
-        } else {
+        }
+        else {
             msg_type = "media"
-            msg_status = "pending"
+            const group = await GroupModel.findOne({_id: groupId})
+            // const isPresent = group.admins.map((obj) => obj._id == senderId).length > 0
+            const isPresent = group.admins.filter((obj) => obj._id == senderId).length>0
+            if (isPresent) {
+                msg_status="approved"
+            }
             for (let i = 0; i < media_type.length; i++) {
                 if (media_type[i] === "image") {
                     md_type[i] = "image"
@@ -277,8 +291,6 @@ export default class UserDetailService {
             }
 
         }
-
-
         const conversation = await ConversationModel.findOne({group_id: mongoose.Types.ObjectId(groupId)})
         if (!conversation) {
             const newConversation = new ConversationModel({
@@ -290,15 +302,16 @@ export default class UserDetailService {
                     message_type: msg_type,
                     media: {
                         object_type: md_type,
-                        object_location: md_loc,
-                        approval_status: msg_status
+                        object_location: md_loc
                     },
+                    approval_status: msg_status,
                     sender: {
                         id: mongoose.Types.ObjectId(user._id),
                         name: user.name
                     },
                     timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
-                }]
+                }],
+
             })
             await newConversation.save()
         } else {
@@ -314,9 +327,10 @@ export default class UserDetailService {
                 message_type: msg_type,
                 media: {
                     object_type: md_type,
-                    object_location: md_loc,
-                    approval_status: msg_status
+                    object_location: md_loc
+
                 },
+                approval_status: msg_status,
                 timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
             })
             await existingConversation.save()
@@ -365,11 +379,15 @@ export default class UserDetailService {
         if (groupId === null || groupId === "" || msgId === null || msgId === "") {
             return ({success: false, error: {message: 'Invalid parameters !'}})
         }
-        const _result = await ConversationModel.find({"messages._id": msgId})
+        let _result = await ConversationModel.find({"messages._id": msgId})
+        console.log(_result)
         if (!_result || _result === null) {
             return ({success: false, error: {message: 'No such message found !'}})
         } else {
-            _result.approval_status = "approved"
+            // let r= _result[0].messages.filter(m => m._id == msgId)[0]
+            // console.log("qqqqq",(_result[0].messages.filter(m => m._id == msgId))[0].approval_status)
+            // process.exit()
+            (_result[0].messages.filter(m => m._id == msgId))[0].approval_status = "approved"
             await _result.save()
             return ({success: true, error: {}, data: {}})
         }

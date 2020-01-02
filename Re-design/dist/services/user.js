@@ -197,8 +197,6 @@ class UserDetailService {
       "admins._id": currentUser._id
     });
 
-    console.log(",,,," + _result[0].toObject().members[0]);
-
     if (!_result) {
       return {
         success: false,
@@ -216,6 +214,28 @@ class UserDetailService {
         }
       };
     }
+  }
+
+  async getGroupAdmins(groupId) {
+    if (groupId === null || groupId === "") {
+      return {
+        success: false,
+        error: {
+          message: 'Invalid route params !'
+        }
+      };
+    }
+
+    const obj = await _Group.default.findOne({
+      _id: groupId
+    }).select('admins');
+    return {
+      success: true,
+      error: {},
+      data: {
+        obj
+      }
+    };
   }
 
   async getGroupMembers(groupId) {
@@ -433,7 +453,7 @@ class UserDetailService {
     let msg_type = "";
     let md_type = [];
     let md_loc = [];
-    let msg_status = "";
+    let msg_status = "pending";
     let text_ = "";
 
     if (message_type === "text") {
@@ -442,7 +462,15 @@ class UserDetailService {
       text_ = text;
     } else {
       msg_type = "media";
-      msg_status = "pending";
+      const group = await _Group.default.findOne({
+        _id: groupId
+      }); // const isPresent = group.admins.map((obj) => obj._id == senderId).length > 0
+
+      const isPresent = group.admins.filter(obj => obj._id == senderId).length > 0;
+
+      if (isPresent) {
+        msg_status = "approved";
+      }
 
       for (let i = 0; i < media_type.length; i++) {
         if (media_type[i] === "image") {
@@ -475,9 +503,9 @@ class UserDetailService {
           message_type: msg_type,
           media: {
             object_type: md_type,
-            object_location: md_loc,
-            approval_status: msg_status
+            object_location: md_loc
           },
+          approval_status: msg_status,
           sender: {
             id: _mongoose.default.Types.ObjectId(user._id),
             name: user.name
@@ -499,9 +527,9 @@ class UserDetailService {
         message_type: msg_type,
         media: {
           object_type: md_type,
-          object_location: md_loc,
-          approval_status: msg_status
+          object_location: md_loc
         },
+        approval_status: msg_status,
         timestamp: moment().format('MMMM Do YYYY, h:mm A').toString()
       });
       await existingConversation.save();
@@ -563,36 +591,67 @@ class UserDetailService {
       conversation_type: 2
     }).select('messages');
 
-    const _r = [];
+    const messages = _result.messages;
+    const pending_messages = [];
 
-    for (let i = 0; i < _result.messages.length; i++) {
-      _r.push(_result.messages[i].toObject());
+    for (let i = 0; i < messages.length; i++) {
+      if (messages[i].approval_status === "pending") pending_messages.push(messages[i].toObject());
     }
 
-    console.log(_r); // console.log(_result.messages)
-
-    process.exit();
-
-    if (!_result || _result.length === 0) {
+    if (!pending_messages || pending_messages.length === 0) {
       return {
         success: false,
         error: {
-          message: 'No Conversations so far !'
+          message: 'No new request(s) so far !'
         }
       };
     } else {
-      let messages = _result.messages;
       return {
         success: true,
         error: {},
         data: {
-          messages
+          pending_messages
         }
       };
     }
   }
 
-  async updatePendingGroupUploadStatus(groupId, msgId) {} // async findGroup(groupId){
+  async updatePendingGroupUploadStatus(groupId, msgId) {
+    if (groupId === null || groupId === "" || msgId === null || msgId === "") {
+      return {
+        success: false,
+        error: {
+          message: 'Invalid parameters !'
+        }
+      };
+    }
+
+    let _result = await _Conversation.default.find({
+      "messages._id": msgId
+    });
+
+    console.log(_result);
+
+    if (!_result || _result === null) {
+      return {
+        success: false,
+        error: {
+          message: 'No such message found !'
+        }
+      };
+    } else {
+      // let r= _result[0].messages.filter(m => m._id == msgId)[0]
+      // console.log("qqqqq",(_result[0].messages.filter(m => m._id == msgId))[0].approval_status)
+      // process.exit()
+      _result[0].messages.filter(m => m._id == msgId)[0].approval_status = "approved";
+      await _result[0].save();
+      return {
+        success: true,
+        error: {},
+        data: {}
+      };
+    }
+  } // async findGroup(groupId){
   //     const _result = await GroupModel.findOne({
   //         _id:mongoose.Types.ObjectId(groupId)
   //     })

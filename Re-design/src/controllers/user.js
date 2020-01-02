@@ -39,6 +39,11 @@ const getAdminGroups = async (req, res) => {
     const response = await _userDetailService.getAdminGroups(user)
     return res.send(response)
 }
+const getGroupAdmins = async (req,res)=>{
+    const {groupId} =   req.params
+    const response = await _userDetailService.getGroupAdmins(groupId)
+    return res.send(response)
+}
 const getGroupMembers = async (req, res) => {
     const groupId = req.params.groupId
     const response = await _userDetailService.getGroupMembers(groupId)
@@ -117,6 +122,7 @@ export let userController = {
     getUserGroups,
     createGroup,
     getAdminGroups,
+    getGroupAdmins,
     getGroupMembers,
     updatePermissions,
     getUserPermissions,

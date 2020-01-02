@@ -34,6 +34,20 @@ io.on('connection', function (socket) {
 
     socket.join(roomName);
   });
+  socket.on('init', data => {
+    socket.join(data.id);
+  });
+  socket.on('new_upload', data => {
+    const admins = data.admins;
+    admins.forEach(e => {
+      socket.broadcast.to(e._id).emit('new_upload', {
+        sender: data.sender,
+        group: data.receiver,
+        media_type: data.media_type,
+        text: data.text
+      });
+    });
+  });
   socket.on('new_msg', async metadata => {
     let _room;
 
