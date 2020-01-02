@@ -252,7 +252,6 @@ var socket;
         let r = await _user.uploadFile(formData)
         let filename = ""
         if (r.success) {
-
             filename = r.filename
             socket.emit('new_msg', {
                 sender: currentUser,
@@ -271,7 +270,6 @@ var socket;
                     $('<li class="sent media_doc"><a href="http://localhost:3000/uploads/' + filename[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
                 }
             }
-
             $('.message-input input').val(null);
             // $('.contact.active .preview').html('<span>You: </span>' + message);
             scrollToBottom()

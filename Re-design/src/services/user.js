@@ -38,7 +38,7 @@ export default class UserDetailService {
             result = result.toObject()
             result["isAdmin"] = members[i]["isAdmin"]
             result["permissions"] = members[i]["permissions"]
-            result["adminLevel"]=members[i]["adminLevel"]
+            result["adminLevel"] = members[i]["adminLevel"]
 
             membersArr.push(result)
         }
@@ -95,7 +95,7 @@ export default class UserDetailService {
     async getAdminGroups(currentUser) {
         const {_id: userID} = currentUser
         const _result = await GroupModel.find({"admins._id": currentUser._id})
-        console.log(",,,,"+_result[0].toObject().members[0])
+        console.log(",,,," + _result[0].toObject().members[0])
         if (!_result) {
             return ({success: false, error: {message: 'No Groups found !'}})
         } else {
@@ -131,18 +131,18 @@ export default class UserDetailService {
                 _id: mongoose.Types.ObjectId(e),
                 isAdmin: false,
                 permissions: [],
-                adminLevel:-1
+                adminLevel: -1
             })
         })
         membersArr.push({
             _id: mongoose.Types.ObjectId(currentUser._id),
             isAdmin: true,
             permissions: [],
-            adminLevel:1
+            adminLevel: 1
         })
         const newGroup = new GroupModel({
             name: groupDetailObj.name,
-            admins: [{_id:currentUser._id,level:1}],
+            admins: [{_id: currentUser._id, level: 1}],
             members: membersArr
         })
         await newGroup.save()
@@ -350,7 +350,7 @@ export default class UserDetailService {
         const group = await GroupModel.findOne({_id: groupId})
         // const isPresent = group.admins.includes(currentUserId)
         console.log(group.admins)
-        const isPresent= group.admins.map((obj)=>obj._id==currentUserId).length>0
+        const isPresent = group.admins.map((obj) => obj._id == currentUserId).length > 0
 
         if (!isPresent) {
             return ({success: false, error: {message: "You\'re not authorized "}})
@@ -360,7 +360,7 @@ export default class UserDetailService {
         const newPermissions = (group.members.filter(m => m._id == userId)[0]).permissions
 
         // const isUserAlreadyAdmin = newAdmins.map((obj=>obj._id==userId)).length > 0
-        const isUserAlreadyAdmin = newAdmins.filter((obj=>obj._id==userId)).length>0
+        const isUserAlreadyAdmin = newAdmins.filter((obj => obj._id == userId)).length > 0
 
         // console.log("isUserAlreadyAdmin : ",isUserAlreadyAdmin)
         const _r = permissions
@@ -371,12 +371,12 @@ export default class UserDetailService {
                 group.members.filter(m => m._id == userId)[0].isAdmin = true
                 group.members.filter(m => m._id == userId)[0].adminLevel = 2
                 newAdmins.push({
-                    _id:mongoose.Types.ObjectId(userId),
-                    level:2
+                    _id: mongoose.Types.ObjectId(userId),
+                    level: 2
                 })
             }
         } else if (_r.includes("~Admin")) {
-            const index = newAdmins.findIndex(obj=>obj._id==userId)
+            const index = newAdmins.findIndex(obj => obj._id == userId)
             if (index > -1) {
                 newAdmins.splice(index, 1)
             }
