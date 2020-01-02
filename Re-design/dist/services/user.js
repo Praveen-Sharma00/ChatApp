@@ -72,6 +72,7 @@ class UserDetailService {
       result = result.toObject();
       result["isAdmin"] = members[i]["isAdmin"];
       result["permissions"] = members[i]["permissions"];
+      result["adminLevel"] = members[i]["adminLevel"];
       membersArr.push(result);
     }
 
@@ -193,8 +194,10 @@ class UserDetailService {
     } = currentUser;
 
     const _result = await _Group.default.find({
-      admins: currentUser._id
+      "admins._id": currentUser._id
     });
+
+    console.log(",,,," + _result[0].toObject().members[0]);
 
     if (!_result) {
       return {
@@ -266,17 +269,22 @@ class UserDetailService {
       membersArr.push({
         _id: _mongoose.default.Types.ObjectId(e),
         isAdmin: false,
-        permissions: []
+        permissions: [],
+        adminLevel: -1
       });
     });
     membersArr.push({
       _id: _mongoose.default.Types.ObjectId(currentUser._id),
       isAdmin: true,
-      permissions: []
+      permissions: [],
+      adminLevel: 1
     });
     const newGroup = new _Group.default({
       name: groupDetailObj.name,
-      admins: [currentUser._id],
+      admins: [{
+        _id: currentUser._id,
+        level: 1
+      }],
       members: membersArr
     });
     await newGroup.save();
@@ -329,7 +337,6 @@ class UserDetailService {
   }
 
   async updateIndividualConversation(senderId, receiverID, text, message_type, media_type) {
-    // process.exit()
     const user = await _User.default.findOne({
       _id: _mongoose.default.Types.ObjectId(senderId)
     });
@@ -550,8 +557,10 @@ class UserDetailService {
   async updatePermissions(currentUserId, groupId, userId, permissions) {
     const group = await _Group.default.findOne({
       _id: groupId
-    });
-    const isPresent = group.admins.includes(currentUserId);
+    }); // const isPresent = group.admins.includes(currentUserId)
+
+    console.log(group.admins);
+    const isPresent = group.admins.map(obj => obj._id == currentUserId).length > 0;
 
     if (!isPresent) {
       return {
@@ -562,28 +571,39 @@ class UserDetailService {
       };
     }
 
-    const newAdmins = group.admins;
-    const newPermissions = group.members.filter(m => m._id == userId)[0].permissions;
+    const newAdmins = group.admins; // const newPermissions = group.members.filter(m => m._id == userId)[0].permissions
+
+    const newPermissions = group.members.filter(m => m._id == userId)[0].permissions; // const isUserAlreadyAdmin = newAdmins.map((obj=>obj._id==userId)).length > 0
+
+    const isUserAlreadyAdmin = newAdmins.filter(obj => obj._id == userId).length > 0; // console.log("isUserAlreadyAdmin : ",isUserAlreadyAdmin)
+
     const _r = permissions;
 
     if (_r.includes("Admin")) {
-      if (!newAdmins.includes(userId)) {
+      if (!isUserAlreadyAdmin) {
+        console.log("THIS AGAIN RUNS");
         group.members.filter(m => m._id == userId)[0].isAdmin = true;
-        newAdmins.push(userId);
+        group.members.filter(m => m._id == userId)[0].adminLevel = 2;
+        newAdmins.push({
+          _id: _mongoose.default.Types.ObjectId(userId),
+          level: 2
+        });
       }
     } else if (_r.includes("~Admin")) {
-      const index = newAdmins.indexOf(userId);
+      const index = newAdmins.findIndex(obj => obj._id == userId);
 
       if (index > -1) {
         newAdmins.splice(index, 1);
       }
 
       group.members.filter(m => m._id == userId)[0].isAdmin = false;
+      group.members.filter(m => m._id == userId)[0].adminLevel = -1;
     }
 
     if (_r.includes("ReadOnly")) {
       if (!newPermissions.includes("ReadOnly")) newPermissions.push("ReadOnly");
     } else if (_r.includes("~ReadOnly")) {
+      console.log("THIS RUNS");
       const index = newPermissions.indexOf("ReadOnly");
 
       if (index > -1) {
@@ -624,7 +644,6 @@ class UserDetailService {
       }
     }]);
 
-    console.log(_result);
     let permissions = {};
     permissions["isAdmin"] = _result[0].members.isAdmin;
 

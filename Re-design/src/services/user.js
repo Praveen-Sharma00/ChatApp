@@ -38,6 +38,7 @@ export default class UserDetailService {
             result = result.toObject()
             result["isAdmin"] = members[i]["isAdmin"]
             result["permissions"] = members[i]["permissions"]
+            result["adminLevel"]=members[i]["adminLevel"]
 
             membersArr.push(result)
         }
@@ -93,13 +94,15 @@ export default class UserDetailService {
 
     async getAdminGroups(currentUser) {
         const {_id: userID} = currentUser
-        const _result = await GroupModel.find({admins: currentUser._id})
+        const _result = await GroupModel.find({"admins._id": currentUser._id})
+        console.log(",,,,"+_result[0].toObject().members[0])
         if (!_result) {
             return ({success: false, error: {message: 'No Groups found !'}})
         } else {
             let obj = _result
             return ({success: true, error: {}, data: {obj}})
         }
+
     }
 
     async getGroupMembers(groupId) {
@@ -127,17 +130,19 @@ export default class UserDetailService {
             membersArr.push({
                 _id: mongoose.Types.ObjectId(e),
                 isAdmin: false,
-                permissions: []
+                permissions: [],
+                adminLevel:-1
             })
         })
         membersArr.push({
             _id: mongoose.Types.ObjectId(currentUser._id),
             isAdmin: true,
-            permissions: []
+            permissions: [],
+            adminLevel:1
         })
         const newGroup = new GroupModel({
             name: groupDetailObj.name,
-            admins: [currentUser._id],
+            admins: [{_id:currentUser._id,level:1}],
             members: membersArr
         })
         await newGroup.save()
@@ -343,38 +348,52 @@ export default class UserDetailService {
 
     async updatePermissions(currentUserId, groupId, userId, permissions) {
         const group = await GroupModel.findOne({_id: groupId})
-        const isPresent = group.admins.includes(currentUserId)
+        // const isPresent = group.admins.includes(currentUserId)
+        console.log(group.admins)
+        const isPresent= group.admins.map((obj)=>obj._id==currentUserId).length>0
+
         if (!isPresent) {
             return ({success: false, error: {message: "You\'re not authorized "}})
         }
         const newAdmins = group.admins
-        const newPermissions = group.members.filter(m => m._id == userId)[0].permissions
+        // const newPermissions = group.members.filter(m => m._id == userId)[0].permissions
+        const newPermissions = (group.members.filter(m => m._id == userId)[0]).permissions
 
+        // const isUserAlreadyAdmin = newAdmins.map((obj=>obj._id==userId)).length > 0
+        const isUserAlreadyAdmin = newAdmins.filter((obj=>obj._id==userId)).length>0
+
+        // console.log("isUserAlreadyAdmin : ",isUserAlreadyAdmin)
         const _r = permissions
 
         if (_r.includes("Admin")) {
-            if (!newAdmins.includes(userId)) {
+            if (!isUserAlreadyAdmin) {
+                console.log("THIS AGAIN RUNS")
                 group.members.filter(m => m._id == userId)[0].isAdmin = true
-                newAdmins.push(userId)
+                group.members.filter(m => m._id == userId)[0].adminLevel = 2
+                newAdmins.push({
+                    _id:mongoose.Types.ObjectId(userId),
+                    level:2
+                })
             }
         } else if (_r.includes("~Admin")) {
-            const index = newAdmins.indexOf(userId)
+            const index = newAdmins.findIndex(obj=>obj._id==userId)
             if (index > -1) {
                 newAdmins.splice(index, 1)
             }
 
             group.members.filter(m => m._id == userId)[0].isAdmin = false
+            group.members.filter(m => m._id == userId)[0].adminLevel = -1
         }
 
         if (_r.includes("ReadOnly")) {
             if (!newPermissions.includes("ReadOnly"))
                 newPermissions.push("ReadOnly")
         } else if (_r.includes("~ReadOnly")) {
+            console.log("THIS RUNS")
             const index = newPermissions.indexOf("ReadOnly")
             if (index > -1) {
                 newPermissions.splice(index, 1)
             }
-
         }
 
         if (_r.includes("BlockUploads")) {

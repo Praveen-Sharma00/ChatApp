@@ -5,18 +5,21 @@ var modifiedState = []
 const generateGroupList = async () => {
     const response = await _user.getAdminGroups()
     let str = ""
+    console.log(response)
     let groups = response.data.obj
     groups.forEach((e) => {
         str += '<option value=' + e._id + '>' + e.name + '</option>'
     })
     return str
 }
-
+var currentAdminLevel;
 const generateGroupMemberListTable = async (groupId) => {
     currentGroupId = groupId
     const currentUser = await _user.getCurrentUser()
     const response = await _user.getMembersOfGroup(groupId)
     const members = response.data.members
+    const _r = response.data.members.find(e => e._id == currentUser._id).adminLevel
+    currentAdminLevel = _r
     let str = ""
     if (response.success) {
         for (let i = 0; i < members.length; i++) {
@@ -55,19 +58,23 @@ const generateGroupMemberListTable = async (groupId) => {
                 cColor = "primary"
                 cTitle = "Click to Make Read-Only user"
             }
-            if (currentUser._id == members[i]._id) {
+            if (currentUser._id == members[i]._id || (members[i].adminLevel!==-1 &&currentAdminLevel>members[i].adminLevel)) {
                 continue;
-            } else {
+            }else {
                 str += '<tr>\n' +
                     ' <th scope="row">' + (i + 1) + '</th>\n' +
                     ' <td>' + members[i].name + '</td>\n' +
                     ' <td>' + members[i].email + '</td>\n' +
                     ' <td>' + members[i].isAdmin + '</td>\n' +
-                    ' <td><div class="d-inline btn-group-sm btn-group-toggle" id="permissions" data-toggle="buttons">' +
-                    '  <label class="btn btn-' + aColor + '"  name="' + i + '" onclick="toggleAdmin(this)" data-toggle="tooltip" title="' + aTitle + '">' +
-                    '<input type="checkbox" name="options" id="admin" autocomplete="off"><i class="fas fa-shield-alt" ></i>' +
-                    '  </label>' +
-                    '  <label class="btn btn-' + bColor + '"  name="' + i + '" onclick="toggleUpload(this)" data-toggle="tooltip" title="' + bTitle + '">' +
+                    ' <td><div class="d-inline btn-group-sm btn-group-toggle" id="permissions" data-toggle="buttons">'
+                if ((currentAdminLevel > members[i].adminLevel && members[i].adminLevel===-1) ||(currentAdminLevel < members[i].adminLevel &&members[i].adminLevel!==-1)) {
+                    str += '  <label class="btn btn-' + aColor + '"  name="' + i + '" onclick="toggleAdmin(this)" data-toggle="tooltip" title="' + aTitle + '">' +
+                        '<input type="checkbox" name="options" id="admin" autocomplete="off"><i class="fas fa-shield-alt" ></i>' +
+                        '  </label>'
+                } else if(currentAdminLevel > members[i].adminLevel && members[i].adminLevel!==-1) {
+                    str += '<label class="btn btn-light" disabled><input type="checkbox" ><i class="fa fa-ban" aria-hidden="true"></i></label>'
+                }
+                str += '  <label class="btn btn-' + bColor + '"  name="' + i + '" onclick="toggleUpload(this)" data-toggle="tooltip" title="' + bTitle + '">' +
                     '    <input type="checkbox" name="options" id="uploads" autocomplete="off"><i class="fas fa-file-upload" ></i>' +
                     '  </label>' +
                     '  <label class="btn btn-' + cColor + '"  name="' + i + '" onclick="toggleRead(this)" data-toggle="tooltip" title="' + cTitle + '">' +
@@ -139,6 +146,7 @@ const setPermission = async (userId, i) => {
     console.log(currentGroupId)
     console.log(userId)
     const response = await _user.updatePermissions(currentGroupId, userId, permissions)
+    console.log(response)
     permissions = null
     if (response.success) {
         await populateDataTable(currentGroupId)

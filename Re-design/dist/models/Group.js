@@ -23,10 +23,15 @@ const groupSchema = new _mongoose.default.Schema({
     permissions: [{
       type: String,
       enum: ['ReadOnly', 'BlockUploads']
-    }]
+    }],
+    adminLevel: Number
   }],
+  // admins: [{
+  //     type: mongoose.Schema.Types.ObjectId
+  // }]
   admins: [{
-    type: _mongoose.default.Schema.Types.ObjectId
+    _id: _mongoose.default.Schema.Types.ObjectId,
+    level: Number
   }]
 });
 
