@@ -380,13 +380,9 @@ export default class UserDetailService {
             return ({success: false, error: {message: 'Invalid parameters !'}})
         }
         let _result = await ConversationModel.find({"messages._id": msgId})
-        console.log(_result)
         if (!_result || _result === null) {
             return ({success: false, error: {message: 'No such message found !'}})
         } else {
-            // let r= _result[0].messages.filter(m => m._id == msgId)[0]
-            // console.log("qqqqq",(_result[0].messages.filter(m => m._id == msgId))[0].approval_status)
-            // process.exit()
             (_result[0].messages.filter(m => m._id == msgId))[0].approval_status = "approved"
             await _result.save()
             return ({success: true, error: {}, data: {}})
@@ -415,13 +411,12 @@ export default class UserDetailService {
             return ({success: false, error: {message: "You\'re not authorized "}})
         }
         const newAdmins = group.admins
-        // const newPermissions = group.members.filter(m => m._id == userId)[0].permissions
+
         const newPermissions = (group.members.filter(m => m._id == userId)[0]).permissions
 
-        // const isUserAlreadyAdmin = newAdmins.map((obj=>obj._id==userId)).length > 0
         const isUserAlreadyAdmin = newAdmins.filter((obj => obj._id == userId)).length > 0
 
-        // console.log("isUserAlreadyAdmin : ",isUserAlreadyAdmin)
+
         const _r = permissions
 
         if (_r.includes("Admin")) {

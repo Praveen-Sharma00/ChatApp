@@ -630,8 +630,6 @@ class UserDetailService {
       "messages._id": msgId
     });
 
-    console.log(_result);
-
     if (!_result || _result === null) {
       return {
         success: false,
@@ -640,11 +638,8 @@ class UserDetailService {
         }
       };
     } else {
-      // let r= _result[0].messages.filter(m => m._id == msgId)[0]
-      // console.log("qqqqq",(_result[0].messages.filter(m => m._id == msgId))[0].approval_status)
-      // process.exit()
       _result[0].messages.filter(m => m._id == msgId)[0].approval_status = "approved";
-      await _result[0].save();
+      await _result.save();
       return {
         success: true,
         error: {},
@@ -680,12 +675,9 @@ class UserDetailService {
       };
     }
 
-    const newAdmins = group.admins; // const newPermissions = group.members.filter(m => m._id == userId)[0].permissions
-
-    const newPermissions = group.members.filter(m => m._id == userId)[0].permissions; // const isUserAlreadyAdmin = newAdmins.map((obj=>obj._id==userId)).length > 0
-
-    const isUserAlreadyAdmin = newAdmins.filter(obj => obj._id == userId).length > 0; // console.log("isUserAlreadyAdmin : ",isUserAlreadyAdmin)
-
+    const newAdmins = group.admins;
+    const newPermissions = group.members.filter(m => m._id == userId)[0].permissions;
+    const isUserAlreadyAdmin = newAdmins.filter(obj => obj._id == userId).length > 0;
     const _r = permissions;
 
     if (_r.includes("Admin")) {

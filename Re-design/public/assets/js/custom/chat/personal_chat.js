@@ -227,15 +227,15 @@ var socket;
                 let docStr=""
                 media.object_type.forEach((e)=>{
                     if(e==="pdf")
-                        docStr+='<a class="btn" href="http://localhost:3000/uploads/'+media.object_location+'"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>'
+                        docStr+='<a  href="http://localhost:3000/uploads/'+media.object_location+'">PDF</a>'
                     if(e==="doc")
-                        docStr+='<a class="btn" href="http://localhost:3000/uploads/'+media.object_location+'"><i class="fa fa-file-text" aria-hidden="true"></i></a>'
+                        docStr+='<a  href="http://localhost:3000/uploads/'+media.object_location+'">Text/Docx</i></a>'
                     if(e==="image")
-                        docStr+='<a class="btn" href="http://localhost:3000/uploads/'+media.object_location+'"><i class="fa fa-file-image-o" aria-hidden="true"></i>'
+                        docStr+='<a  href="http://localhost:3000/uploads/'+media.object_location+'">Image</i>'
                 })
                 listStr+='<tr><td>'+pending_uploads[i].sender.name+'</td>\n'+
                     '<td>'+docStr+'</td>\n'+
-                    '<td><i class="fa fa-check-circle" id="'+pending_uploads[i]._id+'" name="'+groupId+'" onclick="acceptUpload(this)" aria-hidden="true"></i></td></tr>'
+                    '<td><i class="btn btn-primary btn-md fa fa-3x fa-check-circle" id="'+pending_uploads[i]._id+'" name="'+groupId+'" onclick="acceptUpload(this)" aria-hidden="true"></i></td></tr>'
                 docStr=""
             }
             notification_list.innerHTML=listStr
