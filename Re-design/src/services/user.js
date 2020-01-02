@@ -379,11 +379,17 @@ export default class UserDetailService {
         if (groupId === null || groupId === "" || msgId === null || msgId === "") {
             return ({success: false, error: {message: 'Invalid parameters !'}})
         }
-        let _result = await ConversationModel.find({"messages._id": msgId})
+        let _result = await ConversationModel.findOne({"messages._id": msgId})
         if (!_result || _result === null) {
             return ({success: false, error: {message: 'No such message found !'}})
         } else {
-            (_result[0].messages.filter(m => m._id == msgId))[0].approval_status = "approved"
+            // ((_result[0]).messages.filter(m => m._id == msgId))[0].approval_status = "approved"
+            let messageIndex = _result.messages.findIndex((m)=>{
+                return m._id == msgId
+            })
+            if(messageIndex > -1){
+                _result.messages[messageIndex].approval_status="approved"
+            }
             await _result.save()
             return ({success: true, error: {}, data: {}})
         }

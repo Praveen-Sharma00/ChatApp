@@ -626,7 +626,7 @@ class UserDetailService {
       };
     }
 
-    let _result = await _Conversation.default.find({
+    let _result = await _Conversation.default.findOne({
       "messages._id": msgId
     });
 
@@ -638,7 +638,15 @@ class UserDetailService {
         }
       };
     } else {
-      _result[0].messages.filter(m => m._id == msgId)[0].approval_status = "approved";
+      // ((_result[0]).messages.filter(m => m._id == msgId))[0].approval_status = "approved"
+      let messageIndex = _result.messages.findIndex(m => {
+        return m._id == msgId;
+      });
+
+      if (messageIndex > -1) {
+        _result.messages[messageIndex].approval_status = "approved";
+      }
+
       await _result.save();
       return {
         success: true,
