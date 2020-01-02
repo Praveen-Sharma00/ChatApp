@@ -41,6 +41,11 @@ api
 api
     .route('/admin/groups')
     .get(userController.getAdminGroups)
+
+api
+    .route('/admin/group/:groupId/notifications')
+    .get(userController.getPendingGroupUploads)
+    .post(userController.updatePendingGroupUploadStatus)
 // .post(checkSession,userController.createGroup)
 
 

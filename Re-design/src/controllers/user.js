@@ -80,6 +80,17 @@ const updateGroupConversation = async (req, res) => {
     const response = await _userDetailService.updateGroupConversation(user._id, groupId, text,'','')
     return res.send(response)
 }
+const updatePendingGroupUploadStatus = async (req,res)=>{
+    const groupId = req.params.groupId
+    const {msgId} = req.body
+    const response = await _userDetailService.updatePendingGroupUploadStatus(groupId,msgId)
+    return res.send(response)
+}
+const getPendingGroupUploads = async(req,res)=>{
+    const groupId = req.params.groupId
+    const response = await _userDetailService.getPendingGroupUploads( groupId)
+    return res.send(response)
+}
 const updatePermissions = async (req, res) => {
     const {user} = req.session
     const {groupId} = req.params
@@ -113,5 +124,8 @@ export let userController = {
     getConversationBetweenUsers,
     getGroupConversations,
     updateGroupConversation,
+    getPendingGroupUploads,
+    updatePendingGroupUploadStatus,
+
     updateIndividualConversation
 }

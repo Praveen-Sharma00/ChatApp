@@ -26,9 +26,6 @@ const groupSchema = new _mongoose.default.Schema({
     }],
     adminLevel: Number
   }],
-  // admins: [{
-  //     type: mongoose.Schema.Types.ObjectId
-  // }]
   admins: [{
     _id: _mongoose.default.Schema.Types.ObjectId,
     level: Number

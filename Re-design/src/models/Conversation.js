@@ -38,11 +38,11 @@ const conversationSchema = new mongoose.Schema({
             },
             object_location:{
                 type:[String]
-            },
-            approval_status:{
-                type:[String],
-                enum:["pending","approved"]
             }
+        },
+        approval_status:{
+            type:String,
+            enum:["pending","approved"]
         },
         sender: {
             id: {

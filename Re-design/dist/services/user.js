@@ -433,6 +433,7 @@ class UserDetailService {
     let msg_type = "";
     let md_type = [];
     let md_loc = [];
+    let msg_status = "";
     let text_ = "";
 
     if (message_type === "text") {
@@ -441,6 +442,7 @@ class UserDetailService {
       text_ = text;
     } else {
       msg_type = "media";
+      msg_status = "pending";
 
       for (let i = 0; i < media_type.length; i++) {
         if (media_type[i] === "image") {
@@ -473,7 +475,8 @@ class UserDetailService {
           message_type: msg_type,
           media: {
             object_type: md_type,
-            object_location: md_loc
+            object_location: md_loc,
+            approval_status: msg_status
           },
           sender: {
             id: _mongoose.default.Types.ObjectId(user._id),
@@ -496,7 +499,8 @@ class UserDetailService {
         message_type: msg_type,
         media: {
           object_type: md_type,
-          object_location: md_loc
+          object_location: md_loc,
+          approval_status: msg_status
         },
         timestamp: moment().format('MMMM Do YYYY, h:mm A').toString()
       });
@@ -542,7 +546,53 @@ class UserDetailService {
         }
       };
     }
-  } // async findGroup(groupId){
+  }
+
+  async getPendingGroupUploads(groupId) {
+    if (groupId === null || groupId === "") {
+      return {
+        success: false,
+        error: {
+          message: 'Invalid req params !'
+        }
+      };
+    }
+
+    const _result = await _Conversation.default.findOne({
+      group_id: _mongoose.default.Types.ObjectId(groupId),
+      conversation_type: 2
+    }).select('messages');
+
+    const _r = [];
+
+    for (let i = 0; i < _result.messages.length; i++) {
+      _r.push(_result.messages[i].toObject());
+    }
+
+    console.log(_r); // console.log(_result.messages)
+
+    process.exit();
+
+    if (!_result || _result.length === 0) {
+      return {
+        success: false,
+        error: {
+          message: 'No Conversations so far !'
+        }
+      };
+    } else {
+      let messages = _result.messages;
+      return {
+        success: true,
+        error: {},
+        data: {
+          messages
+        }
+      };
+    }
+  }
+
+  async updatePendingGroupUploadStatus(groupId, msgId) {} // async findGroup(groupId){
   //     const _result = await GroupModel.findOne({
   //         _id:mongoose.Types.ObjectId(groupId)
   //     })

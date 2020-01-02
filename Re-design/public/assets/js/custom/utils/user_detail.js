@@ -105,4 +105,15 @@ class UserData {
         const response = await this.doUploadPostRequest(data)
         return response
     }
+
+    async getPendingGroupUploads(groupId){
+        const response = await this.doGetRequest('/api/v1/admin/group/' + groupId + '/notifications/')
+        return response
+    }
+    async updatePendingGroupUploadStatus(groupId, msgId) {
+        const response = await this.doPostRequest('/api/v1/admin/group/' + groupId+ '/notifications/', {
+            msgId
+        })
+        return response
+    }
 }

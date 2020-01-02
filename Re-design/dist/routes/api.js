@@ -23,7 +23,8 @@ api.route('/user/group/:groupId/permissions').get(_user.userController.getUserPe
 api.route('/user/chats/:secondUserId').get(_user.userController.getConversationBetweenUsers).post(_user.userController.updateIndividualConversation); // .post(checkSession, userController.createGroup)
 
 api.route('/user/chats/group/:groupId').get(_user.userController.getGroupConversations).post(_user.userController.updateGroupConversation);
-api.route('/admin/groups').get(_user.userController.getAdminGroups); // .post(checkSession,userController.createGroup)
+api.route('/admin/groups').get(_user.userController.getAdminGroups);
+api.route('/admin/group/:groupId/notifications').get(_user.userController.getPendingGroupUploads).post(_user.userController.updatePendingGroupUploadStatus); // .post(checkSession,userController.createGroup)
 
 let apiRoutes = api;
 exports.apiRoutes = apiRoutes;

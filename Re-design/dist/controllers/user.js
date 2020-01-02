@@ -116,6 +116,21 @@ const updateGroupConversation = async (req, res) => {
   return res.send(response);
 };
 
+const updatePendingGroupUploadStatus = async (req, res) => {
+  const groupId = req.params.groupId;
+  const {
+    msgId
+  } = req.body;
+  const response = await _userDetailService.updatePendingGroupUploadStatus(groupId, msgId);
+  return res.send(response);
+};
+
+const getPendingGroupUploads = async (req, res) => {
+  const groupId = req.params.groupId;
+  const response = await _userDetailService.getPendingGroupUploads(groupId);
+  return res.send(response);
+};
+
 const updatePermissions = async (req, res) => {
   const {
     user
@@ -158,6 +173,8 @@ let userController = {
   getConversationBetweenUsers,
   getGroupConversations,
   updateGroupConversation,
+  getPendingGroupUploads,
+  updatePendingGroupUploadStatus,
   updateIndividualConversation
 };
 exports.userController = userController;

@@ -251,6 +251,7 @@ export default class UserDetailService {
         let msg_type = ""
         let md_type = []
         let md_loc = []
+        let msg_status = ""
         let text_ = ""
         if (message_type === "text") {
             msg_type = "text"
@@ -258,6 +259,7 @@ export default class UserDetailService {
             text_ = text
         } else {
             msg_type = "media"
+            msg_status = "pending"
             for (let i = 0; i < media_type.length; i++) {
                 if (media_type[i] === "image") {
                     md_type[i] = "image"
@@ -273,6 +275,7 @@ export default class UserDetailService {
                     md_loc = text[i]
                 }
             }
+
         }
 
 
@@ -287,7 +290,8 @@ export default class UserDetailService {
                     message_type: msg_type,
                     media: {
                         object_type: md_type,
-                        object_location: md_loc
+                        object_location: md_loc,
+                        approval_status: msg_status
                     },
                     sender: {
                         id: mongoose.Types.ObjectId(user._id),
@@ -310,7 +314,8 @@ export default class UserDetailService {
                 message_type: msg_type,
                 media: {
                     object_type: md_type,
-                    object_location: md_loc
+                    object_location: md_loc,
+                    approval_status: msg_status
                 },
                 timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
             })
@@ -334,6 +339,42 @@ export default class UserDetailService {
             return ({success: true, error: {}, data: {messages}})
         }
     }
+
+    async getPendingGroupUploads(groupId) {
+        if (groupId === null || groupId === "") {
+            return ({success: false, error: {message: 'Invalid req params !'}})
+        }
+        const _result = await ConversationModel.findOne({
+            group_id: mongoose.Types.ObjectId(groupId),
+            conversation_type: 2
+        }).select('messages')
+        const messages = _result.messages
+        const pending_messages = []
+        for (let i = 0; i < messages.length; i++) {
+            if (messages[i].approval_status === "pending")
+                pending_messages.push(messages[i].toObject())
+        }
+        if (!pending_messages || pending_messages.length === 0) {
+            return ({success: false, error: {message: 'No new request(s) so far !'}})
+        } else {
+            return ({success: true, error: {}, data: {pending_messages}})
+        }
+    }
+
+    async updatePendingGroupUploadStatus(groupId, msgId) {
+        if (groupId === null || groupId === "" || msgId === null || msgId === "") {
+            return ({success: false, error: {message: 'Invalid parameters !'}})
+        }
+        const _result = await ConversationModel.find({"messages._id": msgId})
+        if (!_result || _result === null) {
+            return ({success: false, error: {message: 'No such message found !'}})
+        } else {
+            _result.approval_status = "approved"
+            await _result.save()
+            return ({success: true, error: {}, data: {}})
+        }
+    }
+
 
     // async findGroup(groupId){
     //     const _result = await GroupModel.findOne({

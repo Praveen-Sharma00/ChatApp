@@ -231,7 +231,11 @@ var socket;
         // $('.contact.active .preview').html('<span>You: </span>' + message);
         scrollToBottom()
     })
-
+    tell=async (id)=>{
+        console.log(id)
+       const notifications = await _user.getPendingGroupUploads(id)
+        console.log(notifications)
+    }
     upload = async () => {
         // socket.emit('new_msg', {sender: currentUser, receiver: receiverId, type: conversationType, message_type:"media",text: message})
         // if ($.trim(message) === '') {
