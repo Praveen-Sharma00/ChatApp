@@ -591,28 +591,37 @@ class UserDetailService {
       conversation_type: 2
     }).select('messages');
 
-    const messages = _result.messages;
-    const pending_messages = [];
-
-    for (let i = 0; i < messages.length; i++) {
-      if (messages[i].approval_status === "pending") pending_messages.push(messages[i].toObject());
-    }
-
-    if (!pending_messages || pending_messages.length === 0) {
+    if (!_result || _result === null) {
       return {
         success: false,
         error: {
-          message: 'No new request(s) so far !'
+          message: 'No conversation(s) !'
         }
       };
     } else {
-      return {
-        success: true,
-        error: {},
-        data: {
-          pending_messages
-        }
-      };
+      const messages = _result.messages;
+      const pending_messages = [];
+
+      for (let i = 0; i < messages.length; i++) {
+        if (messages[i].approval_status === "pending") pending_messages.push(messages[i].toObject());
+      }
+
+      if (!pending_messages || pending_messages.length === 0) {
+        return {
+          success: false,
+          error: {
+            message: 'No new request(s) so far !'
+          }
+        };
+      } else {
+        return {
+          success: true,
+          error: {},
+          data: {
+            pending_messages
+          }
+        };
+      }
     }
   }
 

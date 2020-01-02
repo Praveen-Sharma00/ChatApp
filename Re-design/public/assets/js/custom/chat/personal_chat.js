@@ -74,7 +74,7 @@ var socket;
                     if (msg.message_type === "text") {
                         $('<li class="replies"><p>' + msg.text + '</p></li>').appendTo($('.messages ul'));
                         scrollToBottom()
-                    } else if (msg.message_type === "media" && msg.approval_status==="approved") {
+                    } else if (msg.message_type === "media" && msg.approval_status === "approved") {
                         for (let i = 0; i < msg.media.object_type.length; i++) {
                             if (msg.media.object_type[i] === "image") {
                                 $('<li class="replies media_image"><a href="http://localhost:3000/uploads/' + msg.media.object_location[i] + '"><img src="http://localhost:3000/uploads/' + msg.media.object_location[i] + '"></a><br></li>').appendTo($('.messages ul'));
@@ -213,60 +213,60 @@ var socket;
         }
     });
 
-    const renderNotifications =async (groupId)=>{
-        const {data} = await  _user.getPendingGroupUploads(groupId)
+    const renderNotifications = async (groupId) => {
+        const {data} = await _user.getPendingGroupUploads(groupId)
         const pending_uploads = data.pending_messages
         const notification_list = document.getElementById("notifications")
-        let listStr=""
-        if(pending_uploads.length===0){
-            notification_list.innerHTML="<tr><td>No new request(s) so far !</td></tr>"
-        }else{
+        let listStr = ""
+        if (pending_uploads.length === 0) {
+            notification_list.innerHTML = "<tr><td>No new request(s) so far !</td></tr>"
+        } else {
 
-            for(let i=0;i<pending_uploads.length;i++){
-                let media=pending_uploads[i].media
-                let docStr=""
-                media.object_type.forEach((e)=>{
-                    if(e==="pdf")
-                        docStr+='<a  href="http://localhost:3000/uploads/'+media.object_location+'">PDF</a>'
-                    if(e==="doc")
-                        docStr+='<a  href="http://localhost:3000/uploads/'+media.object_location+'">Text/Docx</i></a>'
-                    if(e==="image")
-                        docStr+='<a  href="http://localhost:3000/uploads/'+media.object_location+'">Image</i>'
+            for (let i = 0; i < pending_uploads.length; i++) {
+                let media = pending_uploads[i].media
+                let docStr = ""
+                media.object_type.forEach((e) => {
+                    if (e === "pdf")
+                        docStr += '<a  href="http://localhost:3000/uploads/' + media.object_location + '">PDF</a>'
+                    if (e === "doc")
+                        docStr += '<a  href="http://localhost:3000/uploads/' + media.object_location + '">Text/Docx</i></a>'
+                    if (e === "image")
+                        docStr += '<a  href="http://localhost:3000/uploads/' + media.object_location + '">Image</i>'
                 })
-                listStr+='<tr><td>'+pending_uploads[i].sender.name+'</td>\n'+
-                    '<td>'+docStr+'</td>\n'+
-                    '<td><i class="btn btn-primary btn-md fa fa-3x fa-check-circle" id="'+pending_uploads[i]._id+'" name="'+groupId+'" onclick="acceptUpload(this)" aria-hidden="true"></i></td></tr>'
-                docStr=""
+                listStr += '<tr><td>' + pending_uploads[i].sender.name + '</td>\n' +
+                    '<td>' + docStr + '</td>\n' +
+                    '<td><i class="btn btn-primary btn-md fa fa-3x fa-check-circle" id="' + pending_uploads[i]._id + '" name="' + groupId + '" onclick="acceptUpload(this)" aria-hidden="true"></i></td></tr>'
+                docStr = ""
             }
-            notification_list.innerHTML=listStr
+            notification_list.innerHTML = listStr
         }
     }
-    acceptUpload = async(e)=>{
+    acceptUpload = async (e) => {
         const msgId = e.getAttribute("id")
         const groupId = e.getAttribute("name")
-        const response = await _user.updatePendingGroupUploadStatus(groupId,msgId)
-        if(response.success){
-            await this.showConversation("group",groupId)
+        const response = await _user.updatePendingGroupUploadStatus(groupId, msgId)
+        if (response.success) {
+            await renderNotifications(groupId)
         }
+        await showConversation("group", groupId)
     }
-    socket.on("new_upload",(data)=>{
+    socket.on("new_upload", (data) => {
         alert('New upload approval')
-        renderNotifications(data.group)
     })
     socket.on('new_msg', (data) => {
         if (data.message_type === "text") {
             $('<li class="replies"><p>' + data.text + '</p></li>').appendTo($('.messages ul'));
-        } else if (data.message_type === "media") {
-            // for (let i = 0; i < data.media_type.length; i++) {
-            //     if (data.media_type[i] === "image") {
-            //         $('<li class="replies media_image"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/uploads/' + data.text[i] + '"></a><br></li>').appendTo($('.messages ul'));
-            //     } else if (data.media_type[i] === "pdf") {
-            //         $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
-            //     } else if (data.media_type[i] === "doc") {
-            //         $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
-            //     }
-            // }
-            console.log("Uploaded media")
+        } else if (data.message_type === "media" && data.sentBy === "admin") {
+            for (let i = 0; i < data.media_type.length; i++) {
+                if (data.media_type[i] === "image") {
+                    $('<li class="replies media_image"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/uploads/' + data.text[i] + '"></a><br></li>').appendTo($('.messages ul'));
+                } else if (data.media_type[i] === "pdf") {
+                    $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
+                } else if (data.media_type[i] === "doc") {
+                    $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
+                }
+            }
+
             // $('<li class="replies media_upload"><p><a href="http://localhost:3000/uploads/'+data.text+'">Media Received</a></p></li>').appendTo($('.messages ul'));
         }
 
@@ -274,10 +274,9 @@ var socket;
         // $('.contact.active .preview').html('<span>You: </span>' + message);
         scrollToBottom()
     })
-    tell = async (id) => {
+    loadNotificationModal = async (id) => {
         console.log(id)
         await renderNotifications(id)
-        console.log(notifications)
     }
     upload = async () => {
         // socket.emit('new_msg', {sender: currentUser, receiver: receiverId, type: conversationType, message_type:"media",text: message})
@@ -298,50 +297,38 @@ var socket;
         let r = await _user.uploadFile(formData)
         let filename = ""
         if (r.success) {
+            let adminList
             filename = r.filename
+            let sentBy = "non-admin"
             if (conversationType === "group") {
                 const {data} = await _user.getUserPermissions(receiverId)
                 if (data.permissions.isAdmin) {
-                    socket.emit('new_msg', {
-                        sender: currentUser,
-                        receiver: receiverId,
-                        type: conversationType,
-                        message_type: "media",
-                        media_type: r.media_type,
-                        text: filename
-                    })
-                }
-                else {
+                    sentBy = "admin"
+                } else {
                     const {data} = await _user.getGroupAdmins(receiverId)
-                    const adminList=data.obj.admins
+                    adminList = data.obj.admins
                     socket.emit('new_upload', {
                         sender: currentUser,
                         receiver: receiverId,
                         media_type: r.media_type,
                         text: filename,
-                        admins:adminList
+                        admins: adminList
                     })
-                    socket.emit('new_msg', {
-                        sender: currentUser,
-                        receiver: receiverId,
-                        type: conversationType,
-                        message_type: "media",
-                        media_type: r.media_type,
-                        text: filename
-                    })
-                    await renderNotifications(receiverId)
+                    // await renderNotifications(receiverId)
                 }
+
             }
-            else {
-                socket.emit('new_msg', {
-                    sender: currentUser,
-                    receiver: receiverId,
-                    type: conversationType,
-                    message_type: "media",
-                    media_type: r.media_type,
-                    text: filename
-                })
-            }
+
+            socket.emit('new_msg', {
+                sender: currentUser,
+                receiver: receiverId,
+                type: conversationType,
+                message_type: "media",
+                media_type: r.media_type,
+                text: filename,
+                sentBy: sentBy
+            })
+
             for (let i = 0; i < r.media_type.length; i++) {
                 if (r.media_type[i] === "image") {
                     $('<li class="sent media_image"><a href="http://localhost:3000/uploads/' + filename[i] + '"><img src="http://localhost:3000/uploads/' + filename[i] + '"></a></li><br>').appendTo($('.messages ul'));

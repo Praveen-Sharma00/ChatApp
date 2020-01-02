@@ -103,12 +103,13 @@ export default class UserDetailService {
         }
 
     }
-    async getGroupAdmins(groupId){
+
+    async getGroupAdmins(groupId) {
         if (groupId === null || groupId === "") {
             return ({success: false, error: {message: 'Invalid route params !'}})
         }
         const obj = await GroupModel.findOne({
-            _id:groupId
+            _id: groupId
         }).select('admins')
         return ({success: true, error: {}, data: {obj}})
     }
@@ -265,14 +266,13 @@ export default class UserDetailService {
             msg_type = "text"
             md_type[0] = "default"
             text_ = text
-        }
-        else {
+        } else {
             msg_type = "media"
             const group = await GroupModel.findOne({_id: groupId})
             // const isPresent = group.admins.map((obj) => obj._id == senderId).length > 0
-            const isPresent = group.admins.filter((obj) => obj._id == senderId).length>0
+            const isPresent = group.admins.filter((obj) => obj._id == senderId).length > 0
             if (isPresent) {
-                msg_status="approved"
+                msg_status = "approved"
             }
             for (let i = 0; i < media_type.length; i++) {
                 if (media_type[i] === "image") {
@@ -362,17 +362,23 @@ export default class UserDetailService {
             group_id: mongoose.Types.ObjectId(groupId),
             conversation_type: 2
         }).select('messages')
-        const messages = _result.messages
-        const pending_messages = []
-        for (let i = 0; i < messages.length; i++) {
-            if (messages[i].approval_status === "pending")
-                pending_messages.push(messages[i].toObject())
-        }
-        if (!pending_messages || pending_messages.length === 0) {
-            return ({success: false, error: {message: 'No new request(s) so far !'}})
+
+        if (!_result || _result === null) {
+            return ({success: false, error: {message: 'No conversation(s) !'}})
         } else {
-            return ({success: true, error: {}, data: {pending_messages}})
+            const messages = _result.messages
+            const pending_messages = []
+            for (let i = 0; i < messages.length; i++) {
+                if (messages[i].approval_status === "pending")
+                    pending_messages.push(messages[i].toObject())
+            }
+            if (!pending_messages || pending_messages.length === 0) {
+                return ({success: false, error: {message: 'No new request(s) so far !'}})
+            } else {
+                return ({success: true, error: {}, data: {pending_messages}})
+            }
         }
+
     }
 
     async updatePendingGroupUploadStatus(groupId, msgId) {
@@ -384,11 +390,11 @@ export default class UserDetailService {
             return ({success: false, error: {message: 'No such message found !'}})
         } else {
             // ((_result[0]).messages.filter(m => m._id == msgId))[0].approval_status = "approved"
-            let messageIndex = _result.messages.findIndex((m)=>{
+            let messageIndex = _result.messages.findIndex((m) => {
                 return m._id == msgId
             })
-            if(messageIndex > -1){
-                _result.messages[messageIndex].approval_status="approved"
+            if (messageIndex > -1) {
+                _result.messages[messageIndex].approval_status = "approved"
             }
             await _result.save()
             return ({success: true, error: {}, data: {}})
