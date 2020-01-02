@@ -146,6 +146,7 @@ const setPermission = async (userId, i) => {
     console.log(currentGroupId)
     console.log(userId)
     const response = await _user.updatePermissions(currentGroupId, userId, permissions)
+    console.log(response)
     permissions = null
     if (response.success) {
         await populateDataTable(currentGroupId)
