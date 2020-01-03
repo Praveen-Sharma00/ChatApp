@@ -648,7 +648,7 @@ body {
 
 #frame .content .messages {
     height: auto;
-    min-height: calc(100% - 93px);
+    min-height: calc(100% - 97px);
     max-height: calc(100% - 93px);
     overflow-y: scroll;
     overflow-x: hidden;
@@ -674,7 +674,7 @@ body {
     clear: both;
     float: left;
     margin: 15px 15px 5px 15px;
-    width: calc(100% - 25px);
+    width: calc(100% - 15px);
     font-size: 0.9em;
 }
 
@@ -903,4 +903,5 @@ body {
 .uname{
     font-weight: bold;
     font-size : 13px;
+
 }
