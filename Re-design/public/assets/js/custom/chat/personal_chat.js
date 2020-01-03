@@ -3,14 +3,104 @@ var socket;
     socket = io()
     const _user = new UserData()
     const currentUser = await _user.getCurrentUser()
-
     var conversationType;
     var receiverId;
+
     $(".message-input").css("display", "none")
     $(".contact-profile").css("display", "none")
-    socket.emit('init', {id: currentUser._id})
 
+    socket.emit('init', {id: currentUser._id})
     socket.emit('login', currentUser)
+    const generateListHTML = (arr) => {
+        let str = ""
+        arr.forEach((e) => {
+            str += ' <li class="contact " name="' + e.name + '" id="' + e._id + '" onclick="startConversation(this.id)">\n' +
+                '                    <div class="wrap" id="_' + e._id + '">\n' +
+                // '                        <span class="contact-status online"></span>\n' +
+                '                        <img src="http://emilcarlsson.se/assets/louislitt.png" alt=""/>\n' +
+                '                        <div class="meta">\n' +
+                '                            <p class="name">' + e.name + '</p>\n' +
+                '                            <!--                            <p class="preview">You just got LITT up, Mike.</p>-->\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                </li>'
+        })
+        return str
+    }
+
+    const populateBasicUserData = async () => {
+        const {data} = await _user.getUserContacts()
+        const {contacts} = data
+
+        let contact_list = document.getElementById("list")
+        let user_name = document.getElementById("user_name")
+        user_name.innerHTML = currentUser.name
+
+        let list = generateListHTML(contacts)
+
+        if (contacts.length > 0) {
+            contact_list.innerHTML = list
+        } else {
+            contact_list.innerHTML = "<p class='text-center mt-5'>No contacts</p>"
+        }
+        conversationType = "individual"
+
+    }
+
+    const populateBasicGroupData = async () => {
+        const response = await _user.getUserGroups()
+        const {obj} = response.data
+
+        let group_list = document.getElementById("list")
+        let user_name = document.getElementById("user_name")
+        user_name.innerHTML = currentUser.name
+
+        let list = generateListHTML(obj)
+
+        if (obj.length > 0) {
+            group_list.innerHTML = list
+        } else {
+            group_list.innerHTML = "<p class='text-center mt-5'>No Groups</p>"
+        }
+        conversationType = "group"
+    }
+
+    const renderNotifications = async (groupId) => {
+        const {data} = await _user.getPendingGroupUploads(groupId)
+        const pending_uploads = data.pending_messages
+        const notification_list = document.getElementById("notifications")
+        let listStr = ""
+        if (pending_uploads.length === 0) {
+            notification_list.innerHTML = "<tr><td>No new request(s) so far !</td></tr>"
+        } else {
+
+            for (let i = 0; i < pending_uploads.length; i++) {
+                let media = pending_uploads[i].media
+                let docStr = ""
+                media.object_type.forEach((e) => {
+                    if (e === "pdf")
+                        docStr += '<a  href="http://localhost:3000/uploads/' + media.object_location + '">PDF</a>'
+                    if (e === "doc")
+                        docStr += '<a  href="http://localhost:3000/uploads/' + media.object_location + '">Text/Docx</i></a>'
+                    if (e === "image")
+                        docStr += '<a  href="http://localhost:3000/uploads/' + media.object_location + '">Image</i>'
+                })
+                listStr += '<tr><td>' + pending_uploads[i].sender.name + '</td>\n' +
+                    '<td>' + docStr + '</td>\n' +
+                    '<td><i class="btn btn-primary btn-md fa fa-3x fa-check-circle" id="' + pending_uploads[i]._id + '" name="' + groupId + '" onclick="acceptUpload(this)" aria-hidden="true"></i></td></tr>'
+                docStr = ""
+            }
+            notification_list.innerHTML = listStr
+        }
+    }
+
+    $(".tab-btn").click(function (e) {
+        $(this).addClass("active-tab").siblings().removeClass("active-tab")
+    })
+
+    await populateBasicUserData()
+
+
     scrollToBottom = () => {
         $(".messages").animate({scrollTop: $(".messages")[0].scrollHeight}, 0);
     }
@@ -69,9 +159,7 @@ var socket;
                                 scrollToBottom()
                             }
                         }
-
                     }
-
                 } else {
                     if (msg.message_type === "text") {
                         $('<li class="replies"><p>' + msg.text + '</p></li>').appendTo($('.messages ul'));
@@ -90,12 +178,13 @@ var socket;
                             }
                         }
                     }
-
                 }
             })
         }
     }
+    loadAddMemberModal = (groupId) => {
 
+    }
     startConversation = async (id) => {
         $("li#" + id).addClass("active").siblings().removeClass("active")
         $("#tab-name").html($("li#" + id).attr("name"))
@@ -104,129 +193,11 @@ var socket;
         await showConversation(conversationType, id)
         socket.emit('join', {sender: currentUser, rec_id: id, type: conversationType})
     }
-    const generateListHTML = (arr) => {
-        let str = ""
-        arr.forEach((e) => {
-            str += ' <li class="contact " name="' + e.name + '" id="' + e._id + '" onclick="startConversation(this.id)">\n' +
-                '                    <div class="wrap" id="_' + e._id + '">\n' +
-                // '                        <span class="contact-status online"></span>\n' +
-                '                        <img src="http://emilcarlsson.se/assets/louislitt.png" alt=""/>\n' +
-                '                        <div class="meta">\n' +
-                '                            <p class="name">' + e.name + '</p>\n' +
-                '                            <!--                            <p class="preview">You just got LITT up, Mike.</p>-->\n' +
-                '                        </div>\n' +
-                '                    </div>\n' +
-                '                </li>'
-        })
-        return str
-    }
-
-    const populateBasicUserData = async () => {
-        const {data} = await _user.getUserContacts()
-        const {contacts} = data
-
-        let contact_list = document.getElementById("list")
-        let user_name = document.getElementById("user_name")
-        user_name.innerHTML = currentUser.name
-
-        let list = generateListHTML(contacts)
-
-        if (contacts.length > 0) {
-            contact_list.innerHTML = list
-        } else {
-            contact_list.innerHTML = "<p class='text-center mt-5'>No contacts</p>"
-        }
-        conversationType = "individual"
-
-    }
-
-    const populateBasicGroupData = async () => {
-        const response = await _user.getUserGroups()
-        const {obj} = response.data
-
-        let group_list = document.getElementById("list")
-        let user_name = document.getElementById("user_name")
-        user_name.innerHTML = currentUser.name
-
-        let list = generateListHTML(obj)
-
-        if (obj.length > 0) {
-            group_list.innerHTML = list
-        } else {
-            group_list.innerHTML = "<p class='text-center mt-5'>No Groups</p>"
-        }
-        conversationType = "group"
-    }
-
-
-    $(".tab-btn").click(function (e) {
-        $(this).addClass("active-tab").siblings().removeClass("active-tab")
-    })
-    await populateBasicUserData()
-
     loadDefaultData = async () => {
         await populateBasicUserData()
     }
     loadGroupData = async () => {
         await populateBasicGroupData()
-    }
-
-
-    newMessage = () => {
-        message = $(".message-input input").val()
-        socket.emit('new_msg', {
-            sender: currentUser,
-            receiver: receiverId,
-            type: conversationType,
-            message_type: "text",
-            media_type: [],
-            text: message
-        })
-        if ($.trim(message) === '') {
-            return false;
-        }
-        $('<li class="sent"><p>' + message + '</p></li>').appendTo($('.messages ul'));
-        $('.message-input input').val(null);
-        // $('.contact.active .preview').html('<span>You: </span>' + message);
-        scrollToBottom()
-    };
-    $('.submit').click(function () {
-        newMessage();
-    });
-    $(window).on('keydown', function (e) {
-        if (e.which == 13) {
-            newMessage();
-            return false;
-        }
-    });
-
-    const renderNotifications = async (groupId) => {
-        const {data} = await _user.getPendingGroupUploads(groupId)
-        const pending_uploads = data.pending_messages
-        const notification_list = document.getElementById("notifications")
-        let listStr = ""
-        if (pending_uploads.length === 0) {
-            notification_list.innerHTML = "<tr><td>No new request(s) so far !</td></tr>"
-        } else {
-
-            for (let i = 0; i < pending_uploads.length; i++) {
-                let media = pending_uploads[i].media
-                let docStr = ""
-                media.object_type.forEach((e) => {
-                    if (e === "pdf")
-                        docStr += '<a  href="http://localhost:3000/uploads/' + media.object_location + '">PDF</a>'
-                    if (e === "doc")
-                        docStr += '<a  href="http://localhost:3000/uploads/' + media.object_location + '">Text/Docx</i></a>'
-                    if (e === "image")
-                        docStr += '<a  href="http://localhost:3000/uploads/' + media.object_location + '">Image</i>'
-                })
-                listStr += '<tr><td>' + pending_uploads[i].sender.name + '</td>\n' +
-                    '<td>' + docStr + '</td>\n' +
-                    '<td><i class="btn btn-primary btn-md fa fa-3x fa-check-circle" id="' + pending_uploads[i]._id + '" name="' + groupId + '" onclick="acceptUpload(this)" aria-hidden="true"></i></td></tr>'
-                docStr = ""
-            }
-            notification_list.innerHTML = listStr
-        }
     }
     acceptUpload = async (e) => {
         const msgId = e.getAttribute("id")
@@ -237,30 +208,6 @@ var socket;
         }
         await showConversation("group", groupId)
     }
-    socket.on("new_upload", (data) => {
-        console.log('New upload approval')
-    })
-    socket.on('new_msg', (data) => {
-        if (data.message_type === "text") {
-            $('<li class="replies"><p>' + data.text + '</p></li>').appendTo($('.messages ul'));
-        } else if (data.message_type === "media" && data.sentBy === "admin") {
-            for (let i = 0; i < data.media_type.length; i++) {
-                if (data.media_type[i] === "image") {
-                    $('<li class="replies media_image"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/uploads/' + data.text[i] + '"></a><br></li>').appendTo($('.messages ul'));
-                } else if (data.media_type[i] === "pdf") {
-                    $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
-                } else if (data.media_type[i] === "doc") {
-                    $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
-                }
-            }
-
-            // $('<li class="replies media_upload"><p><a href="http://localhost:3000/uploads/'+data.text+'">Media Received</a></p></li>').appendTo($('.messages ul'));
-        }
-
-        // $('.message-input input').val(null);
-        // $('.contact.active .preview').html('<span>You: </span>' + message);
-        scrollToBottom()
-    })
     loadNotificationModal = async (id) => {
         console.log(id)
         await renderNotifications(id)
@@ -301,11 +248,8 @@ var socket;
                         text: filename,
                         admins: adminList
                     })
-                    // await renderNotifications(receiverId)
                 }
-
             }
-
             socket.emit('new_msg', {
                 sender: currentUser,
                 receiver: receiverId,
@@ -315,7 +259,6 @@ var socket;
                 text: filename,
                 sentBy: sentBy
             })
-
             for (let i = 0; i < r.media_type.length; i++) {
                 if (r.media_type[i] === "image") {
                     $('<li class="sent media_image"><a href="http://localhost:3000/uploads/' + filename[i] + '"><img src="http://localhost:3000/uploads/' + filename[i] + '"></a></li><br>').appendTo($('.messages ul'));
@@ -326,11 +269,64 @@ var socket;
                 }
             }
             $('.message-input input').val(null);
-
-            // $('.contact.active .preview').html('<span>You: </span>' + message);
             scrollToBottom()
         }
         return false
     }
+    newMessage = () => {
+        message = $(".message-input input").val()
+        socket.emit('new_msg', {
+            sender: currentUser,
+            receiver: receiverId,
+            type: conversationType,
+            message_type: "text",
+            media_type: [],
+            text: message
+        })
+        if ($.trim(message) === '') {
+            return false;
+        }
+        $('<li class="sent"><p>' + message + '</p></li>').appendTo($('.messages ul'));
+        $('.message-input input').val(null);
+        // $('.contact.active .preview').html('<span>You: </span>' + message);
+        scrollToBottom()
+    }
+
+    $('.submit').click(function () {
+        newMessage();
+    });
+    $(window).on('keydown', function (e) {
+        if (e.which == 13) {
+            newMessage();
+            return false;
+        }
+    })
+
+    socket.on("new_upload", (data) => {
+        console.log('New upload approval')
+    })
+    socket.on('new_msg', (data) => {
+        if (data.message_type === "text") {
+            $('<li class="replies"><p>' + data.text + '</p></li>').appendTo($('.messages ul'));
+        } else if (data.message_type === "media" && data.sentBy === "admin") {
+            for (let i = 0; i < data.media_type.length; i++) {
+                if (data.media_type[i] === "image") {
+                    $('<li class="replies media_image"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/uploads/' + data.text[i] + '"></a><br></li>').appendTo($('.messages ul'));
+                } else if (data.media_type[i] === "pdf") {
+                    $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/pdf.png"></a></li><br>').appendTo($('.messages ul'));
+                } else if (data.media_type[i] === "doc") {
+                    $('<li class="replies media_doc"><a href="http://localhost:3000/uploads/' + data.text[i] + '"><img src="http://localhost:3000/assets/js/custom/chat/doc.png"></a></li><br>').appendTo($('.messages ul'));
+                }
+            }
+
+            // $('<li class="replies media_upload"><p><a href="http://localhost:3000/uploads/'+data.text+'">Media Received</a></p></li>').appendTo($('.messages ul'));
+        }
+
+        // $('.message-input input').val(null);
+        // $('.contact.active .preview').html('<span>You: </span>' + message);
+        scrollToBottom()
+    })
+
+
 })()
 
