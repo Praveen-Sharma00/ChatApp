@@ -854,7 +854,7 @@ body {
     float: right;
     margin: 6px 0 5px 8px;
     width: 120px !important;
-    border: 1px solid #ddd; /* Gray border */
+    /*border: 1px solid #ddd; !* Gray border *!*/
     border-radius: 4px;
 }
 #frame .content .messages ul li.sent.media_image img:hover {
@@ -864,9 +864,9 @@ body {
 
 #frame .content .messages ul li.sent.media_doc img {
     float: right;
-    margin: 6px 0 5px 8px;
+    margin: 6px 0 5px 6px;
     width: 100px !important;
-    border: 1px solid #ddd; /* Gray border */
+    /*border: 1px solid #ddd; !* Gray border *!*/
     border-radius: 4px;
 }
 #frame .content .messages ul li.sent.media_doc img:hover {
@@ -876,9 +876,9 @@ body {
 
 #frame .content .messages ul li.replies.media_image img {
     float: left;
-    margin: 6px 0 5px 8px;
+    margin: 6px 0 5px 6px;
     width: 120px !important;
-    border: 1px solid #ddd; /* Gray border */
+    /*border: 1px solid #ddd; !* Gray border *!*/
     border-radius: 4px;
 }
 #frame .content .messages ul li.replies.media_image img:hover {
@@ -888,12 +888,19 @@ body {
 
 #frame .content .messages ul li.replies.media_doc img {
     float: left;
-    margin: 6px 0 5px 8px;
-    width: 100px !important;
-    border: 1px solid #ddd; /* Gray border */
+    margin: 6px 0 5px 5px;
+    width: 80px !important;
+    /*border: 1px solid #ddd; !* Gray border *!*/
     border-radius: 4px;
 }
 #frame .content .messages ul li.replies.media_doc img:hover {
     box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
     cursor: pointer;
+}
+.sender_name{
+
+}
+.uname{
+    font-weight: bold;
+    font-size : 13px;
 }
