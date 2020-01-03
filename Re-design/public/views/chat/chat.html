@@ -123,10 +123,12 @@
             <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt=""/>
             <p id="tab-name"></p>
             <div class="social-media ">
-                <i class="fa fa-bell edit" title="Pending approvals for Uploads" onclick="loadNotificationModal(this.id)" data-toggle="modal" data-target="#notificationModal"
+                <i class="fa fa-bell edit" title="Pending approvals for Uploads"
+                   onclick="loadNotificationModal(this.id)" data-toggle="modal" data-target="#notificationModal"
                    aria-hidden="true"></i>
-<!--                <i class="fa fa-users edit"  aria-hidden="true"></i>-->
-                <i class="fa fa-plus edit" onclick="tell(this.id)" title="Add new members" aria-hidden="true"></i>
+                <!--                <i class="fa fa-users edit"  aria-hidden="true"></i>-->
+                <i class="fa fa-plus edit" onclick="tell(this.id)" data-toggle="modal" data-target="#addMemberModal"
+                   title="Add new members" aria-hidden="true"></i>
             </div>
         </div>
 
@@ -143,66 +145,87 @@
             </div>
         </div>
     </div>
+</div>
+<!-- Notification Modal -->
+<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModal"
+     aria-hidden="true">
 
-    <!-- Central Modal Small -->
-    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModal"
-         aria-hidden="true">
-
-        <!-- Change class .modal-sm to change the size of the modal -->
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <!-- Change class .modal-sm to change the size of the modal -->
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body notification_list">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Sender</th>
+                            <th scope="col">Documents uploaded</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="notifications">
+                        <tr>
+                            <td>Cell</td>
+                            <td>Cell</td>
+                            <td>Cell</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="modal-body notification_list">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">Sender</th>
-                                <th scope="col">Documents uploaded</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody id="notifications">
-                            <tr>
-                                <td>Cell</td>
-                                <td>Cell</td>
-                                <td>Cell</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-    <!-- Central Modal Small -->
 </div>
-<!-- Frame Modal Bottom -->
+<!-- Notification Modal -->
+<!-- Add member modal -->
+<div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="email" id="defaultForm-email" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
+                </div>
+
+                <div class="md-form mb-4">
+                    <i class="fas fa-lock prefix grey-text"></i>
+                    <input type="password" id="defaultForm-pass" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-default">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add member modal -->
+<!-- Attachment Modal -->
 <div class="modal fade bottom" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="attachmentModal"
      aria-hidden="true">
     <div class="modal-dialog modal-frame modal-bottom" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row d-flex justify-content-center align-items-center">
-                    <!--                    <p class="pt-3 pr-2 mx-auto">-->
-                    <!--&lt;!&ndash;                        <i class="attachment_icons fa fa-file fa-3x" data-toggle="modal" data-target="#attachmentModal" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
-                    <!--&lt;!&ndash;                        <i class="attachment_icons fa fa-file-image-o fa-3x" aria-hidden="true"></i>&ndash;&gt;-->
-                    <!--                   -->
-                    <!--&lt;!&ndash;                        <i class="btn btn-primary fa fa-file fa-3x" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
-                    <!--&lt;!&ndash;                        <i class="btn btn-primary fa fa-file-image-o fa-3x" aria-hidden="true"></i>&ndash;&gt;-->
-                    <!--                    </p>-->
                     <div class="ml-auto input-group col-sm-12 col-md-6">
                         <form enctype="multipart/form-data" method="POST" onsubmit="return upload()">
-                            <!--                        <div class="input-group-prepend">-->
-                            <!--                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>-->
-                            <!--                        </div>-->
                             <div class=" custom-file">
                                 <input type="file" name="media" class="form-control-file custom-file-input"
                                        id="fileUpload" onchange="upload()"
@@ -218,7 +241,9 @@
         </div>
     </div>
 </div>
-<!-- Frame Modal Bottom -->
+<!-- Attachment Modal -->
+
+
 <script
         src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
 <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
