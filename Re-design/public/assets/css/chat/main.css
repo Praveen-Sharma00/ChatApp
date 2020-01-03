@@ -865,7 +865,7 @@ body {
 #frame .content .messages ul li.sent.media_doc img {
     float: right;
     margin: 6px 0 5px 6px;
-    width: 100px !important;
+    width: 80px !important;
     /*border: 1px solid #ddd; !* Gray border *!*/
     border-radius: 4px;
 }
