@@ -114,12 +114,14 @@ class UserData {
         const response = await this.doGetRequest('/api/v1/admin/group/' + groupId + '/notifications/')
         return response
     }
-    async updateMembersOfGroup(groupId,newMembers){
-        const response = await this.doPostRequest('/api/v1/admin/group/'+groupId,{
+
+    async updateMembersOfGroup(groupId, newMembers) {
+        const response = await this.doPostRequest('/api/v1/admin/group/' + groupId, {
             newMembers
         })
         return response
     }
+
     async updatePendingGroupUploadStatus(groupId, msgId) {
         const response = await this.doPostRequest('/api/v1/admin/group/' + groupId + '/notifications/', {
             msgId

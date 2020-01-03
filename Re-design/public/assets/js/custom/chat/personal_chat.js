@@ -91,35 +91,36 @@ var socket;
         }
     }
 
-    const generateNonMemberList =async (groupId)=>{
-        const {data:first_response} = await _user.getUserContacts()
-        const {data:second_response} = await _user.getMembersOfGroup(groupId)
+    const generateNonMemberList = async (groupId) => {
+        const {data: first_response} = await _user.getUserContacts()
+        const {data: second_response} = await _user.getMembersOfGroup(groupId)
 
         const existingContacts = first_response.contacts
         const existingMembers = second_response.members
 
-        const existingContactIds = existingContacts.map(e=>e._id)
-        const existingMemberIds = existingMembers.map(e=>e._id)
-        const nonMemberIds = existingContactIds.filter(e=>!existingMemberIds.includes(e))
-        const nonMembers = existingContacts.filter(e=>nonMemberIds.includes(e._id))
+        const existingContactIds = existingContacts.map(e => e._id)
+        const existingMemberIds = existingMembers.map(e => e._id)
+
+        const nonMemberIds = existingContactIds.filter(e => !existingMemberIds.includes(e))
+        const nonMembers = existingContacts.filter(e => nonMemberIds.includes(e._id))
         return nonMembers
     }
-    const generateNonMemberOptions = async (groupId)=>{
+    const generateNonMemberOptions = async (groupId) => {
         const nonMembers = await generateNonMemberList(groupId)
-        let options= ""
-        if(nonMembers.length === 0){
-            options="<option >No new members to add</option>"
-        }
-        else{
-            nonMembers.forEach((c)=>{options+='<option value='+c._id+'>'+c.name+'</option>';
+        let options = ""
+        if (nonMembers.length === 0) {
+            options = "<option >No new members to add</option>"
+        } else {
+            nonMembers.forEach((c) => {
+                options += '<option value=' + c._id + '>' + c.name + '</option>';
             })
         }
         return options
     }
-    const populateNonMembers = async (groupId)=>{
+    const populateNonMembers = async (groupId) => {
         const options = await generateNonMemberOptions(groupId)
         const select = document.getElementById("member-select")
-        select.innerHTML = '<select class="bg-info" id="members" multiple="multiple">'+options+'</select>'
+        select.innerHTML = '<select class="bg-info" id="members" multiple="multiple">' + options + '</select>'
         $(document).ready(function () {
             $('#members').multiselect({
                 buttonText: function (options, select) {
@@ -137,14 +138,14 @@ var socket;
     })
     await populateBasicUserData()
 
-    addNewMember = async () =>{
-        const groupId=receiverId
+    addNewMember = async () => {
+        const groupId = receiverId
         $('#addMemberModal').modal('hide');
         const members = $("#members").val()
-        const response = await _user.updateMembersOfGroup(groupId,members)
-        if(response.success){
+        const response = await _user.updateMembersOfGroup(groupId, members)
+        if (response.success) {
             alert('Members Added successfully')
-        }else{
+        } else {
             alert(response.error.message)
         }
     }

@@ -76,8 +76,7 @@ io.on('connection', function (socket) {
       sentBy: metadata.sentBy
     });
   });
-}); //sample
-
+});
 server.listen(process.env.PORT, () => {
   console.log(success("Server listening on PORT " + process.env.PORT));
 });
