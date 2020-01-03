@@ -27,7 +27,6 @@ var socket;
         })
         return str
     }
-
     const populateBasicUserData = async () => {
         const {data} = await _user.getUserContacts()
         const {contacts} = data
@@ -46,7 +45,6 @@ var socket;
         conversationType = "individual"
 
     }
-
     const populateBasicGroupData = async () => {
         const response = await _user.getUserGroups()
         const {obj} = response.data
@@ -64,7 +62,6 @@ var socket;
         }
         conversationType = "group"
     }
-
     const renderNotifications = async (groupId) => {
         const {data} = await _user.getPendingGroupUploads(groupId)
         const pending_uploads = data.pending_messages
@@ -94,13 +91,63 @@ var socket;
         }
     }
 
+    const generateNonMemberList =async (groupId)=>{
+        const {data:first_response} = await _user.getUserContacts()
+        const {data:second_response} = await _user.getMembersOfGroup(groupId)
+
+        const existingContacts = first_response.contacts
+        const existingMembers = second_response.members
+
+        const existingContactIds = existingContacts.map(e=>e._id)
+        const existingMemberIds = existingMembers.map(e=>e._id)
+        const nonMemberIds = existingContactIds.filter(e=>!existingMemberIds.includes(e))
+        const nonMembers = existingContacts.filter(e=>nonMemberIds.includes(e._id))
+        return nonMembers
+    }
+    const generateNonMemberOptions = async (groupId)=>{
+        const nonMembers = await generateNonMemberList(groupId)
+        let options= ""
+        if(nonMembers.length === 0){
+            options="<option >No new members to add</option>"
+        }
+        else{
+            nonMembers.forEach((c)=>{options+='<option value='+c._id+'>'+c.name+'</option>';
+            })
+        }
+        return options
+    }
+    const populateNonMembers = async (groupId)=>{
+        const options = await generateNonMemberOptions(groupId)
+        const select = document.getElementById("member-select")
+        select.innerHTML = '<select class="bg-info" id="members" multiple="multiple">'+options+'</select>'
+        $(document).ready(function () {
+            $('#members').multiselect({
+                buttonText: function (options, select) {
+                    if (options.length === 0) {
+                        return 'Select members';
+                    } else if (options.length > 4) {
+                        return 'More than 3 members selected!';
+                    }
+                }
+            });
+        });
+    }
     $(".tab-btn").click(function (e) {
         $(this).addClass("active-tab").siblings().removeClass("active-tab")
     })
-
     await populateBasicUserData()
 
-
+    addNewMember = async () =>{
+        const groupId=receiverId
+        $('#addMemberModal').modal('hide');
+        const members = $("#members").val()
+        const response = await _user.updateMembersOfGroup(groupId,members)
+        if(response.success){
+            alert('Members Added successfully')
+        }else{
+            alert(response.error.message)
+        }
+    }
     scrollToBottom = () => {
         $(".messages").animate({scrollTop: $(".messages")[0].scrollHeight}, 0);
     }
@@ -182,8 +229,8 @@ var socket;
             })
         }
     }
-    loadAddMemberModal = (groupId) => {
-
+    loadAddMemberModal = async (groupId) => {
+        await populateNonMembers(groupId)
     }
     startConversation = async (id) => {
         $("li#" + id).addClass("active").siblings().removeClass("active")
@@ -209,7 +256,6 @@ var socket;
         await showConversation("group", groupId)
     }
     loadNotificationModal = async (id) => {
-        console.log(id)
         await renderNotifications(id)
     }
     upload = async () => {

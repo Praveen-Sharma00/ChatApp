@@ -50,7 +50,9 @@ api
     .post(userController.updatePendingGroupUploadStatus)
 // .post(checkSession,userController.createGroup)
 
-
+api
+    .route('/admin/group/:groupId')
+    .post(userController.updateMembersOfGroup)
 export let apiRoutes = api;
 
 

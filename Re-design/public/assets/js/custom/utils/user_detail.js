@@ -85,10 +85,12 @@ class UserData {
         const response = await this.doGetRequest('/api/v1/admin/groups')
         return response
     }
-    async getGroupAdmins(groupId){
-        const response = await this.doGetRequest('/api/v1/group/'+groupId+'/admins')
+
+    async getGroupAdmins(groupId) {
+        const response = await this.doGetRequest('/api/v1/group/' + groupId + '/admins')
         return response
     }
+
     async updatePermissions(groupId, userId, permissions) {
         const response = await this.doPostRequest('/api/v1/user/group/' + groupId, {
             permissions,
@@ -108,12 +110,18 @@ class UserData {
         return response
     }
 
-    async getPendingGroupUploads(groupId){
+    async getPendingGroupUploads(groupId) {
         const response = await this.doGetRequest('/api/v1/admin/group/' + groupId + '/notifications/')
         return response
     }
+    async updateMembersOfGroup(groupId,newMembers){
+        const response = await this.doPostRequest('/api/v1/admin/group/'+groupId,{
+            newMembers
+        })
+        return response
+    }
     async updatePendingGroupUploadStatus(groupId, msgId) {
-        const response = await this.doPostRequest('/api/v1/admin/group/' + groupId+ '/notifications/', {
+        const response = await this.doPostRequest('/api/v1/admin/group/' + groupId + '/notifications/', {
             msgId
         })
         return response

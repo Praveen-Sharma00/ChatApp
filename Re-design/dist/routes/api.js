@@ -27,5 +27,6 @@ api.route('/group/:groupId/admins').get(_user.userController.getGroupAdmins);
 api.route('/admin/groups').get(_user.userController.getAdminGroups);
 api.route('/admin/group/:groupId/notifications').get(_user.userController.getPendingGroupUploads).post(_user.userController.updatePendingGroupUploadStatus); // .post(checkSession,userController.createGroup)
 
+api.route('/admin/group/:groupId').post(_user.userController.updateMembersOfGroup);
 let apiRoutes = api;
 exports.apiRoutes = apiRoutes;

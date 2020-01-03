@@ -126,6 +126,21 @@ export default class UserDetailService {
         return ({success: true, error: {}, data: {members}})
     }
 
+    async updateMembersOfGroup(groupId,members){
+        const group = await GroupModel.findOne({
+            _id:groupId
+        })
+        members.forEach((m)=>{
+            group.members.push({
+                permissions:[],
+                _id:m,
+                isAdmin:false,
+                adminLevel:1
+            })
+        })
+        await group.save()
+        return ({success:true,error:{},data:{}})
+    }
     async createGroup(currentUser, groupDetailObj) {
         const temp = await this.getAdminGroups(currentUser)
         const groups = temp.data.obj

@@ -109,6 +109,12 @@ const getUserPermissions = async (req, res) => {
     const response = await _userDetailService.getUserPermissions(user._id, groupId)
     return res.send(response)
 }
+const updateMembersOfGroup = async(req,res)=>{
+    const {groupId} = req.params
+    const {newMembers} = req.body
+    const response = await _userDetailService.updateMembersOfGroup(groupId,newMembers)
+    return res.send(response)
+}
 export let userController = {
     dashboard,
     chat,
@@ -122,6 +128,7 @@ export let userController = {
     getUserGroups,
     createGroup,
     getAdminGroups,
+    updateMembersOfGroup,
     getGroupAdmins,
     getGroupMembers,
     updatePermissions,
