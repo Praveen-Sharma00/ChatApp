@@ -16,6 +16,7 @@ var socket;
     }
     showConversation = async (type, id) => {
         if (type === "group") {
+            $(".edit").show()
             const _r = await _user.getUserPermissions(id)
             if (_r.data.permissions["ReadOnly"]) {
                 $(".message-input").hide()
@@ -28,6 +29,7 @@ var socket;
                 }
             }
         } else if (type === "individual") {
+            $(".edit").hide()
             $(".message-input").show()
         }
 
@@ -87,26 +89,11 @@ var socket;
                                 scrollToBottom()
                             }
                         }
-                        // $('<li class="replies media_upload"><p><a href="http://localhost:3000/uploads/'+data.text+'">Media Received</a></p></li>').appendTo($('.messages ul'));
                     }
-                    //
-                    // $('<li class="replies"><p>' + msg.text + '</p></li>').appendTo($('.messages ul'));
-                    // scrollToBottom()
+
                 }
             })
         }
-        // else {
-        //     $('.messages ul').html("")
-        //     response.data.messages.forEach((msg) => {
-        //         if (msg.sender.id === currentUser._id) {
-        //             $('<li class="sent"><p>' + msg.text + '</p></li>').appendTo($('.messages ul'));
-        //             scrollToBottom()
-        //         } else {
-        //             $('<li class="replies"><p>' + msg.text + '</p></li>').appendTo($('.messages ul'));
-        //             scrollToBottom()
-        //         }
-        //     })
-        // }
     }
 
     startConversation = async (id) => {
@@ -251,7 +238,7 @@ var socket;
         await showConversation("group", groupId)
     }
     socket.on("new_upload", (data) => {
-        alert('New upload approval')
+        console.log('New upload approval')
     })
     socket.on('new_msg', (data) => {
         if (data.message_type === "text") {
