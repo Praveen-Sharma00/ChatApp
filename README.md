@@ -1,4 +1,4 @@
-# ChatApp
+# Ping.io
 A Simple ChatApp
 
 **Steps to run**
