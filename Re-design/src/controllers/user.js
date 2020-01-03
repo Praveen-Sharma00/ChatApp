@@ -1,6 +1,4 @@
-import UserDetailService from "../services/user";
-
-
+import UserDetailService from "../services/user"
 const _userDetailService = new UserDetailService()
 
 const dashboard = async (req, res) => {
@@ -39,8 +37,8 @@ const getAdminGroups = async (req, res) => {
     const response = await _userDetailService.getAdminGroups(user)
     return res.send(response)
 }
-const getGroupAdmins = async (req,res)=>{
-    const {groupId} =   req.params
+const getGroupAdmins = async (req, res) => {
+    const {groupId} = req.params
     const response = await _userDetailService.getGroupAdmins(groupId)
     return res.send(response)
 }
@@ -74,26 +72,25 @@ const updateIndividualConversation = async (req, res) => {
     const receiverId = req.params.secondUserId
 
     const text = req.body.text.trim()
-    const response = await _userDetailService.updateIndividualConversation(user._id, receiverId, text,'','')
+    const response = await _userDetailService.updateIndividualConversation(user._id, receiverId, text, '', '')
     return res.send(response)
 }
 const updateGroupConversation = async (req, res) => {
     const {user} = req.session
     const {text} = req.body
     const groupId = req.params.groupId
-
-    const response = await _userDetailService.updateGroupConversation(user._id, groupId, text,'','')
+    const response = await _userDetailService.updateGroupConversation(user._id, groupId, text, '', '')
     return res.send(response)
 }
-const updatePendingGroupUploadStatus = async (req,res)=>{
+const updatePendingGroupUploadStatus = async (req, res) => {
     const groupId = req.params.groupId
     const {msgId} = req.body
-    const response = await _userDetailService.updatePendingGroupUploadStatus(groupId,msgId)
+    const response = await _userDetailService.updatePendingGroupUploadStatus(groupId, msgId)
     return res.send(response)
 }
-const getPendingGroupUploads = async(req,res)=>{
+const getPendingGroupUploads = async (req, res) => {
     const groupId = req.params.groupId
-    const response = await _userDetailService.getPendingGroupUploads( groupId)
+    const response = await _userDetailService.getPendingGroupUploads(groupId)
     return res.send(response)
 }
 const updatePermissions = async (req, res) => {
@@ -109,10 +106,10 @@ const getUserPermissions = async (req, res) => {
     const response = await _userDetailService.getUserPermissions(user._id, groupId)
     return res.send(response)
 }
-const updateMembersOfGroup = async(req,res)=>{
+const updateMembersOfGroup = async (req, res) => {
     const {groupId} = req.params
     const {newMembers} = req.body
-    const response = await _userDetailService.updateMembersOfGroup(groupId,newMembers)
+    const response = await _userDetailService.updateMembersOfGroup(groupId, newMembers)
     return res.send(response)
 }
 export let userController = {
@@ -121,7 +118,6 @@ export let userController = {
     configurePage,
 
     getCurrentUser,
-
     getUserContacts,
     updateUserContact,
 

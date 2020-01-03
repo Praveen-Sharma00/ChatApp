@@ -69,7 +69,6 @@ io.on('connection', function (socket) {
       res = await _userDetailService.updateGroupConversation(metadata.sender._id, metadata.receiver, metadata.text, metadata.message_type, metadata.media_type);
     }
 
-    console.log("/////", metadata.name);
     socket.broadcast.to(_room).emit('new_msg', {
       name: metadata.sender.name,
       text: metadata.text,

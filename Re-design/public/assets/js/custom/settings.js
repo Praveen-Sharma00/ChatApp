@@ -1,18 +1,17 @@
 var currentGroupId;
 var currentState = []
 var modifiedState = []
+var currentAdminLevel;
 
 const generateGroupList = async () => {
     const response = await _user.getAdminGroups()
     let str = ""
-    console.log(response)
     let groups = response.data.obj
     groups.forEach((e) => {
         str += '<option value=' + e._id + '>' + e.name + '</option>'
     })
     return str
 }
-var currentAdminLevel;
 const generateGroupMemberListTable = async (groupId) => {
     currentGroupId = groupId
     const currentUser = await _user.getCurrentUser()
@@ -113,7 +112,6 @@ const toggleUpload = (i) => {
     const index = parseInt(i.getAttribute("name"))
     modifiedState[index].IsUploadBlocked = !modifiedState[index].IsUploadBlocked
 }
-
 const setPermission = async (userId, i) => {
     const index = parseInt(i)
     let permissions = []
@@ -143,15 +141,10 @@ const setPermission = async (userId, i) => {
     } else {
         permissions.push("~BlockUploads")
     }
-    console.log(permissions)
-    console.log(currentGroupId)
-    console.log(userId)
     const response = await _user.updatePermissions(currentGroupId, userId, permissions)
-    console.log(response)
     permissions = null
     if (response.success) {
         await populateDataTable(currentGroupId)
-
         modifiedState[index].IsAdmin = false
         modifiedState[index].IsReadOnly = false
         modifiedState[index].IsUploadBlocked = false

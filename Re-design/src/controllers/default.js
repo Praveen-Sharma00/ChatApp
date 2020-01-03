@@ -1,7 +1,7 @@
-const home = (req,res)=>{
+const home = (req, res) => {
     res.render('index')
 }
 
-export let defaultController={
-    home:home
+export let defaultController = {
+    home: home
 }

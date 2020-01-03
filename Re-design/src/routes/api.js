@@ -1,9 +1,10 @@
 import express from 'express'
 
-import { userController } from "../controllers/user";
-import { checkSession } from '../middlewares/auth'
+import {userController} from "../controllers/user";
+import {checkSession} from '../middlewares/auth'
 
 const api = express.Router()
+
 api
     .route('/user')
     .get(checkSession, userController.getCurrentUser)
@@ -12,10 +13,12 @@ api
     .route('/user/contacts')
     .get(userController.getUserContacts)
     .post(checkSession, userController.updateUserContact)
+
 api
     .route('/user/groups')
     .get(userController.getUserGroups)
     .post(checkSession, userController.createGroup)
+
 api
     .route('/user/group/:groupId')
     .get(userController.getGroupMembers)
@@ -30,8 +33,6 @@ api
     .get(userController.getConversationBetweenUsers)
     .post(userController.updateIndividualConversation)
 
-
-// .post(checkSession, userController.createGroup)
 api
     .route('/user/chats/group/:groupId')
     .get(userController.getGroupConversations)
@@ -40,6 +41,7 @@ api
 api
     .route('/group/:groupId/admins')
     .get(userController.getGroupAdmins)
+
 api
     .route('/admin/groups')
     .get(userController.getAdminGroups)
@@ -48,11 +50,11 @@ api
     .route('/admin/group/:groupId/notifications')
     .get(userController.getPendingGroupUploads)
     .post(userController.updatePendingGroupUploadStatus)
-// .post(checkSession,userController.createGroup)
 
 api
     .route('/admin/group/:groupId')
     .post(userController.updateMembersOfGroup)
+
 export let apiRoutes = api;
 
 

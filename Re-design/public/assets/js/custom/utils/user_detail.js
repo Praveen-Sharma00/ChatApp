@@ -105,7 +105,6 @@ class UserData {
     }
 
     async uploadFile(data) {
-        console.log(data)
         const response = await this.doUploadPostRequest(data)
         return response
     }

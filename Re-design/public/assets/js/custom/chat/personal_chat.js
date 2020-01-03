@@ -11,6 +11,7 @@ var socket;
 
     socket.emit('init', {id: currentUser._id})
     socket.emit('login', currentUser)
+
     const generateListHTML = (arr) => {
         let str = ""
         arr.forEach((e) => {
@@ -90,7 +91,6 @@ var socket;
             notification_list.innerHTML = listStr
         }
     }
-
     const generateNonMemberList = async (groupId) => {
         const {data: first_response} = await _user.getUserContacts()
         const {data: second_response} = await _user.getMembersOfGroup(groupId)
@@ -263,7 +263,6 @@ var socket;
 
         for (let i = 0; i < file.length; i++) {
             let fname = "." + file[i].name.split('.')[1]
-            console.log(fname)
             let re = /(\.jpg|\.JPG|\.jpeg|\.JPEG|\.png|\.PNG|\.gif|\.GIF|\.pdf|\.docx|\.doc)$/i;
             if (!re.exec(fname)) {
                 alert("Only pdf,docx,doc,gif,png,jpg,jpeg are supported");
@@ -372,7 +371,5 @@ var socket;
         // $('.contact.active .preview').html('<span>You: </span>' + message);
         scrollToBottom()
     })
-
-
 })()
 

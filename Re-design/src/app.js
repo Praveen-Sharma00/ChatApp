@@ -13,7 +13,8 @@ import {userRoutes} from "./routes/user";
 import {apiRoutes} from "./routes/api";
 
 import {Filter} from './utils/fileFilters'
-import GroupModel from "./models/Group";
+
+const multer = require('multer')
 
 dotenv.config({
     path: path.join(__dirname, '..', 'config.env')
@@ -21,8 +22,6 @@ dotenv.config({
 
 
 const app = express()
-
-const multer = require('multer')
 
 
 let storage = multer.diskStorage({
@@ -61,13 +60,11 @@ app.use(session({
     saveUninitialized: false,
     secret: 'CloudSurfer',
     store: expressStore
-    // ,
     // cookie: { maxAge: 60000 }
 }))
 
 
 app.use(express.static(path.join(__dirname, '..', 'public')))
-// app.use('/uploads', express.static(path.join(__dirname, '..', 'public','uploads')));
 app.use('/assets', express.static(path.join(__dirname, '..', 'public', 'assets')))
 app.engine('html', require('ejs').renderFile)
 app.set('view engine', 'html')
@@ -84,33 +81,8 @@ app.use(defaultRoutes)
 app.use(authRoutes)
 app.use(userRoutes)
 app.use('/api/v1', apiRoutes)
-app.use('/g',async (req,res)=>{
-    const g=new GroupModel({
-        admins:[{
-            _id:mongoose.Types.ObjectId("5dfc5de07e69f8300414bad7"),
-            level:1,
-        },{
-            _id:mongoose.Types.ObjectId("5dfc5dfc7e69f8300414bad8"),
-            level: 2
-        }],
-        name:"Simple_App",
-        members:[{
-            _id:mongoose.Types.ObjectId("5dfc5dfc7e69f8300414bad8"),
-            isAdmin:true,
-            permissions:[]
-        },{
-            _id:mongoose.Types.ObjectId("5dfc5e0d7e69f8300414bad9"),
-            isAdmin:false,
-            permissions:[]
-        },{
-            _id:mongoose.Types.ObjectId("5dfc5de07e69f8300414bad7"),
-            isAdmin:true,
-            permissions:[]
-        }]
-    })
-    await g.save()
-    process.exit()
-})
+
+/************************************** UPLOAD HANDLER ***************************************/
 app.post('/upload', uploadFile.array('media', 10), (req, res) => {
     const files = req.files
     let media_type = []
@@ -128,7 +100,6 @@ app.post('/upload', uploadFile.array('media', 10), (req, res) => {
     }
     res.send({success: true, filename: filename, media_type: media_type})
 })
-// app.use(userRoutes)
-/********************************************************************* */
+
 
 export default app

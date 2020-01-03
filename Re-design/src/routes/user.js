@@ -8,6 +8,7 @@ const router = express.Router()
 router
     .route('/dashboard')
     .get(checkSession, userController.dashboard)
+
 router
     .route('/dashboard/settings')
     .get(checkSession, userController.configurePage)

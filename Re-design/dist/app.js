@@ -27,9 +27,13 @@ var _user = require("./routes/user");
 
 var _api = require("./routes/api");
 
+var multer = _interopRequireWildcard(require("multer"));
+
 var _fileFilters = require("./utils/fileFilters");
 
-var _Group = _interopRequireDefault(require("./models/Group"));
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38,9 +42,6 @@ _dotenv.default.config({
 });
 
 const app = (0, _express.default)();
-
-const multer = require('multer');
-
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, _path.default.join(__dirname, '..', 'public', 'uploads'));
@@ -80,12 +81,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: 'CloudSurfer',
-  store: expressStore // ,
-  // cookie: { maxAge: 60000 }
+  store: expressStore // cookie: { maxAge: 60000 }
 
 }));
-app.use(_express.default.static(_path.default.join(__dirname, '..', 'public'))); // app.use('/uploads', express.static(path.join(__dirname, '..', 'public','uploads')));
-
+app.use(_express.default.static(_path.default.join(__dirname, '..', 'public')));
 app.use('/assets', _express.default.static(_path.default.join(__dirname, '..', 'public', 'assets')));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -101,33 +100,8 @@ app.use(_default2.defaultRoutes);
 app.use(_auth.authRoutes);
 app.use(_user.userRoutes);
 app.use('/api/v1', _api.apiRoutes);
-app.use('/g', async (req, res) => {
-  const g = new _Group.default({
-    admins: [{
-      _id: _mongoose.default.Types.ObjectId("5dfc5de07e69f8300414bad7"),
-      level: 1
-    }, {
-      _id: _mongoose.default.Types.ObjectId("5dfc5dfc7e69f8300414bad8"),
-      level: 2
-    }],
-    name: "Simple_App",
-    members: [{
-      _id: _mongoose.default.Types.ObjectId("5dfc5dfc7e69f8300414bad8"),
-      isAdmin: true,
-      permissions: []
-    }, {
-      _id: _mongoose.default.Types.ObjectId("5dfc5e0d7e69f8300414bad9"),
-      isAdmin: false,
-      permissions: []
-    }, {
-      _id: _mongoose.default.Types.ObjectId("5dfc5de07e69f8300414bad7"),
-      isAdmin: true,
-      permissions: []
-    }]
-  });
-  await g.save();
-  process.exit();
-});
+/************************************** UPLOAD HANDLER ***************************************/
+
 app.post('/upload', uploadFile.array('media', 10), (req, res) => {
   const files = req.files;
   let media_type = [];
@@ -151,9 +125,6 @@ app.post('/upload', uploadFile.array('media', 10), (req, res) => {
     filename: filename,
     media_type: media_type
   });
-}); // app.use(userRoutes)
-
-/********************************************************************* */
-
+});
 var _default = app;
 exports.default = _default;

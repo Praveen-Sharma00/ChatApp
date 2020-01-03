@@ -34,7 +34,6 @@ export default class UserDetailService {
                 _id: members[i]._id
             }).select('-password -contacts')
 
-            // const newObj = {...result,isAdmin:members[i].isAdmin,permissions: members[i].permissions}
             result = result.toObject()
             result["isAdmin"] = members[i]["isAdmin"]
             result["permissions"] = members[i]["permissions"]
@@ -46,7 +45,6 @@ export default class UserDetailService {
     }
 
     async findContact(currentUser, email) {
-
         const _all = await this.getUserContacts(currentUser)
         const _result = _all.data.contacts.find(e => e.email == email)
         if (!_result) {
@@ -201,10 +199,8 @@ export default class UserDetailService {
         if (a > b) {
             [a, b] = [b, a]
         }
-        let msg_type = ""
-        let md_type = []
-        let md_loc = []
-        let text_ = ""
+        let msg_type = "", md_type = [], md_loc = [], text_ = ""
+
         if (message_type === "text") {
             msg_type = "text"
             text_ = text
@@ -228,8 +224,8 @@ export default class UserDetailService {
             }
         }
 
-
         const conversation = await ConversationModel.findOne({between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)]})
+
         if (!conversation) {
             const newConversation = new ConversationModel({
                 between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)],
@@ -273,11 +269,7 @@ export default class UserDetailService {
 
     async updateGroupConversation(senderId, groupId, text, message_type, media_type) {
         const user = await UserModel.findOne({_id: mongoose.Types.ObjectId(senderId)})
-        let msg_type = ""
-        let md_type = []
-        let md_loc = []
-        let msg_status = "pending"
-        let text_ = ""
+        let msg_type = "", md_type = [], md_loc = [], text_ = "", msg_status = "pending"
         if (message_type === "text") {
             msg_type = "text"
             md_type[0] = "default"
@@ -285,7 +277,6 @@ export default class UserDetailService {
         } else {
             msg_type = "media"
             const group = await GroupModel.findOne({_id: groupId})
-            // const isPresent = group.admins.map((obj) => obj._id == senderId).length > 0
             const isPresent = group.admins.filter((obj) => obj._id == senderId).length > 0
             if (isPresent) {
                 msg_status = "approved"
@@ -305,7 +296,6 @@ export default class UserDetailService {
                     md_loc = text[i]
                 }
             }
-
         }
         const conversation = await ConversationModel.findOne({group_id: mongoose.Types.ObjectId(groupId)})
         if (!conversation) {
@@ -394,7 +384,6 @@ export default class UserDetailService {
                 return ({success: true, error: {}, data: {pending_messages}})
             }
         }
-
     }
 
     async updatePendingGroupUploadStatus(groupId, msgId) {
@@ -405,7 +394,6 @@ export default class UserDetailService {
         if (!_result || _result === null) {
             return ({success: false, error: {message: 'No such message found !'}})
         } else {
-            // ((_result[0]).messages.filter(m => m._id == msgId))[0].approval_status = "approved"
             let messageIndex = _result.messages.findIndex((m) => {
                 return m._id == msgId
             })
@@ -431,25 +419,17 @@ export default class UserDetailService {
 
     async updatePermissions(currentUserId, groupId, userId, permissions) {
         const group = await GroupModel.findOne({_id: groupId})
-        // const isPresent = group.admins.includes(currentUserId)
-        console.log(group.admins)
         const isPresent = group.admins.map((obj) => obj._id == currentUserId).length > 0
-
         if (!isPresent) {
             return ({success: false, error: {message: "You\'re not authorized "}})
         }
         const newAdmins = group.admins
-
         const newPermissions = (group.members.filter(m => m._id == userId)[0]).permissions
-
         const isUserAlreadyAdmin = newAdmins.filter((obj => obj._id == userId)).length > 0
-
-
         const _r = permissions
 
         if (_r.includes("Admin")) {
             if (!isUserAlreadyAdmin) {
-                console.log("THIS AGAIN RUNS")
                 group.members.filter(m => m._id == userId)[0].isAdmin = true
                 group.members.filter(m => m._id == userId)[0].adminLevel = 2
                 newAdmins.push({
@@ -462,7 +442,6 @@ export default class UserDetailService {
             if (index > -1) {
                 newAdmins.splice(index, 1)
             }
-
             group.members.filter(m => m._id == userId)[0].isAdmin = false
             group.members.filter(m => m._id == userId)[0].adminLevel = 3
         }
@@ -471,7 +450,6 @@ export default class UserDetailService {
             if (!newPermissions.includes("ReadOnly"))
                 newPermissions.push("ReadOnly")
         } else if (_r.includes("~ReadOnly")) {
-            console.log("THIS RUNS")
             const index = newPermissions.indexOf("ReadOnly")
             if (index > -1) {
                 newPermissions.splice(index, 1)
@@ -486,7 +464,6 @@ export default class UserDetailService {
             if (index > -1) {
                 newPermissions.splice(index, 1)
             }
-
         }
         group.admins = newAdmins
         group.members.filter((m) => m._id == userId)[0].permissions = newPermissions
@@ -494,11 +471,7 @@ export default class UserDetailService {
         return ({success: true, error: {}, data: {}})
     }
 
-
     async getUserPermissions(userId, groupId) {
-        // let _result = await GroupModel.aggregate([{$unwind: "$members"}, {$match: {
-        //     $and:[{"_id":groupId},{"members._id": userId}]
-        //     }}])
         let _result = await GroupModel.aggregate([
             {
                 $unwind: "$members"
@@ -519,7 +492,6 @@ export default class UserDetailService {
             permissions["ReadOnly"] = _result[0].members.permissions.includes("ReadOnly")
             permissions["BlockUploads"] = _result[0].members.permissions.includes("BlockUploads")
         }
-
         return ({success: true, error: {}, data: {permissions}})
     }
 }

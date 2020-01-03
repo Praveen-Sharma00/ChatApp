@@ -821,27 +821,32 @@ body {
 .active-tab {
     background-color: rgba(0, 188, 212, 0.35) !important;
 }
-.block{
+
+.block {
     display: none !important;
 }
-.attachment_icons{
+
+.attachment_icons {
     background-color: white;
     border-radius: 75%;
     border: 1px solid #dfdfdf;
-    padding:12px;
+    padding: 12px;
     height: 70%;
-    box-shadow: 0 0 0 4px rgba(255,255,255,1);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 1);
     transition: background 0.2s, color 0.2s;
 
 }
-.attachment_icons:hover{
-    background: rgba(255,255,255,1);
+
+.attachment_icons:hover {
+    background: rgba(255, 255, 255, 1);
     color: #64bb5d;
     cursor: pointer;
 }
+
 .attachment_icons:hover:before {
     animation: spinAround 2s linear infinite;
 }
+
 @keyframes spinAround {
     from {
         transform: rotate(0deg)
@@ -850,6 +855,7 @@ body {
         transform: rotate(360deg);
     }
 }
+
 #frame .content .messages ul li.sent.media_image img {
     float: right;
     margin: 6px 0 5px 8px;
@@ -857,6 +863,7 @@ body {
     /*border: 1px solid #ddd; !* Gray border *!*/
     border-radius: 4px;
 }
+
 #frame .content .messages ul li.sent.media_image img:hover {
     box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
     cursor: pointer;
@@ -869,6 +876,7 @@ body {
     /*border: 1px solid #ddd; !* Gray border *!*/
     border-radius: 4px;
 }
+
 #frame .content .messages ul li.sent.media_doc img:hover {
     box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
     cursor: pointer;
@@ -881,6 +889,7 @@ body {
     /*border: 1px solid #ddd; !* Gray border *!*/
     border-radius: 4px;
 }
+
 #frame .content .messages ul li.replies.media_image img:hover {
     box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
     cursor: pointer;
@@ -893,15 +902,18 @@ body {
     /*border: 1px solid #ddd; !* Gray border *!*/
     border-radius: 4px;
 }
+
 #frame .content .messages ul li.replies.media_doc img:hover {
     box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
     cursor: pointer;
 }
-.sender_name{
+
+.sender_name {
 
 }
-.uname{
+
+.uname {
     font-weight: bold;
-    font-size : 13px;
+    font-size: 13px;
 
 }

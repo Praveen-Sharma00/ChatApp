@@ -2,6 +2,7 @@ import express from 'express'
 
 import {authController} from '../controllers/auth'
 import {checkSession} from '../middlewares/auth'
+
 const router = express.Router()
 
 
@@ -15,7 +16,7 @@ router
 
 router
     .route('/logout')
-    .post(checkSession,authController.destroySession)
+    .post(checkSession, authController.destroySession)
 
 export let authRoutes = router;
 
