@@ -135,7 +135,7 @@ export default class UserDetailService {
                 permissions: [],
                 _id: m,
                 isAdmin: false,
-                adminLevel: -1
+                adminLevel: 3
             })
         })
         await group.save()
@@ -156,7 +156,7 @@ export default class UserDetailService {
                 _id: mongoose.Types.ObjectId(e),
                 isAdmin: false,
                 permissions: [],
-                adminLevel: -1
+                adminLevel: 3
             })
         })
         membersArr.push({
@@ -464,7 +464,7 @@ export default class UserDetailService {
             }
 
             group.members.filter(m => m._id == userId)[0].isAdmin = false
-            group.members.filter(m => m._id == userId)[0].adminLevel = -1
+            group.members.filter(m => m._id == userId)[0].adminLevel = 3
         }
 
         if (_r.includes("ReadOnly")) {

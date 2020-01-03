@@ -58,22 +58,23 @@ const generateGroupMemberListTable = async (groupId) => {
                 cColor = "primary"
                 cTitle = "Click to Make Read-Only user"
             }
-            if (currentUser._id == members[i]._id || (members[i].adminLevel!==-1 &&currentAdminLevel>members[i].adminLevel)) {
+            if (currentUser._id == members[i]._id || (currentAdminLevel > members[i].adminLevel)) {
                 continue;
-            }else {
+            } else {
                 str += '<tr>\n' +
-                    ' <th scope="row">' + (i + 1) + '</th>\n' +
+
                     ' <td>' + members[i].name + '</td>\n' +
                     ' <td>' + members[i].email + '</td>\n' +
                     ' <td>' + members[i].isAdmin + '</td>\n' +
                     ' <td><div class="d-inline btn-group-sm btn-group-toggle" id="permissions" data-toggle="buttons">'
-                if ((currentAdminLevel > members[i].adminLevel && members[i].adminLevel===-1) ||(currentAdminLevel < members[i].adminLevel &&members[i].adminLevel!==-1)) {
+                if ((currentAdminLevel <= members[i].adminLevel)) {
                     str += '  <label class="btn btn-' + aColor + '"  name="' + i + '" onclick="toggleAdmin(this)" data-toggle="tooltip" title="' + aTitle + '">' +
                         '<input type="checkbox" name="options" id="admin" autocomplete="off"><i class="fas fa-shield-alt" ></i>' +
                         '  </label>'
-                } else if(currentAdminLevel > members[i].adminLevel && members[i].adminLevel!==-1) {
-                    str += '<label class="btn btn-light" disabled><input type="checkbox" ><i class="fa fa-ban" aria-hidden="true"></i></label>'
                 }
+                // } else if(currentAdminLevel > members[i].adminLevel && currentAdminLevel===2) {
+                //     str += '<label class="btn btn-light" disabled><input type="checkbox" ><i class="fa fa-ban" aria-hidden="true"></i></label>'
+                // }
                 str += '  <label class="btn btn-' + bColor + '"  name="' + i + '" onclick="toggleUpload(this)" data-toggle="tooltip" title="' + bTitle + '">' +
                     '    <input type="checkbox" name="options" id="uploads" autocomplete="off"><i class="fas fa-file-upload" ></i>' +
                     '  </label>' +
