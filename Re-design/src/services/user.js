@@ -264,7 +264,6 @@ export default class UserDetailService {
             })
             await existingConversation.save()
         }
-        console.log("-----",(moment().format('MMMM Do YYYY, h:mm A')).toString())
         return ({success: true, error: {}, data: {}})
     }
 
