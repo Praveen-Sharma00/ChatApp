@@ -5,25 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-const mongoose = require('mongoose'); // const conversationSchema = new mongoose.Schema({
-//     between_users: [mongoose.Schema.Types.ObjectId],
-//     group_id: mongoose.Schema.Types.ObjectId,
-//     conversation_type: {
-//         type: Number
-//     },
-//     messages: [{
-//         text: String,
-//
-//         sender: {
-//             id: {
-//                 type: mongoose.Schema.Types.ObjectId
-//             },
-//             name: String
-//         },
-//         sentAt: String
-//     }]
-// })
-
+const mongoose = require('mongoose');
 
 const conversationSchema = new mongoose.Schema({
   between_users: [mongoose.Schema.Types.ObjectId],
@@ -58,24 +40,7 @@ const conversationSchema = new mongoose.Schema({
     },
     sentAt: String
   }]
-}); // conversationSchema.statics.getAllChatsBetweenUsers = async (sender, receiver) => {
-//     let a, b;
-//     if (sender < receiver) {
-//         a = sender;
-//         b = receiver;
-//     } else {
-//         b = sender;
-//         a = receiver;
-//     }
-//     const conversations = await Conversation.find({between_users: [a, b]})
-//     return conversations
-// }
-//
-// conversationSchema.statics.getAllGroupChats = async (name) => {
-//     const conversations = await Conversation.findOne({group_id: mongoose.Types.ObjectId("5df9c531f699661b00c97df6")})
-//     return conversations
-// }
-
+});
 const ConversationModel = mongoose.model('Conversation', conversationSchema);
 var _default = ConversationModel;
 exports.default = _default;

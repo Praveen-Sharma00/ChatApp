@@ -67,8 +67,7 @@ class UserDetailService {
     for (let i = 0; i < members.length; i++) {
       let result = await _User.default.findOne({
         _id: members[i]._id
-      }).select('-password -contacts'); // const newObj = {...result,isAdmin:members[i].isAdmin,permissions: members[i].permissions}
-
+      }).select('-password -contacts');
       result = result.toObject();
       result["isAdmin"] = members[i]["isAdmin"];
       result["permissions"] = members[i]["permissions"];
@@ -387,10 +386,10 @@ class UserDetailService {
       [a, b] = [b, a];
     }
 
-    let msg_type = "";
-    let md_type = [];
-    let md_loc = [];
-    let text_ = "";
+    let msg_type = "",
+        md_type = [],
+        md_loc = [],
+        text_ = "";
 
     if (message_type === "text") {
       msg_type = "text";
@@ -435,7 +434,7 @@ class UserDetailService {
             id: _mongoose.default.Types.ObjectId(user._id),
             name: user.name
           },
-          timestamp: moment().format('MMMM Do YYYY, h:mm A').toString()
+          sentAt: moment().format('MMMM Do YYYY, h:mm A').toString()
         }]
       });
       await newConversation.save();
@@ -454,11 +453,12 @@ class UserDetailService {
           id: _mongoose.default.Types.ObjectId(user._id),
           name: user.name
         },
-        timestamp: moment().format('MMMM Do YYYY, h:mm A').toString()
+        sentAt: moment().format('MMMM Do YYYY, h:mm A').toString()
       });
       await existingConversation.save();
     }
 
+    console.log("-----", moment().format('MMMM Do YYYY, h:mm A').toString());
     return {
       success: true,
       error: {},
@@ -470,11 +470,11 @@ class UserDetailService {
     const user = await _User.default.findOne({
       _id: _mongoose.default.Types.ObjectId(senderId)
     });
-    let msg_type = "";
-    let md_type = [];
-    let md_loc = [];
-    let msg_status = "pending";
-    let text_ = "";
+    let msg_type = "",
+        md_type = [],
+        md_loc = [],
+        text_ = "",
+        msg_status = "pending";
 
     if (message_type === "text") {
       msg_type = "text";
@@ -484,8 +484,7 @@ class UserDetailService {
       msg_type = "media";
       const group = await _Group.default.findOne({
         _id: groupId
-      }); // const isPresent = group.admins.map((obj) => obj._id == senderId).length > 0
-
+      });
       const isPresent = group.admins.filter(obj => obj._id == senderId).length > 0;
 
       if (isPresent) {
@@ -530,7 +529,7 @@ class UserDetailService {
             id: _mongoose.default.Types.ObjectId(user._id),
             name: user.name
           },
-          timestamp: moment().format('MMMM Do YYYY, h:mm A').toString()
+          sentAt: moment().format('MMMM Do YYYY, h:mm A').toString()
         }]
       });
       await newConversation.save();
@@ -550,7 +549,7 @@ class UserDetailService {
           object_location: md_loc
         },
         approval_status: msg_status,
-        timestamp: moment().format('MMMM Do YYYY, h:mm A').toString()
+        sentAt: moment().format('MMMM Do YYYY, h:mm A').toString()
       });
       await existingConversation.save();
     }
@@ -667,7 +666,6 @@ class UserDetailService {
         }
       };
     } else {
-      // ((_result[0]).messages.filter(m => m._id == msgId))[0].approval_status = "approved"
       let messageIndex = _result.messages.findIndex(m => {
         return m._id == msgId;
       });
@@ -698,9 +696,7 @@ class UserDetailService {
   async updatePermissions(currentUserId, groupId, userId, permissions) {
     const group = await _Group.default.findOne({
       _id: groupId
-    }); // const isPresent = group.admins.includes(currentUserId)
-
-    console.log(group.admins);
+    });
     const isPresent = group.admins.map(obj => obj._id == currentUserId).length > 0;
 
     if (!isPresent) {
@@ -719,7 +715,6 @@ class UserDetailService {
 
     if (_r.includes("Admin")) {
       if (!isUserAlreadyAdmin) {
-        console.log("THIS AGAIN RUNS");
         group.members.filter(m => m._id == userId)[0].isAdmin = true;
         group.members.filter(m => m._id == userId)[0].adminLevel = 2;
         newAdmins.push({
@@ -741,7 +736,6 @@ class UserDetailService {
     if (_r.includes("ReadOnly")) {
       if (!newPermissions.includes("ReadOnly")) newPermissions.push("ReadOnly");
     } else if (_r.includes("~ReadOnly")) {
-      console.log("THIS RUNS");
       const index = newPermissions.indexOf("ReadOnly");
 
       if (index > -1) {
@@ -770,9 +764,6 @@ class UserDetailService {
   }
 
   async getUserPermissions(userId, groupId) {
-    // let _result = await GroupModel.aggregate([{$unwind: "$members"}, {$match: {
-    //     $and:[{"_id":groupId},{"members._id": userId}]
-    //     }}])
     let _result = await _Group.default.aggregate([{
       $unwind: "$members"
     }, {

@@ -241,7 +241,7 @@ export default class UserDetailService {
                         id: mongoose.Types.ObjectId(user._id),
                         name: user.name
                     },
-                    timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
+                    sentAt: (moment().format('MMMM Do YYYY, h:mm A')).toString()
                 }]
             })
             await newConversation.save()
@@ -260,10 +260,11 @@ export default class UserDetailService {
                     id: mongoose.Types.ObjectId(user._id),
                     name: user.name
                 },
-                timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
+                sentAt: (moment().format('MMMM Do YYYY, h:mm A')).toString()
             })
             await existingConversation.save()
         }
+        console.log("-----",(moment().format('MMMM Do YYYY, h:mm A')).toString())
         return ({success: true, error: {}, data: {}})
     }
 
@@ -315,7 +316,7 @@ export default class UserDetailService {
                         id: mongoose.Types.ObjectId(user._id),
                         name: user.name
                     },
-                    timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
+                    sentAt: (moment().format('MMMM Do YYYY, h:mm A')).toString()
                 }],
 
             })
@@ -337,7 +338,7 @@ export default class UserDetailService {
 
                 },
                 approval_status: msg_status,
-                timestamp: (moment().format('MMMM Do YYYY, h:mm A')).toString()
+                sentAt: (moment().format('MMMM Do YYYY, h:mm A')).toString()
             })
             await existingConversation.save()
         }
