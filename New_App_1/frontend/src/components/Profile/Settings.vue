@@ -31,5 +31,14 @@
 </script>
 
 <style scoped>
+    #profile-settings {
+        position: absolute;
+        top: 0;
+        left: -110%;
+        background: hsl(0, 0%, 95%);
+        transition: all 0.2s ease-in;
+        -moz-transition: all .2s ease-in-out;
+        -webkit-transition: all .2s ease-in-out;
+    }
 
 </style>

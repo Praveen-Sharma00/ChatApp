@@ -8,7 +8,7 @@
         <a href="#"><img src="https://via.placeholder.com/400x400" alt="Profile Photo"
                          class="img-fluid rounded-circle mr-2" style="height:50px;" id="pic"></a>
         <div class="d-flex flex-column">
-            <div class="text-white font-weight-bold" id="name"></div>
+            <div clasdetailss="text-white font-weight-bold" id="name"></div>
             <div class="text-white small" id="details"></div>
         </div>
         <div class="d-flex flex-row align-items-center ml-auto">
@@ -26,5 +26,12 @@
 </script>
 
 <style scoped>
-
+    #navbar {
+        background: #009688;
+    }
+    #navbar #details {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>
