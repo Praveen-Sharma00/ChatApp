@@ -10,13 +10,17 @@
 </template>
 
 <style>
+    /*#main-container {*/
+    /*    width: 100vw;*/
+    /*    height: 100vh;*/
+    /*}*/
+
+    /*#navbar {*/
+    /*    background: #009688;*/
+    /*}*/
     #main-container {
         width: 100vw;
         height: 100vh;
-    }
-
-    #navbar {
-        background: #009688;
     }
 </style>
 <script>
@@ -25,8 +29,8 @@
 
     export default {
         components: {
-            'chat-list':ChatList,
-            'message-area':MessageArea,
+            'chat-list': ChatList,
+            'message-area': MessageArea,
         }
     }
 </script>
