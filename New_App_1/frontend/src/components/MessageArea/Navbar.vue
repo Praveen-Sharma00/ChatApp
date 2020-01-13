@@ -25,10 +25,7 @@
     }
 </script>
 
-<style scoped>
-    #navbar {
-        background: #009688;
-    }
+<style  >
     #navbar #details {
         white-space: nowrap;
         overflow: hidden;

@@ -22,11 +22,12 @@
         name: "Navbar_1"
     }
 </script>
-<style scoped>
-    .dropdown-toggle::after {
-        display: none;
-    }
+<style >
     #navbar {
         background: #009688;
     }
+    .dropdown-toggle::after {
+        display: none;
+    }
+
 </style>

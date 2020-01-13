@@ -15,7 +15,7 @@
     }
 </script>
 
-<style scoped>
+<style >
     #input-area {
         background: hsl(0, 0%, 95%);
     }

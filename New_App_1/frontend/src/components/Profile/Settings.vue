@@ -30,7 +30,7 @@
     }
 </script>
 
-<style scoped>
+<style >
     #profile-settings {
         position: absolute;
         top: 0;

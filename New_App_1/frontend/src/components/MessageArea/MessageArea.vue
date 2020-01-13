@@ -23,7 +23,7 @@
     }
 </script>
 
-<style scoped>
+<style >
     #message-area {
         border-left: 1px solid white;
     }
