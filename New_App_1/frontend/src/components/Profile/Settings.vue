@@ -1,8 +1,8 @@
 <template>
     <!-- Profile Settings -->
-    <div class="d-flex flex-column w-100 h-100" id="profile-settings">
+    <div class="d-flex flex-column w-100 h-100" id="profile-settings" :style="{left:left+'%'}">
         <div class="row d-flex flex-row align-items-center p-2 m-0" style="background:#009688; min-height:65px;">
-            <i class="fas fa-arrow-left p-2 mx-3 my-1 text-white" style="font-size: 1.5rem; cursor: pointer;" onclick="hideProfileSettings()"></i>
+            <i class="fas fa-arrow-left p-2 mx-3 my-1 text-white" style="font-size: 1.5rem; cursor: pointer;" @click="hideProfileSettings()"></i>
             <div class="text-white font-weight-bold">Profile</div>
         </div>
         <div class="d-flex flex-column" style="overflow:auto;">
@@ -25,9 +25,28 @@
 </template>
 
 <script>
+    import {eventBus} from "../../main";
+
     export default {
-        name: "Settings"
+        name: "Settings",
+        data(){
+            return {
+                left:-110
+            }
+        },
+        methods:{
+            hideProfileSettings(){
+                this.left=-110
+            }
+        },
+
+        mounted() {
+            eventBus.$on("show-profile-settings",()=>{
+                this.left=0
+            })
+        }
     }
+
 </script>
 
 <style>
@@ -40,4 +59,5 @@
         -moz-transition: all .2s ease-in-out;
         -webkit-transition: all .2s ease-in-out;
     }
+
 </style>

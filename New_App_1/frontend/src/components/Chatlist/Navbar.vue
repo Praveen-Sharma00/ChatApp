@@ -22,11 +22,13 @@
     </div>
 </template>
 <script>
+    import {eventBus} from "../../main";
+
     export default {
         name: "Navbar_1",
         methods:{
             showProfileSettings(){
-                alert("hi")
+                eventBus.$emit("show-profile-settings")
             }
         }
     }
