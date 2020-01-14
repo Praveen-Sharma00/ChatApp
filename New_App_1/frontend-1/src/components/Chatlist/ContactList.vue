@@ -1,6 +1,6 @@
 <template>
-    <div class="row" id="chat-list">
-        <div class="chat-list-item d-flex flex-row w-100 p-2 border-bottom" @click="generateMessageArea()">
+    <div class="row" id="chat-list" >
+        <div class="chat-list-item d-flex flex-row w-100 p-2 border-bottom" @click="generateMessageArea()" >
             <img src="https://p7.hiclipart.com/preview/4/1012/949/github-bitbucket-fork-software-repository-icons-for-windows-github-logo.jpg"
                  alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
             <div class="w-50">
@@ -29,7 +29,7 @@
     }
 </script>
 
-<style scoped>
+<style >
     #chat-list {
         overflow: auto;
     }
