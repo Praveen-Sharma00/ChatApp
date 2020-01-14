@@ -1,7 +1,7 @@
 <template>
     <!-- Message Area -->
     <div class="d-none d-sm-flex flex-column col-12 col-sm-7 col-md-8 p-0 h-100" id="message-area">
-        <div class="w-100 h-100 overlay"></div>
+        <div class="d-flex w-100 h-100 overlay"></div>
         <message-area-navbar></message-area-navbar>
         <messages></messages>
         <message-input></message-input>

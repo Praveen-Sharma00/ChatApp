@@ -1,12 +1,12 @@
 <template>
-    <!-- Navbar -->
     <div class="row d-flex flex-row align-items-center p-2 m-0 w-100" id="navbar">
         <div class="d-block d-sm-none">
             <i class="fas fa-arrow-left p-2 mr-2 text-white" style="font-size: 1.5rem; cursor: pointer;"
                onclick="showChatList()"></i>
         </div>
-        <a href="#"><img src="https://via.placeholder.com/400x400" alt="Profile Photo"
-                         class="img-fluid rounded-circle mr-2" style="height:50px;" id="pic"></a>
+        <a href="#">
+            <img src="https://via.placeholder.com/400x400" alt="Profile Photo" class="img-fluid rounded-circle mr-2"
+                 style="height:50px;" id="pic"></a>
         <div class="d-flex flex-column">
             <div clasdetailss="text-white font-weight-bold" id="name"></div>
             <div class="text-white small" id="details"></div>
@@ -25,7 +25,7 @@
     }
 </script>
 
-<style scoped >
+<style scoped>
     #navbar {
         background: #009688;
     }
