@@ -23,5 +23,18 @@
     }
 </script>
 
-<style >
+<style>
+    #message-area {
+        border-left: 1px solid white;
+    }
+
+    #message-area .overlay {
+        background: hsl(0, 0%, 80%);
+    }
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 99;
+    }
 </style>

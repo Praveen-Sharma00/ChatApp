@@ -25,5 +25,8 @@
     }
 </script>
 
-<style>
+<style scoped >
+    #navbar {
+        background: #009688;
+    }
 </style>

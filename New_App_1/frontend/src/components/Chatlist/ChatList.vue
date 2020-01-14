@@ -21,5 +21,8 @@
     }
 </script>
 
-<style>
+<style scoped>
+    #chat-list-area{
+        position: relative;
+    }
 </style>

@@ -16,4 +16,12 @@
 </script>
 
 <style >
+    #input-area {
+        background: hsl(0, 0%, 95%);
+    }
+
+    #input-area #input {
+        outline: none;
+    }
+
 </style>

@@ -10,9 +10,11 @@
 </template>
 
 <style>
-    chat-list{
-        position:relative;
+    #main-container {
+        width: 100vw;
+        height: 100vh;
     }
+
 </style>
 <script>
     import ChatList from "./components/Chatlist/ChatList";

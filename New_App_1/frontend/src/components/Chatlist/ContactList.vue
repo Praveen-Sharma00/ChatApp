@@ -11,5 +11,8 @@
     }
 </script>
 
-<style >
+<style scoped>
+    #chat-list{
+        overflow:auto;
+    }
 </style>
