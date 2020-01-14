@@ -6,7 +6,7 @@
              style="height:50px; cursor:pointer;"
              @click="showProfileSettings()"
              id="display-pic"
-                src="https://p7.hiclipart.com/preview/4/1012/949/github-bitbucket-fork-software-repository-icons-for-windows-github-logo.jpg">
+             src="https://p7.hiclipart.com/preview/4/1012/949/github-bitbucket-fork-software-repository-icons-for-windows-github-logo.jpg">
         <div class="text-white font-weight-bold" id="username">Some name</div>
         <div class="nav-item dropdown ml-auto">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
@@ -26,8 +26,8 @@
 
     export default {
         name: "Navbar_1",
-        methods:{
-            showProfileSettings(){
+        methods: {
+            showProfileSettings() {
                 eventBus.$emit("show-profile-settings")
             }
         }
@@ -37,6 +37,7 @@
     #navbar {
         background: #009688;
     }
+
     .dropdown-toggle::after {
         display: none;
     }
