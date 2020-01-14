@@ -21,6 +21,5 @@
     }
 </script>
 
-<style >
-
+<style>
 </style>

@@ -10,32 +10,8 @@
 </template>
 
 <style>
-    /*#main-container {*/
-    /*    width: 100vw;*/
-    /*    height: 100vh;*/
-    /*}*/
-
-    /*#navbar {*/
-    /*    background: #009688;*/
-    /*}*/
-    #main-container {
-        width: 100vw;
-        height: 100vh;
-    }
-
-    ::-webkit-scrollbar {
-        width: 10px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background: none;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: rgba(0, 0, 0, 0.2);
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: rgba(0, 0, 0, 0.3);
+    chat-list{
+        position:relative;
     }
 </style>
 <script>

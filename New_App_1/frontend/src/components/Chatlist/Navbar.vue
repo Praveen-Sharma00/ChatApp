@@ -23,11 +23,4 @@
     }
 </script>
 <style >
-    #navbar {
-        background: #009688;
-    }
-    .dropdown-toggle::after {
-        display: none;
-    }
-
 </style>
