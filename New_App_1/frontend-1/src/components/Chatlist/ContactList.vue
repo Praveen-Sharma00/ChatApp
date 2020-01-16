@@ -1,6 +1,9 @@
 <template>
     <div class="row" id="chat-list" >
-        <div :id="contact.id+','+contact.name" class="chat-list-item d-flex flex-row w-100 p-2 border-bottom" v-for="contact in getUserContacts()" @click="showMessageArea(contact)"  >
+        <div :id="contact.id+','+contact.name"
+             :class="['chat-list-item','d-flex', 'flex-row','w-100', 'p-2', 'border-bottom',contact.id==activeItem?'active':'']"
+             v-for="contact in getUserContacts()"
+             @click="showMessageArea(contact)"  >
             <img :src="contact.imageUrl"
                  alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
             <div class="w-50">
@@ -19,10 +22,15 @@
 <script>
     export default {
         name: "ContactList",
-
+        data(){
+            return{
+                activeItem:''
+            }
+        },
         methods:{
             showMessageArea(contact){
                 this.$store.commit('SetMessageAreaState',true)
+                this.activeItem=contact.id
                 this.$store.commit('SetRecipientDetails',{id:contact.id,name:contact.name,imageUrl:contact.imageUrl})
             },
             getUserContacts(){
