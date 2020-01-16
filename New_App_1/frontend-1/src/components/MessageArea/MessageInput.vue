@@ -3,9 +3,9 @@
     <div :class="classList" id="input-area">
         <a href="#"><i class="far fa-smile text-muted px-3" style="font-size:1.5rem;"></i></a>
         <input type="text" name="message" id="input" placeholder="Type a message"
-               class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm">
+               class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm" ref="msgText">
         <i class="fas fa-paper-plane text-muted px-3" style="cursor:pointer;"
-           onclick="sendMessage()"></i>
+           @click="sendMessage()"></i>
     </div>
 </template>
 
@@ -18,6 +18,18 @@
                     return "d-flex justify-self-end align-items-center flex-row"
                 else
                     return "d-none justify-self-end align-items-center flex-row"
+            }
+        },
+        methods:{
+            sendMessage(){
+                let id=this.$store.state.currentRecipient.id
+                this.$store.state.user.contacts.find(x => x.id === id).conversations.push({
+                        senderId:2,
+                    text: this.$refs.msgText.value,
+                    sentAt:'now'
+                }
+                )
+                this.$refs.msgText.value=""
             }
         }
     }
