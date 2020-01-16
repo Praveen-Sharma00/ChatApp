@@ -95,7 +95,7 @@
 
     #messages {
         flex: 1 !important;
-        background: hsl(0, 0%, 80%);
+        background: hsl(0, 2%, 83%);
         overflow: auto;
     }
 </style>
