@@ -1,10 +1,10 @@
 <template>
     <div class="row" id="chat-list" >
-        <div class="chat-list-item d-flex flex-row w-100 p-2 border-bottom" @click="showMessageArea()"  >
-            <img src="https://p7.hiclipart.com/preview/4/1012/949/github-bitbucket-fork-software-repository-icons-for-windows-github-logo.jpg"
+        <div :id="contact.id+','+contact.name" class="chat-list-item d-flex flex-row w-100 p-2 border-bottom" v-for="contact in getUserContacts()" @click="showMessageArea(contact)"  >
+            <img :src="contact.imageUrl"
                  alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
             <div class="w-50">
-                <div class="name">Rohit verma</div>
+                <div class="name" >{{contact.name}}</div>
                 <div class="small last-message">+91 9876512345 : Some message ...<i class=" fa-check-circle mr-1"></i>
                 </div>
             </div>
@@ -17,13 +17,20 @@
 </template>
 
 <script>
-
     export default {
         name: "ContactList",
+
         methods:{
-            showMessageArea(){
+            showMessageArea(contact){
                 this.$store.commit('SetMessageAreaState',true)
+                this.$store.commit('SetRecipientDetails',{id:contact.id,name:contact.name,imageUrl:contact.imageUrl})
+            },
+            getUserContacts(){
+                return this.$store.state.userContacts
             }
+        },
+        mounted() {
+            this.$store.dispatch('fetchUserContacts')
         }
     }
 </script>

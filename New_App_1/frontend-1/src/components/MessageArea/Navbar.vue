@@ -5,10 +5,10 @@
                onclick="showChatList()"></i>
         </div>
         <a href="#">
-            <img src="https://via.placeholder.com/400x400" alt="Profile Photo" class="img-fluid rounded-circle mr-2"
+            <img :src="getRecipientImage" alt="Profile Photo" class="img-fluid rounded-circle mr-2"
                  style="height:50px;" id="pic"></a>
         <div class="d-flex flex-column">
-            <div clasdetailss="text-white font-weight-bold" id="name"></div>
+            <div class="details text-white font-weight-bold" id="name" >{{getRecipientName}}</div>
             <div class="text-white small" id="details"></div>
         </div>
         <div class="d-flex flex-row align-items-center ml-auto">
@@ -21,7 +21,23 @@
 
 <script>
     export default {
-        name: "Navbar_2"
+        name: "Navbar_2",
+        data(){
+            return{
+                id:0,name:'',imageUrl:''
+            }
+        },
+        computed:{
+            getRecipientName(){
+                return this.$store.state.currentRecipient.name
+            },
+            getRecipientId(){
+                return this.$store.state.currentRecipient.id
+            },
+            getRecipientImage(){
+                return this.$store.state.currentRecipient.imageUrl
+            }
+        }
     }
 </script>
 
