@@ -1,7 +1,7 @@
 <template>
-    <!-- Message Area -->
+
     <div class="d-none d-sm-flex flex-column col-12 col-sm-7 col-md-8 p-0 h-100" id="message-area">
-        <div class="d-flex w-100 h-100 overlay"></div>
+        <div :class="classList"></div>
         <message-area-navbar></message-area-navbar>
         <messages></messages>
         <message-input></message-input>
@@ -19,13 +19,22 @@
             'message-area-navbar': Navbar_2,
             'messages': Messages,
             'message-input': MessageInput
+        },
+        computed:{
+            classList(){
+                if(this.$store.getters.GetMessageAreaState)
+                    return "w-100 h-100 overlay d-none  "
+                else
+                    return "w-100 h-100 overlay"
+            }
         }
     }
 </script>
 
 <style>
     #message-area {
-        border-left: 1px solid white;
+        border-left: 1px solid #e6e6e6;
+        background-color: rgba(228, 228, 228, 0.81);
     }
 
     #message-area .overlay {

@@ -5,12 +5,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    
+    isMessageAreaActive : false
   },
-  mutations: {
+  getters:{
+    GetMessageAreaState(state){
+      return state.isMessageAreaActive
+    }
   },
-  actions: {
-  },
-  modules: {
+  mutations:{
+    SetMessageAreaState(state,payload){
+      state.isMessageAreaActive = payload
+    }
   }
 })
