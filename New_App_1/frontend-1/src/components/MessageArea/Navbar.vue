@@ -6,7 +6,8 @@
         </div>
         <a href="#">
             <img :src="getRecipientImage" alt="Profile Photo" class="img-fluid rounded-circle mr-2"
-                 style="height:50px;" id="pic"></a>
+                 style="height:50px;" id="pic">
+        </a>
         <div class="d-flex flex-column">
             <div class="details text-white font-weight-bold" id="name" >{{getRecipientName}}</div>
             <div class="text-white small" id="details"></div>

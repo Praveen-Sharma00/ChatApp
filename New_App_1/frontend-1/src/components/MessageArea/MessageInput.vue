@@ -12,30 +12,30 @@
 <script>
     export default {
         name: "MessageInput",
-        computed:{
-            classList(){
-                if(this.$store.getters.GetMessageAreaState)
+        computed: {
+            classList() {
+                if (this.$store.getters.GetMessageAreaState)
                     return "d-flex justify-self-end align-items-center flex-row"
                 else
                     return "d-none justify-self-end align-items-center flex-row"
             }
         },
-        methods:{
-            sendMessage(){
-                let id=this.$store.state.currentRecipient.id
+        methods: {
+            sendMessage() {
+                let id = this.$store.state.currentRecipient.id
                 this.$store.state.user.contacts.find(x => x.id === id).conversations.push({
-                        senderId:2,
-                    text: this.$refs.msgText.value,
-                    sentAt:'now'
-                }
+                        senderId: 2,
+                        text: this.$refs.msgText.value,
+                        sentAt: 'now'
+                    }
                 )
-                this.$refs.msgText.value=""
+                this.$refs.msgText.value = ""
             }
         }
     }
 </script>
 
-<style >
+<style>
     #input-area {
         background: hsl(0, 0%, 95%);
     }
