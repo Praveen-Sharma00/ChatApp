@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     isMessageAreaActive : false,
     userId : null,
-    userContacts : [],
+    user:{},
     currentRecipient:{}
   },
   getters:{
@@ -20,9 +20,11 @@ export default new Vuex.Store({
       state.isMessageAreaActive = payload
     },
     SetUserContacts(state,payload){
-      payload.forEach((e)=>{
-        state.userContacts.push(e)
-      })
+      state.user={
+        id:2,
+        contacts:payload
+      }
+      state.userId= this.state.user.id
     },
     SetRecipientDetails(state,payload){
       state.currentRecipient={
@@ -37,11 +39,25 @@ export default new Vuex.Store({
       context.commit('SetUserContacts',[{
         id:1,
         name:'Some name',
-        imageUrl:'https://p7.hiclipart.com/preview/4/1012/949/github-bitbucket-fork-software-repository-icons-for-windows-github-logo.jpg'
+        imageUrl:'https://p7.hiclipart.com/preview/4/1012/949/github-bitbucket-fork-software-repository-icons-for-windows-github-logo.jpg',
+        conversations:[{
+          senderId:1,
+          text:'Hello',
+          sentAt:'23:24'
+        },{
+          senderId:2,
+          text:'Another message',
+          sentAt:'23:24'
+        },{
+          senderId:1,
+          text:'New message',
+          sentAt:'23:24'
+        }]
       },{
         id:2,
         name:'Carl Rock',
-        imageUrl:'https://p7.hiclipart.com/preview/4/1012/949/github-bitbucket-fork-software-repository-icons-for-windows-github-logo.jpg'
+        imageUrl:'https://p7.hiclipart.com/preview/4/1012/949/github-bitbucket-fork-software-repository-icons-for-windows-github-logo.jpg',
+        conversations:[]
       }])
     }
   }

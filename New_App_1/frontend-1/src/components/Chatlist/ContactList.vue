@@ -20,6 +20,8 @@
 </template>
 
 <script>
+    import {eventBus} from "../../main";
+
     export default {
         name: "ContactList",
         data(){
@@ -32,9 +34,10 @@
                 this.$store.commit('SetMessageAreaState',true)
                 this.activeItem=contact.id
                 this.$store.commit('SetRecipientDetails',{id:contact.id,name:contact.name,imageUrl:contact.imageUrl})
+                eventBus.$emit('load-conversations',contact.id)
             },
             getUserContacts(){
-                return this.$store.state.userContacts
+                return this.$store.state.user.contacts
             }
         },
         mounted() {
