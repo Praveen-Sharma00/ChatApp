@@ -8,7 +8,6 @@ export default class SocketIO{
     }
     listenForMessage(){
         this.socket.on('new-message',(data)=>{
-            console.log("NEW MESSAGE :",data)
             if(data.sender.id ===  this.store.state.currentRecipient.id){
                 this.store.state.currentConversation.messages.push({
                         message_type: 'text',
