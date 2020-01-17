@@ -59,8 +59,9 @@ export default new Vuex.Store({
     actions: {
         async login(context,payload){
             try{
-                commit('auth_request')
+                context.commit('auth_request')
                 const response =  await axios({url: 'http://localhost:3000/login', data: payload, method: 'POST' })
+                console.log(response)
                 const token = response.data.token
                 const user = response.data.user
                 localStorage.setItem('token', token)
@@ -74,8 +75,9 @@ export default new Vuex.Store({
         },
         async register(context,payload){
             try{
-                commit('auth_request')
+                context.commit('auth_request')
                 const response =  await axios({url: 'http://localhost:3000/register', data: payload, method: 'POST' })
+                console.log(response)
                 const token = response.data.token
                 const user = response.data.user
                 localStorage.setItem('token', token)

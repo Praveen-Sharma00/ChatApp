@@ -47,7 +47,7 @@
                 let _password = this.password
                 let _name = this._name
                 await this.$store.dispatch('register', { _email, _password ,_name})
-                await this.$router.push('/chat')
+                 this.$router.push('/chat')
             }
         }
     }
