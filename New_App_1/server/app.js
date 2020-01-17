@@ -44,6 +44,7 @@ app.post('/register',async (req,res)=>{
         res.status(500).send("There was a problem registering the user.")
     }
 })
+
 app.post('/login',(req,res)=>{
 
 })

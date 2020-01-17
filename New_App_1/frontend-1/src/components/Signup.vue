@@ -5,17 +5,17 @@
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <h5 class="card-title text-center">Sign up</h5>
-                        <form class="form-signin">
+                        <form class="form-signin" @submit.prevent="register">
                             <div class="form-label-group">
-                                <input type="text" id="inputName" class="form-control" placeholder="Your name" required autofocus>
+                                <input type="text" v-model="name" id="inputName" class="form-control" placeholder="Your name" required autofocus>
                                 <label for="inputName">Name</label>
                             </div>
                             <div class="form-label-group">
-                                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                                <input type="email" v-model="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                                 <label for="inputEmail">Email address</label>
                             </div>
                             <div class="form-label-group">
-                                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                                <input type="password" v-model="password" id="inputPassword" class="form-control" placeholder="Password" required>
                                 <label for="inputPassword">Password</label>
                             </div>
                             <div class="custom-control custom-checkbox mb-3">
@@ -33,7 +33,23 @@
 
 <script>
     export default {
-        name: "Signup"
+        name: "Signup",
+        data(){
+            return{
+                email:'',
+                password:'',
+                name:''
+            }
+        },
+        methods:{
+            async register(){
+                let _email=this.email
+                let _password = this.password
+                let _name = this._name
+                await this.$store.dispatch('register', { _email, _password ,_name})
+                await this.$router.push('/chat')
+            }
+        }
     }
 </script>
 
