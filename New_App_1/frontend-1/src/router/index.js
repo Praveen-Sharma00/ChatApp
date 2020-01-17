@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import Login from "../components/Login";
+import Signup from "../components/Signup";
 
 Vue.use(VueRouter)
 
@@ -20,7 +21,10 @@ Vue.use(VueRouter)
 //   //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
 //   // }
 // ]
-const routes=[]
+const routes=[
+  {path:'/',component:Login},
+  {path: '/register',component: Signup}
+]
 const router = new VueRouter({
   routes
 })
