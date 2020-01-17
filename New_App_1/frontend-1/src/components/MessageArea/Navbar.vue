@@ -9,7 +9,7 @@
                  style="height:50px;" id="pic">
         </a>
         <div class="d-flex flex-column">
-            <div class="details text-white font-weight-bold" id="name" >{{getRecipientName}}</div>
+            <div class="details text-white font-weight-bold" id="name">{{getRecipientName}}</div>
             <div class="text-white small" id="details"></div>
         </div>
         <div class="d-flex flex-row align-items-center ml-auto">
@@ -22,19 +22,19 @@
 <script>
     export default {
         name: "Navbar_2",
-        data(){
-            return{
-                id:0,name:'',imageUrl:''
+        data() {
+            return {
+                id: 0, name: '', imageUrl: ''
             }
         },
-        computed:{
-            getRecipientName(){
+        computed: {
+            getRecipientName() {
                 return this.$store.state.currentRecipient.name
             },
-            getRecipientId(){
+            getRecipientId() {
                 return this.$store.state.currentRecipient.id
             },
-            getRecipientImage(){
+            getRecipientImage() {
                 return this.$store.state.currentRecipient.imageUrl
             }
         }
