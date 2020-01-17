@@ -5,13 +5,13 @@
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <h5 class="card-title text-center">Sign In</h5>
-                        <form class="form-signin">
+                        <form class="form-signin" @submit.prevent="login">
                             <div class="form-label-group">
-                                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                                <input type="email" v-model="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                                 <label for="inputEmail">Email address</label>
                             </div>
                             <div class="form-label-group">
-                                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                                <input type="password" v-model="password" id="inputPassword" class="form-control" placeholder="Password" required>
                                 <label for="inputPassword">Password</label>
                             </div>
                             <div class="custom-control custom-checkbox mb-3">
@@ -30,7 +30,21 @@
 
 <script>
     export default {
-        name: "Home"
+        name: "Home",
+        data(){
+            return{
+                email:'',
+                password:''
+            }
+        },
+        methods:{
+           async login(){
+                let _email=this.email
+                let _password = this.password
+               await this.$store.dispatch('login', { _email, _password })
+               await this.$router.push('/chat')
+            }
+        }
     }
 </script>
 

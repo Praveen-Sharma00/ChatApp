@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -17,6 +18,22 @@ export default new Vuex.Store({
         }
     },
     mutations: {
+        auth_request(state){
+            state.status = 'loading'
+        },
+        auth_success(state, token, user){
+            state.status = 'success'
+            state.token = token
+            state.user = user
+        },
+        auth_error(state){
+            state.status = 'error'
+        },
+        logout(state){
+            state.status = ''
+            state.token = ''
+        },
+
         SetMessageAreaState(state, payload) {
             state.isMessageAreaActive = payload
         },
@@ -40,6 +57,28 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        async login(context,payload){
+            try{
+                const response =  await axios({url: 'http://localhost:3000/login', data: payload, method: 'POST' })
+                const token = response.data.token
+                const user = response.data.user
+                localStorage.setItem('token', token)
+                axios.defaults.headers.common['Authorization'] = token
+                context.commit('auth_success', token, user)
+            }catch(e){
+                context.commit('auth_error', e)
+                localStorage.removeItem('token')
+                return e
+            }
+        },
+        // logout({commit}){
+        //     return new Promise((resolve, reject) => {
+        //         commit('logout')
+        //         localStorage.removeItem('token')
+        //         delete axios.defaults.headers.common['Authorization']
+        //         resolve()
+        //     })
+        // },
         fetchUserContacts(context) {
             context.commit('SetUserContacts', [{
                 id: 1,

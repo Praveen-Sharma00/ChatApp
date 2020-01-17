@@ -23,7 +23,8 @@ Vue.use(VueRouter)
 // ]
 const routes=[
   {path:'/',component:Login},
-  {path: '/register',component: Signup}
+  {path: '/register',component: Signup},
+  {path:'/chat',component:Login}
 ]
 const router = new VueRouter({
   routes
