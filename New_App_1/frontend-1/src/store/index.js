@@ -36,7 +36,6 @@ export default new Vuex.Store({
         },
 
         InitConversations(state, payload) {
-            console.log(payload)
             state.currentConversation = payload
         }
     },
@@ -102,12 +101,12 @@ export default new Vuex.Store({
                     sentAt: '11:51 AM'
                 }]
             }]
-            let a=context.state.user.id
-            let b=context.state.currentRecipient.id
-            let data = a>b?[b,a]:[a,b]
+            let a = context.state.user.id
+            let b = context.state.currentRecipient.id
+            let data = a > b ? [b, a] : [a, b]
 
-            let r = conversations.find((e)=>{
-              return JSON.stringify(e.between_users)===JSON.stringify(data)
+            let r = conversations.find((e) => {
+                return JSON.stringify(e.between_users) === JSON.stringify(data)
             })
 
             context.commit('InitConversations', r)

@@ -37,6 +37,7 @@
 
 <script>
     import {eventBus} from "../../main";
+    import SocketIO from "../../utils/socket";
 
     export default {
         name: "Messages",
@@ -58,8 +59,8 @@
             eventBus.$on("load-conversations", (id) => {
                 this.$store.dispatch('fetchConversations',1)
                 this.messages = this.$store.state.currentConversation.messages
-                console.log(this.messages)
             })
+
         }
     }
 </script>
