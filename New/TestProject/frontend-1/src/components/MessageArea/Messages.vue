@@ -3,7 +3,7 @@
     <div class="d-flex flex-column" id="messages">
 
         <div v-for="msg in loadConversations"
-             :class="['p-1 my-1 mx-3 rounded bg-white shadow-sm message-item',currentUserId===msg.sender.id?'align-self-end self':'align-self-start']">
+             :class="['p-1 my-1 mx-3 rounded bg-white shadow-sm message-item',currentUserId===msg.senderId?'align-self-end self':'align-self-start']">
             <div class="options">
                 <a href="#"><i class="fas fa-angle-down text-muted px-2"></i></a>
             </div>
@@ -37,7 +37,6 @@
 
 <script>
     import {eventBus} from "../../main";
-    import SocketIO from "../../utils/socket";
 
     export default {
         name: "Messages",
@@ -57,10 +56,9 @@
         },
         mounted() {
             eventBus.$on("load-conversations", (id) => {
-                this.$store.dispatch('fetchConversations',1)
-                this.messages = this.$store.state.currentConversation.messages
+                this.messages = this.$store.state.user.contacts.find(x => x.id === id).conversations
+                console.log(this.messages)
             })
-
         }
     }
 </script>

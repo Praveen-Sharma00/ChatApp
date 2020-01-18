@@ -1,20 +1,28 @@
 <template>
     <div id="app">
-        <div class="container">
+        <div class="container-fluid" id="main-container">
             <div class="row h-100">
-                <router-view></router-view>
+                <chat-list></chat-list>
+                <message-area></message-area>
             </div>
         </div>
     </div>
 </template>
 
+<style>
+    #main-container {
+        width: 100vw;
+        height: 100vh;
+    }
+</style>
 <script>
-    import Login from "./components/Login";
-    import Signup from "./components/Signup";
+    import ChatList from "./components/Chatlist/ChatList";
+    import MessageArea from "./components/MessageArea/MessageArea";
+
     export default {
         components: {
-            'login':Login,
-            'signup':Signup
+            'chat-list': ChatList,
+            'message-area': MessageArea,
         }
     }
 </script>

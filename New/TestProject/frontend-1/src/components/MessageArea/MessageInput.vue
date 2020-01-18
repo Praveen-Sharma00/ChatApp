@@ -23,25 +23,12 @@
         methods: {
             sendMessage() {
                 let id = this.$store.state.currentRecipient.id
-                // this.$store.state.currentConversation.messages.push({
-                //         message_type: 'text',
-                //         text: this.$refs.msgText.value,
-                //         sender: {
-                //             id: this.$store.state.user.id,
-                //             name: 'A'
-                //         },
-                //         sentAt: 'now'
-                //     }
-                // )
-                this.$socket.emitMessage({
-                    message_type:'text',
-                    text:this.$refs.msgText.value,
-                    sender:{
-                        id:this.$store.state.user.id,
-                        name:'A'
-                    },
-                    sentAt:'now'
-                })
+                this.$store.state.user.contacts.find(x => x.id === id).conversations.push({
+                        senderId: 2,
+                        text: this.$refs.msgText.value,
+                        sentAt: 'now'
+                    }
+                )
                 this.$refs.msgText.value = ""
             }
         }
