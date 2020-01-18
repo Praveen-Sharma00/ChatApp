@@ -83,6 +83,7 @@ class AuthService {
     } else {
       let user = _userRecord.toObject();
 
+      console.log(user);
       let token = this.generateToken(user);
       return {
         success: true,

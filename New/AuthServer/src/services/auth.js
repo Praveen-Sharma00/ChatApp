@@ -36,6 +36,7 @@ export default class AuthService {
             return ({success: false, error: {message: 'Invalid Credentials!'}})
         } else {
             let user = _userRecord.toObject()
+            console.log(user)
             let token = this.generateToken(user)
             return ({success: true, token: token, user: {name: user.name, email: user.email}});
         }

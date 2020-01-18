@@ -5,7 +5,7 @@ export default {
         isLoggedIn: !!localStorage.getItem('token'),
         status:'',
         token:localStorage.getItem('token') || '',
-        user:''
+        user:{}
     },
     getters: {
         isLoggedIn: (state) => {
@@ -13,16 +13,19 @@ export default {
         },
         getErrorStatus:(state)=>{
             return state.status
+        },
+        getUser : (state)=>{
+            return state.user
         }
     },
     mutations: {
         auth_request(state) {
             state.status = 'loading'
         },
-        auth_success(state, token, user) {
+        auth_success(state, payload) {
             state.status = 'success'
-            state.token = token
-            state.user = user
+            state.token = payload.token
+            state.user = payload.user
             state.isLoggedIn=true
         },
         auth_error(state,message) {
@@ -44,13 +47,12 @@ export default {
             }
             const result = await axios({url:url,data :data.user, method :'POST'})
             const response=result.data
-            console.log(response)
             if(response.success){
                 const token = response.token
                 const user = response.user
                 localStorage.setItem('token', token)
                 axios.defaults.headers.common['Authorization'] = token
-                context.commit('auth_success', token, user)
+                context.commit('auth_success', {token, user})
             }else{
                 context.commit('auth_error',response.error.message)
                 localStorage.removeItem('token')
