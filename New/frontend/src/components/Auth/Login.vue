@@ -28,7 +28,31 @@
 
 <script>
     export default {
-        name: "Home"
+        name: "Home",
+        data(){
+            return{
+                email:'',
+                password:''
+            }
+        },
+        methods: {
+            async login() {
+                await this.$store.dispatch('authenticate', {
+                    type:"login",
+                    user:{
+                        email:this.email,
+                        password:this.password
+                    }
+                })
+                if(this.$store.getters.isLoggedIn){
+                    this.$router.push('/test')
+                }else{
+                    alert(this.$store.getters.getErrorStatus)
+                }
+            }
+
+        },
+        computed:{}
     }
 </script>
 

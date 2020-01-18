@@ -43,11 +43,17 @@
         },
         methods: {
             async register() {
-                let _email = this.email
-                let _password = this.password
-                let _name = this._name
-                await this.$store.dispatch('register', {_email, _password, _name})
-                this.$router.push('/chat')
+               await this.$store.dispatch('authenticate', {
+                    type:"register",
+                    user:{
+                        name:this.name,
+                        email:this.email,
+                        password:this.password
+                    }
+                })
+                if(this.$store.state.isLoggedIn){
+                    alert('Done')
+                }
             }
         }
     }
