@@ -66,8 +66,12 @@
 <style>
     .message-item {
         position: relative;
-        max-width: 75%;
+        max-width: 55%;
         word-break: break-word;
+        border-radius: 30px !important;
+        padding: 10px !important;
+        font-size: 90%;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
 
     .message-item.self {
@@ -81,7 +85,7 @@
     .message-item .options {
         position: absolute;
         top: 0;
-        right: -3px;
+        right: 15px !important;
         opacity: 0;
         transition: all .2s ease-in-out;
         -moz-transition: all .2s ease-in-out;
@@ -91,6 +95,7 @@
     .message-item:hover .options {
         opacity: 1;
         right: 0;
+
     }
 
     #messages {

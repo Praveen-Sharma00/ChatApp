@@ -53,20 +53,28 @@
     }
 
     .chat-list-item {
+        margin-bottom: 3px;
         background: white;
         cursor: pointer;
+        /*border-radius: 30px;*/
+
     }
+
 
     .chat-list-item:hover {
         background: hsl(0, 0%, 95%);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     }
 
     .chat-list-item:active {
         background: hsl(0, 0%, 85%);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
     }
 
     .chat-list-item.active {
         background: hsl(0, 0%, 90%);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     }
 
     .chat-list-item .chat-details {
