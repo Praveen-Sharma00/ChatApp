@@ -41,33 +41,15 @@ mongoose.connect(
         console.log(success('Database connection established !'))
     })
 
-const session = require('express-session')
-const MongoDBStore = require('connect-mongodb-session')(session)
-
-const expressStore = new MongoDBStore({
-    uri: process.env.DATABASE_URL,
-    collection: 'sessions'
-})
 
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 app.use(cors())
 app.use(compression())
-app.use(session({
-    resave: false,
-    saveUninitialized: false,
-    secret: 'CloudSurfer',
-    store: expressStore
-    // cookie: { maxAge: 60000 }
-}))
+
 
 
 /************************ROUTE MIDDLEWARES***************************** */
-app.use((req, res, next) => {
-    res.locals.isAuthenticated = req.session.isLoggedIn
-    res.locals.user = req.session.user
-    next()
-})
 
 app.use(authRoutes)
 app.use('/api/v1', apiRoutes)
