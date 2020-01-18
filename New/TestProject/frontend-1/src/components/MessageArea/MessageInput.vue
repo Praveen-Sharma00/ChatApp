@@ -38,6 +38,10 @@
 <style>
     #input-area {
         background: hsl(0, 0%, 95%);
+        /*box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
+        -webkit-box-shadow: 0px 4px 7px -1px rgba(0,0,0,0.55);
+        -moz-box-shadow: 0px 4px 7px -1px rgba(0,0,0,0.55);
+        box-shadow: 0px 4px 7px -1px rgba(0,0,0,0.55);
     }
 
     #input-area #input {

@@ -43,6 +43,12 @@
 
 <style scoped>
     #navbar {
-        background: #009688;
+        /*background: #009688;*/
+        /*background-image: linear-gradient(to left bottom, #dee5e7, #76c9f2, #00a4ff, #0075ff, #5225f6);*/
+        /*background-image: linear-gradient(to left bottom, #dee5e7, #99a9b3, #5d7083, #2d3a55, #0a0227);*/
+        background: #43C6AC;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #191654, #43C6AC);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left, #191654, #43C6AC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     }
 </style>

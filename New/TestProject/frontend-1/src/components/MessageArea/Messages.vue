@@ -75,9 +75,9 @@
     }
 
     .message-item.self {
-        background: #dcf8c6 !important;
+        background: #caf2f7 !important;
+        /*background: #dcf8c6 !important;*/
     }
-
     .message-item .number {
         color: #1f7aec !important;
     }
@@ -90,6 +90,7 @@
         transition: all .2s ease-in-out;
         -moz-transition: all .2s ease-in-out;
         -webkit-transition: all .2s ease-in-out;
+
     }
 
     .message-item:hover .options {
@@ -100,7 +101,7 @@
 
     #messages {
         flex: 1 !important;
-        background: hsl(0, 2%, 83%);
+        background: hsl(27, 5%, 96%);
         overflow: auto;
     }
 </style>
