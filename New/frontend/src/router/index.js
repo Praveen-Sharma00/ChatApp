@@ -12,7 +12,7 @@ const index = [
     {path: '/login', component: Login},
     {path: '/register', component: Register},
     {
-        path: '/test', component: Test, meta: {
+        path: '/test', name: 'TestRoute', component: Test, meta: {
             requiresAuth: true
         }
     },
@@ -25,12 +25,20 @@ const router = new VueRouter({
 export default router
 
 router.beforeEach((to, from, next) => {
-    if(to.matched.some(record => record.meta.requiresAuth)) {
-        if (localStorage.getItem('token') == null) {
+    if (to.path === '/login') {
+        if (!!localStorage.getItem('token')) {
+            next('/test')
+        } else {
+            next()
+        }
+    } else if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (localStorage.getItem('token') !== null) {
             next()
             return
+        } else {
+            next('/login')
         }
-        next('/login')
+
     } else {
         next()
     }

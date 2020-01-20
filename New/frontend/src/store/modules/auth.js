@@ -33,6 +33,9 @@ export default {
             state.isLoggedIn=true
             state.auth_status = "success"
         },
+        init_user(state,payload){
+            state.user = payload.user
+        },
         auth_error(state,message) {
             state.status = message
             state.auth_status = "failed"
@@ -54,7 +57,6 @@ export default {
             }
             result = await axios({url:url,data :data.user, method :'POST'})
             const response=result.data
-
             if(response.success){
                 const token = response.token
                 const user = response.user

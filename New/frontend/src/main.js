@@ -20,7 +20,10 @@ new Vue({
             const result = response.data
             if (result.success) {
                 Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-            }else{
+                if (this.$store.getters.isLoggedIn) {
+                    this.$store.commit('init_user', result)
+                }
+            } else {
                 await this.$store.dispatch('logout')
             }
         }

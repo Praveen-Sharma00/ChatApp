@@ -5,7 +5,6 @@ import {authController} from '../controllers/auth'
 
 const router = express.Router()
 
-
 router
     .route('/login')
     .post(authController.postLogin)
