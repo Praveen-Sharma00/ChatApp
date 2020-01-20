@@ -47,21 +47,16 @@ export default {
             context.commit('auth_request')
             let result;
             let url=''
-            if(data.type === "verify"){
-                url ='http://localhost:3000/verify'
-                result = await axios({url:url,data :{token:data.token}, method :'POST'})
-            }
-            else if(data.type==="login"){
+           if(data.type==="login"){
                 url='http://localhost:3000/login'
-                result = await axios({url:url,data :data.user, method :'POST'})
             }else{
                 url='http://localhost:3000/register'
-                result = await axios({url:url,data :data.user, method :'POST'})
             }
+            result = await axios({url:url,data :data.user, method :'POST'})
             const response=result.data
 
             if(response.success){
-                const token = (data.type==="verify")?localStorage.getItem('token'):response.token
+                const token = response.token
                 const user = response.user
                 localStorage.setItem('token', token)
                 axios.defaults.headers.common['Authorization'] = token
