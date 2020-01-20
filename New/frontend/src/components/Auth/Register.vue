@@ -51,8 +51,8 @@
                         password:this.password
                     }
                 })
-                if(this.$store.state.isLoggedIn){
-                    alert('Done')
+                if(this.$store.getters.isLoggedIn){
+                    this.$router.push('/test')
                 }
             }
         }
