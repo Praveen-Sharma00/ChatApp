@@ -6,14 +6,26 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+
 Vue.config.productionTip = false
 Vue.prototype.$http = axios;
-const token = localStorage.getItem('token')
-if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-}
+
 new Vue({
-  router,
-  store,
-  render: function (h) { return h(App) }
+    router,
+    store,
+    async created() {
+        const token = localStorage.getItem('token')
+        if (token) {
+            const response = await axios({url: 'http://localhost:3000/verify', data: {token: token}, method: 'POST'})
+            const result = response.data
+            if (result.success) {
+                Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+            }else{
+                await this.$store.dispatch('logout')
+            }
+        }
+    },
+    render: function (h) {
+        return h(App)
+    }
 }).$mount('#app')

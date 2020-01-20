@@ -16,7 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 class AuthService {
   generateToken(user) {
     let token = _jsonwebtoken.default.sign({
-      id: user.id
+      id: user._id
     }, 'cloud_', {
       expiresIn: 86400 // expires in 24 hours
 
@@ -83,7 +83,6 @@ class AuthService {
     } else {
       let user = _userRecord.toObject();
 
-      console.log(user);
       let token = this.generateToken(user);
       return {
         success: true,
@@ -94,6 +93,36 @@ class AuthService {
         }
       };
     }
+  }
+
+  async verifyToken(data) {
+    let {
+      token
+    } = data;
+    let response = '';
+    let decoded;
+
+    try {
+      decoded = await _jsonwebtoken.default.verify(token, 'cloud_');
+
+      const _userRecord = await _User.default.findOne({
+        _id: _mongoose.default.Types.ObjectId(decoded.id)
+      }).select('-password -_id -__v');
+
+      response = {
+        success: true,
+        user: _userRecord
+      };
+    } catch (e) {
+      response = {
+        success: false,
+        error: {
+          message: 'Invalid token !'
+        }
+      };
+    }
+
+    return response;
   }
 
 }

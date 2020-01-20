@@ -12,9 +12,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const _authService = new _auth.default();
 
 const postLogin = async (req, res) => {
-  console.log(req.body);
   const response = await _authService.loginUser(req.body);
-  console.log(response);
   return res.send(response);
 };
 
@@ -23,8 +21,14 @@ const postRegister = async (req, res) => {
   return res.send(response);
 };
 
+const verifyToken = async (req, res) => {
+  const response = await _authService.verifyToken(req.body);
+  return res.send(response);
+};
+
 let authController = {
   postLogin,
-  postRegister
+  postRegister,
+  verifyToken
 };
 exports.authController = authController;

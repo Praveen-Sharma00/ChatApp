@@ -4,6 +4,7 @@ export default {
     state: {
         isLoggedIn: !!localStorage.getItem('token'),
         status:'',
+        auth_status:'',
         token:localStorage.getItem('token') || '',
         user:{}
     },
@@ -16,6 +17,9 @@ export default {
         },
         getUser : (state)=>{
             return state.user
+        },
+        getAuthStatus : (state)=>{
+            return state.auth_status
         }
     },
     mutations: {
@@ -27,9 +31,11 @@ export default {
             state.token = payload.token
             state.user = payload.user
             state.isLoggedIn=true
+            state.auth_status = "success"
         },
         auth_error(state,message) {
             state.status = message
+            state.auth_status = "failed"
         },
         logout(state) {
             state.status = ''
@@ -39,16 +45,23 @@ export default {
     actions: {
         async authenticate(context,data){
             context.commit('auth_request')
+            let result;
             let url=''
-            if(data.type==="login"){
+            if(data.type === "verify"){
+                url ='http://localhost:3000/verify'
+                result = await axios({url:url,data :{token:data.token}, method :'POST'})
+            }
+            else if(data.type==="login"){
                 url='http://localhost:3000/login'
+                result = await axios({url:url,data :data.user, method :'POST'})
             }else{
                 url='http://localhost:3000/register'
+                result = await axios({url:url,data :data.user, method :'POST'})
             }
-            const result = await axios({url:url,data :data.user, method :'POST'})
             const response=result.data
+
             if(response.success){
-                const token = response.token
+                const token = (data.type==="verify")?localStorage.getItem('token'):response.token
                 const user = response.user
                 localStorage.setItem('token', token)
                 axios.defaults.headers.common['Authorization'] = token
@@ -57,6 +70,11 @@ export default {
                 context.commit('auth_error',response.error.message)
                 localStorage.removeItem('token')
             }
+        },
+        async logout(context){
+                context.commit('logout')
+                localStorage.removeItem('token')
+                delete axios.defaults.headers.common['Authorization']
         }
     }
 }

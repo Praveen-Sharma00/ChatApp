@@ -6,7 +6,7 @@ import UserModel from '../models/User'
 export default class AuthService {
 
     generateToken(user) {
-        let token = jwt.sign({id: user.id}, 'cloud_', {
+        let token = jwt.sign({id: user._id}, 'cloud_', {
             expiresIn: 86400 // expires in 24 hours
         });
         return token
@@ -36,9 +36,26 @@ export default class AuthService {
             return ({success: false, error: {message: 'Invalid Credentials!'}})
         } else {
             let user = _userRecord.toObject()
-            console.log(user)
             let token = this.generateToken(user)
             return ({success: true, token: token, user: {name: user.name, email: user.email}});
         }
+    }
+
+    async verifyToken(data) {
+        let {token} = data
+        let response = ''
+        let decoded ;
+        try {
+            decoded = await jwt.verify(token, 'cloud_')
+
+            const _userRecord = await UserModel.findOne({
+                _id: mongoose.Types.ObjectId(decoded.id)
+            }).select('-password -_id -__v')
+
+            response = {success: true, user: _userRecord}
+        } catch (e) {
+            response = {success: false, error: {message: 'Invalid token !'}}
+        }
+        return response
     }
 }

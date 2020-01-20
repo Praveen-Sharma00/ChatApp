@@ -15,5 +15,6 @@ const router = _express.default.Router();
 
 router.route('/login').post(_auth.authController.postLogin);
 router.route('/register').post(_auth.authController.postRegister);
+router.route('/verify').post(_auth.authController.verifyToken);
 let authRoutes = router;
 exports.authRoutes = authRoutes;
