@@ -1,7 +1,7 @@
 <template>
     <!-- Message Area -->
     <div class="d-none d-sm-flex flex-column col-12 col-sm-7 col-md-8 p-0 h-100" id="message-area">
-        <div :class="classList"></div>
+        <div :class="classListOverlay"></div>
 
         <!-- Navbar -->
         <div class="row d-flex flex-row align-items-center p-2 m-0 w-100" id="navbar">
@@ -29,10 +29,10 @@
                 <div class="options">
                     <a href="#"><i class="fas fa-angle-down text-muted px-2"></i></a>
                 </div>
-
                 <div class="d-flex flex-row">
                     <div class="body m-1 mr-2">{{msg.text}}</div>
-                    <div class="time ml-auto small text-right flex-shrink-0 align-self-end text-muted" style="width:75px;">
+                    <div class="time ml-auto small text-right flex-shrink-0 align-self-end text-muted"
+                         style="width:75px;">
                         {{msg.sentAt}}
                         <i class="fas fa-check-circle"></i>
                     </div>
@@ -41,11 +41,12 @@
         </div>
 
         <!-- Input -->
-        <div class="d-none justify-self-end align-items-center flex-row" id="input-area">
+        <div :class="classListInput" id="input-area">
             <a href="#"><i class="far fa-smile text-muted px-3" style="font-size:1.5rem;"></i></a>
             <input type="text" name="message" id="input" placeholder="Type a message"
-                   class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm">
-            <i class="fas fa-paper-plane text-muted px-3" style="cursor:pointer;" onclick="sendMessage()"></i>
+                   class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm" ref="msgText">
+            <i class="fas fa-paper-plane text-muted px-3" style="cursor:pointer;" @click="sendMessage()"
+               ></i>
         </div>
     </div>
 </template>
@@ -57,36 +58,56 @@
         name: "MessageArea",
         mounted() {
             eventBus.$on("load-conversations", async (id) => {
-                console.log("OBJ : ",this.$store.getters.getUser)
-               await this.$store.dispatch('GetConversationBetweenUsers',{
-                    id_a:this.$store.getters.getUser._id,
-                    id_b:this.$store.getters.GetCurrentRecipient.id
+                console.log("OBJ : ", this.$store.getters.getUser)
+                await this.$store.dispatch('GetConversationBetweenUsers', {
+                    id_a: this.$store.getters.getUser._id,
+                    id_b: this.$store.getters.GetCurrentRecipient.id
                 })
-                this.messages=this.$store.getters.GetCurrentConversation
+                this.messages = this.$store.getters.GetCurrentConversation
             })
         },
-        data(){
-            return{
-                messages:[]
+        data() {
+            return {
+                messages: []
+            }
+        },
+        methods: {
+            sendMessage() {
+                console.log(this.$refs.msgText.value)
+                let id = this.$store.getters.getUser._id
+                this.messages.push({
+                    sender:{
+                        id:id
+                    },
+                    text:this.$refs.msgText.value,
+                    sentAt:"Jan 2020"
+                })
+                this.$refs.msgText.value = ""
             }
         },
         computed: {
-            classList() {
+            classListOverlay() {
                 if (this.$store.getters.GetMessageAreaState)
                     return "w-100 h-100 overlay d-none  "
                 else
                     return "w-100 h-100 overlay"
             },
-            currentUser(){
+            classListInput() {
+                if (this.$store.getters.GetMessageAreaState)
+                    return "d-flex justify-self-end align-items-center flex-row"
+                else
+                    return "d-none justify-self-end align-items-center flex-row"
+            },
+            currentUser() {
                 return this.$store.getters.getUser
             },
             currentRecipient() {
                 return this.$store.getters.GetCurrentRecipient
             },
-            async conversations(){
-                await this.$store.dispatch('GetConversationBetweenUsers',{
-                    id_a:this.$store.getters.getUser._id,
-                    id_b:this.$store.getters.GetCurrentRecipient.id
+            async conversations() {
+                await this.$store.dispatch('GetConversationBetweenUsers', {
+                    id_a: this.$store.getters.getUser._id,
+                    id_b: this.$store.getters.GetCurrentRecipient.id
                 })
             }
         }
