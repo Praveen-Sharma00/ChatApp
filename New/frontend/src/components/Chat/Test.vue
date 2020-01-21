@@ -1,5 +1,7 @@
 <template>
-    <p>{{getUser}}</p>
+    <div class="container-fluid">
+        <p>{{getUser}}</p>
+    </div>
 </template>
 
 <script>
