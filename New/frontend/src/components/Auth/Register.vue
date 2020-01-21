@@ -66,7 +66,7 @@
                     }
                 })
                 if (this.$store.getters.isLoggedIn) {
-                    this.$router.push('/test')
+                    this.$router.push('/chat')
                 }
             }
         }

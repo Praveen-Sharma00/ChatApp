@@ -4,7 +4,7 @@ import store from '../store/index'
 
 import Login from "../components/Auth/Login";
 import Register from "../components/Auth/Register";
-import Test from "../components/Chat/Test";
+import Chat from "../components/Chat/Chat";
 
 Vue.use(VueRouter)
 
@@ -12,7 +12,7 @@ const index = [
     {path: '/login', component: Login},
     {path: '/register', component: Register},
     {
-        path: '/test', name: 'TestRoute', component: Test, meta: {
+        path: '/chat', name: 'ChatRoute', component: Chat, meta: {
             requiresAuth: true
         }
     },
@@ -27,7 +27,7 @@ export default router
 router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
         if (!!localStorage.getItem('token')) {
-            next('/test')
+            next('/chat')
         } else {
             next()
         }
@@ -38,7 +38,6 @@ router.beforeEach((to, from, next) => {
         } else {
             next('/login')
         }
-
     } else {
         next()
     }
