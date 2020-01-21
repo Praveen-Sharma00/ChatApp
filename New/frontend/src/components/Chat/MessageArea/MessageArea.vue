@@ -34,7 +34,15 @@
 
 <script>
     export default {
-        name: "MessageArea"
+        name: "MessageArea",
+        computed:{
+            classList(){
+                if(this.$store.getters.GetMessageAreaState)
+                    return "w-100 h-100 overlay d-none  "
+                else
+                    return "w-100 h-100 overlay"
+            }
+        }
     }
 </script>
 
