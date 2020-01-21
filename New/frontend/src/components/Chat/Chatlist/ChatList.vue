@@ -37,8 +37,8 @@
                          alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
                     <div class="w-50">
                         <div class="name">{{contact.name}}</div>
-                        <div class="small last-message">+91 9876512345 : Some message ...<i
-                                class=" fa-check-circle mr-1"></i>
+                        <div class="small last-message">+91 9876512345 : Some message ...
+                            <i class=" fa-check-circle mr-1"></i>
                         </div>
                     </div>
                     <div class="flex-grow-1 text-right">
@@ -83,7 +83,6 @@
         name: "ChatList",
         data() {
             return {
-                sessionUser: {},
                 activeItem: ''
             }
         },

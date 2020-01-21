@@ -7,12 +7,12 @@
         <div class="row d-flex flex-row align-items-center p-2 m-0 w-100" id="navbar">
             <div class="d-block d-sm-none">
                 <i class="fas fa-arrow-left p-2 mr-2 text-white" style="font-size: 1.5rem; cursor: pointer;"
-                   onclick="showChatList()"></i>
+                   @click="showChatList()"></i>
             </div>
-            <a href="#"><img src="https://via.placeholder.com/400x400" alt="Profile Photo"
+            <a href="#"><img :src="currentRecipient.imageUrl" alt="Profile Photo"
                              class="img-fluid rounded-circle mr-2" style="height:50px;" id="pic"></a>
             <div class="d-flex flex-column">
-                <div class="text-white font-weight-bold" id="name"></div>
+                <div class="text-white font-weight-bold" id="name">{{currentRecipient.name}}</div>
                 <div class="text-white small" id="details"></div>
             </div>
             <div class="d-flex flex-row align-items-center ml-auto">
@@ -23,7 +23,9 @@
         </div>
 
         <!-- Messages -->
-        <div class="d-flex flex-column" id="messages"></div>
+        <div class="d-flex flex-column" id="messages">
+
+        </div>
 
         <!-- Input -->
         <div class="d-none justify-self-end align-items-center flex-row" id="input-area">
@@ -36,14 +38,26 @@
 </template>
 
 <script>
+    import {eventBus} from "../../../../../TestProject/frontend-1/src/main";
+
     export default {
         name: "MessageArea",
+        mounted() {
+            eventBus.$on("load-conversations", (id) => {
+                this.messages = this.$store.state.user.contacts.find(x => x._id === id).conversations
+                console.log(this.messages)
+            })
+        },
         computed: {
             classList() {
                 if (this.$store.getters.GetMessageAreaState)
                     return "w-100 h-100 overlay d-none  "
                 else
                     return "w-100 h-100 overlay"
+            },
+            currentRecipient() {
+                console.log("REC : ",this.$store.getters.GetCurrentRecipient)
+                return this.$store.getters.GetCurrentRecipient
             }
         }
     }

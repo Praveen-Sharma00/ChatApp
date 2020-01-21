@@ -7,6 +7,9 @@ export default {
     getters:{
         GetMessageAreaState(state){
             return state.isMessageAreaActive
+        },
+        GetCurrentRecipient(state){
+            return state.currentRecipient
         }
     },
     mutations:{

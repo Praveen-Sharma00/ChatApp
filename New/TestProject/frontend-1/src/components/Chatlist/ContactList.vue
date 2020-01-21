@@ -1,13 +1,13 @@
 <template>
-    <div class="row" id="chat-list" >
+    <div class="row" id="chat-list">
         <div :id="contact.id+','+contact.name"
              :class="['chat-list-item','d-flex', 'flex-row','w-100', 'p-2', 'border-bottom',contact.id==activeItem?'active':'']"
              v-for="contact in getUserContacts()"
-             @click="showMessageArea(contact)"  >
+             @click="showMessageArea(contact)">
             <img :src="contact.imageUrl"
                  alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
             <div class="w-50">
-                <div class="name" >{{contact.name}}</div>
+                <div class="name">{{contact.name}}</div>
                 <div class="small last-message">+91 9876512345 : Some message ...<i class=" fa-check-circle mr-1"></i>
                 </div>
             </div>
@@ -24,19 +24,23 @@
 
     export default {
         name: "ContactList",
-        data(){
-            return{
-                activeItem:''
+        data() {
+            return {
+                activeItem: ''
             }
         },
-        methods:{
-            showMessageArea(contact){
-                this.$store.commit('SetMessageAreaState',true)
-                this.activeItem=contact.id
-                this.$store.commit('SetRecipientDetails',{id:contact.id,name:contact.name,imageUrl:contact.imageUrl})
-                eventBus.$emit('load-conversations',contact.id)
+        methods: {
+            showMessageArea(contact) {
+                this.$store.commit('SetMessageAreaState', true)
+                this.activeItem = contact.id
+                this.$store.commit('SetRecipientDetails', {
+                    id: contact.id,
+                    name: contact.name,
+                    imageUrl: contact.imageUrl
+                })
+                eventBus.$emit('load-conversations', contact.id)
             },
-            getUserContacts(){
+            getUserContacts() {
                 return this.$store.state.user.contacts
             }
         },
@@ -46,10 +50,10 @@
     }
 </script>
 
-<style >
+<style>
     #chat-list {
         overflow: auto;
-        max-height:85vh;
+        max-height: 85vh;
     }
 
     .chat-list-item {
@@ -63,18 +67,18 @@
 
     .chat-list-item:hover {
         background: hsl(0, 0%, 95%);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
 
     .chat-list-item:active {
         background: hsl(0, 0%, 85%);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
     }
 
     .chat-list-item.active {
         background: hsl(0, 0%, 90%);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
 
     .chat-list-item .chat-details {
