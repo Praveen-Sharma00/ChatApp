@@ -7,10 +7,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import SocketIO from "./utils/socket";
 
 export const eventBus = new Vue()
+
 Vue.config.productionTip = false
 Vue.prototype.$http = axios;
+Vue.prototype.$socket  = new SocketIO(store)
 
 new Vue({
     router,

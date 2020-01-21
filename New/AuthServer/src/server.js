@@ -1,13 +1,17 @@
 import app from './app'
 import http from 'http'
-// import UserDetailService from "./services/user";
-//
-// const _userDetailService = new UserDetailService()
+
 const server = http.createServer(app)
 const io = require('socket.io')(server)
 
 io.on('connection',(socket)=>{
-    console.log('Someone connected !')
+    socket.on('new_message',(data)=>{
+        console.log("REC : ",data)
+        socket.emit('new_message',data)
+    })
+    socket.on('disconnect', ()=>{
+        console.log("A user disconnected");
+    });
 })
 
 server.listen(process.env.PORT, () => {

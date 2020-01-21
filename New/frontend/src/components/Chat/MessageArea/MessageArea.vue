@@ -73,8 +73,15 @@
         },
         methods: {
             sendMessage() {
-                console.log(this.$refs.msgText.value)
+
                 let id = this.$store.getters.getUser._id
+                this.$socket.emit({
+                    sender:{
+                        id:id
+                    },
+                    text:this.$refs.msgText.value,
+                    sentAt:"Jan 2020"
+                })
                 this.messages.push({
                     sender:{
                         id:id
@@ -82,6 +89,7 @@
                     text:this.$refs.msgText.value,
                     sentAt:"Jan 2020"
                 })
+
                 this.$refs.msgText.value = ""
             }
         },
