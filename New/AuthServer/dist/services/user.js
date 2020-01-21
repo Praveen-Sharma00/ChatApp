@@ -368,9 +368,7 @@ class UserDetailService {
       return {
         success: true,
         error: {},
-        data: {
-          messages
-        }
+        messages: messages
       };
     }
   }

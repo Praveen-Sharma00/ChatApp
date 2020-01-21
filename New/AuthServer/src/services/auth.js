@@ -50,7 +50,7 @@ export default class AuthService {
 
             const _userRecord = await UserModel.findOne({
                 _id: mongoose.Types.ObjectId(decoded.id)
-            }).select('-password -_id -__v')
+            }).select('-password -__v')
 
             response = {success: true, user: _userRecord}
         } catch (e) {

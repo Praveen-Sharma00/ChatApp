@@ -1,8 +1,11 @@
+import axios from 'axios';
+
 export default {
     state:{
         isMessageAreaActive : false,
         userId : null,
-        currentRecipient:{}
+        currentRecipient:{},
+        currentConversation:[]
     },
     getters:{
         GetMessageAreaState(state){
@@ -10,6 +13,9 @@ export default {
         },
         GetCurrentRecipient(state){
             return state.currentRecipient
+        },
+        GetCurrentConversation(state){
+            return state.currentConversation
         }
     },
     mutations:{
@@ -22,9 +28,15 @@ export default {
                 name:payload.name,
                 imageUrl:payload.imageUrl
             }
+        },
+        SetCurrentConversation(state,payload){
+            state.currentConversation=payload
         }
     },
     actions:{
-
+        async GetConversationBetweenUsers(context,payload){
+            let response = await axios({url:'http://localhost:3000/api/v1/user/chats/'+payload.id_a+'/'+payload.id_b,method:'GET'})
+            context.commit('SetCurrentConversation',response.data.messages)
+        }
     }
 }

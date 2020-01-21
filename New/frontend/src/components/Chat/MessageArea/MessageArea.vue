@@ -24,7 +24,20 @@
 
         <!-- Messages -->
         <div class="d-flex flex-column" id="messages">
+            <div v-for="msg in messages"
+                 :class="['p-1 my-1 mx-3 rounded bg-white shadow-sm message-item',currentUser._id===msg.sender.id?'align-self-end self':'align-self-start']">
+                <div class="options">
+                    <a href="#"><i class="fas fa-angle-down text-muted px-2"></i></a>
+                </div>
 
+                <div class="d-flex flex-row">
+                    <div class="body m-1 mr-2">{{msg.text}}</div>
+                    <div class="time ml-auto small text-right flex-shrink-0 align-self-end text-muted" style="width:75px;">
+                        {{msg.sentAt}}
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Input -->
@@ -43,12 +56,20 @@
     export default {
         name: "MessageArea",
         mounted() {
-            eventBus.$on("load-conversations", (id) => {
-                this.messages = this.$store.state.user.contacts.find(x => x._id === id).conversations
-                console.log(this.messages)
+            eventBus.$on("load-conversations", async (id) => {
+                console.log("OBJ : ",this.$store.getters.getUser)
+               await this.$store.dispatch('GetConversationBetweenUsers',{
+                    id_a:this.$store.getters.getUser._id,
+                    id_b:this.$store.getters.GetCurrentRecipient.id
+                })
+                this.messages=this.$store.getters.GetCurrentConversation
             })
         },
-
+        data(){
+            return{
+                messages:[]
+            }
+        },
         computed: {
             classList() {
                 if (this.$store.getters.GetMessageAreaState)
@@ -56,9 +77,17 @@
                 else
                     return "w-100 h-100 overlay"
             },
+            currentUser(){
+                return this.$store.getters.getUser
+            },
             currentRecipient() {
-                console.log("REC : ",this.$store.getters.GetCurrentRecipient)
                 return this.$store.getters.GetCurrentRecipient
+            },
+            async conversations(){
+                await this.$store.dispatch('GetConversationBetweenUsers',{
+                    id_a:this.$store.getters.getUser._id,
+                    id_b:this.$store.getters.GetCurrentRecipient.id
+                })
             }
         }
     }

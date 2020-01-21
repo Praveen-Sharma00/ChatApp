@@ -87,10 +87,7 @@ const createGroup = async (req, res) => {
 };
 
 const getConversationBetweenUsers = async (req, res) => {
-  const {
-    user
-  } = req.session;
-  const currentUserId = user._id;
+  const currentUserId = req.params.firstUserId;
   const secondUserId = req.params.secondUserId;
   const response = await _userDetailService.getConversationBetweenUsers(currentUserId, secondUserId);
   return res.send(response);

@@ -29,7 +29,7 @@ api
     .get(userController.getUserPermissions)
 
 api
-    .route('/user/chats/:secondUserId')
+    .route('/user/chats/:firstUserId/:secondUserId')
     .get(userController.getConversationBetweenUsers)
     .post(userController.updateIndividualConversation)
 

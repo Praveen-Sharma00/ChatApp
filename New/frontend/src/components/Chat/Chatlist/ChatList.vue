@@ -84,7 +84,7 @@
         data() {
             return {
                 activeItem: '',
-                left:-110
+                left: -110
             }
         },
         computed: {
@@ -93,8 +93,8 @@
             }
         },
         mounted() {
-            eventBus.$on("show-profile-settings",()=>{
-                this.left=0
+            eventBus.$on("show-profile-settings", () => {
+                this.left = 0
             })
         },
         methods: {
@@ -111,8 +111,8 @@
             showProfileSettings() {
                 eventBus.$emit("show-profile-settings")
             },
-            hideProfileSettings(){
-                this.left=-110
+            hideProfileSettings() {
+                this.left = -110
             }
         }
     }

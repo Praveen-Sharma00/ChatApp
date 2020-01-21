@@ -107,7 +107,7 @@ class AuthService {
 
       const _userRecord = await _User.default.findOne({
         _id: _mongoose.default.Types.ObjectId(decoded.id)
-      }).select('-password -_id -__v');
+      }).select('-password -__v');
 
       response = {
         success: true,
