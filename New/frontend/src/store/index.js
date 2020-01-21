@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import auth from './modules/auth'
+import chat from './modules/chat'
 export default new Vuex.Store({
   state: {
   },
@@ -12,6 +13,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    auth
+    auth,
+    chat
   }
 })

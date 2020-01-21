@@ -1,7 +1,7 @@
 <template>
     <!-- Message Area -->
     <div class="d-none d-sm-flex flex-column col-12 col-sm-7 col-md-8 p-0 h-100" id="message-area">
-        <div class="w-100 h-100 overlay"></div>
+        <div :class="classList"></div>
 
         <!-- Navbar -->
         <div class="row d-flex flex-row align-items-center p-2 m-0 w-100" id="navbar">
