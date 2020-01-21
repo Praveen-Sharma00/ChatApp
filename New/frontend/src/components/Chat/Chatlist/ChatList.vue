@@ -6,7 +6,7 @@
                     alt="Profile Photo"
                     class="img-fluid rounded-circle mr-2"
                     style="height:50px; cursor:pointer;"
-                    onclick="showProfileSettings()"
+                    @click="showProfileSettings()"
                     id="display-pic"
                     src="https://p7.hiclipart.com/preview/4/1012/949/github-bitbucket-fork-software-repository-icons-for-windows-github-logo.jpg">
             <div class="text-white font-weight-bold" id="username">{{currentSessionUser.name}}</div>
@@ -50,10 +50,10 @@
         </div>
 
         <!-- Profile Settings -->
-        <div class="d-flex flex-column w-100 h-100" id="profile-settings">
+        <div class="d-flex flex-column w-100 h-100" id="profile-settings" :style="{left:left+'%'}">
             <div class="row d-flex flex-row align-items-center p-2 m-0" style="background:#009688; min-height:65px;">
                 <i class="fas fa-arrow-left p-2 mx-3 my-1 text-white" style="font-size: 1.5rem; cursor: pointer;"
-                   onclick="hideProfileSettings()"></i>
+                   @click="hideProfileSettings()"></i>
                 <div class="text-white font-weight-bold">Profile</div>
             </div>
             <div class="d-flex flex-column" style="overflow:auto;">
@@ -83,13 +83,19 @@
         name: "ChatList",
         data() {
             return {
-                activeItem: ''
+                activeItem: '',
+                left:-110
             }
         },
         computed: {
             currentSessionUser() {
                 return this.$store.getters.getUser
             }
+        },
+        mounted() {
+            eventBus.$on("show-profile-settings",()=>{
+                this.left=0
+            })
         },
         methods: {
             showMessageArea(contact) {
@@ -102,6 +108,12 @@
                 })
                 eventBus.$emit('load-conversations', contact._id)
             },
+            showProfileSettings() {
+                eventBus.$emit("show-profile-settings")
+            },
+            hideProfileSettings(){
+                this.left=-110
+            }
         }
     }
 </script>

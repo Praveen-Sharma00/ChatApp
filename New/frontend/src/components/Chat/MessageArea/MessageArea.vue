@@ -38,7 +38,7 @@
 </template>
 
 <script>
-    import {eventBus} from "../../../../../TestProject/frontend-1/src/main";
+    import {eventBus} from "../../../main";
 
     export default {
         name: "MessageArea",
@@ -48,6 +48,7 @@
                 console.log(this.messages)
             })
         },
+
         computed: {
             classList() {
                 if (this.$store.getters.GetMessageAreaState)
