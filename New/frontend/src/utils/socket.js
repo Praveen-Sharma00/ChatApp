@@ -7,7 +7,7 @@ export default class SocketIO{
         this.listen()
     }
     listen(){
-        this.__socket.on('new_message',(data)=>{
+        this.__socket.on("new_message",(data)=>{
             console.log("NEW_MSG : ",data)
         })
     }

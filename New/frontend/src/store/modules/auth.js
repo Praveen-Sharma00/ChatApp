@@ -68,7 +68,7 @@ export default {
                 localStorage.removeItem('token')
             }
         },
-        async logout(context){
+        logout(context){
                 context.commit('logout')
                 localStorage.removeItem('token')
                 delete axios.defaults.headers.common['Authorization']

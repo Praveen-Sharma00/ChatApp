@@ -15,10 +15,8 @@
                    aria-expanded="false"><i class="fas fa-ellipsis-v text-white"></i></a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="#">New Group</a>
-                    <a class="dropdown-item" href="#">Archived</a>
-                    <a class="dropdown-item" href="#">Starred</a>
                     <a class="dropdown-item" href="#">Settings</a>
-                    <a class="dropdown-item" href="#">Log Out</a>
+                    <a class="btn btn-primary dropdown-item" style="cursor: pointer" @click="logout">Log Out</a>
                 </div>
             </div>
         </div>
@@ -113,6 +111,10 @@
             },
             hideProfileSettings() {
                 this.left = -110
+            },
+            logout(){
+                this.$store.dispatch('logout')
+                this.$router.push('/')
             }
         }
     }
