@@ -32,12 +32,13 @@
                 <div :id="contact._id+','+contact.name"
                      :class="['chat-list-item','d-flex', 'flex-row','w-100', 'p-2', 'border-bottom',contact._id==activeItem?'active':'']"
                      v-for="contact in currentSessionUser.contacts"
-                     @click="showMessageArea(contact)"  >
+                     @click="showMessageArea(contact)">
                     <img :src="contact.imageUrl"
                          alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
                     <div class="w-50">
                         <div class="name">{{contact.name}}</div>
-                        <div class="small last-message">+91 9876512345 : Some message ...<i class=" fa-check-circle mr-1"></i>
+                        <div class="small last-message">+91 9876512345 : Some message ...<i
+                                class=" fa-check-circle mr-1"></i>
                         </div>
                     </div>
                     <div class="flex-grow-1 text-right">
@@ -83,7 +84,7 @@
         data() {
             return {
                 sessionUser: {},
-                activeItem:''
+                activeItem: ''
             }
         },
         computed: {
@@ -91,12 +92,16 @@
                 return this.$store.getters.getUser
             }
         },
-        methods:{
-            showMessageArea(contact){
-                this.$store.commit('SetMessageAreaState',true)
-                this.activeItem=contact._id
-                this.$store.commit('SetRecipientDetails',{id:contact._id,name:contact.name,imageUrl:contact.imageUrl})
-                eventBus.$emit('load-conversations',contact._id)
+        methods: {
+            showMessageArea(contact) {
+                this.$store.commit('SetMessageAreaState', true)
+                this.activeItem = contact._id
+                this.$store.commit('SetRecipientDetails', {
+                    id: contact._id,
+                    name: contact.name,
+                    imageUrl: contact.imageUrl
+                })
+                eventBus.$emit('load-conversations', contact._id)
             },
         }
     }

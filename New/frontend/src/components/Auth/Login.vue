@@ -73,6 +73,7 @@
         border-radius: 1rem;
         box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
     }
+
     .form-signin {
         --input-padding-x: 1.5rem;
         --input-padding-y: .75rem;
