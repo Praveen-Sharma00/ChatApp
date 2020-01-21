@@ -11,6 +11,9 @@
             getUser(){
                 return this.$store.getters.getUser
             }
+        },
+        beforeCreate() {
+            document.body.className=""
         }
     }
 </script>
