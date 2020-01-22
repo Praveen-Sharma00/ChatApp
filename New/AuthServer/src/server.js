@@ -1,6 +1,9 @@
 import app from './app'
 import http from 'http'
 
+import UserDetailService from "./services/user";
+const _userDetailService = new UserDetailService()
+
 const server = http.createServer(app)
 const io = require('socket.io')(server)
 
@@ -19,13 +22,17 @@ io.on('connection', (socket) => {
         console.log("NEW ROOM : ", roomName)
         socket.join(roomName)
     })
-    socket.on('new_message', function (data) {
+    socket.on('new_message',async function (data) {
+        if (data.type === "individual") {
+             await _userDetailService.updateIndividualConversation(data.sender, data.receiver, data.text, data.message_type, data.media)
+        } else if (data.type === "group") {
+             await _userDetailService.updateGroupConversation(data.sender, data.receiver, data.text, data.message_type, data.media)
+        }
         socket.broadcast.to(data.room.name).emit('new_message', {
             room: data.room,
             sender: data.sender,
             text: data.text,
         })
-        console.log("NEW_MSG : ", data)
     })
     socket.on('disconnect', function () {
         io.emit('user disconnected');
