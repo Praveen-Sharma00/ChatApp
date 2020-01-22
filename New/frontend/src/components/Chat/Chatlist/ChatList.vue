@@ -144,7 +144,6 @@
                 } else {
                     this.$store.commit('SetCurrentRoom', {name: b, type: type})
                 }
-                console.log("ROOM :", this.$store.getters.GetCurrentRoom)
                 this.$socket.joinRoom({
                     sender: this.$store.getters.getUser,
                     receiver,

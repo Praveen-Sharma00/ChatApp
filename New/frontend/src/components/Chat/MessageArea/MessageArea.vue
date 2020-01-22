@@ -59,7 +59,6 @@
         name: "MessageArea",
         mounted() {
             eventBus.$on("load-conversations", async (id) => {
-                console.log("OBJ : ", this.$store.getters.getUser)
                 await this.$store.dispatch('GetConversationBetweenUsers', {
                     id_a: this.$store.getters.getUser._id,
                     id_b: this.$store.getters.GetCurrentRecipient.id
@@ -106,14 +105,6 @@
                     },
                     sentAt: 'Now'
                 })
-                // this.$socket.emit({
-                //     sender: {
-                //         id: id
-                //     },
-                //     text: this.$refs.msgText.value,
-                //     sentAt: "Jan 2020"
-                // })
-
                 this.messages.push({
                     sender: {
                         id: user._id
@@ -121,7 +112,6 @@
                     text: this.$refs.msgText.value,
                     sentAt: "Jan 2020"
                 })
-
                 this.$refs.msgText.value = ""
             }
         },
