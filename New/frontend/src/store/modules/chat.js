@@ -6,7 +6,8 @@ export default {
         userId: null,
         currentRecipient: {},
         currentConversation: [],
-        currentRoom: {}
+        currentRoom: {},
+        userGroups:[]
     },
     getters: {
         GetMessageAreaState(state) {
@@ -21,6 +22,9 @@ export default {
         },
         GetCurrentRoom(state) {
             return state.currentRoom
+        },
+        GetUserGroupList(state){
+            return state.userGroups
         }
     },
     mutations: {
@@ -38,8 +42,10 @@ export default {
             state.currentConversation = payload
         },
         SetCurrentRoom(state, payload) {
-            console.log("PAYLOAD : ", payload)
             state.currentRoom = payload
+        },
+        SetGroupList(state,payload){
+            state.userGroups = payload
         }
     },
     actions: {
@@ -49,6 +55,15 @@ export default {
                 method: 'GET'
             })
             context.commit('SetCurrentConversation', response.data.messages)
+        },
+        async GetAllUserGroups(context,payload){
+            console.log("USER ID : ",payload)
+            let response = await axios({
+                url:'http://localhost:3000/api/v1/user/'+payload+'/groups',
+                method:'GET'
+            })
+            console.log(response)
+            context.commit('SetGroupList',response.data.groups)
         }
     }
 }

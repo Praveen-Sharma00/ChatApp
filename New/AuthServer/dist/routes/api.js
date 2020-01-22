@@ -18,6 +18,7 @@ const api = _express.default.Router();
 api.route('/user').get(_auth.checkSession, _user.userController.getCurrentUser);
 api.route('/user/contacts').get(_user.userController.getUserContacts).post(_auth.checkSession, _user.userController.updateUserContact);
 api.route('/user/groups').get(_user.userController.getUserGroups).post(_auth.checkSession, _user.userController.createGroup);
+api.route('/user/:id/groups').get(_user.userController.getUserGroups);
 api.route('/user/group/:groupId').get(_user.userController.getGroupMembers).post(_auth.checkSession, _user.userController.updatePermissions);
 api.route('/user/group/:groupId/permissions').get(_user.userController.getUserPermissions);
 api.route('/user/chats/:firstUserId/:secondUserId').get(_user.userController.getConversationBetweenUsers).post(_user.userController.updateIndividualConversation);

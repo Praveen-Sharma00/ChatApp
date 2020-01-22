@@ -80,13 +80,13 @@ export default class UserDetailService {
         }
     }
 
-    async getUserGroups(currentUser) {
-        const _result = await GroupModel.aggregate([{$unwind: "$members"}, {$match: {"members._id": currentUser._id}}])
+    async getUserGroups(userId) {
+        const _result = await GroupModel.aggregate([ {$match: {"members._id": mongoose.Types.ObjectId(userId)}}])
         if (!_result) {
             return ({success: false, error: {message: 'No Groups found !'}})
         } else {
             let obj = _result
-            return ({success: true, error: {}, data: {obj}})
+            return ({success: true, error: {}, groups: obj})
         }
     }
 

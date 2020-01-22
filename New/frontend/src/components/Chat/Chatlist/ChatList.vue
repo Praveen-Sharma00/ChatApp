@@ -23,7 +23,7 @@
 
         <!-- Chat List -->
 
-        <div class="row chat-list"  style="overflow:auto;">
+        <div class="row chat-list"  id="contacts" style="overflow:auto;">
             <div class="alert alert-success " role="alert" style="width:100%;margin-bottom: 1px !important;padding:2px 5px !important;">
                 Personal
             </div>
@@ -50,11 +50,32 @@
                 </div>
             </template>
         </div>
-        <div class="row chat-list">
+        <div class="row chat-list" id="group-list">
             <div class="alert alert-success " role="alert" style="width:100%;margin-bottom: 1px !important;padding:2px 5px !important;">
                Groups
             </div>
-
+            <template v-if="!currentUserGroups">
+                <p class="text-center mx-5">No Groups</p>
+            </template>
+            <template v-else>
+                <div :id="group._id+','+group.name"
+                     :class="['chat-list-item','d-flex', 'flex-row','w-100', 'p-2', 'border-bottom',group._id==activeItem?'active':'']"
+                     v-for="group in  currentUserGroups"
+                     @click="showMessageArea(group,'group')">
+                    <img :src="group.imageUrl"
+                         alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;width:50px;">
+                    <div class="w-50">
+                        <div class="name mt-3">{{group.name}}</div>
+                        <!--                        <div class="small last-message">+91 9876512345 : Some message ...-->
+                        <!--                            <i class=" fa-check-circle mr-1"></i>-->
+                        <!--                        </div>-->
+                    </div>
+                    <!--                    <div class="flex-grow-1 text-right">-->
+                    <!--                        <div class="small time">28/03/2018</div>-->
+                    <!--                        <div class="badge badge-success badge-pill small" id="1">2</div>-->
+                    <!--                    </div>-->
+                </div>
+            </template>
         </div>
 
         <!-- Profile Settings -->
@@ -95,20 +116,24 @@
                 left: -110
             }
         },
-        mounted() {
+        async mounted() {
             eventBus.$on("show-profile-settings", () => {
                 this.left = 0
-            })
+            }) ,
+                await this.$store.dispatch('GetAllUserGroups',this.$store.getters.getUser._id)
         },
         computed: {
             currentSessionUser() {
                 return this.$store.getters.getUser
-            }
+            },
+             currentUserGroups(){
+                // await this.$store.dispatch('GetAllUserGroups',this.$store.getters.getUser._id)
+                return this.$store.getters.GetUserGroupList
+            },
         },
         methods: {
             showMessageArea(receiver, type) {
                 let b = receiver._id
-
                 if (type === 'individual') {
                     let a = this.$store.getters.getUser._id
                     if (a > b)

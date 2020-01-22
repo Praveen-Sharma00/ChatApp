@@ -1,3 +1,4 @@
+
 import UserDetailService from "../services/user"
 const _userDetailService = new UserDetailService()
 
@@ -28,9 +29,8 @@ const updateUserContact = async (req, res) => {
 }
 
 const getUserGroups = async (req, res) => {
-    const userId=req.params.id
-    const response = await _userDetailService.getUserGroups(userId)
-    console.log("GROUPS :",response)
+    const {user} = req.session
+    const response = await _userDetailService.getUserGroups(user)
     return res.send(response)
 }
 const getAdminGroups = async (req, res) => {

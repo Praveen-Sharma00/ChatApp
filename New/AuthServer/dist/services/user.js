@@ -159,14 +159,14 @@ class UserDetailService {
     }
   }
 
-  async getUserGroups(currentUser) {
+  async getUserGroups(userId) {
     const _result = await _Group.default.aggregate([{
-      $unwind: "$members"
-    }, {
       $match: {
-        "members._id": currentUser._id
+        "members._id": _mongoose.default.Types.ObjectId(userId)
       }
     }]);
+
+    console.log("_RESULT : ", _result);
 
     if (!_result) {
       return {
@@ -180,9 +180,7 @@ class UserDetailService {
       return {
         success: true,
         error: {},
-        data: {
-          obj
-        }
+        groups: obj
       };
     }
   }
