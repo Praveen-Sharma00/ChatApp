@@ -13,6 +13,7 @@ export default {
             return state.isMessageAreaActive
         },
         GetCurrentRecipient(state) {
+            console.log("REC : ",state.currentRecipient)
             return state.currentRecipient
         },
         GetCurrentConversation(state) {
