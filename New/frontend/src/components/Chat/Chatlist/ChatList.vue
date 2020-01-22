@@ -22,7 +22,11 @@
         </div>
 
         <!-- Chat List -->
-        <div class="row" id="chat-list" style="overflow:auto;">
+
+        <div class="row chat-list"  style="overflow:auto;">
+            <div class="alert alert-success " role="alert" style="width:100%;margin-bottom: 1px !important;padding:2px 5px !important;">
+                Personal
+            </div>
             <template v-if="!currentSessionUser.contacts">
                 <p class="text-center mx-5">No contacts</p>
             </template>
@@ -45,6 +49,12 @@
 <!--                    </div>-->
                 </div>
             </template>
+        </div>
+        <div class="row chat-list">
+            <div class="alert alert-success " role="alert" style="width:100%;margin-bottom: 1px !important;padding:2px 5px !important;">
+               Groups
+            </div>
+
         </div>
 
         <!-- Profile Settings -->
@@ -141,11 +151,14 @@
         position: relative;
     }
 
-    #chat-list {
+    /*#chat-list {*/
+    /*    overflow: auto;*/
+    /*    max-height: 85vh;*/
+    /*}*/
+    .chat-list {
         overflow: auto;
         max-height: 85vh;
     }
-
     .chat-list-item {
         margin-bottom: 3px;
         background: white;
