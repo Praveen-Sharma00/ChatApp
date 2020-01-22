@@ -1,7 +1,7 @@
 # Ping.io
 A Simple ChatApp
-![Chat Window](chat.png)
-Format: ![Alt Text](url)
+![Chat Window](rsz_chat.png)
+Format: ![Chat Window](url)
 
 **Steps to run**
 
