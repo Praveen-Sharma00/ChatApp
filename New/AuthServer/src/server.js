@@ -20,7 +20,12 @@ io.on('connection', (socket) => {
         socket.join(roomName)
     })
     socket.on('new_message', function (data) {
-        socket.emit('new_message', data)
+        socket.broadcast.to(data.room.name).emit('new_message', {
+            room:data.room,
+            sender:data.sender,
+            text: data.text,
+        })
+       console.log("NEW_MSG : ",data)
     })
     socket.on('disconnect', function () {
         io.emit('user disconnected');

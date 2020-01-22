@@ -65,6 +65,16 @@
                 })
                 this.messages = this.$store.getters.GetCurrentConversation
             })
+            eventBus.$on("new_message",(data)=>{
+                console.log("EVE_MSG : ",data)
+                this.messages.push({
+                    sender: {
+                        id: data.sender._id
+                    },
+                    text: data.text,
+                    sentAt: "Jan 2020"
+                })
+            })
         },
         data() {
             return {
@@ -73,17 +83,27 @@
         },
         methods: {
             sendMessage() {
-                let id = this.$store.getters.getUser._id
+                let user = this.$store.getters.getUser
                 this.$socket.emit({
-                    sender: {
-                        id: id
+                    room:this.$store.getters.GetCurrentRoom,
+                    sender:{
+                        name:user.name,
+                        id:user._id
                     },
-                    text: this.$refs.msgText.value,
-                    sentAt: "Jan 2020"
+                    text : this.$refs.msgText.value,
+                    sentAt:'Now'
                 })
+                // this.$socket.emit({
+                //     sender: {
+                //         id: id
+                //     },
+                //     text: this.$refs.msgText.value,
+                //     sentAt: "Jan 2020"
+                // })
+
                 this.messages.push({
                     sender: {
-                        id: id
+                        id: user._id
                     },
                     text: this.$refs.msgText.value,
                     sentAt: "Jan 2020"

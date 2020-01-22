@@ -1,4 +1,5 @@
 import io from "socket.io-client";
+import {eventBus} from "../main";
 
 export default class SocketIO {
     constructor(store) {
@@ -8,9 +9,10 @@ export default class SocketIO {
     }
     listen() {
         this.__socket.on("new_message", (data) => {
-            console.log("NEW_MSG : ", data)
+            eventBus.$emit('new_message',data)
         })
     }
+
     emit(data) {
         this.__socket.emit("new_message", data)
     }
