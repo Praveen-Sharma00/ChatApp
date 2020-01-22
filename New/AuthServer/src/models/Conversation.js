@@ -15,7 +15,7 @@ const conversationSchema = new mongoose.Schema({
         media: {
             type: {
                 type: String,
-                enum: ["image", "pdf", "doc", "default"]
+                enum: ["image", "pdf", "doc", "default",""]
             },
             location: {
                 type: String

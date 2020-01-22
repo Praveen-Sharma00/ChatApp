@@ -63,7 +63,10 @@
                     id_a: this.$store.getters.getUser._id,
                     id_b: this.$store.getters.GetCurrentRecipient.id
                 })
-                this.messages = this.$store.getters.GetCurrentConversation
+                if(!this.$store.getters.GetCurrentConversation )
+                    this.messages=[]
+                else
+                    this.messages = this.$store.getters.GetCurrentConversation
             })
             eventBus.$on("new_message", (data) => {
                 this.messages.push({

@@ -220,7 +220,7 @@ export default class UserDetailService {
 
         if (!conversation) {
             const newConversation = new ConversationModel({
-                between_users: [room.name.split(",")],
+                between_users: room.name.split(","),
                 conversation_type: 1,
                 messages: [{
                     text: text_,
@@ -249,7 +249,7 @@ export default class UserDetailService {
                     location: md_loc
                 },
                 sender: {
-                    id: mongoose.Types.ObjectId(sender._id),
+                    id: mongoose.Types.ObjectId(sender.id),
                     name: sender.name
                 },
                 sentAt: (moment().format('MMMM Do YYYY, h:mm A')).toString()

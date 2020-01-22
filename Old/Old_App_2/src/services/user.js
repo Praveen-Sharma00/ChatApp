@@ -193,53 +193,45 @@ export default class UserDetailService {
         }
     }
 
-    async updateIndividualConversation(senderId, receiverID, text, message_type, media_type) {
-        const user = await UserModel.findOne({_id: mongoose.Types.ObjectId(senderId)})
-        let a = senderId, b = receiverID;
-        if (a > b) {
-            [a, b] = [b, a]
-        }
-        let msg_type = "", md_type = [], md_loc = [], text_ = ""
+    async updateIndividualConversation(room,sender, receiver, text, message_type, media) {
+        let msg_type = "", md_type = '', md_loc = '', text_ = ""
 
         if (message_type === "text") {
             msg_type = "text"
             text_ = text
-            md_type[0] = "default"
         } else {
             msg_type = "media"
-            for (let i = 0; i < media_type.length; i++) {
-                if (media_type[i] === "image") {
-                    md_type[i] = "image"
+                if (media.type === "image") {
+                    md_type = "image"
                     text_ = ""
-                    md_loc[i] = text[i]
-                } else if (media_type[i] === "pdf") {
-                    md_type[i] = "pdf"
+                    md_loc = text
+                } else if (media.type === "pdf") {
+                    md_type = "pdf"
                     text_ = ""
-                    md_loc[i] = text[i]
-                } else if (media_type[i] === "doc") {
-                    md_type[i] = "doc"
+                    md_loc = text
+                } else if (media.type === "doc") {
+                    md_type = "doc"
                     text_ = ""
-                    md_loc[i] = text[i]
+                    md_loc = text
                 }
-            }
         }
 
-        const conversation = await ConversationModel.findOne({between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)]})
+        const conversation = await ConversationModel.findOne({between_users: room.name.split(",")})
 
         if (!conversation) {
             const newConversation = new ConversationModel({
-                between_users: [mongoose.Types.ObjectId(a), mongoose.Types.ObjectId(b)],
+                between_users: [room.name.split(",")],
                 conversation_type: 1,
                 messages: [{
                     text: text_,
                     message_type: msg_type,
                     media: {
-                        object_type: md_type,
-                        object_location: md_loc
+                        type: md_type,
+                        location: md_loc
                     },
                     sender: {
-                        id: mongoose.Types.ObjectId(user._id),
-                        name: user.name
+                        id: mongoose.Types.ObjectId(sender.id),
+                        name: sender.name
                     },
                     sentAt: (moment().format('MMMM Do YYYY, h:mm A')).toString()
                 }]
@@ -247,18 +239,18 @@ export default class UserDetailService {
             await newConversation.save()
         } else {
             const existingConversation = await ConversationModel.findOne({
-                between_users: [a, b]
+                between_users: room.name.split(",")
             })
             existingConversation.messages.push({
                 text: text_,
                 message_type: msg_type,
                 media: {
-                    object_type: md_type,
-                    object_location: md_loc
+                    type: md_type,
+                    location: md_loc
                 },
                 sender: {
-                    id: mongoose.Types.ObjectId(user._id),
-                    name: user.name
+                    id: mongoose.Types.ObjectId(sender._id),
+                    name: sender.name
                 },
                 sentAt: (moment().format('MMMM Do YYYY, h:mm A')).toString()
             })

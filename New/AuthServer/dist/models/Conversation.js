@@ -20,12 +20,12 @@ const conversationSchema = new mongoose.Schema({
       enum: ["text", "media"]
     },
     media: {
-      object_type: {
-        type: [String],
-        enum: ["image", "pdf", "doc", "default"]
+      type: {
+        type: String,
+        enum: ["image", "pdf", "doc", "default", ""]
       },
-      object_location: {
-        type: [String]
+      location: {
+        type: String
       }
     },
     approval_status: {

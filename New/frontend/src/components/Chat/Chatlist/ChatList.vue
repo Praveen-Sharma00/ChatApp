@@ -23,7 +23,7 @@
 
         <!-- Chat List -->
         <div class="row" id="chat-list" style="overflow:auto;">
-            <template v-if="currentSessionUser.contacts.length==0">
+            <template v-if="!currentSessionUser.contacts">
                 <p class="text-center mx-5">No contacts</p>
             </template>
             <template v-else>

@@ -406,7 +406,7 @@ class UserDetailService {
 
     if (!conversation) {
       const newConversation = new _Conversation.default({
-        between_users: [room.name.split(",")],
+        between_users: room.name.split(","),
         conversation_type: 1,
         messages: [{
           text: text_,
@@ -435,7 +435,7 @@ class UserDetailService {
           location: md_loc
         },
         sender: {
-          id: _mongoose.default.Types.ObjectId(sender._id),
+          id: _mongoose.default.Types.ObjectId(sender.id),
           name: sender.name
         },
         sentAt: moment().format('MMMM Do YYYY, h:mm A').toString()
