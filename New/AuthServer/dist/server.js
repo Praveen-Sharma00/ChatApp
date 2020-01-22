@@ -4,7 +4,11 @@ var _app = _interopRequireDefault(require("./app"));
 
 var _http = _interopRequireDefault(require("http"));
 
+var _user = _interopRequireDefault(require("./services/user"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const _userDetailService = new _user.default();
 
 const server = _http.default.createServer(_app.default);
 
@@ -25,13 +29,21 @@ io.on('connection', socket => {
     console.log("NEW ROOM : ", roomName);
     socket.join(roomName);
   });
-  socket.on('new_message', function (data) {
+  socket.on('new_message', async function (data) {
+    let res = '';
+
+    if (data.room.type === "individual") {
+      res = await _userDetailService.updateIndividualConversation(data.room, data.sender, data.receiver, data.text, data.message_type, data.media);
+    } else if (data.type === "group") {
+      res = await _userDetailService.updateGroupConversation(data.room, data.sender, data.receiver, data.text, data.message_type, data.media);
+    }
+
+    console.log("RESPONSE : ", res);
     socket.broadcast.to(data.room.name).emit('new_message', {
       room: data.room,
       sender: data.sender,
       text: data.text
     });
-    console.log("NEW_MSG : ", data);
   });
   socket.on('disconnect', function () {
     io.emit('user disconnected');
