@@ -156,7 +156,7 @@
                     name: receiver.name,
                     imageUrl: receiver.imageUrl
                 })
-                eventBus.$emit('load-conversations', receiver._id)
+                eventBus.$emit('load-conversations', type)
             },
             showProfileSettings() {
                 eventBus.$emit("show-profile-settings")

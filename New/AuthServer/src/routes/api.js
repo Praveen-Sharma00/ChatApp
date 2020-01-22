@@ -24,6 +24,10 @@ api
     .get(userController.getUserGroups)
 
 api
+    .route('/chats/group/:id')
+    .get(userController.getGroupConversations)
+
+api
     .route('/user/group/:groupId')
     .get(userController.getGroupMembers)
     .post(checkSession, userController.updatePermissions)

@@ -62,8 +62,8 @@ const getConversationBetweenUsers = async (req, res) => {
     return res.send(response)
 }
 const getGroupConversations = async (req, res) => {
-    const id = req.params.groupId
-    const response = await _userDetailService.getGroupConversations(id)
+    const groupId = req.params.id
+    const response = await _userDetailService.getGroupConversations(groupId)
     return res.send(response)
 }
 const updateIndividualConversation = async (req, res) => {

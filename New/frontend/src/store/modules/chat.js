@@ -55,6 +55,14 @@ export default {
             })
             context.commit('SetCurrentConversation', response.data.messages)
         },
+        async GetGroupConversations(context, payload) {
+            let response = await axios({
+                url: 'http://localhost:3000/api/v1/chats/group/' + payload.id,
+                method: 'GET'
+            })
+            console.log(response)
+            context.commit('SetCurrentConversation', response.data.messages)
+        },
         async GetAllUserGroups(context, payload) {
             let response = await axios({
                 url: 'http://localhost:3000/api/v1/user/' + payload + '/groups',

@@ -488,7 +488,6 @@ class UserDetailService {
     });
 
     if (!conversation) {
-      console.log("NO");
       const newConversation = new _Conversation.default({
         between_users: [],
         group_id: room.id,
@@ -510,7 +509,6 @@ class UserDetailService {
       });
       await newConversation.save();
     } else {
-      console.log("YES");
       const existingConversation = await _Conversation.default.findOne({
         group_id: _mongoose.default.Types.ObjectId(receiver.id)
       });

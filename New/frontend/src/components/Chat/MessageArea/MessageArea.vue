@@ -58,11 +58,18 @@
     export default {
         name: "MessageArea",
         mounted() {
-            eventBus.$on("load-conversations", async (id) => {
-                await this.$store.dispatch('GetConversationBetweenUsers', {
-                    id_a: this.$store.getters.getUser._id,
-                    id_b: this.$store.getters.GetCurrentRecipient.id
-                })
+            eventBus.$on("load-conversations", async (type) => {
+                if(type==="individual"){
+                    await this.$store.dispatch('GetConversationBetweenUsers', {
+                        id_a: this.$store.getters.getUser._id,
+                        id_b: this.$store.getters.GetCurrentRecipient.id
+                    })
+                }else{
+                    await this.$store.dispatch('GetGroupConversations', {
+                        id:this.$store.getters.GetCurrentRecipient.id
+                    })
+                }
+
                 if (!this.$store.getters.GetCurrentConversation)
                     this.messages = []
                 else
