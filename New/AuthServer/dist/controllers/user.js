@@ -49,8 +49,8 @@ const updateUserContact = async (req, res) => {
 
 const getUserGroups = async (req, res) => {
   const userId = req.params.id;
+  console.log("USER ID : ", userId);
   const response = await _userDetailService.getUserGroups(userId);
-  console.log("GROUPS :", response);
   return res.send(response);
 };
 
@@ -109,9 +109,6 @@ const updateIndividualConversation = async (req, res) => {
 };
 
 const updateGroupConversation = async (req, res) => {
-  const {
-    user
-  } = req.session;
   const {
     text
   } = req.body;

@@ -24,7 +24,7 @@ const router = new VueRouter({
 
 export default router
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async(to, from, next) => {
     if (to.path === '/login') {
         if (!!localStorage.getItem('token')) {
             next('/chat')
@@ -33,6 +33,7 @@ router.beforeEach((to, from, next) => {
         }
     } else if (to.matched.some(record => record.meta.requiresAuth)) {
         if (localStorage.getItem('token') !== null) {
+
             next()
             return
         } else {

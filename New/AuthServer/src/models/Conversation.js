@@ -23,7 +23,7 @@ const conversationSchema = new mongoose.Schema({
         },
         approval_status: {
             type: String,
-            enum: ["pending", "approved"]
+            enum: ["pending", "approved",""]
         },
         sender: {
             id: {

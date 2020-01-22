@@ -166,8 +166,6 @@ class UserDetailService {
       }
     }]);
 
-    console.log("_RESULT : ", _result);
-
     if (!_result) {
       return {
         success: false,
@@ -448,90 +446,88 @@ class UserDetailService {
     };
   }
 
-  async updateGroupConversation(senderId, groupId, text, message_type, media_type) {
-    const user = await _User.default.findOne({
-      _id: _mongoose.default.Types.ObjectId(senderId)
-    });
+  async updateGroupConversation(room, sender, receiver, text, message_type, media) {
+    console.log("ENTERED");
     let msg_type = "",
-        md_type = [],
-        md_loc = [],
+        md_type = '',
+        md_loc = '',
         text_ = "",
         msg_status = "pending";
 
     if (message_type === "text") {
       msg_type = "text";
-      md_type[0] = "default";
+      md_type = "";
       text_ = text;
     } else {
       msg_type = "media";
       const group = await _Group.default.findOne({
-        _id: groupId
+        _id: receiver.id
       });
-      const isPresent = group.admins.filter(obj => obj._id == senderId).length > 0;
+      const isPresent = group.admins.filter(obj => obj._id == sender.id).length > 0;
 
       if (isPresent) {
         msg_status = "approved";
       }
 
-      for (let i = 0; i < media_type.length; i++) {
-        if (media_type[i] === "image") {
-          md_type[i] = "image";
-          text_ = "";
-          md_loc[i] = text[i];
-        } else if (media_type[i] === "pdf") {
-          md_type[i] = "pdf";
-          text_ = "";
-          md_loc[i] = text[i];
-        } else if (media_type[i] === "doc") {
-          md_type[i] = "doc";
-          text_ = "";
-          md_loc = text[i];
-        }
+      if (media.type === "image") {
+        md_type = "image";
+        text_ = "";
+        md_loc = text;
+      } else if (media.type === "pdf") {
+        md_type = "pdf";
+        text_ = "";
+        md_loc = text;
+      } else if (media.type === "doc") {
+        md_type = "doc";
+        text_ = "";
+        md_loc = text;
       }
     }
 
     const conversation = await _Conversation.default.findOne({
-      group_id: _mongoose.default.Types.ObjectId(groupId)
+      group_id: _mongoose.default.Types.ObjectId(receiver.id)
     });
 
     if (!conversation) {
+      console.log("NO");
       const newConversation = new _Conversation.default({
         between_users: [],
-        group_id: _mongoose.default.Types.ObjectId(groupId),
+        group_id: room.id,
         conversation_type: 2,
         messages: [{
           text: text_,
           message_type: msg_type,
           media: {
-            object_type: md_type,
-            object_location: md_loc
+            type: md_type,
+            location: md_loc
           },
           approval_status: msg_status,
           sender: {
-            id: _mongoose.default.Types.ObjectId(user._id),
-            name: user.name
+            id: _mongoose.default.Types.ObjectId(sender.id),
+            name: sender.name
           },
-          sentAt: moment().format('MMMM Do YYYY, h:mm A').toString()
+          sentAt: moment().format('DD/MM/YY, h:mm A').toString()
         }]
       });
       await newConversation.save();
     } else {
+      console.log("YES");
       const existingConversation = await _Conversation.default.findOne({
-        group_id: _mongoose.default.Types.ObjectId(groupId)
+        group_id: _mongoose.default.Types.ObjectId(receiver.id)
       });
       existingConversation.messages.push({
         text: text_,
         sender: {
-          id: _mongoose.default.Types.ObjectId(user._id),
-          name: user.name
+          id: _mongoose.default.Types.ObjectId(sender.id),
+          name: sender.name
         },
         message_type: msg_type,
         media: {
-          object_type: md_type,
-          object_location: md_loc
+          type: md_type,
+          location: md_loc
         },
         approval_status: msg_status,
-        sentAt: moment().format('MMMM Do YYYY, h:mm A').toString()
+        sentAt: moment().format('DD/MM/YY, h:mm A').toString()
       });
       await existingConversation.save();
     }

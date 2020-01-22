@@ -27,6 +27,7 @@ new Vue({
                 Vue.prototype.$http.defaults.headers.common['Authorization'] = token
                 if (this.$store.getters.isLoggedIn) {
                     this.$store.commit('init_user', result)
+                    await this.$store.dispatch('GetAllUserGroups',this.$store.getters.getUser._id)
                 }
             } else {
                 await this.$store.dispatch('logout')

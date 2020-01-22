@@ -30,11 +30,13 @@ io.on('connection', socket => {
     socket.join(roomName);
   });
   socket.on('new_message', async function (data) {
+    console.log("NEW_MSG : ", data);
     let res = '';
 
     if (data.room.type === "individual") {
       res = await _userDetailService.updateIndividualConversation(data.room, data.sender, data.receiver, data.text, data.message_type, data.media);
-    } else if (data.type === "group") {
+    } else if (data.room.type === "group") {
+      console.log("this one entered");
       res = await _userDetailService.updateGroupConversation(data.room, data.sender, data.receiver, data.text, data.message_type, data.media);
     }
 

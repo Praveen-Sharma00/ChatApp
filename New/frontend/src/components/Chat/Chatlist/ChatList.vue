@@ -56,6 +56,7 @@
             </div>
             <template v-if="!currentUserGroups">
                 <p class="text-center mx-5">No Groups</p>
+
             </template>
             <template v-else>
                 <div :id="group._id+','+group.name"
@@ -113,23 +114,22 @@
         data() {
             return {
                 activeItem: '',
-                left: -110
+                left: -110,
+                userGroups:[]
             }
         },
-        async mounted() {
+        mounted() {
             eventBus.$on("show-profile-settings", () => {
                 this.left = 0
-            }) ,
-                await this.$store.dispatch('GetAllUserGroups',this.$store.getters.getUser._id)
+            })
         },
         computed: {
             currentSessionUser() {
                 return this.$store.getters.getUser
             },
-             currentUserGroups(){
-                // await this.$store.dispatch('GetAllUserGroups',this.$store.getters.getUser._id)
+            currentUserGroups(){
                 return this.$store.getters.GetUserGroupList
-            },
+            }
         },
         methods: {
             showMessageArea(receiver, type) {
