@@ -447,7 +447,6 @@ class UserDetailService {
   }
 
   async updateGroupConversation(room, sender, receiver, text, message_type, media) {
-    console.log("ENTERED");
     let msg_type = "",
         md_type = '',
         md_loc = '',

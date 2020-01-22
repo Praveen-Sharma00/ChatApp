@@ -23,8 +23,9 @@
 
         <!-- Chat List -->
 
-        <div class="row chat-list"  id="contacts" style="overflow:auto;">
-            <div class="alert alert-success " role="alert" style="width:100%;margin-bottom: 1px !important;padding:2px 5px !important;">
+        <div class="row chat-list" id="contacts" style="overflow:auto;">
+            <div class="alert alert-success " role="alert"
+                 style="width:100%;margin-bottom: 1px !important;padding:2px 5px !important;">
                 Personal
             </div>
             <template v-if="!currentSessionUser.contacts">
@@ -39,20 +40,21 @@
                          alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;width:50px;">
                     <div class="w-50">
                         <div class="name mt-3">{{contact.name}}</div>
-<!--                        <div class="small last-message">+91 9876512345 : Some message ...-->
-<!--                            <i class=" fa-check-circle mr-1"></i>-->
-<!--                        </div>-->
+                        <!--                        <div class="small last-message">+91 9876512345 : Some message ...-->
+                        <!--                            <i class=" fa-check-circle mr-1"></i>-->
+                        <!--                        </div>-->
                     </div>
-<!--                    <div class="flex-grow-1 text-right">-->
-<!--                        <div class="small time">28/03/2018</div>-->
-<!--                        <div class="badge badge-success badge-pill small" id="1">2</div>-->
-<!--                    </div>-->
+                    <!--                    <div class="flex-grow-1 text-right">-->
+                    <!--                        <div class="small time">28/03/2018</div>-->
+                    <!--                        <div class="badge badge-success badge-pill small" id="1">2</div>-->
+                    <!--                    </div>-->
                 </div>
             </template>
         </div>
         <div class="row chat-list" id="group-list">
-            <div class="alert alert-success " role="alert" style="width:100%;margin-bottom: 1px !important;padding:2px 5px !important;">
-               Groups
+            <div class="alert alert-success " role="alert"
+                 style="width:100%;margin-bottom: 1px !important;padding:2px 5px !important;">
+                Groups
             </div>
             <template v-if="!currentUserGroups">
                 <p class="text-center mx-5">No Groups</p>
@@ -115,7 +117,7 @@
             return {
                 activeItem: '',
                 left: -110,
-                userGroups:[]
+                userGroups: []
             }
         },
         mounted() {
@@ -127,7 +129,7 @@
             currentSessionUser() {
                 return this.$store.getters.getUser
             },
-            currentUserGroups(){
+            currentUserGroups() {
                 return this.$store.getters.GetUserGroupList
             }
         },
@@ -184,6 +186,7 @@
         overflow: auto;
         max-height: 85vh;
     }
+
     .chat-list-item {
         margin-bottom: 3px;
         background: white;

@@ -260,7 +260,7 @@ export default class UserDetailService {
     }
 
     async updateGroupConversation(room, sender, receiver, text, message_type, media) {
-        let msg_type = "", md_type = '', md_loc = '', text_ = "", msg_status="pending";
+        let msg_type = "", md_type = '', md_loc = '', text_ = "", msg_status = "pending";
         if (message_type === "text") {
             msg_type = "text"
             md_type = ""
@@ -288,7 +288,6 @@ export default class UserDetailService {
         }
         const conversation = await ConversationModel.findOne({group_id: mongoose.Types.ObjectId(receiver.id)})
         if (!conversation) {
-            console.log("NO")
             const newConversation = new ConversationModel({
                 between_users: [],
                 group_id: room.id,
@@ -311,7 +310,6 @@ export default class UserDetailService {
             })
             await newConversation.save()
         } else {
-            console.log("YES")
             const existingConversation = await ConversationModel.findOne({
                 group_id: mongoose.Types.ObjectId(receiver.id)
             })

@@ -1,4 +1,5 @@
 import UserDetailService from "../services/user"
+
 const _userDetailService = new UserDetailService()
 
 const dashboard = async (req, res) => {
@@ -28,8 +29,7 @@ const updateUserContact = async (req, res) => {
 }
 
 const getUserGroups = async (req, res) => {
-    const userId=req.params.id
-    console.log("USER ID : ",userId)
+    const userId = req.params.id
     const response = await _userDetailService.getUserGroups(userId)
     return res.send(response)
 }

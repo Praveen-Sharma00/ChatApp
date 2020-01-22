@@ -15,7 +15,7 @@ const conversationSchema = new mongoose.Schema({
         media: {
             type: {
                 type: String,
-                enum: ["image", "pdf", "doc", "default",""]
+                enum: ["image", "pdf", "doc", "default", ""]
             },
             location: {
                 type: String
@@ -23,7 +23,7 @@ const conversationSchema = new mongoose.Schema({
         },
         approval_status: {
             type: String,
-            enum: ["pending", "approved",""]
+            enum: ["pending", "approved", ""]
         },
         sender: {
             id: {
