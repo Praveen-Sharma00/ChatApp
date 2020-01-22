@@ -10,7 +10,7 @@
                    @click="showChatList()"></i>
             </div>
             <a href="#"><img :src="currentRecipient.imageUrl" alt="Profile Photo"
-                             class="img-fluid rounded-circle mr-2" style="height:50px;" id="pic"></a>
+                             class="img-fluid rounded-circle mr-2" style="height:50px;width:50px;" id="pic"></a>
             <div class="d-flex flex-column">
                 <div class="text-white font-weight-bold" id="name">{{currentRecipient.name}}</div>
                 <div class="text-white small" id="details"></div>
@@ -30,11 +30,12 @@
                     <a href="#"><i class="fas fa-angle-down text-muted px-2"></i></a>
                 </div>
                 <div class="d-flex flex-row">
-                    <div class="body m-1 mr-2">{{msg.text}}</div>
-                    <div class="time ml-auto small text-right flex-shrink-0 align-self-end text-muted"
-                         style="width:75px;">
-                        {{msg.sentAt}}
-                        <i class="fas fa-check-circle"></i>
+                    <div class="body m-1 mr-2">{{msg.text}}
+                        <div class="time ml-auto small align-text-bottom text-right flex-shrink-1 align-self-end text-muted"
+                             style="width:127px;">
+                            {{msg.sentAt}}
+                            <!--                        <i class="fas fa-check-circle"></i>-->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,8 +64,8 @@
                     id_a: this.$store.getters.getUser._id,
                     id_b: this.$store.getters.GetCurrentRecipient.id
                 })
-                if(!this.$store.getters.GetCurrentConversation )
-                    this.messages=[]
+                if (!this.$store.getters.GetCurrentConversation)
+                    this.messages = []
                 else
                     this.messages = this.$store.getters.GetCurrentConversation
             })
@@ -86,22 +87,22 @@
         methods: {
             sendMessage(msg_type) {
                 let user = this.$store.getters.getUser
-                let reciever=this.$store.getters.GetCurrentRecipient
+                let reciever = this.$store.getters.GetCurrentRecipient
                 this.$socket.emit({
                     room: this.$store.getters.GetCurrentRoom,
                     sender: {
                         name: user.name,
                         id: user._id
                     },
-                    receiver:{
-                        name:reciever.name,
-                        id:reciever.id
+                    receiver: {
+                        name: reciever.name,
+                        id: reciever.id
                     },
-                    message_type:msg_type,
+                    message_type: msg_type,
                     text: this.$refs.msgText.value,
-                    media:{
-                        type:'',
-                        location:''
+                    media: {
+                        type: '',
+                        location: ''
                     },
                     sentAt: 'Now'
                 })

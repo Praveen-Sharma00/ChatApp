@@ -193,7 +193,7 @@ export default class UserDetailService {
         }
     }
 
-    async updateIndividualConversation(room,sender, receiver, text, message_type, media) {
+    async updateIndividualConversation(room, sender, receiver, text, message_type, media) {
         let msg_type = "", md_type = '', md_loc = '', text_ = ""
 
         if (message_type === "text") {
@@ -233,7 +233,7 @@ export default class UserDetailService {
                         id: mongoose.Types.ObjectId(sender.id),
                         name: sender.name
                     },
-                    sentAt: (moment().format('MMMM Do YYYY, h:mm A')).toString()
+                    sentAt: (moment().format('DD/MM/YY, h:mm A')).toString()
                 }]
             })
             await newConversation.save()
@@ -252,7 +252,7 @@ export default class UserDetailService {
                     id: mongoose.Types.ObjectId(sender.id),
                     name: sender.name
                 },
-                sentAt: (moment().format('MMMM Do YYYY, h:mm A')).toString()
+                sentAt: (moment().format('DD/MM/YY, h:mm A')).toString()
             })
             await existingConversation.save()
         }

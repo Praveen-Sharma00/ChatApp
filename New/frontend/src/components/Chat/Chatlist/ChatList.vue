@@ -32,17 +32,17 @@
                      v-for="contact in currentSessionUser.contacts"
                      @click="showMessageArea(contact,'individual')">
                     <img :src="contact.imageUrl"
-                         alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
+                         alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;width:50px;">
                     <div class="w-50">
-                        <div class="name">{{contact.name}}</div>
-                        <div class="small last-message">+91 9876512345 : Some message ...
-                            <i class=" fa-check-circle mr-1"></i>
-                        </div>
+                        <div class="name mt-3">{{contact.name}}</div>
+<!--                        <div class="small last-message">+91 9876512345 : Some message ...-->
+<!--                            <i class=" fa-check-circle mr-1"></i>-->
+<!--                        </div>-->
                     </div>
-                    <div class="flex-grow-1 text-right">
-                        <div class="small time">28/03/2018</div>
-                        <div class="badge badge-success badge-pill small" id="1">2</div>
-                    </div>
+<!--                    <div class="flex-grow-1 text-right">-->
+<!--                        <div class="small time">28/03/2018</div>-->
+<!--                        <div class="badge badge-success badge-pill small" id="1">2</div>-->
+<!--                    </div>-->
                 </div>
             </template>
         </div>

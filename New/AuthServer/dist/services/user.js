@@ -419,7 +419,7 @@ class UserDetailService {
             id: _mongoose.default.Types.ObjectId(sender.id),
             name: sender.name
           },
-          sentAt: moment().format('MMMM Do YYYY, h:mm A').toString()
+          sentAt: moment().format('DD/MM/YY, h:mm A').toString()
         }]
       });
       await newConversation.save();
@@ -438,7 +438,7 @@ class UserDetailService {
           id: _mongoose.default.Types.ObjectId(sender.id),
           name: sender.name
         },
-        sentAt: moment().format('MMMM Do YYYY, h:mm A').toString()
+        sentAt: moment().format('DD/MM/YY, h:mm A').toString()
       });
       await existingConversation.save();
     }
