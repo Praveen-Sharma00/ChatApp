@@ -65,8 +65,7 @@
                 })
                 this.messages = this.$store.getters.GetCurrentConversation
             })
-            eventBus.$on("new_message",(data)=>{
-                console.log("EVE_MSG : ",data)
+            eventBus.$on("new_message", (data) => {
                 this.messages.push({
                     sender: {
                         id: data.sender._id
@@ -85,13 +84,13 @@
             sendMessage() {
                 let user = this.$store.getters.getUser
                 this.$socket.emit({
-                    room:this.$store.getters.GetCurrentRoom,
-                    sender:{
-                        name:user.name,
-                        id:user._id
+                    room: this.$store.getters.GetCurrentRoom,
+                    sender: {
+                        name: user.name,
+                        id: user._id
                     },
-                    text : this.$refs.msgText.value,
-                    sentAt:'Now'
+                    text: this.$refs.msgText.value,
+                    sentAt: 'Now'
                 })
                 // this.$socket.emit({
                 //     sender: {

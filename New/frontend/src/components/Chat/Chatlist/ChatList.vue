@@ -96,20 +96,20 @@
             }
         },
         methods: {
-            showMessageArea(receiver,type) {
-                let b=receiver._id
+            showMessageArea(receiver, type) {
+                let b = receiver._id
 
-                if(type==='individual'){
-                    let a=this.$store.getters.getUser._id
+                if (type === 'individual') {
+                    let a = this.$store.getters.getUser._id
                     if (a > b)
                         [a, b] = [b, a]
-                     this.$store.commit('SetCurrentRoom',{name:a + "," + b,type:type})
-                }else{
-                    this.$store.commit('SetCurrentRoom', {name:b,type:type})
+                    this.$store.commit('SetCurrentRoom', {name: a + "," + b, type: type})
+                } else {
+                    this.$store.commit('SetCurrentRoom', {name: b, type: type})
                 }
-                console.log("ROOM :",this.$store.getters.GetCurrentRoom)
+                console.log("ROOM :", this.$store.getters.GetCurrentRoom)
                 this.$socket.joinRoom({
-                    sender:this.$store.getters.getUser,
+                    sender: this.$store.getters.getUser,
                     receiver,
                     type
                 })

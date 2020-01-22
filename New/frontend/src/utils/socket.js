@@ -7,16 +7,18 @@ export default class SocketIO {
         this.__socket = io('http://localhost:3000')
         this.listen()
     }
+
     listen() {
         this.__socket.on("new_message", (data) => {
-            eventBus.$emit('new_message',data)
+            eventBus.$emit('new_message', data)
         })
     }
 
     emit(data) {
         this.__socket.emit("new_message", data)
     }
-    joinRoom(data){
-        this.__socket.emit('join',data)
+
+    joinRoom(data) {
+        this.__socket.emit('join', data)
     }
 }

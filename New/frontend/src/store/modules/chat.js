@@ -6,7 +6,7 @@ export default {
         userId: null,
         currentRecipient: {},
         currentConversation: [],
-        currentRoom:{}
+        currentRoom: {}
     },
     getters: {
         GetMessageAreaState(state) {
@@ -18,7 +18,7 @@ export default {
         GetCurrentConversation(state) {
             return state.currentConversation
         },
-        GetCurrentRoom(state){
+        GetCurrentRoom(state) {
             return state.currentRoom
         }
     },
@@ -36,8 +36,8 @@ export default {
         SetCurrentConversation(state, payload) {
             state.currentConversation = payload
         },
-        SetCurrentRoom(state,payload){
-            console.log("PAYLOAD : ",payload)
+        SetCurrentRoom(state, payload) {
+            console.log("PAYLOAD : ", payload)
             state.currentRoom = payload
         }
     },
