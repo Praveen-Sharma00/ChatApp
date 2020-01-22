@@ -13,7 +13,7 @@ export const eventBus = new Vue()
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios;
-Vue.prototype.$socket  = new SocketIO(store)
+Vue.prototype.$socket = new SocketIO(store)
 
 new Vue({
     router,

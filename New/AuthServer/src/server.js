@@ -4,13 +4,26 @@ import http from 'http'
 const server = http.createServer(app)
 const io = require('socket.io')(server)
 
-io.on('connection',(socket)=>{
-    socket.on('new_message',(data)=>{
-        console.log("REC : ",data)
-        socket.emit('new_message',data)
+io.on('connection', (socket) => {
+    let roomName=''
+    socket.on('join',(data)=>{
+        if (data.type === "individual") {
+            let a = data.sender._id
+            let b = data.receiver._id
+            if (a > b)
+                [a, b] = [b, a]
+            roomName = a + "," + b
+        } else if (data.type === "group") {
+            roomName = data.receiver._id + ""
+        }
+        console.log("NEW ROOM : ",roomName)
+        socket.join(roomName)
     })
-    socket.on('disconnect', ()=>{
-        console.log("A user disconnected");
+    socket.on('new_message', function (data) {
+        socket.emit('new_message', data)
+    })
+    socket.on('disconnect', function () {
+        io.emit('user disconnected');
     });
 })
 

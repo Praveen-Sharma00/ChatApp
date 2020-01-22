@@ -46,7 +46,7 @@
             <input type="text" name="message" id="input" placeholder="Type a message"
                    class="flex-grow-1 border-0 px-3 py-2 my-3 rounded shadow-sm" ref="msgText">
             <i class="fas fa-paper-plane text-muted px-3" style="cursor:pointer;" @click="sendMessage()"
-               ></i>
+            ></i>
         </div>
     </div>
 </template>
@@ -73,21 +73,20 @@
         },
         methods: {
             sendMessage() {
-
                 let id = this.$store.getters.getUser._id
                 this.$socket.emit({
-                    sender:{
-                        id:id
+                    sender: {
+                        id: id
                     },
-                    text:this.$refs.msgText.value,
-                    sentAt:"Jan 2020"
+                    text: this.$refs.msgText.value,
+                    sentAt: "Jan 2020"
                 })
                 this.messages.push({
-                    sender:{
-                        id:id
+                    sender: {
+                        id: id
                     },
-                    text:this.$refs.msgText.value,
-                    sentAt:"Jan 2020"
+                    text: this.$refs.msgText.value,
+                    sentAt: "Jan 2020"
                 })
 
                 this.$refs.msgText.value = ""

@@ -23,14 +23,14 @@
 
         <!-- Chat List -->
         <div class="row" id="chat-list" style="overflow:auto;">
-            <template v-if="currentSessionUser.contacts.length===0">
+            <template v-if="currentSessionUser.contacts.length==0">
                 <p class="text-center mx-5">No contacts</p>
             </template>
             <template v-else>
                 <div :id="contact._id+','+contact.name"
                      :class="['chat-list-item','d-flex', 'flex-row','w-100', 'p-2', 'border-bottom',contact._id==activeItem?'active':'']"
                      v-for="contact in currentSessionUser.contacts"
-                     @click="showMessageArea(contact)">
+                     @click="showMessageArea(contact,'individual')">
                     <img :src="contact.imageUrl"
                          alt="Profile Photo" class="img-fluid rounded-circle mr-2" style="height:50px;">
                     <div class="w-50">
@@ -85,26 +85,42 @@
                 left: -110
             }
         },
-        computed: {
-            currentSessionUser() {
-                return this.$store.getters.getUser
-            }
-        },
         mounted() {
             eventBus.$on("show-profile-settings", () => {
                 this.left = 0
             })
         },
+        computed: {
+            currentSessionUser() {
+                return this.$store.getters.getUser
+            }
+        },
         methods: {
-            showMessageArea(contact) {
-                this.$store.commit('SetMessageAreaState', true)
-                this.activeItem = contact._id
-                this.$store.commit('SetRecipientDetails', {
-                    id: contact._id,
-                    name: contact.name,
-                    imageUrl: contact.imageUrl
+            showMessageArea(receiver,type) {
+                let b=receiver._id
+
+                if(type==='individual'){
+                    let a=this.$store.getters.getUser._id
+                    if (a > b)
+                        [a, b] = [b, a]
+                     this.$store.commit('SetCurrentRoom',{name:a + "," + b,type:type})
+                }else{
+                    this.$store.commit('SetCurrentRoom', {name:b,type:type})
+                }
+                console.log("ROOM :",this.$store.getters.GetCurrentRoom)
+                this.$socket.joinRoom({
+                    sender:this.$store.getters.getUser,
+                    receiver,
+                    type
                 })
-                eventBus.$emit('load-conversations', contact._id)
+                this.$store.commit('SetMessageAreaState', true)
+                this.activeItem = receiver._id
+                this.$store.commit('SetRecipientDetails', {
+                    id: receiver._id,
+                    name: receiver.name,
+                    imageUrl: receiver.imageUrl
+                })
+                eventBus.$emit('load-conversations', receiver._id)
             },
             showProfileSettings() {
                 eventBus.$emit("show-profile-settings")
@@ -112,7 +128,7 @@
             hideProfileSettings() {
                 this.left = -110
             },
-            logout(){
+            logout() {
                 this.$store.dispatch('logout')
                 this.$router.push('/')
             }
