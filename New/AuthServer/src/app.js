@@ -48,17 +48,14 @@ app.use(cors())
 app.use(compression())
 
 
-
 /************************ROUTE MIDDLEWARES***************************** */
 
 app.use(authRoutes)
 app.use('/api/v1', apiRoutes)
 
 /************************************** UPLOAD HANDLER ***************************************/
-app.post('/upload', uploadFile.array('file',10), (req, res) => {
-    console.log('IT HIT HERE ')
+app.post('/upload', uploadFile.array('file', 10), (req, res) => {
     const files = req.files
-    console.log("FILES : ",files )
     let media_type = []
     let filename = []
     for (let i = 0; i < files.length; i++) {

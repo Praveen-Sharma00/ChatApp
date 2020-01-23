@@ -58,27 +58,28 @@
             ></i>
         </div>
 
-        <div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog"
+        <div class="modal fade" id="fileUploadModal" ref="fileUploadModal" tabindex="-1" role="dialog"
              aria-labelledby="fileUploadModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <form @submit.prevent="submitFileUpload" enctype="multipart/form-data">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Select file</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="custom-file">
-                            <input type="file" multiple class="custom-file-input" name="file" id="customFile" ref="file">
-                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Select file</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
+                        <div class="modal-body">
+                            <div class="custom-file">
+                                <input type="file" multiple class="custom-file-input" name="file" id="customFile"
+                                       ref="file">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -87,9 +88,7 @@
 </template>
 
 <script>
-
     import {eventBus} from "../../../main";
-    import axios from 'axios';
 
     export default {
         name: "MessageArea",
@@ -126,27 +125,15 @@
             return {
                 messages: [],
                 conversationType: '',
-                uploadedFile:''
+                uploadedFile: ''
             }
         },
         methods: {
-            async submitFileUpload(){
-                const selectedFile = this.$refs.file.files
-                console.log(selectedFile)
-                this.uploadedFile=selectedFile
-                const formData = new FormData()
-                for (let i = 0 ; i < selectedFile.length ; i++) {
-                    formData.append("file", selectedFile[i]);
-                }
-                await this.$store.dispatch('UploadFile',formData)
-                console.log("FILE : ",this.$store.getters.GetCurrentUploadedFileDetails)
-
-                // try{
-                //     response=await axios.post('http://localhost:3000/upload',formData)
-                //     console.log(response.data.filename, ";",response.data.media_type)
-                // }catch(e){
-                //     console.log(e)
-                // }
+            async submitFileUpload() {
+                const selectedFiles = this.$refs.file.files
+                this.uploadedFile = selectedFiles
+                await this.$store.dispatch('UploadFile', selectedFiles)
+                alert("Files uploaded")
             },
             sendMessage(msg_type) {
                 let user = this.$store.getters.getUser

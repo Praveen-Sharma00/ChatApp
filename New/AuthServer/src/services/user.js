@@ -344,7 +344,7 @@ export default class UserDetailService {
             return ({success: false, error: {message: 'No Conversations so far !'}})
         } else {
             let messages = _result.messages
-            return ({success: true, error: {}, messages:messages})
+            return ({success: true, error: {}, messages: messages})
         }
     }
 
