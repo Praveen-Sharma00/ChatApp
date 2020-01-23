@@ -490,7 +490,7 @@ class UserDetailService {
     if (!conversation) {
       const newConversation = new _Conversation.default({
         between_users: [],
-        group_id: room.id,
+        group_id: _mongoose.default.Types.ObjectId(receiver.id),
         conversation_type: 2,
         messages: [{
           text: text_,
@@ -563,9 +563,7 @@ class UserDetailService {
       return {
         success: true,
         error: {},
-        data: {
-          messages
-        }
+        messages: messages
       };
     }
   }

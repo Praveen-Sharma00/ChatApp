@@ -290,7 +290,7 @@ export default class UserDetailService {
         if (!conversation) {
             const newConversation = new ConversationModel({
                 between_users: [],
-                group_id: room.id,
+                group_id: mongoose.Types.ObjectId(receiver.id),
                 conversation_type: 2,
                 messages: [{
                     text: text_,
@@ -344,7 +344,7 @@ export default class UserDetailService {
             return ({success: false, error: {message: 'No Conversations so far !'}})
         } else {
             let messages = _result.messages
-            return ({success: true, error: {}, data: {messages}})
+            return ({success: true, error: {}, messages:messages})
         }
     }
 
