@@ -17,7 +17,7 @@
             </div>
             <div class="d-flex flex-row align-items-center ml-auto">
                 <a href="#"><i class="fas fa-search mx-3 text-white d-none d-md-block"></i></a>
-                <a href="#" data-toggle="modal" data-target="#fileUploadModal"><i
+                <a href="#" :class="classListAttachment" data-toggle="modal" data-target="#fileUploadModal"><i
                         class="fas fa-paperclip mx-3 text-white d-none d-md-block"></i></a>
                 <a href="#"><i class="fas fa-ellipsis-v mr-2 mx-sm-3 text-white"></i></a>
             </div>
@@ -282,6 +282,12 @@
                     }
                 }
                 return "d-none justify-self-end align-items-center flex-row"
+            },
+            classListAttachment(){
+                let permissions = this.$store.getters.GetUserPermissions
+                if(this.conversationType === 'group' && (permissions.BlockUploads===true || permissions.ReadOnly === true))
+                    return "d-none"
+                return ""
             },
             currentUser() {
                 return this.$store.getters.getUser
