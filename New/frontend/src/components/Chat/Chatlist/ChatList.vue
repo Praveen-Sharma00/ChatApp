@@ -1,5 +1,5 @@
 <template>
-    <div class="col-12 col-sm-5 col-md-4 d-flex flex-column" id="chat-list-area" style="position:relative;">
+    <div class="col-12 col-sm-4 col-md-3 d-flex flex-column" id="chat-list-area" style="position:relative;">
         <!-- Navbar -->
         <div class="row d-flex flex-row align-items-center p-2" id="navbar">
             <img

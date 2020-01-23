@@ -1,6 +1,6 @@
 <template>
     <!-- Message Area -->
-    <div class="d-none d-sm-flex flex-column col-12 col-sm-7 col-md-8 p-0 h-100" id="message-area">
+    <div class="d-none d-sm-flex flex-column col-12 col-sm-8 col-md-9 p-0 h-100" id="message-area">
         <div :class="classListOverlay"></div>
 
         <!-- Navbar -->
