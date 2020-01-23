@@ -144,7 +144,6 @@
                         id: this.$store.getters.GetCurrentRecipient.id
                     })
                 }
-
                 if (!this.$store.getters.GetCurrentConversation)
                     this.messages = []
                 else
@@ -153,24 +152,32 @@
             eventBus.$on("new_message", (data) => {
                 this.messages.push({
                     sender: {
-                        id: data.sender._id
+                        id: data.sender._id,
+                        name: data.sender.name
                     },
-                    type: 'text',
+                    media: {
+                        type: [], location: []
+                    },
+                    message_type: 'text',
                     text: data.text,
                     sentAt: "Jan 2020"
                 })
             })
             eventBus.$on('new_upload', (data) => {
-                for (let i = 0; i < data.media.type.length; i++) {
-                    this.messages.push({
-                        sender: {
-                            id: data.sender.id
-                        },
-                        type: 'media',
-                        text: 'http://localhost:3000/' + data.media.location[i],
-                        sentAt: "Jan 2020"
-                    })
-                }
+
+                this.messages.push({
+                    sender: {
+                        id: data.sender.id,
+                        name: data.sender.name
+                    },
+                    media: {
+                        type: data.media.type,
+                        location: data.media.location
+                    },
+                    message_type: 'media',
+                    text: '',
+                    sentAt: "Jan 2020"
+                })
             })
         },
         data() {
@@ -209,21 +216,36 @@
                     },
                     sentAt: 'Now'
                 })
-                for (let i = 0; i < data.media_types.length; i++) {
-                    this.messages.push({
-                        sender: {
-                            id: this.$store.getters.getUser._id
-                        },
-                        type: 'media',
-                        text: 'http://localhost:3000/' + data.filenames[i],
-                        sentAt: "Jan 2020"
-                    })
-                }
-            }
-            ,
+                this.messages.push({
+                    sender: {
+                        id: this.$store.getters.getUser._id,
+                        name:this.$store.getters.getUser.name
+                    },
+                    media:{
+                        type:data.media_types,
+                        location:data.filenames
+                    },
+                    message_type: 'media',
+                    text: '',
+                    sentAt: "Now"
+                })
+            },
             sendMessage(msg_type) {
                 let user = this.$store.getters.getUser
                 let reciever = this.$store.getters.GetCurrentRecipient
+                this.messages.push({
+                    sender: {
+                        id: user._id,
+                        name: user.name
+                    },
+                    media: {
+                        type: [],
+                        location: []
+                    },
+                    message_type: 'text',
+                    text: this.$refs.msgText.value,
+                    sentAt: "Now"
+                })
                 this.$socket.emit({
                     room: this.$store.getters.GetCurrentRoom,
                     sender: {
@@ -237,19 +259,12 @@
                     message_type: msg_type,
                     text: this.$refs.msgText.value,
                     media: {
-                        type: '',
-                        location: ''
+                        type: [],
+                        location: []
                     },
                     sentAt: 'Now'
                 })
-                this.messages.push({
-                    sender: {
-                        id: user._id
-                    },
-                    type: 'text',
-                    text: this.$refs.msgText.value,
-                    sentAt: "Jan 2020"
-                })
+
                 this.$refs.msgText.value = ""
             }
         },
