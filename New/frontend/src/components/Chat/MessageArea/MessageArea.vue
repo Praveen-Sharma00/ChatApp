@@ -17,9 +17,11 @@
             </div>
             <div class="d-flex flex-row align-items-center ml-auto">
                 <a href="#"><i class="fas fa-search mx-3 text-white d-none d-md-block"></i></a>
-                <a href="#"><i class="fas fa-paperclip mx-3 text-white d-none d-md-block"></i></a>
+                <a href="#" data-toggle="modal" data-target="#fileUploadModal"><i
+                        class="fas fa-paperclip mx-3 text-white d-none d-md-block"></i></a>
                 <a href="#"><i class="fas fa-ellipsis-v mr-2 mx-sm-3 text-white"></i></a>
             </div>
+
         </div>
 
         <!-- Messages -->
@@ -55,25 +57,53 @@
             <i class="fas fa-paper-plane text-muted px-3" style="cursor:pointer;" @click="sendMessage('text')"
             ></i>
         </div>
+
+        <div class="modal fade" id="fileUploadModal" tabindex="-1" role="dialog"
+             aria-labelledby="fileUploadModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form @submit.prevent="submitFileUpload" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Select file</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="custom-file">
+                            <input type="file" multiple class="custom-file-input" name="file" id="customFile" ref="file">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+
     import {eventBus} from "../../../main";
+    import axios from 'axios';
 
     export default {
         name: "MessageArea",
         mounted() {
             eventBus.$on("load-conversations", async (type) => {
-                this.conversationType=type
-                if(type==="individual"){
+                this.conversationType = type
+                if (type === "individual") {
                     await this.$store.dispatch('GetConversationBetweenUsers', {
                         id_a: this.$store.getters.getUser._id,
                         id_b: this.$store.getters.GetCurrentRecipient.id
                     })
-                }else{
+                } else {
                     await this.$store.dispatch('GetGroupConversations', {
-                        id:this.$store.getters.GetCurrentRecipient.id
+                        id: this.$store.getters.GetCurrentRecipient.id
                     })
                 }
 
@@ -95,10 +125,29 @@
         data() {
             return {
                 messages: [],
-                conversationType : ''
+                conversationType: '',
+                uploadedFile:''
             }
         },
         methods: {
+            async submitFileUpload(){
+                const selectedFile = this.$refs.file.files
+                console.log(selectedFile)
+                this.uploadedFile=selectedFile
+                const formData = new FormData()
+                for (let i = 0 ; i < selectedFile.length ; i++) {
+                    formData.append("file", selectedFile[i]);
+                }
+                await this.$store.dispatch('UploadFile',formData)
+                console.log("FILE : ",this.$store.getters.GetCurrentUploadedFileDetails)
+
+                // try{
+                //     response=await axios.post('http://localhost:3000/upload',formData)
+                //     console.log(response.data.filename, ";",response.data.media_type)
+                // }catch(e){
+                //     console.log(e)
+                // }
+            },
             sendMessage(msg_type) {
                 let user = this.$store.getters.getUser
                 let reciever = this.$store.getters.GetCurrentRecipient

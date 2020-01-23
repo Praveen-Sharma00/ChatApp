@@ -7,6 +7,7 @@ export default {
         currentRecipient: {},
         currentConversation: [],
         currentRoom: {},
+        currentUploadedFile:{},
         userGroups: []
     },
     getters: {
@@ -24,6 +25,9 @@ export default {
         },
         GetUserGroupList(state) {
             return state.userGroups
+        },
+        GetCurrentUploadedFileDetails(state){
+            return state.currentUploadedFile
         }
     },
     mutations: {
@@ -45,6 +49,9 @@ export default {
         },
         SetGroupList(state, payload) {
             state.userGroups = payload
+        },
+        SetUploadedFileDetails(state,payload){
+            state.currentUploadedFile = payload
         }
     },
     actions: {
@@ -69,6 +76,16 @@ export default {
                 method: 'GET'
             })
             context.commit('SetGroupList', response.data.groups)
+        },
+        async UploadFile(context,payload){
+            let response = await axios.post(
+                'http://localhost:3000/upload',payload
+            )
+            console.log(response)
+            context.commit('SetUploadedFileDetails',{
+                filenames:response.data.filename,
+                media_types:response.data.media_type
+            })
         }
     }
 }

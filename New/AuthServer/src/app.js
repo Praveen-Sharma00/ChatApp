@@ -55,8 +55,10 @@ app.use(authRoutes)
 app.use('/api/v1', apiRoutes)
 
 /************************************** UPLOAD HANDLER ***************************************/
-app.post('/upload', uploadFile.array('media', 10), (req, res) => {
+app.post('/upload', uploadFile.array('file',10), (req, res) => {
+    console.log('IT HIT HERE ')
     const files = req.files
+    console.log("FILES : ",files )
     let media_type = []
     let filename = []
     for (let i = 0; i < files.length; i++) {
