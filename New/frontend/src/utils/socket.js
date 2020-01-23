@@ -14,15 +14,18 @@ export default class SocketIO {
             eventBus.$emit('new_message', data)
         })
     }
+
     listenForNewUpload() {
         this.__socket.on("new_upload", (data) => {
             eventBus.$emit('new_upload', data)
         })
     }
+
     emit(data) {
         this.__socket.emit("new_message", data)
     }
-    emit_media(media){
+
+    emit_media(media) {
         this.__socket.emit("new_upload", media)
     }
 

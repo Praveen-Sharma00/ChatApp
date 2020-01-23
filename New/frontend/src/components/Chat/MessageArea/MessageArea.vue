@@ -49,36 +49,40 @@
                         </div>
                     </div>
                 </template>
-               <template v-else-if="msg.message_type==='media'">
-                   <div v-for="(type,index) in msg.media.type"
-                           :class="['p-1 my-1 mx-3 rounded bg-white shadow-sm message-item',currentUser._id===msg.sender.id?'align-self-end self':'align-self-start']">
-                       <div class="options">
-                           <a href="#"><i class="fas fa-angle-down text-muted px-2"></i></a>
-                       </div>
-                       <div class="d-flex flex-row">
-                           <div class="body m-1 mr-2">
+                <template v-else-if="msg.message_type==='media'">
+                    <div v-for="(type,index) in msg.media.type"
+                         :class="['p-1 my-1 mx-3 rounded bg-white shadow-sm message-item',currentUser._id===msg.sender.id?'align-self-end self':'align-self-start']">
+                        <div class="options">
+                            <a href="#"><i class="fas fa-angle-down text-muted px-2"></i></a>
+                        </div>
+                        <div class="d-flex flex-row">
+                            <div class="body m-1 mr-2">
                         <span v-if="conversationType==='group'" class="text-muted"
                               style="font-weight: 600;font-size:12px;text-decoration: underline">
                             <template v-if="currentUser._id===msg.sender.id">Me</template>
                             <template v-else> {{msg.sender.name}}</template>
                             <br></span>
-                               <template v-if="type==='doc'">
-                                   <a :href="'http://localhost:3000/uploads/'+msg.media.location[index]"><img class="upload_media" src="@/assets/img/doc.png"></a>
-                               </template>
-                               <template v-else-if="type==='pdf'">
-                                   <a :href="'http://localhost:3000/uploads/'+msg.media.location[index]"><img class="upload_media" src="@/assets/img/pdf.png"></a>
-                               </template>
-                               <template v-else="type==='image'">
-                                   <a :href="'http://localhost:3000/uploads/'+msg.media.location[index]"><img class="upload_media" src="@/assets/img/pic.png"></a>
-                               </template>
-                               <div class="time ml-auto small align-text-bottom text-right flex-shrink-1 align-self-end text-muted" style="width:127px;">
-                                   {{msg.sentAt}}
-                                   <!--                        <i class="fas fa-check-circle"></i>-->
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-               </template>
+                                <template v-if="type==='doc'">
+                                    <a :href="'http://localhost:3000/uploads/'+msg.media.location[index]"><img
+                                            class="upload_media" src="@/assets/img/doc.png"></a>
+                                </template>
+                                <template v-else-if="type==='pdf'">
+                                    <a :href="'http://localhost:3000/uploads/'+msg.media.location[index]"><img
+                                            class="upload_media" src="@/assets/img/pdf.png"></a>
+                                </template>
+                                <template v-else="type==='image'">
+                                    <a :href="'http://localhost:3000/uploads/'+msg.media.location[index]"><img
+                                            class="upload_media" src="@/assets/img/pic.png"></a>
+                                </template>
+                                <div class="time ml-auto small align-text-bottom text-right flex-shrink-1 align-self-end text-muted"
+                                     style="width:127px;">
+                                    {{msg.sentAt}}
+                                    <!--                        <i class="fas fa-check-circle"></i>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
 
             </template>
 
@@ -151,19 +155,19 @@
                     sender: {
                         id: data.sender._id
                     },
-                    type:'text',
+                    type: 'text',
                     text: data.text,
                     sentAt: "Jan 2020"
                 })
             })
-            eventBus.$on('new_upload',(data)=>{
-                for(let i=0;i<data.media.type.length;i++){
+            eventBus.$on('new_upload', (data) => {
+                for (let i = 0; i < data.media.type.length; i++) {
                     this.messages.push({
                         sender: {
                             id: data.sender.id
                         },
-                        type:'media',
-                        text: 'http://localhost:3000/'+data.media.location[i],
+                        type: 'media',
+                        text: 'http://localhost:3000/' + data.media.location[i],
                         sentAt: "Jan 2020"
                     })
                 }
@@ -205,13 +209,13 @@
                     },
                     sentAt: 'Now'
                 })
-                for(let i=0;i<data.media_types.length;i++){
+                for (let i = 0; i < data.media_types.length; i++) {
                     this.messages.push({
                         sender: {
                             id: this.$store.getters.getUser._id
                         },
-                        type:'media',
-                        text: 'http://localhost:3000/'+data.filenames[i],
+                        type: 'media',
+                        text: 'http://localhost:3000/' + data.filenames[i],
                         sentAt: "Jan 2020"
                     })
                 }
@@ -242,7 +246,7 @@
                     sender: {
                         id: user._id
                     },
-                    type:'text',
+                    type: 'text',
                     text: this.$refs.msgText.value,
                     sentAt: "Jan 2020"
                 })
@@ -358,8 +362,9 @@
         background: -webkit-linear-gradient(to right, #191654, #43C6AC); /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to left, #191654, #43C6AC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
-    .upload_media{
-        width:40px;
-        height:40px;
+
+    .upload_media {
+        width: 40px;
+        height: 40px;
     }
 </style>
