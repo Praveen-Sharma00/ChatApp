@@ -17,13 +17,13 @@
             'chat-list': ChatList,
             'message-area': MessageArea,
         },
-        computed:{
-            getUser(){
+        computed: {
+            getUser() {
                 return this.$store.getters.getUser
             }
         },
         beforeCreate() {
-            document.body.className=""
+            document.body.className = ""
         }
     }
 </script>

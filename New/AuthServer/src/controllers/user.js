@@ -68,9 +68,7 @@ const getGroupConversations = async (req, res) => {
 }
 const updateIndividualConversation = async (req, res) => {
     const {user} = req.session
-
     const receiverId = req.params.secondUserId
-
     const text = req.body.text.trim()
     const response = await _userDetailService.updateIndividualConversation(user._id, receiverId, text, '', '')
     return res.send(response)

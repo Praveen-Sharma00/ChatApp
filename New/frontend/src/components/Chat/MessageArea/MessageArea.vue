@@ -219,11 +219,11 @@
                 this.messages.push({
                     sender: {
                         id: this.$store.getters.getUser._id,
-                        name:this.$store.getters.getUser.name
+                        name: this.$store.getters.getUser.name
                     },
-                    media:{
-                        type:data.media_types,
-                        location:data.filenames
+                    media: {
+                        type: data.media_types,
+                        location: data.filenames
                     },
                     message_type: 'media',
                     text: '',

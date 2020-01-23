@@ -7,14 +7,11 @@ import auth from './modules/auth'
 import chat from './modules/chat'
 
 export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-    auth,
-    chat
-  }
+    state: {},
+    mutations: {},
+    actions: {},
+    modules: {
+        auth,
+        chat
+    }
 })

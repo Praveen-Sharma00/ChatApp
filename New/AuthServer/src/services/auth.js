@@ -11,7 +11,6 @@ export default class AuthService {
         });
         return token
     }
-
     async registerUser(user) {
         const {name, email, password} = user
         const _result = await UserModel.findByCredentials(email)
@@ -28,7 +27,6 @@ export default class AuthService {
             return ({success: false, error: {message: 'A user with e-mail already exists !'}})
         }
     }
-
     async loginUser(credentials) {
         const {email, password} = credentials
         const _userRecord = await UserModel.findByCredentials(email, password)
@@ -40,11 +38,10 @@ export default class AuthService {
             return ({success: true, token: token, user: {name: user.name, email: user.email}});
         }
     }
-
     async verifyToken(data) {
         let {token} = data
         let response = ''
-        let decoded ;
+        let decoded;
         try {
             decoded = await jwt.verify(token, 'cloud_')
 
