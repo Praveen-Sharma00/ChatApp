@@ -483,6 +483,6 @@ export default class UserDetailService {
             permissions["ReadOnly"] = _result[0].members.permissions.includes("ReadOnly")
             permissions["BlockUploads"] = _result[0].members.permissions.includes("BlockUploads")
         }
-        return ({success: true, error: {}, data: {permissions}})
+        return ({success: true, error: {}, permissions:permissions})
     }
 }

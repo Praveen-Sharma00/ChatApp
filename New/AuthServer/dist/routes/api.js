@@ -20,8 +20,8 @@ api.route('/user/contacts').get(_user.userController.getUserContacts).post(_auth
 api.route('/user/groups').get(_user.userController.getUserGroups).post(_auth.checkSession, _user.userController.createGroup);
 api.route('/user/:id/groups').get(_user.userController.getUserGroups);
 api.route('/chats/group/:id').get(_user.userController.getGroupConversations);
+api.route('/user/:userId/group/:groupId/permissions').get(_user.userController.getUserPermissions);
 api.route('/user/group/:groupId').get(_user.userController.getGroupMembers).post(_auth.checkSession, _user.userController.updatePermissions);
-api.route('/user/group/:groupId/permissions').get(_user.userController.getUserPermissions);
 api.route('/user/chats/:firstUserId/:secondUserId').get(_user.userController.getConversationBetweenUsers).post(_user.userController.updateIndividualConversation);
 api.route('/user/chats/group/:groupId').get(_user.userController.getGroupConversations).post(_user.userController.updateGroupConversation);
 api.route('/group/:groupId/admins').get(_user.userController.getGroupAdmins);

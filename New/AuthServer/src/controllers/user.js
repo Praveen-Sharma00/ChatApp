@@ -98,9 +98,10 @@ const updatePermissions = async (req, res) => {
     return res.send(response)
 }
 const getUserPermissions = async (req, res) => {
-    const {user} = req.session
-    const {groupId} = req.params
-    const response = await _userDetailService.getUserPermissions(user._id, groupId)
+    const userId = req.params.userId
+    const groupId = req.params.groupId
+    const response = await _userDetailService.getUserPermissions(userId, groupId)
+    console.log("PERMISSIONS : ",response)
     return res.send(response)
 }
 const updateMembersOfGroup = async (req, res) => {

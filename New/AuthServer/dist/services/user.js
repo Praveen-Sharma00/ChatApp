@@ -761,9 +761,7 @@ class UserDetailService {
     return {
       success: true,
       error: {},
-      data: {
-        permissions
-      }
+      permissions: permissions
     };
   }
 

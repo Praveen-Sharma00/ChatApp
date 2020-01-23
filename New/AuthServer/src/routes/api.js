@@ -28,13 +28,15 @@ api
     .get(userController.getGroupConversations)
 
 api
+    .route('/user/:userId/group/:groupId/permissions')
+    .get(userController.getUserPermissions)
+
+api
     .route('/user/group/:groupId')
     .get(userController.getGroupMembers)
     .post(checkSession, userController.updatePermissions)
 
-api
-    .route('/user/group/:groupId/permissions')
-    .get(userController.getUserPermissions)
+
 
 api
     .route('/user/chats/:firstUserId/:secondUserId')
