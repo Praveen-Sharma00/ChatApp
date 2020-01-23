@@ -32,7 +32,10 @@
                 <div class="d-flex flex-row">
                     <div class="body m-1 mr-2">
                         <span v-if="conversationType==='group'" class="text-muted"
-                              style="font-weight: 600;font-size:12px;text-decoration: underline">{{msg.sender.name}}<br></span>
+                              style="font-weight: 600;font-size:12px;text-decoration: underline">
+                            <template v-if="currentUser._id===msg.sender.id">Me</template>
+                            <template v-else> {{msg.sender.name}}</template>
+                            <br></span>
                         {{msg.text}}
                         <div class="time ml-auto small align-text-bottom text-right flex-shrink-1 align-self-end text-muted"
                              style="width:127px;">
