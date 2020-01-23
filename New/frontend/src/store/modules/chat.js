@@ -8,7 +8,8 @@ export default {
         currentConversation: [],
         currentRoom: {},
         currentUploadedFile: {},
-        userGroups: []
+        userGroups: [],
+        userPermissions:{}
     },
     getters: {
         GetMessageAreaState(state) {
@@ -28,6 +29,9 @@ export default {
         },
         GetCurrentUploadedFileDetails(state) {
             return state.currentUploadedFile
+        },
+        GetUserPermissions(state){
+            return state.userPermissions
         }
     },
     mutations: {
@@ -52,6 +56,9 @@ export default {
         },
         SetUploadedFileDetails(state, payload) {
             state.currentUploadedFile = payload
+        },
+        InitUserPermissions(state,payload){
+            state.userPermissions = payload
         }
     },
     actions: {
@@ -82,6 +89,7 @@ export default {
                 url:'http://localhost:3000/api/v1/user/'+payload.userId+'/group/'+payload.groupId+'/permissions',
                 method:'GET'
             })
+            context.commit('InitUserPermissions',response.data.permissions)
         },
         async UploadFile(context, payload) {
             const formData = new FormData()

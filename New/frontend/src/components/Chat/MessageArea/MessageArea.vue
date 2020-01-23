@@ -137,9 +137,9 @@
                         id_b: this.$store.getters.GetCurrentRecipient.id
                     })
                 } else {
-                    await this.$store.dispatch('GetUserPermissions',{
-                        userId:this.$store.getters.getUser._id,
-                        groupId:this.$store.getters.GetCurrentRecipient.id
+                    await this.$store.dispatch('GetUserPermissions', {
+                        userId: this.$store.getters.getUser._id,
+                        groupId: this.$store.getters.GetCurrentRecipient.id
                     })
                     await this.$store.dispatch('GetGroupConversations', {
                         id: this.$store.getters.GetCurrentRecipient.id
@@ -184,7 +184,8 @@
             return {
                 messages: [],
                 conversationType: '',
-                uploadedFile: ''
+                uploadedFile: '',
+                permissions: {}
             }
         },
         methods: {
@@ -273,10 +274,14 @@
                     return "w-100 h-100 overlay"
             },
             classListInput() {
-                if (this.$store.getters.GetMessageAreaState)
-                    return "d-flex justify-self-end align-items-center flex-row"
-                else
-                    return "d-none justify-self-end align-items-center flex-row"
+                let permissions = this.$store.getters.GetUserPermissions
+                console.log(permissions)
+                if (this.$store.getters.GetMessageAreaState) {
+                    if ((this.conversationType === 'group' && permissions.ReadOnly === false) || this.conversationType === 'individual') {
+                        return "d-flex justify-self-end align-items-center flex-row"
+                    }
+                }
+                return "d-none justify-self-end align-items-center flex-row"
             },
             currentUser() {
                 return this.$store.getters.getUser
@@ -299,15 +304,18 @@
         border-left: 1px solid #e6e6e6;
         background-color: rgba(228, 228, 228, 0.81);
     }
+
     #message-area .overlay {
         background: hsl(0, 0%, 80%);
     }
+
     .overlay {
         position: absolute;
         top: 0;
         left: 0;
         z-index: 99;
     }
+
     #input-area {
         background: hsl(0, 0%, 95%);
         /*box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
@@ -315,9 +323,11 @@
         -moz-box-shadow: 0px 4px 7px -1px rgba(0, 0, 0, 0.55);
         box-shadow: 0px 4px 7px -1px rgba(0, 0, 0, 0.55);
     }
+
     #input-area #input {
         outline: none;
     }
+
     .message-item {
         position: relative;
         max-width: 55%;
@@ -327,12 +337,15 @@
         font-size: 90%;
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     }
+
     .message-item.self {
         background: #caf2f7 !important;
     }
+
     .message-item .number {
         color: #1f7aec !important;
     }
+
     .message-item .options {
         position: absolute;
         top: 0;
@@ -342,21 +355,25 @@
         -moz-transition: all .2s ease-in-out;
         -webkit-transition: all .2s ease-in-out;
     }
+
     .message-item:hover .options {
         opacity: 1;
         right: 0;
 
     }
+
     #messages {
         flex: 1 !important;
         background: hsl(27, 5%, 96%);
         overflow: auto;
     }
+
     #navbar {
         background: #43C6AC;
         background: -webkit-linear-gradient(to right, #191654, #43C6AC);
         background: linear-gradient(to left, #191654, #43C6AC);
     }
+
     .upload_media {
         width: 40px;
         height: 40px;
