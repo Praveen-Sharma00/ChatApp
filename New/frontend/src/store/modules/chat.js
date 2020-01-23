@@ -85,7 +85,6 @@ export default {
             let response = await axios.post(
                 'http://localhost:3000/upload', formData
             )
-            console.log(response)
             context.commit('SetUploadedFileDetails', {
                 filenames: response.data.filename,
                 media_types: response.data.media_type
