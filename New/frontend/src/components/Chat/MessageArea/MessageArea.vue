@@ -137,6 +137,10 @@
                         id_b: this.$store.getters.GetCurrentRecipient.id
                     })
                 } else {
+                    await this.$store.dispatch('GetUserPermissions',{
+                        userId:this.$store.getters.getUser._id,
+                        groupId:this.$store.getters.GetCurrentRecipient.id
+                    })
                     await this.$store.dispatch('GetGroupConversations', {
                         id: this.$store.getters.GetCurrentRecipient.id
                     })

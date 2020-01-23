@@ -77,6 +77,12 @@ export default {
             })
             context.commit('SetGroupList', response.data.groups)
         },
+        async GetUserPermissions(context,payload){
+            let response = await axios({
+                url:'http://localhost:3000/api/v1/user/'+payload.userId+'/group/'+payload.groupId+'/permissions',
+                method:'GET'
+            })
+        },
         async UploadFile(context, payload) {
             const formData = new FormData()
             for (let i = 0; i < payload.length; i++) {
