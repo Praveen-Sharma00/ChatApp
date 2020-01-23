@@ -14,11 +14,11 @@ const conversationSchema = new mongoose.Schema({
         },
         media: {
             type: {
-                type: String,
+                type: [String],
                 enum: ["image", "pdf", "doc", "default", ""]
             },
             location: {
-                type: String
+                type: [String]
             }
         },
         approval_status: {

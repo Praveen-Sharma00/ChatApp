@@ -43,6 +43,17 @@ io.on('connection', socket => {
       text: data.text
     });
   });
+  socket.on('new_upload', async function (data) {
+    console.log("MEDIA : ", data);
+
+    if (data.message_type === 'individual') {
+      await _userDetailService.updateIndividualConversation(data.room, data.sender, data.receiver, data.text, data.message_type, data.media);
+      socket.broadcast.to(data.room.name).emit('new_upload', {
+        media: data.media,
+        sender: data.sender
+      });
+    }
+  });
   socket.on('disconnect', function () {
     io.emit('user disconnected');
   });

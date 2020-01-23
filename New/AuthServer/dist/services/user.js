@@ -371,8 +371,8 @@ class UserDetailService {
 
   async updateIndividualConversation(room, sender, receiver, text, message_type, media) {
     let msg_type = "",
-        md_type = '',
-        md_loc = '',
+        md_type = [],
+        md_loc = [],
         text_ = "";
 
     if (message_type === "text") {
@@ -381,18 +381,19 @@ class UserDetailService {
     } else {
       msg_type = "media";
 
-      if (media.type === "image") {
-        md_type = "image";
-        text_ = "";
-        md_loc = text;
-      } else if (media.type === "pdf") {
-        md_type = "pdf";
-        text_ = "";
-        md_loc = text;
-      } else if (media.type === "doc") {
-        md_type = "doc";
-        text_ = "";
-        md_loc = text;
+      for (let i = 0; i < media.type.length; i++) {
+        md_loc[i] = media.location[i];
+
+        if (media.type[i] === "image") {
+          md_type[i] = "image";
+          text_ = ""; // md_loc[i] = text[i]
+        } else if (media.type[i] === "pdf") {
+          md_type[i] = "pdf";
+          text_ = "";
+        } else if (media.type[i] === "doc") {
+          md_type[i] = "doc";
+          text_ = "";
+        }
       }
     }
 

@@ -55,6 +55,7 @@ _mongoose.default.connect(process.env.DATABASE_URL, {
   console.log(success('Database connection established !'));
 });
 
+app.use(_express.default.static(_path.default.join(__dirname, '..', 'public')));
 app.use(_express.default.urlencoded({
   extended: false
 }));
@@ -68,9 +69,7 @@ app.use('/api/v1', _api.apiRoutes);
 /************************************** UPLOAD HANDLER ***************************************/
 
 app.post('/upload', uploadFile.array('file', 10), (req, res) => {
-  console.log('IT HIT HERE ');
   const files = req.files;
-  console.log("FILES : ", files);
   let media_type = [];
   let filename = [];
 

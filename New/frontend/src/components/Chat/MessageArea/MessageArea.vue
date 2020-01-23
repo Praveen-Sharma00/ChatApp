@@ -26,27 +26,62 @@
 
         <!-- Messages -->
         <div class="d-flex flex-column" id="messages">
-            <div v-for="msg in messages"
-                 :class="['p-1 my-1 mx-3 rounded bg-white shadow-sm message-item',currentUser._id===msg.sender.id?'align-self-end self':'align-self-start']">
-                <div class="options">
-                    <a href="#"><i class="fas fa-angle-down text-muted px-2"></i></a>
-                </div>
-                <div class="d-flex flex-row">
-                    <div class="body m-1 mr-2">
+            <template v-for="msg in messages">
+                <template v-if="msg.message_type==='text'">
+                    <div :class="['p-1 my-1 mx-3 rounded bg-white shadow-sm message-item',currentUser._id===msg.sender.id?'align-self-end self':'align-self-start']">
+                        <div class="options">
+                            <a href="#"><i class="fas fa-angle-down text-muted px-2"></i></a>
+                        </div>
+                        <div class="d-flex flex-row">
+                            <div class="body m-1 mr-2">
                         <span v-if="conversationType==='group'" class="text-muted"
                               style="font-weight: 600;font-size:12px;text-decoration: underline">
                             <template v-if="currentUser._id===msg.sender.id">Me</template>
                             <template v-else> {{msg.sender.name}}</template>
                             <br></span>
-                        {{msg.text}}
-                        <div class="time ml-auto small align-text-bottom text-right flex-shrink-1 align-self-end text-muted"
-                             style="width:127px;">
-                            {{msg.sentAt}}
-                            <!--                        <i class="fas fa-check-circle"></i>-->
+                                {{msg.text}}
+                                <div class="time ml-auto small align-text-bottom text-right flex-shrink-1 align-self-end text-muted"
+                                     style="width:127px;">
+                                    {{msg.sentAt}}
+                                    <!--                        <i class="fas fa-check-circle"></i>-->
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </template>
+               <template v-else-if="msg.message_type==='media'">
+                   <div v-for="(type,index) in msg.media.type"
+                           :class="['p-1 my-1 mx-3 rounded bg-white shadow-sm message-item',currentUser._id===msg.sender.id?'align-self-end self':'align-self-start']">
+                       <div class="options">
+                           <a href="#"><i class="fas fa-angle-down text-muted px-2"></i></a>
+                       </div>
+                       <div class="d-flex flex-row">
+                           <div class="body m-1 mr-2">
+                        <span v-if="conversationType==='group'" class="text-muted"
+                              style="font-weight: 600;font-size:12px;text-decoration: underline">
+                            <template v-if="currentUser._id===msg.sender.id">Me</template>
+                            <template v-else> {{msg.sender.name}}</template>
+                            <br></span>
+                               <template v-if="type==='doc'">
+                                   <a :href="'http://localhost:3000/uploads/'+msg.media.location[index]"><img class="upload_media" src="@/assets/img/doc.png"></a>
+                               </template>
+                               <template v-else-if="type==='pdf'">
+                                   <a :href="'http://localhost:3000/uploads/'+msg.media.location[index]"><img class="upload_media" src="@/assets/img/pdf.png"></a>
+                               </template>
+                               <template v-else="type==='image'">
+                                   <a :href="'http://localhost:3000/uploads/'+msg.media.location[index]"><img class="upload_media" src="@/assets/img/pic.png"></a>
+                               </template>
+                               <div class="time ml-auto small align-text-bottom text-right flex-shrink-1 align-self-end text-muted" style="width:127px;">
+                                   {{msg.sentAt}}
+                                   <!--                        <i class="fas fa-check-circle"></i>-->
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </template>
+
+            </template>
+
         </div>
 
         <!-- Input -->
@@ -116,9 +151,22 @@
                     sender: {
                         id: data.sender._id
                     },
+                    type:'text',
                     text: data.text,
                     sentAt: "Jan 2020"
                 })
+            })
+            eventBus.$on('new_upload',(data)=>{
+                for(let i=0;i<data.media.type.length;i++){
+                    this.messages.push({
+                        sender: {
+                            id: data.sender.id
+                        },
+                        type:'media',
+                        text: 'http://localhost:3000/'+data.media.location[i],
+                        sentAt: "Jan 2020"
+                    })
+                }
             })
         },
         data() {
@@ -134,7 +182,41 @@
                 this.uploadedFile = selectedFiles
                 await this.$store.dispatch('UploadFile', selectedFiles)
                 alert("Files uploaded")
+                this.sendMediaMessage(
+                    this.$store.getters.GetCurrentUploadedFileDetails
+                )
             },
+            sendMediaMessage(data) {
+                this.$socket.emit_media({
+                    room: this.$store.getters.GetCurrentRoom,
+                    sender: {
+                        name: this.$store.getters.getUser.name,
+                        id: this.$store.getters.getUser._id
+                    },
+                    receiver: {
+                        name: this.$store.getters.GetCurrentRecipient.name,
+                        id: this.$store.getters.GetCurrentRecipient.id
+                    },
+                    message_type: 'individual',
+                    text: '',
+                    media: {
+                        type: data.media_types,
+                        location: data.filenames
+                    },
+                    sentAt: 'Now'
+                })
+                for(let i=0;i<data.media_types.length;i++){
+                    this.messages.push({
+                        sender: {
+                            id: this.$store.getters.getUser._id
+                        },
+                        type:'media',
+                        text: 'http://localhost:3000/'+data.filenames[i],
+                        sentAt: "Jan 2020"
+                    })
+                }
+            }
+            ,
             sendMessage(msg_type) {
                 let user = this.$store.getters.getUser
                 let reciever = this.$store.getters.GetCurrentRecipient
@@ -160,6 +242,7 @@
                     sender: {
                         id: user._id
                     },
+                    type:'text',
                     text: this.$refs.msgText.value,
                     sentAt: "Jan 2020"
                 })
@@ -274,6 +357,9 @@
         background: #43C6AC; /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #191654, #43C6AC); /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to left, #191654, #43C6AC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+    }
+    .upload_media{
+        width:40px;
+        height:40px;
     }
 </style>
