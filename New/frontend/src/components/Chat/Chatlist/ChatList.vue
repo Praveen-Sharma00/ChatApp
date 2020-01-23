@@ -176,68 +176,47 @@
     #chat-list-area {
         position: relative;
     }
-
-    /*#chat-list {*/
-    /*    overflow: auto;*/
-    /*    max-height: 85vh;*/
-    /*}*/
     .chat-list {
         overflow: auto;
         max-height: 85vh;
     }
-
     .chat-list-item {
         margin-bottom: 3px;
         background: white;
         cursor: pointer;
-        /*border-radius: 30px;*/
-
     }
-
-
     .chat-list-item:hover {
         background: hsl(0, 0%, 95%);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
-
     .chat-list-item:active {
         background: hsl(0, 0%, 85%);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-
     }
-
     .chat-list-item.active {
         background: hsl(0, 0%, 90%);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
-
     .chat-list-item .chat-details {
         width: 60%;
     }
-
     .chat-list-item.unread .name,
     .chat-list-item.unread .last-message {
         font-weight: bold;
     }
-
     .chat-list-item .last-message {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-
     #navbar {
-        /*background: #009688;*/
-        background: #2C3E50; /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #4CA1AF, #2C3E50); /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, #4CA1AF, #2C3E50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+        background: #2C3E50;
+        background: -webkit-linear-gradient(to right, #4CA1AF, #2C3E50);
+        background: linear-gradient(to right, #4CA1AF, #2C3E50);
     }
-
     .dropdown-toggle::after {
         display: none;
     }
-
     #profile-settings {
         position: absolute;
         top: 0;
@@ -247,18 +226,15 @@
         -moz-transition: all .2s ease-in-out;
         -webkit-transition: all .2s ease-in-out;
     }
-
     #profile-pic {
         cursor: pointer;
         position: relative;
         width: 200px;
     }
-
     .profile-input {
         border-bottom: 2px solid transparent !important;
         outline: none;
     }
-
     .profile-input:focus {
         border-bottom-color: hsl(0, 0%, 50%) !important;
     }
