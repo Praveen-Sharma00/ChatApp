@@ -30,7 +30,10 @@
                     <a href="#"><i class="fas fa-angle-down text-muted px-2"></i></a>
                 </div>
                 <div class="d-flex flex-row">
-                    <div class="body m-1 mr-2">{{msg.text}}
+                    <div class="body m-1 mr-2">
+                        <span v-if="conversationType==='group'" class="text-muted"
+                              style="font-weight: 600;font-size:12px;text-decoration: underline">{{msg.sender.name}}<br></span>
+                        {{msg.text}}
                         <div class="time ml-auto small align-text-bottom text-right flex-shrink-1 align-self-end text-muted"
                              style="width:127px;">
                             {{msg.sentAt}}
@@ -59,6 +62,7 @@
         name: "MessageArea",
         mounted() {
             eventBus.$on("load-conversations", async (type) => {
+                this.conversationType=type
                 if(type==="individual"){
                     await this.$store.dispatch('GetConversationBetweenUsers', {
                         id_a: this.$store.getters.getUser._id,
@@ -87,7 +91,8 @@
         },
         data() {
             return {
-                messages: []
+                messages: [],
+                conversationType : ''
             }
         },
         methods: {
@@ -186,7 +191,7 @@
         max-width: 55%;
         word-break: break-word;
         border-radius: 30px !important;
-        padding: 10px !important;
+        padding: 4px 10px !important;
         font-size: 90%;
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     }
