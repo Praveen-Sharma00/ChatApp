@@ -26,7 +26,6 @@ io.on('connection', socket => {
       roomName = data.receiver._id + "";
     } else if (data.type === "self") {
       roomName = data.userId;
-      console.log("EXEC");
     }
 
     socket.join(roomName);
@@ -47,12 +46,34 @@ io.on('connection', socket => {
     });
   });
   socket.on('new_upload', async function (data) {
+    let allowedToSend = false;
+
     if (data.message_type === 'individual') {
       await _userDetailService.updateIndividualConversation(data.room, data.sender, data.receiver, data.text, data.message_type, data.media);
+      allowedToSend = true;
+    } else {
+      if (data.admins.includes(data.sender.id)) {
+        allowedToSend = true;
+      }
+    }
+
+    if (allowedToSend === true) {
       socket.broadcast.to(data.room.name).emit('new_upload', {
         media: data.media,
         sender: data.sender
       });
+      await _userDetailService.updateGroupConversation(data.room, data.sender, data.receiver, data.text, data.message_type, data.media);
+    } else {
+      await _userDetailService.createUploadRequest({
+        groupId: data.receiver.id,
+        media: data.media,
+        sender: data.sender
+      }); // data.admins.forEach((admin) => {
+      //     socket.broadcast.to(admin).emit('new_upload_approval_request', {
+      //         media: data.media,
+      //         sender: data.sender
+      //     })
+      // })
     }
   });
   socket.on('disconnect', function () {

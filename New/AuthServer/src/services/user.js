@@ -3,6 +3,7 @@ import GroupModel from "../models/Group";
 import ConversationModel from "../models/Conversation";
 
 import mongoose from 'mongoose'
+import UploadRequestModel from "../models/UploadRequest";
 
 const moment = require('moment')
 
@@ -263,30 +264,25 @@ export default class UserDetailService {
     }
 
     async updateGroupConversation(room, sender, receiver, text, message_type, media) {
-        let msg_type = "", md_type = '', md_loc = '', text_ = "", msg_status = "pending";
+        let msg_type = "", md_type = [], md_loc = [], text_ = "", msg_status = "pending";
         if (message_type === "text") {
             msg_type = "text"
-            md_type = ""
             text_ = text
         } else {
             msg_type = "media"
-            const group = await GroupModel.findOne({_id: receiver.id})
-            const isPresent = group.admins.filter((obj) => obj._id == sender.id).length > 0
-            if (isPresent) {
-                msg_status = "approved"
-            }
-            if (media.type === "image") {
-                md_type = "image"
-                text_ = ""
-                md_loc = text
-            } else if (media.type === "pdf") {
-                md_type = "pdf"
-                text_ = ""
-                md_loc = text
-            } else if (media.type === "doc") {
-                md_type = "doc"
-                text_ = ""
-                md_loc = text
+            msg_status = "approved"
+            for (let i = 0; i < media.type.length; i++) {
+                md_loc[i] = media.location[i]
+                if (media.type[i] === "image") {
+                    md_type[i] = "image"
+                    text_ = ""
+                } else if (media.type[i] === "pdf") {
+                    md_type[i] = "pdf"
+                    text_ = ""
+                } else if (media.type[i] === "doc") {
+                    md_type[i] = "doc"
+                    text_ = ""
+                }
             }
         }
         const conversation = await ConversationModel.findOne({group_id: mongoose.Types.ObjectId(receiver.id)})
@@ -485,5 +481,49 @@ export default class UserDetailService {
             permissions["BlockUploads"] = _result[0].members.permissions.includes("BlockUploads")
         }
         return ({success: true, error: {}, permissions: permissions})
+    }
+
+    async createUploadRequest(details) {
+        const {groupId, media, sender} = details
+        const pendingRequest = await UploadRequestModel.findOne({
+            group_id: mongoose.Types.ObjectId(groupId)
+        })
+        const generatedId = mongoose.Types.ObjectId()
+        if (!pendingRequest) {
+            const newRequest = new UploadRequestModel({
+                group_id: groupId,
+                uploads: [{
+                    _id: generatedId,
+                    media: {
+                        type: media.type,
+                        location: media.location
+                    },
+                    sender: {
+                        id: sender.id,
+                        name: sender.name
+                    },
+                    sentAt: (moment().format('DD/MM/YY, h:mm A')).toString()
+                }]
+            })
+            await newRequest.save()
+        } else {
+            const existingRequest = await UploadRequestModel.findOne({
+                group_id: groupId
+            })
+            existingRequest.uploads.push({
+                _id: generatedId,
+                media: {
+                    type: media.type,
+                    location: media.location
+                },
+                sender: {
+                    id: sender.id,
+                    name: sender.name
+                },
+                sentAt: (moment().format('DD/MM/YY, h:mm A')).toString()
+            })
+            await existingRequest.save()
+        }
+        return generatedId
     }
 }

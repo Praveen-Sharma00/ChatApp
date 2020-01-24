@@ -145,8 +145,6 @@
                     await this.$store.dispatch('GetGroupConversations', {
                         id: this.$store.getters.GetCurrentRecipient.id
                     })
-
-                    console.log("GROUP ADMINS : ", this.$store.getters.GetCurrentGroupAdmins)
                 }
                 if (!this.$store.getters.GetCurrentConversation)
                     this.messages = []
@@ -198,24 +196,33 @@
                 this.uploadedFile = selectedFiles
                 await this.$store.dispatch('UploadFile', selectedFiles)
                 alert("Files uploaded")
-                this.sendMediaMessage(this.$store.getters.GetCurrentUploadedFileDetails)
+                this.sendMediaMessage(this.conversationType,this.$store.getters.GetCurrentUploadedFileDetails)
             },
-            sendMediaMessage(data) {
+            sendMediaMessage(conversationType,fileData) {
+                let admins=[],permissions=[]
+                if(conversationType==='group'){
+                    this.$store.getters.GetCurrentGroupAdmins.forEach((e)=>{
+                        admins.push(e._id)
+                    })
+                    permissions = this.$store.getters.GetUserPermissions
+                }
                 this.$socket.emit_media({
                     room: this.$store.getters.GetCurrentRoom,
                     sender: {
                         name: this.$store.getters.getUser.name,
                         id: this.$store.getters.getUser._id
                     },
+                    admins:admins,
+                    permissions:permissions,
                     receiver: {
                         name: this.$store.getters.GetCurrentRecipient.name,
                         id: this.$store.getters.GetCurrentRecipient.id
                     },
-                    message_type: 'individual',
+                    message_type: conversationType,
                     text: '',
                     media: {
-                        type: data.media_types,
-                        location: data.filenames
+                        type: fileData.media_types,
+                        location: fileData.filenames
                     },
                     sentAt: 'Now'
                 })
@@ -225,8 +232,8 @@
                         name: this.$store.getters.getUser.name
                     },
                     media: {
-                        type: data.media_types,
-                        location: data.filenames
+                        type: fileData.media_types,
+                        location: fileData.filenames
                     },
                     message_type: 'media',
                     text: '',

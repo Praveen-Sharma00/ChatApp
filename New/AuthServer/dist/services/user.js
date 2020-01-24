@@ -13,6 +13,8 @@ var _Conversation = _interopRequireDefault(require("../models/Conversation"));
 
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
+var _UploadRequest = _interopRequireDefault(require("../models/UploadRequest"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const moment = require('moment');
@@ -449,38 +451,31 @@ class UserDetailService {
 
   async updateGroupConversation(room, sender, receiver, text, message_type, media) {
     let msg_type = "",
-        md_type = '',
-        md_loc = '',
+        md_type = [],
+        md_loc = [],
         text_ = "",
         msg_status = "pending";
 
     if (message_type === "text") {
       msg_type = "text";
-      md_type = "";
       text_ = text;
     } else {
       msg_type = "media";
-      const group = await _Group.default.findOne({
-        _id: receiver.id
-      });
-      const isPresent = group.admins.filter(obj => obj._id == sender.id).length > 0;
+      msg_status = "approved";
 
-      if (isPresent) {
-        msg_status = "approved";
-      }
+      for (let i = 0; i < media.type.length; i++) {
+        md_loc[i] = media.location[i];
 
-      if (media.type === "image") {
-        md_type = "image";
-        text_ = "";
-        md_loc = text;
-      } else if (media.type === "pdf") {
-        md_type = "pdf";
-        text_ = "";
-        md_loc = text;
-      } else if (media.type === "doc") {
-        md_type = "doc";
-        text_ = "";
-        md_loc = text;
+        if (media.type[i] === "image") {
+          md_type[i] = "image";
+          text_ = "";
+        } else if (media.type[i] === "pdf") {
+          md_type[i] = "pdf";
+          text_ = "";
+        } else if (media.type[i] === "doc") {
+          md_type[i] = "doc";
+          text_ = "";
+        }
       }
     }
 
@@ -764,6 +759,58 @@ class UserDetailService {
       error: {},
       permissions: permissions
     };
+  }
+
+  async createUploadRequest(details) {
+    console.log("DETAILS :", details);
+    const {
+      groupId,
+      media,
+      sender
+    } = details;
+    const pendingRequest = await _UploadRequest.default.findOne({
+      group_id: _mongoose.default.Types.ObjectId(groupId)
+    });
+
+    const generatedId = _mongoose.default.Types.ObjectId();
+
+    if (!pendingRequest) {
+      const newRequest = new _UploadRequest.default({
+        group_id: groupId,
+        uploads: [{
+          _id: generatedId,
+          media: {
+            type: media.type,
+            location: media.location
+          },
+          sender: {
+            id: sender.id,
+            name: sender.name
+          },
+          sentAt: moment().format('DD/MM/YY, h:mm A').toString()
+        }]
+      });
+      await newRequest.save();
+    } else {
+      const existingRequest = await _UploadRequest.default.findOne({
+        group_id: groupId
+      });
+      existingRequest.uploads.push({
+        _id: generatedId,
+        media: {
+          type: media.type,
+          location: media.location
+        },
+        sender: {
+          id: sender.id,
+          name: sender.name
+        },
+        sentAt: moment().format('DD/MM/YY, h:mm A').toString()
+      });
+      await existingRequest.save();
+    }
+
+    return generatedId;
   }
 
 }

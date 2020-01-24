@@ -53,6 +53,7 @@ io.on('connection', (socket) => {
                 media: data.media,
                 sender: data.sender
             })
+            await _userDetailService.updateGroupConversation(data.room, data.sender, data.receiver, data.text, data.message_type, data.media)
         } else {
             await _userDetailService.createUploadRequest({
                 groupId:data.receiver.id,

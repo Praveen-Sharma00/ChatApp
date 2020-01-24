@@ -22,5 +22,5 @@ const uploadRequestSchema = new mongoose.Schema({
     }]
 })
 
-const UploadRequestModel = mongoose.model('Conversation', uploadRequestSchema)
+const UploadRequestModel = mongoose.model('UploadRequest', uploadRequestSchema)
 export default UploadRequestModel
