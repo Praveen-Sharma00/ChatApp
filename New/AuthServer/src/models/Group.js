@@ -8,7 +8,7 @@ const groupSchema = new mongoose.Schema({
         _id: {type: mongoose.Schema.Types.ObjectId},
         isAdmin: {type: Boolean},
         permissions: [{type: String, enum: ['ReadOnly', 'BlockUploads']}],
-        adminLevel: Number
+        memberLevel: Number
     }],
     admins: [{
         _id: mongoose.Schema.Types.ObjectId,
