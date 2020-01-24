@@ -9,7 +9,8 @@ export default {
         currentRoom: {},
         currentUploadedFile: {},
         userGroups: [],
-        userPermissions:{}
+        currentGroupAdmins: [],
+        userPermissions: {}
     },
     getters: {
         GetMessageAreaState(state) {
@@ -30,8 +31,11 @@ export default {
         GetCurrentUploadedFileDetails(state) {
             return state.currentUploadedFile
         },
-        GetUserPermissions(state){
+        GetUserPermissions(state) {
             return state.userPermissions
+        },
+        GetCurrentGroupAdmins(state) {
+            return state.currentGroupAdmins
         }
     },
     mutations: {
@@ -57,8 +61,11 @@ export default {
         SetUploadedFileDetails(state, payload) {
             state.currentUploadedFile = payload
         },
-        InitUserPermissions(state,payload){
+        InitUserPermissions(state, payload) {
             state.userPermissions = payload
+        },
+        InitGroupAdmins(state, payload) {
+            state.currentGroupAdmins = payload
         }
     },
     actions: {
@@ -83,12 +90,19 @@ export default {
             })
             context.commit('SetGroupList', response.data.groups)
         },
-        async GetUserPermissions(context,payload){
+        async GetUserPermissions(context, payload) {
             let response = await axios({
-                url:'http://localhost:3000/api/v1/user/'+payload.userId+'/group/'+payload.groupId+'/permissions',
-                method:'GET'
+                url: 'http://localhost:3000/api/v1/user/' + payload.userId + '/group/' + payload.groupId + '/permissions',
+                method: 'GET'
             })
-            context.commit('InitUserPermissions',response.data.permissions)
+            context.commit('InitUserPermissions', response.data.permissions)
+        },
+        async GetGroupAdmins(context, payload) {
+            let response = await axios({
+                url: 'http://localhost:3000/api/v1/group/' + payload + '/admins',
+                method: 'GET'
+            })
+            context.commit('InitGroupAdmins', response.data.admins)
         },
         async UploadFile(context, payload) {
             const formData = new FormData()
