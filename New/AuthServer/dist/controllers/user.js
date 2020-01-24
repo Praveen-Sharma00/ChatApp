@@ -122,6 +122,13 @@ const getPendingUploadRequests = async (req, res) => {
   return res.send(response);
 };
 
+const updatePendingUploadStatus = async (req, res) => {
+  const groupId = req.params.groupId;
+  const status = req.body.request_status;
+  const response = await _userDetailService.updatePendingUploadStatus(groupId, status);
+  return res.send(response);
+};
+
 const updatePendingGroupUploadStatus = async (req, res) => {
   const groupId = req.params.groupId;
   const {
@@ -190,6 +197,7 @@ let userController = {
   updateGroupConversation,
   getPendingGroupUploads,
   getPendingUploadRequests,
+  updatePendingUploadStatus,
   updatePendingGroupUploadStatus,
   updateIndividualConversation
 };

@@ -117,6 +117,16 @@ export default {
             })
             context.commit('InitPendingUploads', response.data.requests)
         },
+        async UpdatePendingRequestStatus(context,payload){
+            let response = await axios({
+                url:'http://localhost:3000/api/v1/group/'+payload.groupId+'/pending_uploads',
+                method:'PUT',
+                data:{
+                    request_status:payload.status
+                }
+            })
+            console.log("STATUS : ",response)
+        },
         async UploadFile(context, payload) {
             const formData = new FormData()
             for (let i = 0; i < payload.length; i++) {

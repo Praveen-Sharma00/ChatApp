@@ -605,6 +605,60 @@ class UserDetailService {
     }
   }
 
+  async updatePendingUploadStatus(groupId, request) {
+    const msgId = request.split("-")[1];
+    const status = request.split("-")[0];
+    const requestObj = await _UploadRequest.default.findOne({
+      group_id: _mongoose.default.Types.ObjectId(groupId)
+    }).select('uploads');
+
+    if (!requestObj.uploads || requestObj.uploads.length === 0) {
+      return {
+        success: false,
+        error: {
+          message: 'No requests !'
+        }
+      };
+    }
+
+    if (status === 'accept') {
+      let uploadReq = requestObj.uploads.find(e => e._id == msgId);
+      console.log("uploadReq : ", uploadReq);
+      const groupConversation = await _Conversation.default.findOne({
+        group_id: _mongoose.default.Types.ObjectId(groupId)
+      }).select('messages');
+      groupConversation.messages.push({
+        _id: _mongoose.default.Types.ObjectId(),
+        media: {
+          type: uploadReq.media.type,
+          location: uploadReq.media.location
+        },
+        message_type: "media",
+        sender: {
+          id: uploadReq.sender.id,
+          name: uploadReq.sender.name
+        },
+        approval_status: "approved",
+        text: "",
+        sentAt: uploadReq.sentAlert
+      });
+      await groupConversation.save();
+      return {
+        success: true,
+        message: 'Request Approved !'
+      };
+    } else {
+      requestObj.uploads = requestObj.uploads.filter(e => {
+        return e._id != msgId;
+      });
+      await requestObj.save();
+      return {
+        success: true,
+        message: 'Request rejected !'
+      };
+    }
+  }
+
   async getPendingGroupUploads(groupId) {
     if (groupId === null || groupId === "") {
       return {

@@ -155,7 +155,7 @@
                                 </thead>
                                 <tbody>
                                 <template v-for="(request,i) in pendingApprovals">
-                                    <tr>
+                                    <tr :id="request._id">
                                         <th scope="row">{{i+1}}</th>
                                         <td>{{request.sender.name}}</td>
                                         <template v-for="(upload,j) in request.media.type">
@@ -176,10 +176,10 @@
                                             </template>
                                         </template>
                                         <td>
-                                            <button type="button" class="btn-sm btn-success" title="Accept"><i
+                                            <button @click="updateRequestStatus($event)" type="button" class="btn-sm btn-success" :id="'accept-'+request._id" title="Accept"><i
                                                     class="fas fa-check-circle"></i></button>
                                             &nbsp;&nbsp;
-                                            <button type="button" class="btn-sm btn-danger" title="Reject"><i
+                                            <button @click="updateRequestStatus($event)" type="button" class="btn-sm btn-danger" :id="'reject-'+request._id"title="Reject"><i
                                                     class="fas fa-times-circle"></i></button>
                                         </td>
                                     </tr>
@@ -223,7 +223,6 @@
                     await this.$store.dispatch('GetGroupConversations', {
                         id: this.$store.getters.GetCurrentRecipient.id
                     })
-
                 }
                 if (!this.$store.getters.GetCurrentConversation)
                     this.messages = []
@@ -360,6 +359,17 @@
                     sentAt: 'Now'
                 })
                 this.$refs.msgText.value = ""
+            },
+            async updateRequestStatus(event){
+                let id=event.currentTarget.id.split("-")[1]
+                this.pendingApprovals=this.pendingApprovals.filter((obj)=>{
+                    return obj._id !=id
+                })
+                await this.$store.dispatch('UpdatePendingRequestStatus',{
+                    groupId:this.$store.getters.GetCurrentRecipient.id,
+                    status:event.currentTarget.id
+                })
+
             }
         },
         computed: {

@@ -24,7 +24,7 @@ api
 api
     .route('/group/:groupId/pending_uploads')
     .get(userController.getPendingUploadRequests)
-
+    .put(userController.updatePendingUploadStatus)
 
 api
     .route('/user')
