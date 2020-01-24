@@ -79,15 +79,15 @@ const updateGroupConversation = async (req, res) => {
     const response = await _userDetailService.updateGroupConversation(user._id, groupId, text, '', '')
     return res.send(response)
 }
-const getPendingUploadRequests = async(req,res)=>{
+const getPendingUploadRequests = async (req, res) => {
     const groupId = req.params.groupId
     const response = await _userDetailService.getPendingUploadRequests(groupId)
     return res.send(response)
 }
-const updatePendingUploadStatus = async(req,res)=>{
+const updatePendingUploadStatus = async (req, res) => {
     const groupId = req.params.groupId
     const status = req.body.request_status
-    const response = await _userDetailService.updatePendingUploadStatus(groupId,status)
+    const response = await _userDetailService.updatePendingUploadStatus(groupId, status)
     return res.send(response)
 }
 const updatePendingGroupUploadStatus = async (req, res) => {

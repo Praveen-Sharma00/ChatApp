@@ -41,12 +41,10 @@ api
     .post(checkSession, userController.createGroup)
 
 
-
 api
     .route('/user/group/:groupId')
     .get(userController.getGroupMembers)
     .post(checkSession, userController.updatePermissions)
-
 
 
 api

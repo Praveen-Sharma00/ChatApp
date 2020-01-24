@@ -176,10 +176,14 @@
                                             </template>
                                         </template>
                                         <td>
-                                            <button @click="updateRequestStatus($event)" type="button" class="btn-sm btn-success" :id="'accept-'+request._id" title="Accept"><i
+                                            <button @click="updateRequestStatus($event)" type="button"
+                                                    class="btn-sm btn-success" :id="'accept-'+request._id"
+                                                    title="Accept"><i
                                                     class="fas fa-check-circle"></i></button>
                                             &nbsp;&nbsp;
-                                            <button @click="updateRequestStatus($event)" type="button" class="btn-sm btn-danger" :id="'reject-'+request._id"title="Reject"><i
+                                            <button @click="updateRequestStatus($event)" type="button"
+                                                    class="btn-sm btn-danger" :id="'reject-'+request._id"
+                                                    title="Reject"><i
                                                     class="fas fa-times-circle"></i></button>
                                         </td>
                                     </tr>
@@ -280,7 +284,6 @@
             async getPendingRequests() {
                 await this.$store.dispatch('GetPendingUploadApprovals', this.$store.getters.GetCurrentRecipient.id)
                 this.pendingApprovals = this.$store.getters.GetPendingApprovals
-                console.log(this.pendingApprovals)
             },
             sendMediaMessage(conversationType, fileData) {
                 let admins = [], permissions = []
@@ -360,16 +363,15 @@
                 })
                 this.$refs.msgText.value = ""
             },
-            async updateRequestStatus(event){
-                let id=event.currentTarget.id.split("-")[1]
-                this.pendingApprovals=this.pendingApprovals.filter((obj)=>{
-                    return obj._id !=id
+            async updateRequestStatus(event) {
+                let id = event.currentTarget.id.split("-")[1]
+                this.pendingApprovals = this.pendingApprovals.filter((obj) => {
+                    return obj._id != id
                 })
-                await this.$store.dispatch('UpdatePendingRequestStatus',{
-                    groupId:this.$store.getters.GetCurrentRecipient.id,
-                    status:event.currentTarget.id
+                await this.$store.dispatch('UpdatePendingRequestStatus', {
+                    groupId: this.$store.getters.GetCurrentRecipient.id,
+                    status: event.currentTarget.id
                 })
-
             }
         },
         computed: {

@@ -379,7 +379,6 @@ export default class UserDetailService {
         }
         if (status === 'accept') {
             let uploadReq = requestObj.uploads.find((e) => e._id == msgId)
-            console.log("uploadReq : ",uploadReq)
             const groupConversation = await ConversationModel.findOne({
                 group_id: mongoose.Types.ObjectId(groupId)
             }).select('messages')
