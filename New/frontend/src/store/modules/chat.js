@@ -97,9 +97,9 @@ export default {
             })
             context.commit('InitUserPermissions', response.data.permissions)
         },
-        async GetGroupAdmins(context, payload) {
+        async GetGroupAdmins(context, groupId) {
             let response = await axios({
-                url: 'http://localhost:3000/api/v1/group/' + payload + '/admins',
+                url: 'http://localhost:3000/api/v1/group/' + groupId + '/admins',
                 method: 'GET'
             })
             context.commit('InitGroupAdmins', response.data.admins)

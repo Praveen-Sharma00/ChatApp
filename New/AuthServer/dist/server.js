@@ -24,6 +24,9 @@ io.on('connection', socket => {
       roomName = a + "," + b;
     } else if (data.type === "group") {
       roomName = data.receiver._id + "";
+    } else if (data.type === "self") {
+      roomName = data.userId;
+      console.log("EXEC");
     }
 
     socket.join(roomName);

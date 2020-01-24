@@ -137,6 +137,7 @@
                         id_b: this.$store.getters.GetCurrentRecipient.id
                     })
                 } else {
+                    await this.$store.dispatch('GetGroupAdmins', this.$store.getters.GetCurrentRecipient.id)
                     await this.$store.dispatch('GetUserPermissions', {
                         userId: this.$store.getters.getUser._id,
                         groupId: this.$store.getters.GetCurrentRecipient.id
@@ -144,6 +145,8 @@
                     await this.$store.dispatch('GetGroupConversations', {
                         id: this.$store.getters.GetCurrentRecipient.id
                     })
+
+                    console.log("GROUP ADMINS : ", this.$store.getters.GetCurrentGroupAdmins)
                 }
                 if (!this.$store.getters.GetCurrentConversation)
                     this.messages = []
@@ -185,7 +188,8 @@
                 messages: [],
                 conversationType: '',
                 uploadedFile: '',
-                permissions: {}
+                permissions: {},
+                groupAdmins: []
             }
         },
         methods: {
@@ -275,7 +279,6 @@
             },
             classListInput() {
                 let permissions = this.$store.getters.GetUserPermissions
-                console.log(permissions)
                 if (this.$store.getters.GetMessageAreaState) {
                     if ((this.conversationType === 'group' && permissions.ReadOnly === false) || this.conversationType === 'individual') {
                         return "d-flex justify-self-end align-items-center flex-row"
@@ -283,9 +286,9 @@
                 }
                 return "d-none justify-self-end align-items-center flex-row"
             },
-            classListAttachment(){
+            classListAttachment() {
                 let permissions = this.$store.getters.GetUserPermissions
-                if(this.conversationType === 'group' && (permissions.BlockUploads===true || permissions.ReadOnly === true))
+                if (this.conversationType === 'group' && (permissions.BlockUploads === true || permissions.ReadOnly === true))
                     return "d-none"
                 return ""
             },

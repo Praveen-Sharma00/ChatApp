@@ -17,9 +17,15 @@
             'chat-list': ChatList,
             'message-area': MessageArea,
         },
-        computed: {
-            getUser() {
-                return this.$store.getters.getUser
+        beforeMount() {
+            this.initRoom()
+        },
+        methods:{
+            initRoom(){
+                this.$socket.joinRoom({
+                    type:'self',
+                    userId:this.$store.getters.getUser._id
+                })
             }
         },
         beforeCreate() {
