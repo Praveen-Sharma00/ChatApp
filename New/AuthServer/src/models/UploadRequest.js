@@ -1,14 +1,8 @@
 const mongoose = require('mongoose')
 
 const uploadRequestSchema = new mongoose.Schema({
-    between_users: [],
     group_id: mongoose.Schema.Types.ObjectId,
-    messages: [{
-        text: String,
-        message_type: {
-            type: String,
-            enum: ["media"]
-        },
+    uploads: [{
         media: {
             type: {
                 type: [String],
@@ -17,10 +11,6 @@ const uploadRequestSchema = new mongoose.Schema({
             location: {
                 type: [String]
             }
-        },
-        approval_status: {
-            type: String,
-            enum: ["pending"]
         },
         sender: {
             id: {
