@@ -24,7 +24,7 @@ const groupSchema = new _mongoose.default.Schema({
       type: String,
       enum: ['ReadOnly', 'BlockUploads']
     }],
-    adminLevel: Number
+    memberLevel: Number
   }],
   admins: [{
     _id: _mongoose.default.Schema.Types.ObjectId,

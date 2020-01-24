@@ -74,7 +74,6 @@ export default {
                 url: 'http://localhost:3000/api/v1/chats/group/' + payload.id,
                 method: 'GET'
             })
-            console.log(response)
             context.commit('SetCurrentConversation', response.data.messages)
         },
         async GetAllUserGroups(context, payload) {

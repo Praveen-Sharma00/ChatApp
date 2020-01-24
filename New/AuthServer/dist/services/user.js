@@ -747,8 +747,10 @@ class UserDetailService {
       }
     }]);
 
+    console.log("_result :", _result);
     let permissions = {};
     permissions["isAdmin"] = _result[0].members.isAdmin;
+    permissions["memberLevel"] = _result[0].members.memberLevel;
 
     if (_result[0].members.permissions === undefined) {
       permissions["ReadOnly"] = false;
