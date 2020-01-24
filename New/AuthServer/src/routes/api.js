@@ -21,6 +21,9 @@ api
     .route('/group/:groupId/admins')
     .get(userController.getGroupAdmins)
 
+api
+    .route('/group/:groupId/pending_uploads')
+    .get(userController.getPendingUploadRequests)
 
 
 api

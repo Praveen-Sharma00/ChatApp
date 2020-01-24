@@ -56,9 +56,9 @@ io.on('connection', (socket) => {
             await _userDetailService.updateGroupConversation(data.room, data.sender, data.receiver, data.text, data.message_type, data.media)
         } else {
             await _userDetailService.createUploadRequest({
-                groupId:data.receiver.id,
-                media:data.media,
-                sender:data.sender
+                groupId: data.receiver.id,
+                media: data.media,
+                sender: data.sender
             })
             data.admins.forEach((admin) => {
                 socket.broadcast.to(admin).emit('new_upload_approval_request', {
