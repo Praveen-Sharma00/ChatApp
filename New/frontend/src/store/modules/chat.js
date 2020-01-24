@@ -10,7 +10,8 @@ export default {
         currentUploadedFile: {},
         userGroups: [],
         currentGroupAdmins: [],
-        userPermissions: {}
+        userPermissions: {},
+        pendingApprovals: []
     },
     getters: {
         GetMessageAreaState(state) {
@@ -36,6 +37,9 @@ export default {
         },
         GetCurrentGroupAdmins(state) {
             return state.currentGroupAdmins
+        },
+        GetPendingApprovals(state) {
+            return state.pendingApprovals
         }
     },
     mutations: {
@@ -66,6 +70,9 @@ export default {
         },
         InitGroupAdmins(state, payload) {
             state.currentGroupAdmins = payload
+        },
+        InitPendingUploads(state, payload) {
+            state.pendingApprovals = payload
         }
     },
     actions: {
@@ -103,6 +110,12 @@ export default {
                 method: 'GET'
             })
             context.commit('InitGroupAdmins', response.data.admins)
+        },
+        async GetPendingUploadApprovals(context, groupId) {
+            let response = await axios({
+                url: 'http://localhost:3000/api/v1/group/' + groupId + '/pending_uploads'
+            })
+            context.commit('InitPendingUploads', response.data.requests)
         },
         async UploadFile(context, payload) {
             const formData = new FormData()

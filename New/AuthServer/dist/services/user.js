@@ -564,6 +564,47 @@ class UserDetailService {
     }
   }
 
+  async getPendingUploadRequests(groupId) {
+    if (groupId === null || groupId === "") {
+      return {
+        success: false,
+        error: {
+          message: 'Invalid req params !'
+        }
+      };
+    }
+
+    const _result = await _UploadRequest.default.findOne({
+      group_id: _mongoose.default.Types.ObjectId(groupId)
+    }).select('uploads');
+
+    if (!_result || _result === null) {
+      return {
+        success: false,
+        error: {
+          message: 'No conversation(s) !'
+        }
+      };
+    } else {
+      const requests = _result.uploads;
+
+      if (!requests || requests.length === 0) {
+        return {
+          success: false,
+          error: {
+            message: 'No new request(s) so far !'
+          }
+        };
+      } else {
+        return {
+          success: true,
+          error: {},
+          requests: requests
+        };
+      }
+    }
+  }
+
   async getPendingGroupUploads(groupId) {
     if (groupId === null || groupId === "") {
       return {
@@ -762,7 +803,6 @@ class UserDetailService {
   }
 
   async createUploadRequest(details) {
-    console.log("DETAILS :", details);
     const {
       groupId,
       media,

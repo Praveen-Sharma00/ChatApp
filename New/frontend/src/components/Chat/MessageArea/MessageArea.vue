@@ -16,10 +16,17 @@
                 <div class="text-white small" id="details"></div>
             </div>
             <div class="d-flex flex-row align-items-center ml-auto">
-                <a href="#"><i class="fas fa-search mx-3 text-white d-none d-md-block"></i></a>
-                <a href="#" :class="classListAttachment" data-toggle="modal" data-target="#fileUploadModal"><i
-                        class="fas fa-paperclip mx-3 text-white d-none d-md-block"></i></a>
-                <a href="#"><i class="fas fa-ellipsis-v mr-2 mx-sm-3 text-white"></i></a>
+                <template v-if="permissions.isAdmin && conversationType==='group'">
+                    <a href="#" @click="getPendingRequests" data-toggle="modal" data-target="#approvalRequestModal">
+                        <i class="far fa-clock mx-3 text-white" title="Pending Upload Approvals"></i>
+                    </a>
+                </template>
+                <a href="#" :class="classListAttachment" data-toggle="modal" data-target="#fileUploadModal">
+                    <i class="fas fa-paperclip mx-3 text-white d-none d-md-block"></i>
+                </a>
+                <a href="#">
+                    <i class="fas fa-ellipsis-v mr-2 mx-sm-3 text-white"></i>
+                </a>
             </div>
         </div>
 
@@ -120,6 +127,75 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="approvalRequestModal" ref="approvalRequestModal" tabindex="-1" role="dialog"
+             aria-labelledby="approvalRequestModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="approvalRequestModalLabel">Pending Approval Requests</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <template v-if="!pendingApprovals">
+                            <div class="alert alert-danger" role="alert">
+                                No new request(s) so far !
+                            </div>
+                        </template>
+                        <template v-else>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Sender</th>
+                                    <th scope="col">Uploads</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <template v-for="(request,i) in pendingApprovals">
+                                    <tr>
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{request.sender.name}}</td>
+                                        <template v-for="(upload,j) in request.media.type">
+                                            <template v-if="upload === 'doc'">
+                                                <a :href="'http://localhost:3000/uploads/'+request.media.location[j]">
+                                                    <img src="@/assets/img/doc.png" class="list_media">
+                                                </a>
+                                            </template>
+                                            <template v-if="upload === 'pdf'">
+                                                <a :href="'http://localhost:3000/uploads/'+request.media.location[j]">
+                                                    <img src="@/assets/img/pdf.png" class="list_media">
+                                                </a>
+                                            </template>
+                                            <template v-if="upload === 'image'">
+                                                <a :href="'http://localhost:3000/uploads/'+request.media.location[j]">
+                                                    <img src="@/assets/img/pic.png" class="list_media">
+                                                </a>
+                                            </template>
+                                        </template>
+                                        <td>
+                                            <button type="button" class="btn-sm btn-success" title="Accept"><i
+                                                    class="fas fa-check-circle"></i></button>
+                                            &nbsp;&nbsp;
+                                            <button type="button" class="btn-sm btn-danger" title="Reject"><i
+                                                    class="fas fa-times-circle"></i></button>
+                                        </td>
+                                    </tr>
+                                </template>
+
+                                </tbody>
+                            </table>
+                        </template>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -142,9 +218,12 @@
                         userId: this.$store.getters.getUser._id,
                         groupId: this.$store.getters.GetCurrentRecipient.id
                     })
+                    this.permissions = this.$store.getters.GetUserPermissions
+
                     await this.$store.dispatch('GetGroupConversations', {
                         id: this.$store.getters.GetCurrentRecipient.id
                     })
+
                 }
                 if (!this.$store.getters.GetCurrentConversation)
                     this.messages = []
@@ -187,7 +266,8 @@
                 conversationType: '',
                 uploadedFile: '',
                 permissions: {},
-                groupAdmins: []
+                groupAdmins: [],
+                pendingApprovals: []
             }
         },
         methods: {
@@ -196,12 +276,17 @@
                 this.uploadedFile = selectedFiles
                 await this.$store.dispatch('UploadFile', selectedFiles)
                 alert("Files uploaded")
-                this.sendMediaMessage(this.conversationType,this.$store.getters.GetCurrentUploadedFileDetails)
+                this.sendMediaMessage(this.conversationType, this.$store.getters.GetCurrentUploadedFileDetails)
             },
-            sendMediaMessage(conversationType,fileData) {
-                let admins=[],permissions=[]
-                if(conversationType==='group'){
-                    this.$store.getters.GetCurrentGroupAdmins.forEach((e)=>{
+            async getPendingRequests() {
+                await this.$store.dispatch('GetPendingUploadApprovals', this.$store.getters.GetCurrentRecipient.id)
+                this.pendingApprovals = this.$store.getters.GetPendingApprovals
+                console.log(this.pendingApprovals)
+            },
+            sendMediaMessage(conversationType, fileData) {
+                let admins = [], permissions = []
+                if (conversationType === 'group') {
+                    this.$store.getters.GetCurrentGroupAdmins.forEach((e) => {
                         admins.push(e._id)
                     })
                     permissions = this.$store.getters.GetUserPermissions
@@ -212,8 +297,8 @@
                         name: this.$store.getters.getUser.name,
                         id: this.$store.getters.getUser._id
                     },
-                    admins:admins,
-                    permissions:permissions,
+                    admins: admins,
+                    permissions: permissions,
                     receiver: {
                         name: this.$store.getters.GetCurrentRecipient.name,
                         id: this.$store.getters.GetCurrentRecipient.id
@@ -316,6 +401,16 @@
 </script>
 
 <style scoped>
+    .list_media {
+        width: 20px;
+        height: 20px;
+        margin-top: 12px;
+    }
+
+    .list_media:hover {
+        transform: scale(1.8);
+    }
+
     #message-area {
         border-left: 1px solid #e6e6e6;
         background-color: rgba(228, 228, 228, 0.81);

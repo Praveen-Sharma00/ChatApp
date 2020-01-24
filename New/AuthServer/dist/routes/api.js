@@ -19,6 +19,7 @@ api.route('/user/:id/groups').get(_user.userController.getUserGroups);
 api.route('/chats/group/:id').get(_user.userController.getGroupConversations);
 api.route('/user/:userId/group/:groupId/permissions').get(_user.userController.getUserPermissions);
 api.route('/group/:groupId/admins').get(_user.userController.getGroupAdmins);
+api.route('/group/:groupId/pending_uploads').get(_user.userController.getPendingUploadRequests);
 api.route('/user').get(_auth.checkSession, _user.userController.getCurrentUser);
 api.route('/user/contacts').get(_user.userController.getUserContacts).post(_auth.checkSession, _user.userController.updateUserContact);
 api.route('/user/groups').get(_user.userController.getUserGroups).post(_auth.checkSession, _user.userController.createGroup);

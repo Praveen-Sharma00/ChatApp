@@ -346,7 +346,8 @@ export default class UserDetailService {
             return ({success: true, error: {}, messages: messages})
         }
     }
-    async getPendingUploadRequests(groupId){
+
+    async getPendingUploadRequests(groupId) {
         if (groupId === null || groupId === "") {
             return ({success: false, error: {message: 'Invalid req params !'}})
         }
@@ -362,7 +363,7 @@ export default class UserDetailService {
             if (!requests || requests.length === 0) {
                 return ({success: false, error: {message: 'No new request(s) so far !'}})
             } else {
-                return ({success: true, error: {}, requests:requests})
+                return ({success: true, error: {}, requests: requests})
             }
         }
     }

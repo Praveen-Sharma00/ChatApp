@@ -68,12 +68,13 @@ io.on('connection', socket => {
         groupId: data.receiver.id,
         media: data.media,
         sender: data.sender
-      }); // data.admins.forEach((admin) => {
-      //     socket.broadcast.to(admin).emit('new_upload_approval_request', {
-      //         media: data.media,
-      //         sender: data.sender
-      //     })
-      // })
+      });
+      data.admins.forEach(admin => {
+        socket.broadcast.to(admin).emit('new_upload_approval_request', {
+          media: data.media,
+          sender: data.sender
+        });
+      });
     }
   });
   socket.on('disconnect', function () {
