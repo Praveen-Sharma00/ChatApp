@@ -106,10 +106,10 @@ export default class UserDetailService {
         if (groupId === null || groupId === "") {
             return ({success: false, error: {message: 'Invalid route params !'}})
         }
-        const obj = await GroupModel.findOne({
+        const {admins} = await GroupModel.findOne({
             _id: groupId
         }).select('admins')
-        return ({success: true, error: {}, data: {obj}})
+        return ({success: true, error: {}, admins: admins})
     }
 
     async getGroupMembers(groupId) {

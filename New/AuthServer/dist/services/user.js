@@ -221,15 +221,15 @@ class UserDetailService {
       };
     }
 
-    const obj = await _Group.default.findOne({
+    const {
+      admins
+    } = await _Group.default.findOne({
       _id: groupId
     }).select('admins');
     return {
       success: true,
       error: {},
-      data: {
-        obj
-      }
+      admins: admins
     };
   }
 
@@ -747,7 +747,6 @@ class UserDetailService {
       }
     }]);
 
-    console.log("_result :", _result);
     let permissions = {};
     permissions["isAdmin"] = _result[0].members.isAdmin;
     permissions["memberLevel"] = _result[0].members.memberLevel;

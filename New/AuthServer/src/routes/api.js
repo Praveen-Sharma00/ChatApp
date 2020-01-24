@@ -6,6 +6,24 @@ import {checkSession} from '../middlewares/auth'
 const api = express.Router()
 
 api
+    .route('/user/:id/groups')
+    .get(userController.getUserGroups)
+
+api
+    .route('/chats/group/:id')
+    .get(userController.getGroupConversations)
+
+api
+    .route('/user/:userId/group/:groupId/permissions')
+    .get(userController.getUserPermissions)
+
+api
+    .route('/group/:groupId/admins')
+    .get(userController.getGroupAdmins)
+
+
+
+api
     .route('/user')
     .get(checkSession, userController.getCurrentUser)
 
@@ -19,17 +37,7 @@ api
     .get(userController.getUserGroups)
     .post(checkSession, userController.createGroup)
 
-api
-    .route('/user/:id/groups')
-    .get(userController.getUserGroups)
 
-api
-    .route('/chats/group/:id')
-    .get(userController.getGroupConversations)
-
-api
-    .route('/user/:userId/group/:groupId/permissions')
-    .get(userController.getUserPermissions)
 
 api
     .route('/user/group/:groupId')
