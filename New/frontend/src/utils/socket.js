@@ -29,6 +29,10 @@ export default class SocketIO {
         this.__socket.emit("new_upload", media)
     }
 
+    emit_request_status(request) {
+        this.__socket.emit('changed_request_status', request)
+    }
+
     joinRoom(data) {
         this.__socket.emit('join', data)
     }

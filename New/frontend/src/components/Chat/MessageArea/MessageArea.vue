@@ -176,12 +176,12 @@
                                             </template>
                                         </template>
                                         <td>
-                                            <button @click="updateRequestStatus($event)" type="button"
+                                            <button @click="updateRequestStatus($event,request)" type="button"
                                                     class="btn-sm btn-success" :id="'accept-'+request._id"
                                                     title="Accept"><i
                                                     class="fas fa-check-circle"></i></button>
                                             &nbsp;&nbsp;
-                                            <button @click="updateRequestStatus($event)" type="button"
+                                            <button @click="updateRequestStatus($event,request)" type="button"
                                                     class="btn-sm btn-danger" :id="'reject-'+request._id"
                                                     title="Reject"><i
                                                     class="fas fa-times-circle"></i></button>
@@ -363,8 +363,9 @@
                 })
                 this.$refs.msgText.value = ""
             },
-            async updateRequestStatus(event) {
+            async updateRequestStatus(event, request) {
                 let id = event.currentTarget.id.split("-")[1]
+                let status = event.currentTarget.id.split("-")[0]
                 this.pendingApprovals = this.pendingApprovals.filter((obj) => {
                     return obj._id != id
                 })
