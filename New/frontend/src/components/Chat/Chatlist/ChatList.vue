@@ -14,7 +14,7 @@
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false"><i class="fas fa-ellipsis-v text-white"></i></a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addGroupFormModal">New Group</a>
+                    <a class="dropdown-item" @click="getUserContacts" data-toggle="modal" data-target="#addGroupFormModal">New Group</a>
                     <a class="dropdown-item" href="#">Settings</a>
                     <a class="btn btn-primary dropdown-item" style="cursor: pointer" @click="logout">Log Out</a>
                 </div>
@@ -125,6 +125,12 @@
                                 </div>
                                 <input type="text" class="form-control" id="groupName" placeholder="ex : Fun" ref="group_name">
                             </div>
+                            <div>
+                                <label class="typo__label">Members</label>
+                                <multiselect v-model="selectedMembers" :options="userContacts" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Select members" label="name" track-by="name" :preselect-first="true">
+                                    <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length && !isOpen">{{ values.length }} member(s) selected</span></template>
+                                </multiselect>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -141,14 +147,21 @@
 
 <script>
     import {eventBus} from "../../../main";
+    import Multiselect from 'vue-multiselect'
 
     export default {
         name: "ChatList",
+        components:{
+            Multiselect
+        },
         data() {
             return {
                 activeItem: '',
                 left: -110,
-                userGroups: []
+                userGroups: [],
+                userContacts:[],
+                selectedMembers:[],
+
             }
         },
         mounted() {
@@ -195,9 +208,29 @@
             hideProfileSettings() {
                 this.left = -110
             },
+            getUserContacts(){
+                this.userContacts = this.$store.getters.getUser.contacts
+            },
             async createGroup(){
+                let flag = true
                 let groupName = this.$refs.group_name.value
-                await this.$store.dispatch('CreateGroup')
+                if(groupName === '' || groupName.length === 0){
+                    alert('Please provide group name !')
+                    flag = false
+                    return false;
+                }
+                if(this.selectedMembers.length === 0){
+                    alert('Select atleast 1 member !')
+                    flag = false
+                    return false
+                }
+                if(flag === true){
+                    await this.$store.dispatch('CreateGroup',{
+                        userId : this.$store.getters.getUser._id,
+                        group_name : groupName,
+                        members:this.selectedMembers
+                    })
+                }
             },
             logout() {
                 this.$store.dispatch('logout')

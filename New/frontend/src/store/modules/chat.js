@@ -117,6 +117,17 @@ export default {
             })
             context.commit('InitPendingUploads', response.data.requests)
         },
+        async CreateGroup(context,payload){
+            let response=await axios({
+                url :'http://localhost:3000/api/v1/user/'+payload.userId+'/groups',
+                method:'POST',
+                data:{
+                    group_name:payload.group_name,
+                    members:payload.members
+                }
+            })
+            console.log(response)
+        },
         async UpdatePendingRequestStatus(context,payload){
             let response = await axios({
                 url:'http://localhost:3000/api/v1/group/'+payload.groupId+'/pending_uploads',
