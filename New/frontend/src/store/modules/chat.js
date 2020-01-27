@@ -126,7 +126,11 @@ export default {
                     members:payload.members
                 }
             })
-            console.log(response)
+            if(!response.success){
+                alert(response.error.message)
+            }else{
+                alert('Group created !')
+            }
         },
         async UpdatePendingRequestStatus(context,payload){
             let response = await axios({

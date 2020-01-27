@@ -75,15 +75,6 @@ const getGroupMembers = async (req, res) => {
   return res.send(response);
 };
 
-const createGroup = async (req, res) => {
-  const {
-    user
-  } = req.session;
-  const groupDetailObj = req.body;
-  const response = await _userDetailService.createGroup(user, groupDetailObj);
-  return res.send(response);
-};
-
 const getConversationBetweenUsers = async (req, res) => {
   const currentUserId = req.params.firstUserId;
   const secondUserId = req.params.secondUserId;
@@ -174,6 +165,15 @@ const updateMembersOfGroup = async (req, res) => {
     newMembers
   } = req.body;
   const response = await _userDetailService.updateMembersOfGroup(groupId, newMembers);
+  return res.send(response);
+};
+
+const createGroup = async (req, res) => {
+  const {
+    id: userId
+  } = req.params;
+  const groupObj = req.body;
+  const response = await _userDetailService.createGroup(userId, groupObj);
   return res.send(response);
 };
 

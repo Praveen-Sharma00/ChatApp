@@ -561,19 +561,18 @@ export default class UserDetailService {
     }
 
 
-    async createGroup(userId, groupDetailObj) {
-
+    async createGroup(userId, groupObj) {
         const data = await this.getUserGroups(userId)
         const {groups} = data
         for (let i = 0; i < groups.length; i++) {
-            if (groups[i].name === groupDetailObj.name) {
+            if (groups[i].name === groupObj.group_name) {
                 return ({success: false, error: {message: 'A group with same name already exists !'}})
             }
         }
         let membersArr = [];
-        groupDetailObj.members.forEach((e) => {
+        groupObj.members.forEach((e) => {
             membersArr.push({
-                _id: mongoose.Types.ObjectId(e),
+                _id: mongoose.Types.ObjectId(e._id),
                 isAdmin: false,
                 permissions: [],
                 adminLevel: 3
@@ -586,7 +585,7 @@ export default class UserDetailService {
             adminLevel: 1
         })
         const newGroup = new GroupModel({
-            name: groupDetailObj.name,
+            name: groupObj.group_name,
             admins: [{_id: userId, level: 1}],
             members: membersArr
         })

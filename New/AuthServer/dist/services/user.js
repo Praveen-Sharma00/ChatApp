@@ -161,30 +161,6 @@ class UserDetailService {
     }
   }
 
-  async getUserGroups(userId) {
-    const _result = await _Group.default.aggregate([{
-      $match: {
-        "members._id": _mongoose.default.Types.ObjectId(userId)
-      }
-    }]);
-
-    if (!_result) {
-      return {
-        success: false,
-        error: {
-          message: 'No Groups found !'
-        }
-      };
-    } else {
-      let obj = _result;
-      return {
-        success: true,
-        error: {},
-        groups: obj
-      };
-    }
-  }
-
   async getAdminGroups(currentUser) {
     const {
       _id: userID
@@ -279,52 +255,6 @@ class UserDetailService {
       });
     });
     await group.save();
-    return {
-      success: true,
-      error: {},
-      data: {}
-    };
-  }
-
-  async createGroup(currentUser, groupDetailObj) {
-    const temp = await this.getAdminGroups(currentUser);
-    const groups = temp.data.obj;
-
-    for (let i = 0; i < groups.length; i++) {
-      if (groups[i].name === groupDetailObj.name) {
-        return {
-          success: false,
-          error: {
-            message: 'A group with same name already exists !'
-          }
-        };
-      }
-    }
-
-    let membersArr = [];
-    groupDetailObj.members.forEach(e => {
-      membersArr.push({
-        _id: _mongoose.default.Types.ObjectId(e),
-        isAdmin: false,
-        permissions: [],
-        adminLevel: 3
-      });
-    });
-    membersArr.push({
-      _id: _mongoose.default.Types.ObjectId(currentUser._id),
-      isAdmin: true,
-      permissions: [],
-      adminLevel: 1
-    });
-    const newGroup = new _Group.default({
-      name: groupDetailObj.name,
-      admins: [{
-        _id: currentUser._id,
-        level: 1
-      }],
-      members: membersArr
-    });
-    await newGroup.save();
     return {
       success: true,
       error: {},
@@ -904,6 +834,81 @@ class UserDetailService {
     }
 
     return generatedId;
+  }
+
+  async getUserGroups(userId) {
+    const _result = await _Group.default.aggregate([{
+      $match: {
+        "members._id": _mongoose.default.Types.ObjectId(userId)
+      }
+    }]);
+
+    if (!_result) {
+      return {
+        success: false,
+        error: {
+          message: 'No Groups found !'
+        }
+      };
+    } else {
+      let obj = _result;
+      return {
+        success: true,
+        error: {},
+        groups: obj
+      };
+    }
+  }
+
+  async createGroup(userId, groupObj) {
+    console.log("USER ID ", userId);
+    const data = await this.getUserGroups(userId);
+    console.log("DATA : ", data);
+    const {
+      groups
+    } = data;
+    console.log('GROUPS : ', groups);
+
+    for (let i = 0; i < groups.length; i++) {
+      if (groups[i].name === groupObj.group_name) {
+        return {
+          success: false,
+          error: {
+            message: 'A group with same name already exists !'
+          }
+        };
+      }
+    }
+
+    let membersArr = [];
+    groupObj.members.forEach(e => {
+      membersArr.push({
+        _id: _mongoose.default.Types.ObjectId(e._id),
+        isAdmin: false,
+        permissions: [],
+        adminLevel: 3
+      });
+    });
+    membersArr.push({
+      _id: _mongoose.default.Types.ObjectId(userId),
+      isAdmin: true,
+      permissions: [],
+      adminLevel: 1
+    });
+    const newGroup = new _Group.default({
+      name: groupObj.group_name,
+      admins: [{
+        _id: userId,
+        level: 1
+      }],
+      members: membersArr
+    });
+    await newGroup.save();
+    return {
+      success: true,
+      error: {},
+      data: {}
+    };
   }
 
 }
