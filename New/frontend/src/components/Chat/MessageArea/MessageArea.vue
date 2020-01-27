@@ -20,6 +20,9 @@
                     <a href="#" @click="getPendingRequests" data-toggle="modal" data-target="#approvalRequestModal">
                         <i class="far fa-clock mx-3 text-white" title="Pending Upload Approvals"></i>
                     </a>
+                    <a href="#" @click="getRemainingUserList" data-toggle="modal" data-target="#addMembersFormModal">
+                        <i class="fas fa-user-plus mx-3 text-white" title="Add members to group"></i>
+                    </a>
                 </template>
                 <a href="#" :class="classListAttachment" data-toggle="modal" data-target="#fileUploadModal">
                     <i class="fas fa-paperclip mx-3 text-white d-none d-md-block"></i>
@@ -200,14 +203,50 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="addMembersFormModal" ref="addMembersFormModal" tabindex="-1" role="dialog"
+             aria-labelledby="addMembersFormModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form @submit.prevent="addMembersToGroup" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addGroupFormModalLabel">Create new Group</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <multiselect v-model="selectedMembers" :options="userContacts" :multiple="true"
+                                             :close-on-select="false" :clear-on-select="false" :preserve-search="true"
+                                             placeholder="Select members" label="name" track-by="name"
+                                             :preselect-first="true">
+                                    <template slot="selection" slot-scope="{ values, search, isOpen }"><span
+                                            class="multiselect__single" v-if="values.length && !isOpen">{{ values.length }} member(s) selected</span>
+                                    </template>
+                                </multiselect>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     import {eventBus} from "../../../main";
+    import Multiselect from 'vue-multiselect'
 
     export default {
         name: "MessageArea",
+        components:{
+            Multiselect
+        },
         mounted() {
             eventBus.$on("load-conversations", async (type) => {
                 this.conversationType = type
@@ -270,7 +309,10 @@
                 uploadedFile: '',
                 permissions: {},
                 groupAdmins: [],
-                pendingApprovals: []
+                pendingApprovals: [],
+                userContacts: [],
+                selectedMembers: [],
+                existingMembers:[]
             }
         },
         methods: {
@@ -373,6 +415,15 @@
                     groupId: this.$store.getters.GetCurrentRecipient.id,
                     status: event.currentTarget.id
                 })
+            },
+            async getRemainingUserList(){
+                this.userContacts=this.$store.getters.getUser.contacts
+                await this.$store.dispatch('GetGroupMembers',this.$store.getters.GetCurrentRecipient.id)
+                this.existingMemberIds = this.$store.getters.GetGroupMembers.map(e=>e._id)
+                this.userContacts=this.userContacts.filter(e => !this.existingMemberIds.includes(e._id))
+            },
+            async addMembersToGroup(){
+                // await this.$store.dispatch('')
             }
         },
         computed: {

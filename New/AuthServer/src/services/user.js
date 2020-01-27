@@ -42,7 +42,7 @@ export default class UserDetailService {
 
             membersArr.push(result)
         }
-        return ({success: true, error: {}, data: {membersArr}})
+        return ({success: true, error: {}, members: membersArr})
     }
 
     async findContact(currentUser, email) {
@@ -109,11 +109,11 @@ export default class UserDetailService {
             return ({success: false, error: {message: 'Invalid route params !'}})
         }
         const response = await this.getGroupUserDetails(groupId)
-        const members = response.data.membersArr
+        const members = response.members
         if (members.length === 0) {
             return ({success: false, error: {message: response.error.message}})
         }
-        return ({success: true, error: {}, data: {members}})
+        return ({success: true, error: {}, members:members})
     }
 
     async updateMembersOfGroup(groupId, members) {

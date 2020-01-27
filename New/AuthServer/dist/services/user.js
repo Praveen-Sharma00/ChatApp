@@ -80,9 +80,7 @@ class UserDetailService {
     return {
       success: true,
       error: {},
-      data: {
-        membersArr
-      }
+      members: membersArr
     };
   }
 
@@ -222,7 +220,7 @@ class UserDetailService {
     }
 
     const response = await this.getGroupUserDetails(groupId);
-    const members = response.data.membersArr;
+    const members = response.members;
 
     if (members.length === 0) {
       return {
@@ -236,9 +234,7 @@ class UserDetailService {
     return {
       success: true,
       error: {},
-      data: {
-        members
-      }
+      members: members
     };
   }
 

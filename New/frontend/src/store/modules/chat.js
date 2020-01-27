@@ -11,7 +11,8 @@ export default {
         userGroups: [],
         currentGroupAdmins: [],
         userPermissions: {},
-        pendingApprovals: []
+        pendingApprovals: [],
+        currentGroupMembers:[]
     },
     getters: {
         GetMessageAreaState(state) {
@@ -40,6 +41,9 @@ export default {
         },
         GetPendingApprovals(state) {
             return state.pendingApprovals
+        },
+        GetGroupMembers(state){
+            return state.currentGroupMembers
         }
     },
     mutations: {
@@ -67,6 +71,12 @@ export default {
         },
         SetUploadedFileDetails(state, payload) {
             state.currentUploadedFile = payload
+        },
+        SetGroupMembers(state,payload){
+            state.currentGroupMembers = payload
+        },
+        UpdateGroupMembers(state,payload){
+            state.currentGroupMembers.push(payload)
         },
         InitUserPermissions(state, payload) {
             state.userPermissions = payload
@@ -136,6 +146,13 @@ export default {
                 context.commit('UpdateUserGroups', response.data.newGroup)
                 alert('Group created !')
             }
+        },
+        async GetGroupMembers(context,groupId){
+            let response = await axios({
+                url:'http://localhost:3000/api/v1/group/'+groupId+'/members',
+                method:'GET'
+            })
+            context.commit('SetGroupMembers',response.data.members)
         },
         async UpdatePendingRequestStatus(context, payload) {
             let response = await axios({

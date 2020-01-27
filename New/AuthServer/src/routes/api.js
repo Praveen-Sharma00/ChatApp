@@ -22,7 +22,9 @@ api
     .route('/group/:groupId/admins')
     .get(userController.getGroupAdmins)
     // .put(userController.updateMembersOfGroup)
-
+api
+    .route('/group/:groupId/members')
+    .get(userController.getGroupMembers)
 api
     .route('/group/:groupId/pending_uploads')
     .get(userController.getPendingUploadRequests)
