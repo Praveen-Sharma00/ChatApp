@@ -14,7 +14,7 @@
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false"><i class="fas fa-ellipsis-v text-white"></i></a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">New Group</a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addGroupFormModal">New Group</a>
                     <a class="dropdown-item" href="#">Settings</a>
                     <a class="btn btn-primary dropdown-item" style="cursor: pointer" @click="logout">Log Out</a>
                 </div>
@@ -105,7 +105,38 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="addGroupFormModal" ref="addGroupFormModal" tabindex="-1" role="dialog"
+             aria-labelledby="addGroupFormModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form @submit.prevent="createGroup" >
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addGroupFormModalLabel">Create new Group</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <label class="sr-only" for="groupName">Group name</label>
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Group Name</div>
+                                </div>
+                                <input type="text" class="form-control" id="groupName" placeholder="ex : Fun" ref="group_name">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
+
 </template>
 
 <script>
@@ -163,6 +194,10 @@
             },
             hideProfileSettings() {
                 this.left = -110
+            },
+            async createGroup(){
+                let groupName = this.$refs.group_name.value
+                await this.$store.dispatch('CreateGroup')
             },
             logout() {
                 this.$store.dispatch('logout')
