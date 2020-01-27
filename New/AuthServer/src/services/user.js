@@ -113,7 +113,7 @@ export default class UserDetailService {
         if (members.length === 0) {
             return ({success: false, error: {message: response.error.message}})
         }
-        return ({success: true, error: {}, members:members})
+        return ({success: true, error: {}, members: members})
     }
 
     async updateMembersOfGroup(groupId, members) {

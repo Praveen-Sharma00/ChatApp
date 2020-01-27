@@ -12,7 +12,7 @@ export default {
         currentGroupAdmins: [],
         userPermissions: {},
         pendingApprovals: [],
-        currentGroupMembers:[]
+        currentGroupMembers: []
     },
     getters: {
         GetMessageAreaState(state) {
@@ -42,7 +42,7 @@ export default {
         GetPendingApprovals(state) {
             return state.pendingApprovals
         },
-        GetGroupMembers(state){
+        GetGroupMembers(state) {
             return state.currentGroupMembers
         }
     },
@@ -72,10 +72,10 @@ export default {
         SetUploadedFileDetails(state, payload) {
             state.currentUploadedFile = payload
         },
-        SetGroupMembers(state,payload){
+        SetGroupMembers(state, payload) {
             state.currentGroupMembers = payload
         },
-        UpdateGroupMembers(state,payload){
+        UpdateGroupMembers(state, payload) {
             state.currentGroupMembers.push(payload)
         },
         InitUserPermissions(state, payload) {
@@ -147,24 +147,24 @@ export default {
                 alert('Group created !')
             }
         },
-        async GetGroupMembers(context,groupId){
+        async GetGroupMembers(context, groupId) {
             let response = await axios({
-                url:'http://localhost:3000/api/v1/group/'+groupId+'/members',
-                method:'GET'
+                url: 'http://localhost:3000/api/v1/group/' + groupId + '/members',
+                method: 'GET'
             })
-            context.commit('SetGroupMembers',response.data.members)
+            context.commit('SetGroupMembers', response.data.members)
         },
-        async UpdateGroupMembers(context,payload){
+        async UpdateGroupMembers(context, payload) {
             let response = await axios({
-                url:'http://localhost:3000/api/v1/group/'+payload.groupId+'/members',
-                method:'PUT',
-                data:{
-                    newMembers : payload.newMembers
+                url: 'http://localhost:3000/api/v1/group/' + payload.groupId + '/members',
+                method: 'PUT',
+                data: {
+                    newMembers: payload.newMembers
                 }
             })
-            if(response.data.success){
+            if (response.data.success) {
                 alert('Members added successfully')
-            }else{
+            } else {
                 alert("There was a problem in adding members to group !")
             }
         },

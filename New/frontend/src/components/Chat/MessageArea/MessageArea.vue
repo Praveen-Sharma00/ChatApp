@@ -244,7 +244,7 @@
 
     export default {
         name: "MessageArea",
-        components:{
+        components: {
             Multiselect
         },
         mounted() {
@@ -312,7 +312,7 @@
                 pendingApprovals: [],
                 userContacts: [],
                 selectedMembers: [],
-                existingMembers:[]
+                existingMembers: []
             }
         },
         methods: {
@@ -416,16 +416,16 @@
                     status: event.currentTarget.id
                 })
             },
-            async getRemainingUserList(){
-                this.userContacts=this.$store.getters.getUser.contacts
-                await this.$store.dispatch('GetGroupMembers',this.$store.getters.GetCurrentRecipient.id)
-                this.existingMemberIds = this.$store.getters.GetGroupMembers.map(e=>e._id)
-                this.userContacts=this.userContacts.filter(e => !this.existingMemberIds.includes(e._id))
+            async getRemainingUserList() {
+                this.userContacts = this.$store.getters.getUser.contacts
+                await this.$store.dispatch('GetGroupMembers', this.$store.getters.GetCurrentRecipient.id)
+                this.existingMemberIds = this.$store.getters.GetGroupMembers.map(e => e._id)
+                this.userContacts = this.userContacts.filter(e => !this.existingMemberIds.includes(e._id))
             },
-            async addMembersToGroup(){
-                await this.$store.dispatch('UpdateGroupMembers',{
-                    groupId:this.$store.getters.GetCurrentRecipient.id,
-                    newMembers:this.selectedMembers
+            async addMembersToGroup() {
+                await this.$store.dispatch('UpdateGroupMembers', {
+                    groupId: this.$store.getters.GetCurrentRecipient.id,
+                    newMembers: this.selectedMembers
                 })
             }
         },
