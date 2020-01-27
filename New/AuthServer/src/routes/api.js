@@ -25,6 +25,8 @@ api
 api
     .route('/group/:groupId/members')
     .get(userController.getGroupMembers)
+    .put(userController.updateMembersOfGroup)
+
 api
     .route('/group/:groupId/pending_uploads')
     .get(userController.getPendingUploadRequests)

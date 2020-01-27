@@ -423,7 +423,10 @@
                 this.userContacts=this.userContacts.filter(e => !this.existingMemberIds.includes(e._id))
             },
             async addMembersToGroup(){
-                // await this.$store.dispatch('')
+                await this.$store.dispatch('UpdateGroupMembers',{
+                    groupId:this.$store.getters.GetCurrentRecipient.id,
+                    newMembers:this.selectedMembers
+                })
             }
         },
         computed: {

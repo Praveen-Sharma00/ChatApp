@@ -154,6 +154,20 @@ export default {
             })
             context.commit('SetGroupMembers',response.data.members)
         },
+        async UpdateGroupMembers(context,payload){
+            let response = await axios({
+                url:'http://localhost:3000/api/v1/group/'+payload.groupId+'/members',
+                method:'PUT',
+                data:{
+                    newMembers : payload.newMembers
+                }
+            })
+            if(response.data.success){
+                alert('Members added successfully')
+            }else{
+                alert("There was a problem in adding members to group !")
+            }
+        },
         async UpdatePendingRequestStatus(context, payload) {
             let response = await axios({
                 url: 'http://localhost:3000/api/v1/group/' + payload.groupId + '/pending_uploads',
