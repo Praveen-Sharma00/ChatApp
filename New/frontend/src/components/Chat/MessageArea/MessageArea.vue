@@ -427,6 +427,7 @@
                     groupId: this.$store.getters.GetCurrentRecipient.id,
                     newMembers: this.selectedMembers
                 })
+                this.selectedMembers = []
             }
         },
         computed: {

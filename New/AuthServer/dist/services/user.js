@@ -247,7 +247,7 @@ class UserDetailService {
         permissions: [],
         _id: m,
         isAdmin: false,
-        adminLevel: 3
+        memberLevel: 3
       });
     });
     await group.save();
