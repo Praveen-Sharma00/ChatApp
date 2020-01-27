@@ -861,13 +861,11 @@ class UserDetailService {
   }
 
   async createGroup(userId, groupObj) {
-    console.log("USER ID ", userId);
+    console.log("GroupOBJ : ", groupObj);
     const data = await this.getUserGroups(userId);
-    console.log("DATA : ", data);
     const {
       groups
     } = data;
-    console.log('GROUPS : ', groups);
 
     for (let i = 0; i < groups.length; i++) {
       if (groups[i].name === groupObj.group_name) {
@@ -901,7 +899,8 @@ class UserDetailService {
         _id: userId,
         level: 1
       }],
-      members: membersArr
+      members: membersArr,
+      imageUrl: "http://localhost:3000/uploads/" + groupObj.imageUrl
     });
     await newGroup.save();
     return {

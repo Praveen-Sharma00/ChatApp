@@ -123,7 +123,8 @@ export default {
                 method:'POST',
                 data:{
                     group_name:payload.group_name,
-                    members:payload.members
+                    members:payload.members,
+                    imageUrl : payload.imageUrl
                 }
             })
             if(!response.success){

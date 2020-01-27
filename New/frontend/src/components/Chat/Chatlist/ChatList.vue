@@ -110,7 +110,7 @@
              aria-labelledby="addGroupFormModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form @submit.prevent="createGroup" >
+                    <form @submit.prevent="createGroup" enctype="multipart/form-data">
                         <div class="modal-header">
                             <h5 class="modal-title" id="addGroupFormModalLabel">Create new Group</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -125,12 +125,17 @@
                                 </div>
                                 <input type="text" class="form-control" id="groupName" placeholder="ex : Fun" ref="group_name">
                             </div>
+                            <div class="custom-file">
+                                <input type="file" multiple class="custom-file-input" name="file" id="customFile"
+                                       ref="groupImg" accept=".png,.jpg,.JPEG,.gif,.PNG">
+                                <label class="custom-file-label" for="customFile">Profile Image</label>
+                            </div>
                             <div>
-                                <label class="typo__label">Members</label>
                                 <multiselect v-model="selectedMembers" :options="userContacts" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Select members" label="name" track-by="name" :preselect-first="true">
                                     <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length && !isOpen">{{ values.length }} member(s) selected</span></template>
                                 </multiselect>
                             </div>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -225,10 +230,14 @@
                     return false
                 }
                 if(flag === true){
+                    const selectedFiles = this.$refs.groupImg.files
+                    await this.$store.dispatch('UploadFile', selectedFiles)
+                    let filename = this.$store.getters.GetCurrentUploadedFileDetails.filenames[0]
                     await this.$store.dispatch('CreateGroup',{
                         userId : this.$store.getters.getUser._id,
                         group_name : groupName,
-                        members:this.selectedMembers
+                        members:this.selectedMembers,
+                        imageUrl : filename
                     })
                 }
             },

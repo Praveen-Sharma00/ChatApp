@@ -587,7 +587,8 @@ export default class UserDetailService {
         const newGroup = new GroupModel({
             name: groupObj.group_name,
             admins: [{_id: userId, level: 1}],
-            members: membersArr
+            members: membersArr,
+            imageUrl:"http://localhost:3000/uploads/"+groupObj.imageUrl
         })
         await newGroup.save()
         return ({success: true, error: {}, data: {}})

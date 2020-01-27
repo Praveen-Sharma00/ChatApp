@@ -13,6 +13,7 @@ const groupSchema = new _mongoose.default.Schema({
   name: {
     type: String
   },
+  imageUrl: String,
   members: [{
     _id: {
       type: _mongoose.default.Schema.Types.ObjectId
