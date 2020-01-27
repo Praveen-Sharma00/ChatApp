@@ -4,7 +4,7 @@ const groupSchema = new mongoose.Schema({
     name: {
         type: String
     },
-    imageUrl:String,
+    imageUrl: String,
     members: [{
         _id: {type: mongoose.Schema.Types.ObjectId},
         isAdmin: {type: Boolean},

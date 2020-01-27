@@ -133,7 +133,6 @@ export default class UserDetailService {
     }
 
 
-
     async getConversationBetweenUsers(currentUserId, secondUserId) {
         if (secondUserId === null || secondUserId === "") {
             return ({success: false, error: {message: 'Invalid req params !'}})
@@ -585,12 +584,13 @@ export default class UserDetailService {
             adminLevel: 1
         })
         const newGroup = new GroupModel({
+            _id: mongoose.Types.ObjectId(),
             name: groupObj.group_name,
             admins: [{_id: userId, level: 1}],
             members: membersArr,
-            imageUrl:"http://localhost:3000/uploads/"+groupObj.imageUrl
+            imageUrl: "http://localhost:3000/uploads/" + groupObj.imageUrl
         })
         await newGroup.save()
-        return ({success: true, error: {}, data: {}})
+        return ({success: true, error: {}, newGroup: newGroup})
     }
 }

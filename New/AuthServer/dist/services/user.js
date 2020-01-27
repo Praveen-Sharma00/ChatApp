@@ -861,7 +861,6 @@ class UserDetailService {
   }
 
   async createGroup(userId, groupObj) {
-    console.log("GroupOBJ : ", groupObj);
     const data = await this.getUserGroups(userId);
     const {
       groups
@@ -894,6 +893,7 @@ class UserDetailService {
       adminLevel: 1
     });
     const newGroup = new _Group.default({
+      _id: _mongoose.default.Types.ObjectId(),
       name: groupObj.group_name,
       admins: [{
         _id: userId,
@@ -906,7 +906,7 @@ class UserDetailService {
     return {
       success: true,
       error: {},
-      data: {}
+      newGroup: newGroup
     };
   }
 

@@ -117,7 +117,7 @@ const updateMembersOfGroup = async (req, res) => {
 }
 
 const createGroup = async (req, res) => {
-    const {id:userId} = req.params
+    const {id: userId} = req.params
     const groupObj = req.body
     const response = await _userDetailService.createGroup(userId, groupObj)
     return res.send(response)

@@ -14,7 +14,8 @@
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                    aria-expanded="false"><i class="fas fa-ellipsis-v text-white"></i></a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" @click="getUserContacts" data-toggle="modal" data-target="#addGroupFormModal">New Group</a>
+                    <a class="dropdown-item" @click="getUserContacts" data-toggle="modal"
+                       data-target="#addGroupFormModal">New Group</a>
                     <a class="dropdown-item" href="#">Settings</a>
                     <a class="btn btn-primary dropdown-item" style="cursor: pointer" @click="logout">Log Out</a>
                 </div>
@@ -123,7 +124,8 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">Group Name</div>
                                 </div>
-                                <input type="text" class="form-control" id="groupName" placeholder="ex : Fun" ref="group_name">
+                                <input type="text" class="form-control" id="groupName" placeholder="ex : Fun"
+                                       ref="group_name">
                             </div>
                             <div class="custom-file">
                                 <input type="file" multiple class="custom-file-input" name="file" id="customFile"
@@ -131,8 +133,13 @@
                                 <label class="custom-file-label" for="customFile">Profile Image</label>
                             </div>
                             <div>
-                                <multiselect v-model="selectedMembers" :options="userContacts" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Select members" label="name" track-by="name" :preselect-first="true">
-                                    <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length && !isOpen">{{ values.length }} member(s) selected</span></template>
+                                <multiselect v-model="selectedMembers" :options="userContacts" :multiple="true"
+                                             :close-on-select="false" :clear-on-select="false" :preserve-search="true"
+                                             placeholder="Select members" label="name" track-by="name"
+                                             :preselect-first="true">
+                                    <template slot="selection" slot-scope="{ values, search, isOpen }"><span
+                                            class="multiselect__single" v-if="values.length && !isOpen">{{ values.length }} member(s) selected</span>
+                                    </template>
                                 </multiselect>
                             </div>
 
@@ -156,7 +163,7 @@
 
     export default {
         name: "ChatList",
-        components:{
+        components: {
             Multiselect
         },
         data() {
@@ -164,12 +171,13 @@
                 activeItem: '',
                 left: -110,
                 userGroups: [],
-                userContacts:[],
-                selectedMembers:[],
-
+                userContacts: [],
+                selectedMembers: [],
             }
         },
         mounted() {
+            this.userGroups = this.$store.getters.GetUserGroupList
+
             eventBus.$on("show-profile-settings", () => {
                 this.left = 0
             })
@@ -213,31 +221,31 @@
             hideProfileSettings() {
                 this.left = -110
             },
-            getUserContacts(){
+            getUserContacts() {
                 this.userContacts = this.$store.getters.getUser.contacts
             },
-            async createGroup(){
+            async createGroup() {
                 let flag = true
                 let groupName = this.$refs.group_name.value
-                if(groupName === '' || groupName.length === 0){
+                if (groupName === '' || groupName.length === 0) {
                     alert('Please provide group name !')
                     flag = false
                     return false;
                 }
-                if(this.selectedMembers.length === 0){
+                if (this.selectedMembers.length === 0) {
                     alert('Select atleast 1 member !')
                     flag = false
                     return false
                 }
-                if(flag === true){
+                if (flag === true) {
                     const selectedFiles = this.$refs.groupImg.files
                     await this.$store.dispatch('UploadFile', selectedFiles)
                     let filename = this.$store.getters.GetCurrentUploadedFileDetails.filenames[0]
-                    await this.$store.dispatch('CreateGroup',{
-                        userId : this.$store.getters.getUser._id,
-                        group_name : groupName,
-                        members:this.selectedMembers,
-                        imageUrl : filename
+                    await this.$store.dispatch('CreateGroup', {
+                        userId: this.$store.getters.getUser._id,
+                        group_name: groupName,
+                        members: this.selectedMembers,
+                        imageUrl: filename
                     })
                 }
             },
@@ -253,47 +261,58 @@
     #chat-list-area {
         position: relative;
     }
+
     .chat-list {
         overflow: auto;
         max-height: 85vh;
     }
+
     .chat-list-item {
         margin-bottom: 3px;
         background: white;
         cursor: pointer;
     }
+
     .chat-list-item:hover {
         background: hsl(0, 0%, 95%);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
+
     .chat-list-item:active {
         background: hsl(0, 0%, 85%);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
+
     .chat-list-item.active {
         background: hsl(0, 0%, 90%);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     }
+
     .chat-list-item .chat-details {
         width: 60%;
     }
+
     .chat-list-item.unread .name,
     .chat-list-item.unread .last-message {
         font-weight: bold;
     }
+
     .chat-list-item .last-message {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
     #navbar {
         background: #2C3E50;
         background: -webkit-linear-gradient(to right, #4CA1AF, #2C3E50);
         background: linear-gradient(to right, #4CA1AF, #2C3E50);
     }
+
     .dropdown-toggle::after {
         display: none;
     }
+
     #profile-settings {
         position: absolute;
         top: 0;
@@ -303,15 +322,18 @@
         -moz-transition: all .2s ease-in-out;
         -webkit-transition: all .2s ease-in-out;
     }
+
     #profile-pic {
         cursor: pointer;
         position: relative;
         width: 200px;
     }
+
     .profile-input {
         border-bottom: 2px solid transparent !important;
         outline: none;
     }
+
     .profile-input:focus {
         border-bottom-color: hsl(0, 0%, 50%) !important;
     }

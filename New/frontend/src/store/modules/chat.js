@@ -62,6 +62,9 @@ export default {
         SetGroupList(state, payload) {
             state.userGroups = payload
         },
+        UpdateUserGroups(state, payload) {
+            state.userGroups.push(payload)
+        },
         SetUploadedFileDetails(state, payload) {
             state.currentUploadedFile = payload
         },
@@ -117,31 +120,31 @@ export default {
             })
             context.commit('InitPendingUploads', response.data.requests)
         },
-        async CreateGroup(context,payload){
-            let response=await axios({
-                url :'http://localhost:3000/api/v1/user/'+payload.userId+'/groups',
-                method:'POST',
-                data:{
-                    group_name:payload.group_name,
-                    members:payload.members,
-                    imageUrl : payload.imageUrl
+        async CreateGroup(context, payload) {
+            let response = await axios({
+                url: 'http://localhost:3000/api/v1/user/' + payload.userId + '/groups',
+                method: 'POST',
+                data: {
+                    group_name: payload.group_name,
+                    members: payload.members,
+                    imageUrl: payload.imageUrl
                 }
             })
-            if(!response.success){
-                alert(response.error.message)
-            }else{
+            if (!response.data.success) {
+                alert(response.data.error.message)
+            } else {
+                context.commit('UpdateUserGroups', response.data.newGroup)
                 alert('Group created !')
             }
         },
-        async UpdatePendingRequestStatus(context,payload){
+        async UpdatePendingRequestStatus(context, payload) {
             let response = await axios({
-                url:'http://localhost:3000/api/v1/group/'+payload.groupId+'/pending_uploads',
-                method:'PUT',
-                data:{
-                    request_status:payload.status
+                url: 'http://localhost:3000/api/v1/group/' + payload.groupId + '/pending_uploads',
+                method: 'PUT',
+                data: {
+                    request_status: payload.status
                 }
             })
-            console.log("STATUS : ",response)
         },
         async UploadFile(context, payload) {
             const formData = new FormData()
