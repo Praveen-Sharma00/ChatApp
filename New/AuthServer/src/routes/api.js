@@ -8,6 +8,7 @@ const api = express.Router()
 api
     .route('/user/:id/groups')
     .get(userController.getUserGroups)
+    .post(userController.createGroup)
 
 api
     .route('/chats/group/:id')
@@ -20,11 +21,14 @@ api
 api
     .route('/group/:groupId/admins')
     .get(userController.getGroupAdmins)
+    // .put(userController.updateMembersOfGroup)
 
 api
     .route('/group/:groupId/pending_uploads')
     .get(userController.getPendingUploadRequests)
     .put(userController.updatePendingUploadStatus)
+
+
 
 api
     .route('/user')

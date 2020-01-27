@@ -48,12 +48,7 @@ const getGroupMembers = async (req, res) => {
     const response = await _userDetailService.getGroupMembers(groupId)
     return res.send(response)
 }
-const createGroup = async (req, res) => {
-    const {user} = req.session
-    const groupDetailObj = req.body
-    const response = await _userDetailService.createGroup(user, groupDetailObj)
-    return res.send(response)
-}
+
 
 const getConversationBetweenUsers = async (req, res) => {
     const currentUserId = req.params.firstUserId
@@ -120,6 +115,14 @@ const updateMembersOfGroup = async (req, res) => {
     const response = await _userDetailService.updateMembersOfGroup(groupId, newMembers)
     return res.send(response)
 }
+
+const createGroup = async (req, res) => {
+    const {userId} = req.params
+    const groupDetailObj = req.body
+    const response = await _userDetailService.createGroup(userId, groupDetailObj)
+    return res.send(response)
+}
+
 export let userController = {
     dashboard,
     chat,

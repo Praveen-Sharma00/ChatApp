@@ -623,7 +623,6 @@ class UserDetailService {
 
     if (status === 'accept') {
       let uploadReq = requestObj.uploads.find(e => e._id == msgId);
-      console.log("uploadReq : ", uploadReq);
       const groupConversation = await _Conversation.default.findOne({
         group_id: _mongoose.default.Types.ObjectId(groupId)
       }).select('messages');
@@ -640,7 +639,7 @@ class UserDetailService {
         },
         approval_status: "approved",
         text: "",
-        sentAt: uploadReq.sentAlert
+        sentAt: uploadReq.sentAt
       });
       await groupConversation.save();
       return {

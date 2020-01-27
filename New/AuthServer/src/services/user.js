@@ -81,15 +81,6 @@ export default class UserDetailService {
         }
     }
 
-    async getUserGroups(userId) {
-        const _result = await GroupModel.aggregate([{$match: {"members._id": mongoose.Types.ObjectId(userId)}}])
-        if (!_result) {
-            return ({success: false, error: {message: 'No Groups found !'}})
-        } else {
-            let obj = _result
-            return ({success: true, error: {}, groups: obj})
-        }
-    }
 
     async getAdminGroups(currentUser) {
         const {_id: userID} = currentUser
@@ -141,37 +132,7 @@ export default class UserDetailService {
         return ({success: true, error: {}, data: {}})
     }
 
-    async createGroup(currentUser, groupDetailObj) {
-        const temp = await this.getAdminGroups(currentUser)
-        const groups = temp.data.obj
-        for (let i = 0; i < groups.length; i++) {
-            if (groups[i].name === groupDetailObj.name) {
-                return ({success: false, error: {message: 'A group with same name already exists !'}})
-            }
-        }
-        let membersArr = [];
-        groupDetailObj.members.forEach((e) => {
-            membersArr.push({
-                _id: mongoose.Types.ObjectId(e),
-                isAdmin: false,
-                permissions: [],
-                adminLevel: 3
-            })
-        })
-        membersArr.push({
-            _id: mongoose.Types.ObjectId(currentUser._id),
-            isAdmin: true,
-            permissions: [],
-            adminLevel: 1
-        })
-        const newGroup = new GroupModel({
-            name: groupDetailObj.name,
-            admins: [{_id: currentUser._id, level: 1}],
-            members: membersArr
-        })
-        await newGroup.save()
-        return ({success: true, error: {}, data: {}})
-    }
+
 
     async getConversationBetweenUsers(currentUserId, secondUserId) {
         if (secondUserId === null || secondUserId === "") {
@@ -587,5 +548,49 @@ export default class UserDetailService {
             await existingRequest.save()
         }
         return generatedId
+    }
+
+    async getUserGroups(userId) {
+        const _result = await GroupModel.aggregate([{$match: {"members._id": mongoose.Types.ObjectId(userId)}}])
+        if (!_result) {
+            return ({success: false, error: {message: 'No Groups found !'}})
+        } else {
+            let obj = _result
+            return ({success: true, error: {}, groups: obj})
+        }
+    }
+
+
+    async createGroup(userId, groupDetailObj) {
+
+        const data = await this.getUserGroups(userId)
+        const {groups} = data
+        for (let i = 0; i < groups.length; i++) {
+            if (groups[i].name === groupDetailObj.name) {
+                return ({success: false, error: {message: 'A group with same name already exists !'}})
+            }
+        }
+        let membersArr = [];
+        groupDetailObj.members.forEach((e) => {
+            membersArr.push({
+                _id: mongoose.Types.ObjectId(e),
+                isAdmin: false,
+                permissions: [],
+                adminLevel: 3
+            })
+        })
+        membersArr.push({
+            _id: mongoose.Types.ObjectId(userId),
+            isAdmin: true,
+            permissions: [],
+            adminLevel: 1
+        })
+        const newGroup = new GroupModel({
+            name: groupDetailObj.name,
+            admins: [{_id: userId, level: 1}],
+            members: membersArr
+        })
+        await newGroup.save()
+        return ({success: true, error: {}, data: {}})
     }
 }
