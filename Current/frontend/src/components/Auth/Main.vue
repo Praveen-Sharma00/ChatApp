@@ -1,10 +1,10 @@
 <template>
-    <div>REgister</div>
+    <router-view></router-view>
 </template>
 
 <script>
     export default {
-        name: "Register"
+        name: "Main"
     }
 </script>
 

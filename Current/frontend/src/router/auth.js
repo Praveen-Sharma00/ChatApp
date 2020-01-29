@@ -1,8 +1,16 @@
 import Login from "../components/Auth/Login";
 import Register from "../components/Auth/Register";
+import AuthMain from "../components/Auth/Main";
 
 export default [
-    {path:'/login',component:Login,name:'Login'},
-    {path:'/register',component: Register,name:'Register'},
-    {path:'',redirect:{name:'Login'}}
+    {
+        path: '/auth', component: AuthMain,
+        children: [
+            {path: 'login', component: Login},
+            {path: 'register',component: Register}
+        ]
+    },
+    {
+        path: '*',redirect:'/auth/login'
+    }
 ]
