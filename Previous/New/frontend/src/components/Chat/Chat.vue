@@ -20,11 +20,11 @@
         beforeMount() {
             this.initRoom()
         },
-        methods:{
-            initRoom(){
+        methods: {
+            initRoom() {
                 this.$socket.joinRoom({
-                    type:'self',
-                    userId:this.$store.getters.getUser._id
+                    type: 'self',
+                    userId: this.$store.getters.getUser._id
                 })
             }
         },
