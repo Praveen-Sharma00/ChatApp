@@ -1,14 +1,10 @@
 <template>
     <div id="app">
-
         <div class="saurkraanti-section">
             <div id="wrapper">
                 <div class="section-side">
-                    <aside id="sidebar-wrapper" class="animated animatedFadeInUp fadeInLeft">
+                    <aside id="sidebar-wrapper" class=" _before animated animatedFadeInUp fadeInLeft">
                         <div class="section-side-div">
-                            <div class="sidebar-brand ">
-                                <h2>SaurKraanti</h2>
-                            </div>
                             <div class="menu-aside-1">
                                 <div class="menu-aside-x-overflow">
                                     <div class="user-img">
@@ -170,12 +166,12 @@
                                     <div class="col-lg-12">
                                         <div class="menu-flex-div  animated animatedFadeInUp fadeInUp">
                                             <div class="row">
-                                                <div class="col-sm-6 h-s">
+                                                <div class="col-sm-12 h-s">
                                                     <div class="row">
                                                     </div>
                                                     <div class="mt-3">
                                                         <div class="row">
-                                                            <div class="col-sm-6">
+                                                            <div class="col-sm-12">
                                                                 <a href="" class="">
                                                                     <div class="saur-kranti-menu-list flex-3 hover-a">
                                                                         <div class="d-flex  align-items-end h-100 p-3">
@@ -213,20 +209,20 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </div>
 </template>
 <script>
     export default {
         mounted() {
+            let sidebarWrapper = document.getElementById('sidebar-wrapper')
             let navbarToggle = document.getElementById('sidebar-toggle');
             let wrapper = document.getElementById('wrapper');
             navbarToggle.addEventListener('click', function (e) {
                 e.preventDefault();
                 wrapper.classList.toggle('toggled')
+                sidebarWrapper.classList.toggle('_before')
             });
         }
     }
@@ -240,7 +236,7 @@
         min-height: 100%;
     }
 
-    aside#sidebar-wrapper:before {
+    _before {
         background: #fef7f2;
         content: '';
         width: 250px;
@@ -769,7 +765,6 @@
 
     .result_hover .user-text {
         display: block;
-
     }
 
     /* .result_hover .user-img {
@@ -911,7 +906,7 @@
         /* background-image: linear-gradient(-45deg, #2b163c 0%, #771e10 33%, #9C27B0 100%); */
         background-image: linear-gradient(-45deg, rgba(3, 1, 76, 1) 0%, rgba(3, 1, 76, 1) 33%, rgba(154, 0, 0, 1) 100%);
 
-        background-attachment: fixed;
+        /*background-attachment: fixed;*/
     }
 
     .navbar-wrapper-bg.bg-2 {
@@ -1640,5 +1635,42 @@
         background: #fff;
         border-radius: 4px;
         height: 330px;
+    }
+
+    @media only screen and (min-width: 1601px) {
+        .container-1 {
+            max-width: 1568px
+        }
+
+    }
+
+    @media only screen and (min-width: 1441px) and (max-width: 1600px) {
+        .container-1 {
+            width: 1290px
+        }
+
+    }
+
+    @media only screen and (min-width: 1281px) and (max-width: 1440px) {
+        .container-1 {
+            width: 1170px
+        }
+
+    }
+
+    @media only screen and (min-width: 992px) and (max-width: 1280px) {
+        .container-1 {
+            width: 1170px
+        }
+
+        ._before {
+            display: none;
+        }
+    }
+
+    @media only screen and (max-width: 479px) {
+        ._before {
+            display: none;
+        }
     }
 </style>
