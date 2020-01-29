@@ -6,8 +6,8 @@ export default [
     {
         path: '/auth', component: AuthMain,
         children: [
-            {path: 'login', component: Login},
-            {path: 'register',component: Register}
+            {path: 'login', component: Login,name:'Login'},
+            {path: 'register',component: Register,name:'Register'}
         ]
     },
     {
