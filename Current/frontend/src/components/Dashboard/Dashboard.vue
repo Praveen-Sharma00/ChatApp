@@ -726,6 +726,9 @@
 <script>
     export default {
         name: "Dashboard",
+        beforeCreate() {
+            document.body.className = ""
+        },
         mounted() {
             let sidebarWrapper = document.getElementById('sidebar-wrapper')
             let navbarToggle = document.getElementById('sidebar-toggle');
