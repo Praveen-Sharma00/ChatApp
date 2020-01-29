@@ -13,7 +13,7 @@
                                 <div class="menu-aside-x-overflow">
                                     <div class="user-img">
                                         <div class="user-icon">
-                                            <img src="assets/images/75.jpg" alt="">
+                                            <img src="@/assets/75.jpg" alt="">
                                         </div>
                                         <div class="user-text">
                                             <h4>
@@ -26,7 +26,7 @@
                                     </div>
                                     <div class="side-memnu">
                                         <ul class="sidebar-nav">
-                                            <li class="active">
+                                            <li class="">
                                                 <a href="index.php" class="d-flex align-items-center">
                                                     <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px"
                                                          height="22px" viewBox="0 0 1024 1024" rotate="0">
@@ -56,7 +56,7 @@
                                                     </svg>
                                                     <span>Tender</span> </a>
                                             </li>
-                                            <li class="active">
+                                            <li class="">
                                                 <a href="product-showcase.php" class="d-flex align-items-center">
                                                     <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px"
                                                          height="22px" viewBox="0 0 1024 1024" rotate="0">
@@ -72,7 +72,7 @@
                                                     </svg>
                                                     <span> My Product</span></a>
                                             </li>
-                                            <li class="active">
+                                            <li class="">
                                                 <a href="#" class="d-flex align-items-center">
                                                     <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px"
                                                          height="22px" viewBox="0 0 1024 1024" rotate="0">
@@ -88,7 +88,7 @@
                                                 <li><a href="#"> My RFQ </a></li>
                                                 <li><a href="#"> My Bidding </a></li>
                                             </ul>
-                                            <li class="sub-menu2 active">
+                                            <li class="sub-menu2 ">
                                                 <a href="#" class="d-flex align-items-center">
                                                     <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px"
                                                          height="22px" viewBox="0 0 1024 1024" rotate="0">
@@ -115,7 +115,8 @@
                             <img src="@/assets/download.svg" alt="">
                         </div>
                         <div class="navbar-header1">
-                            <a href="#" class="navbar-brand navbrand-bar" id="sidebar-toggle"><i class="fa fa-bars"></i></a>
+                            <a href="#" class="navbar-brand navbrand-bar" ref="sidebar_toggle" id="sidebar-toggle"><i
+                                    class="fa fa-bars"></i></a>
                         </div>
                         <div class="relative">
                             <nav class="navbar fixed-top navbar-expand-lg navbar-light  navbar-s-k">
@@ -145,7 +146,7 @@
                                             <a class="nav-link dropdown-toggle1" href="#" id="navbarDropdown"
                                                role="button" data-toggle="dropdown" aria-haspopup="true"
                                                aria-expanded="false">
-                                                <img class="nav-s-k-right" src="assets/images/75.jpg" alt="">
+                                                <img class="nav-s-k-right" src="@/assets/75.jpg" alt="">
                                             </a>
                                             <div class="dropdown-menu dropdown-s-k" aria-labelledby="navbarDropdown">
                                                 <a class="dropdown-item" href="#"><i
@@ -218,7 +219,18 @@
 
     </div>
 </template>
-
+<script>
+    export default {
+        mounted() {
+            let navbarToggle = document.getElementById('sidebar-toggle');
+            let wrapper = document.getElementById('wrapper');
+            navbarToggle.addEventListener('click', function (e) {
+                e.preventDefault();
+                wrapper.classList.toggle('toggled')
+            });
+        }
+    }
+</script>
 <style>
     @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap');
 
