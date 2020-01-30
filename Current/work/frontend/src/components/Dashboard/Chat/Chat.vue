@@ -259,6 +259,8 @@
                                                 <div class="body-chat-div-text pl-4">
                                                     
                                                     <h6>
+                                                        <span class="chat-pill-uname">Sender</span>
+                                                        <br>
                                                         Lorem ipsum dolor sit amet Lorem
                                                     </h6>
                                                     <br>
@@ -276,6 +278,8 @@
                                                 <div class="body-chat-div-text pl-4 sender">
                                                     
                                                     <h6>
+                                                         <span class="chat-pill-uname">Receiver</span>
+                                                         <br>
                                                         Lorem ipsum dolor sit amet  Lorem ipsum dolor sit amet  
                                                         psum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
                                                     </h6>
