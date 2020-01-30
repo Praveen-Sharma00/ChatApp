@@ -39,17 +39,34 @@
               </div>
             </a>
           </li>
+          <li class="nav-item">
+                    <a id="tab-B" href="#pane-B" class="nav-link" data-toggle="tab" role="tab">
+                        <div class="d-flex align-items-center">
+                            <div class="chat-img">
+                                <img src="assets/images/75.jpg" alt="">
+                            </div>
+                            <div class="chat-user  align-items-center ">
+                                <h6>
+                                    James Deo1
+                                </h6>
+                                <p>
+                                    Admininstrator
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
         </ul>
         <div class="contact-all">
           <div class="row w-100 justify-content-center">
-            <div class=" col-sm-4 tab-title text-center fav-con active">
-              <i class="fas fa-user" ></i>
+            <div class="col-sm-4 tab-title text-center fav-con active">
+              <i class="fas fa-user"></i>
               Individual
             </div>
             <!-- <div class="col-sm-1"></div> -->
-            <div class=" col-sm-4 tab-title text-center fav-con">
+            <div class="col-sm-4 tab-title text-center fav-con">
               <i class="fas fa-users"></i>
-Group
+              Group
             </div>
           </div>
         </div>
@@ -58,8 +75,7 @@ Group
             id="pane-A"
             class="card tab-pane fade show active"
             role="tabpanel"
-            aria-labelledby="tab-A"
-          >
+            aria-labelledby="tab-A">
             <div class="card-header" role="tab" id="heading-A">
               <h5 class="mb-0">
                 <a
@@ -138,7 +154,7 @@ Group
                         <div class="body-chat-div-img">
                           <img src="@/assets/images/75.jpg" alt />
                         </div>
-                        <div class="body-chat-div-text pl-4 left">
+                        <div class="body-chat-div-text pl-4 sender">
                           <small>May 29, 2019 04:15 Pm</small>
                           <br />
                           <h6>Lorem ipsum dolor sit amet</h6>
@@ -190,6 +206,98 @@ Group
               </div>
             </div>
           </div>
+
+          <div id="pane-B" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-B">
+                    <div class="card-header" role="tab" id="heading-B">
+                        <h5 class="mb-0">
+                            <a class="collapsed" data-toggle="collapse" href="#collapse-B" data-parent="#content" aria-expanded="false" aria-controls="collapse-B">
+                                Collapsible Group Item B
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapse-B" class="collapse" role="tabpanel" aria-labelledby="heading-B">
+                        <div class="card-body">
+                            <div class="chat-body-saur">
+                                <div class="chat-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="chat-body-div">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="chat-body-img">
+                                                        <img src="assets/images/75.jpg" alt="">
+                                                    </div>
+                                                    <div class="chat-body-user-inf d-flex align-items-center pl-4">
+                                                        <h2>
+                                                            James Deo1
+                                                        </h2>
+
+                                                        <p class="pl-2"> <span class="dot-chat pl-2"></span> Online</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 d-flex align-items-center justify-content-end">
+                                            <div class="chat-body-dots">
+                                                <button class="button-chat sub-menu4">
+                                                    <i class="fas fas-dot-chat fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-ul4 dropdown-ul-n12">
+                                                    <li> <a href="#"> Delete Conversation </a> </li>
+                                                    <li> <a href="#"> Option 1</a> </li>
+                                                    <li> <a href="#"> Option 2</a> </li>
+                                                    <li> <a href="#"> Option 3 </a> </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chat-text-body">
+                                    <div class="row">
+                                        <div class="col-sm-8 d-flex align-items-center mt-3">
+                                            <div class="d-flex align-items-center">
+                                               
+                                                <div class="body-chat-div-text pl-4">
+                                                    
+                                                    <h6>
+                                                        Lorem ipsum dolor sit amet Lorem
+                                                    </h6>
+                                                    <br>
+                                                    <small>May 29, 2019 04:15 Pm</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+
+                                    </div>
+                                    <div class="row justify-content-end">
+                                        <div class="col-sm-8 d-flex align-items-center justify-content-end mt-3">
+                                            <div class="d-flex align-items-center">
+                                                
+                                                <div class="body-chat-div-text pl-4 sender">
+                                                    
+                                                    <h6>
+                                                        Lorem ipsum dolor sit amet  Lorem ipsum dolor sit amet  
+                                                        psum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
+                                                    </h6>
+                                                    <small>May 29, 2019 04:15 Pm</small><br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="search-button">
+                                        <div class="active-pink-3 active-pink-41 mt-3">
+                                            <input class="form-control search-text" type="text" placeholder="Type a Message" aria-label="Search">
+                                            <button class="msg_send_btn">
+                                                <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
       </div>
     </div>
@@ -369,11 +477,11 @@ button.button-chat {
 .body-chat-div-text.pl-4 {
   position: relative;
 }
-.body-chat-div-text.pl-4.left h6 {
+.body-chat-div-text.pl-4.sender h6 {
   background: #fff3e0;
   border-top-right-radius: 0;
 }
-.body-chat-div-text.pl-4.left h6:after {
+.body-chat-div-text.pl-4.sender h6:after {
   right: 0;
   border-right: 10px solid #fff3e0;
 }
@@ -416,7 +524,11 @@ input.form-control.search-text {
   position: absolute;
   bottom: 30px;
 }
-
+.chat-pill-uname{
+    color:rgb(119, 119, 119);
+    font-size:12px;
+    font-weight: 600;
+}
 .msg_send_btn {
   background: #05728f none repeat scroll 0 0;
   border: medium none;
@@ -476,8 +588,7 @@ input.form-control.search-text {
   width: 28%;
   height: 70px;
   padding-top: 10px;
-  font-size:12px;
- 
+  font-size: 12px;
 }
 ul#Commentary li {
   list-style-type: none;
@@ -515,15 +626,15 @@ ul#Commentary {
   color: gray;
   margin-top: 5px;
 }
-.contact-all .tab-title{
-    padding-top:4px;
+.contact-all .tab-title {
+  padding-top: 4px;
 }
-.contact-all .tab-title:hover{
-   background: rgb(235, 233, 233);
-   cursor: pointer;
+.contact-all .tab-title:hover {
+  background: rgb(235, 233, 233);
+  cursor: pointer;
 }
-.contact-all .active{
-    background: rgb(206, 204, 204);
+.contact-all .active {
+  background: rgb(206, 204, 204);
 }
 .contact-all a {
   text-decoration: none;
