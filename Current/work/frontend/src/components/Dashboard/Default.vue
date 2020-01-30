@@ -15,7 +15,7 @@
                                         </div>
                                         <div class="saur-kranti-menu-icon d-flex justify-content-end w-50">
                                             <div class="saur-kranti-menu-icon-img">
-                                                <img src="assets/images/my_product_white.png" alt="">
+                                                <img src="@/assets/images/my_product_white.png" alt="">
                                             </div>
                                         </div>
                                     </div>
@@ -33,7 +33,7 @@
                                         </div>
                                         <div class="saur-kranti-menu-icon d-flex justify-content-end w-50">
                                             <div class="saur-kranti-menu-icon-img">
-                                                <img src="assets/images/my_product_white.png" alt="">
+                                                <img src="@/assets/images/my_product_white.png" alt="">
                                             </div>
                                         </div>
                                     </div>
@@ -54,7 +54,7 @@
                                             </div>
                                             <div class="saur-kranti-menu-icon d-flex justify-content-end w-50">
                                                 <div class="saur-kranti-menu-icon-img">
-                                                    <img src="assets/images/my_product_white.png" alt="">
+                                                    <img src="@/assets/images/my_product_white.png" alt="">
                                                 </div>
                                             </div>
                                         </div>
@@ -72,7 +72,7 @@
                                             </div>
                                             <div class="saur-kranti-menu-icon d-flex justify-content-end w-50">
                                                 <div class="saur-kranti-menu-icon-img">
-                                                    <img src="assets/images/my_product_white.png" alt="">
+                                                    <img src="@/assets/images/my_product_white.png" alt="">
                                                 </div>
                                             </div>
                                         </div>
@@ -88,7 +88,7 @@
                         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img class="d-block w-100" src="assets/images/15.jpg" alt="First slide">
+                                    <img class="d-block w-100" src="@/assets/images/15.jpg" alt="First slide">
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5 class="animated animatedFadeInUp fadeInUp">Oli sounds positive
                                             of resolving all ‘pending issues’ with India</h5>
@@ -97,7 +97,7 @@
                                     </div>
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="d-block w-100" src="assets/images/29.jpg"
+                                    <img class="d-block w-100" src="@/assets/images/29.jpg"
                                          alt="Second slide">
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5 class="animated animatedFadeInUp fadeInUp">Oli sounds positive
@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="d-block w-100" src="assets/images/8.jpg" alt="Third slide">
+                                    <img class="d-block w-100" src="@/assets/images/8.jpg" alt="Third slide">
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5>Oli sounds positive of resolving all ‘pending issues’ with
                                             India</h5>
@@ -294,7 +294,7 @@
                                                 <div class="col-sm-10">
                                                     <div class="d-flex">
                                                         <div class="head-prod-img main-2-img">
-                                                            <img src="assets/images/newyear.jpeg" alt="">
+                                                            <img src="@/assets/images/newyear.jpeg" alt="">
                                                         </div>
                                                         <div class="head-prod-icon d-flex align-items-center main-2-h6">
                                                             <h6>

@@ -111,7 +111,7 @@
                 </aside>
                 <div id="navbar-wrapper1">
                     <div class="navbar-wrapper-bg">
-                        <img src="assets/images/download.svg" alt="">
+                        <img src="@/assets/images/download.svg" alt="">
                     </div>
                     <div class="navbar-header1">
                         <a href="#" class="navbar-brand navbrand-bar" id="sidebar-toggle"><i class="fa fa-bars"></i></a>
