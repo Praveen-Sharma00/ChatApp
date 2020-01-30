@@ -25,6 +25,7 @@
             />
             <span>6 Contacts</span>
           </div>
+
           <li class="nav-item">
             <a id="tab-A" href="#pane-A" class="nav-link active" data-toggle="tab" role="tab">
               <div class="d-flex align-items-center">
@@ -38,23 +39,20 @@
               </div>
             </a>
           </li>
-          <div class="contact-all">
-            <div class="row w-100 align-items-end">
-              <div class="col-sm-6 w-50 text-center fav-con">
-                <a href="#tabs">
-                  <i class="fas fa-id-badge"></i>
-                  <p>All Contact</p>
-                </a>
-              </div>
-              <div class="col-sm-6 w-50 text-center fav-con">
-                <a href="#tabs">
-                  <i class="far fa-star"></i>
-                  <p>Favourite</p>
-                </a>
-              </div>
+        </ul>
+        <div class="contact-all">
+          <div class="row w-100 justify-content-center">
+            <div class=" col-sm-4 tab-title text-center fav-con active">
+              <i class="fas fa-user" ></i>
+              Individual
+            </div>
+            <!-- <div class="col-sm-1"></div> -->
+            <div class=" col-sm-4 tab-title text-center fav-con">
+              <i class="fas fa-users"></i>
+Group
             </div>
           </div>
-        </ul>
+        </div>
         <div id="content" class="tab-content" role="tablist">
           <div
             id="pane-A"
@@ -117,6 +115,7 @@
                   </div>
                 </div>
                 <div class="message-area-body">
+                  <!-- LEFT -->
                   <div class="row">
                     <div class="col-sm-12 d-flex align-items-center mt-3">
                       <div class="d-flex align-items-center">
@@ -126,35 +125,14 @@
                         <div class="body-chat-div-text pl-4">
                           <small>May 29, 2019 04:15 Pm</small>
                           <br />
-                          <h6>Lorem ipsum dolor sit amet</h6>
+                          <h6>Some text here</h6>
                         </div>
                       </div>
                     </div>
-
-                    <div class="col-sm-12 d-flex align-items-center justify-content-end mt-3">
-                      <div class="d-flex align-items-center">
-                        <div class="body-chat-div-img">
-                          <img src="@/assets/images/75.jpg" alt />
-                        </div>
-                        <div class="body-chat-div-text pl-4 left">
-                          <small>May 29, 2019 04:15 Pm</small>
-                          <br />
-                          <h6>Lorem ipsum dolor sit amet</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-12 d-flex align-items-center mt-3">
-                      <div class="d-flex align-items-center">
-                        <div class="body-chat-div-img">
-                          <img src="@/assets/images/75.jpg" alt />
-                        </div>
-                        <div class="body-chat-div-text pl-4">
-                          <small>May 29, 2019 04:15 Pm</small>
-                          <br />
-                          <h6>Lorem ipsum dolor sit amet</h6>
-                        </div>
-                      </div>
-                    </div>
+                  </div>
+                  <!--END LEFT -->
+                  <!-- RIGHT -->
+                  <div class="row">
                     <div class="col-sm-12 d-flex align-items-center justify-content-end mt-3">
                       <div class="d-flex align-items-center">
                         <div class="body-chat-div-img">
@@ -168,108 +146,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-sm-12 d-flex align-items-center mt-3">
-                      <div class="d-flex align-items-center">
-                        <div class="body-chat-div-img">
-                          <img src="@/assets/images/75.jpg" alt />
-                        </div>
-                        <div class="body-chat-div-text pl-4">
-                          <small>May 29, 2019 04:15 Pm</small>
-                          <br />
-                          <h6>Lorem ipsum dolor sit amet</h6>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-sm-12 d-flex align-items-center justify-content-end mt-3">
-                      <div class="d-flex align-items-center">
-                        <div class="body-chat-div-img">
-                          <img src="@/assets/images/75.jpg" alt />
-                        </div>
-                        <div class="body-chat-div-text pl-4 left">
-                          <small>May 29, 2019 04:15 Pm</small>
-                          <br />
-                          <h6>Lorem ipsum dolor sit amet</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-12 d-flex align-items-center mt-3">
-                      <div class="d-flex align-items-center">
-                        <div class="body-chat-div-img">
-                          <img src="@/assets/images/75.jpg" alt />
-                        </div>
-                        <div class="body-chat-div-text pl-4">
-                          <small>May 29, 2019 04:15 Pm</small>
-                          <br />
-                          <h6>Lorem ipsum dolor sit amet</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-12 d-flex align-items-center justify-content-end mt-3">
-                      <div class="d-flex align-items-center">
-                        <div class="body-chat-div-img">
-                          <img src="@/assets/images/75.jpg" alt />
-                        </div>
-                        <div class="body-chat-div-text pl-4 left">
-                          <small>May 29, 2019 04:15 Pm</small>
-                          <br />
-                          <h6>Lorem ipsum dolor sit amet</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-12 d-flex align-items-center mt-3">
-                      <div class="d-flex align-items-center">
-                        <div class="body-chat-div-img">
-                          <img src="@/assets/images/75.jpg" alt />
-                        </div>
-                        <div class="body-chat-div-text pl-4">
-                          <small>May 29, 2019 04:15 Pm</small>
-                          <br />
-                          <h6>Lorem ipsum dolor sit amet</h6>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-sm-12 d-flex align-items-center justify-content-end mt-3">
-                      <div class="d-flex align-items-center">
-                        <div class="body-chat-div-img">
-                          <img src="@/assets/images/75.jpg" alt />
-                        </div>
-                        <div class="body-chat-div-text pl-4 left">
-                          <small>May 29, 2019 04:15 Pm</small>
-                          <br />
-                          <h6>Lorem ipsum dolor sit amet</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-12 d-flex align-items-center mt-3">
-                      <div class="d-flex align-items-center">
-                        <div class="body-chat-div-img">
-                          <img src="@/assets/images/75.jpg" alt />
-                        </div>
-                        <div class="body-chat-div-text pl-4">
-                          <small>May 29, 2019 04:15 Pm</small>
-                          <br />
-                          <h6>Lorem ipsum dolor sit amet</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-12 d-flex align-items-center justify-content-end mt-3">
-                      <div class="d-flex align-items-center">
-                        <div class="body-chat-div-img">
-                          <img src="@/assets/images/75.jpg" alt />
-                        </div>
-                        <div class="body-chat-div-text pl-4 left">
-                          <small>May 29, 2019 04:15 Pm</small>
-                          <br />
-                          <h6>Lorem ipsum dolor sit amet</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <!-- END RIGHT-->
                 </div>
                 <div class="chat-input-container container-fluid">
                   <div class="row">
@@ -592,10 +469,15 @@ input.form-control.search-text {
 .chat-tab a {
   padding: 10px 20px;
 }
+
 .contact-all {
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
   width: 28%;
+  height: 70px;
+  padding-top: 10px;
+  font-size:12px;
+ 
 }
 ul#Commentary li {
   list-style-type: none;
@@ -606,6 +488,7 @@ ul#Commentary {
 .contact-all a {
   padding: 0;
 }
+
 .contact-all .fas {
   width: 30px;
   background-image: linear-gradient(#0a2b4f, #af1212) !important;
@@ -631,6 +514,22 @@ ul#Commentary {
 .contact-all p {
   color: gray;
   margin-top: 5px;
+}
+.contact-all .tab-title{
+    padding-top:4px;
+}
+.contact-all .tab-title:hover{
+   background: rgb(235, 233, 233);
+   cursor: pointer;
+}
+.contact-all .active{
+    background: rgb(206, 204, 204);
+}
+.contact-all a {
+  text-decoration: none;
+}
+.contact-all .tab-active {
+  background: red !important;
 }
 ul.dropdown-ul4.dropdown-ul-n12 {
   padding-left: 0;
@@ -659,7 +558,7 @@ ul.dropdown-ul4.dropdown-ul-n12 a {
   bottom: -13px !important;
   min-width: 95%;
   max-width: 95%;
-   
+
   /* margin: 0; */
   box-sizing: content-box;
   min-height: 70px;
@@ -673,7 +572,7 @@ ul.dropdown-ul4.dropdown-ul-n12 a {
   padding: 10px 20px 10px 25px !important;
   box-sizing: border-box;
   color: rgba(0, 0, 0, 0.87);
-    font-size: 12px;
+  font-size: 12px;
   -webkit-box-shadow: 0px 1px 3px 0px rgba(181, 181, 181, 1);
   -moz-box-shadow: 0px 1px 3px 0px rgba(181, 181, 181, 1);
   box-shadow: 0px 1px 3px 0px rgba(181, 181, 181, 1);
