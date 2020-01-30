@@ -2,13 +2,13 @@
     <div class="saurkraanti-section">
         <div id="wrapper">
             <div class="section-side">
-                <aside id="sidebar-wrapper" class=" _before animated animatedFadeInUp fadeInLeft">
+                <aside id="sidebar-wrapper" class="animated animatedFadeInUp fadeInLeft">
                     <div class="section-side-div">
                         <div class="menu-aside-1">
                             <div class="menu-aside-x-overflow">
                                 <div class="user-img">
                                     <div class="user-icon">
-                                        <img src="@/assets/75.jpg" alt="">
+                                        <img src="assets/images/75.jpg" alt="">
                                     </div>
                                     <div class="user-text">
                                         <h4>
@@ -23,16 +23,16 @@
                                     <ul class="sidebar-nav">
                                         <li class="">
                                             <a href="index.php" class="d-flex align-items-center">
-                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px"
-                                                     height="22px" viewBox="0 0 1024 1024" rotate="0">
+                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px" height="22px"
+                                                     viewBox="0 0 1024 1024" rotate="0">
                                                     <path d="M512 224l-320 256v416h224v-256h192v256h224v-416l-320-256zM800 864h-160v-256h-256v256h-160v-368.62l288-230.4 288 230.4v368.62z M512 128l-192 153.6v-89.6h-128v191.998l-64 50.998 23.020 22.768 360.98-288.784 360.98 288.786 23.020-22.77-384-306.996zM288 307.198l-64 51.2v-134.398h64v83.198z"></path>
                                                 </svg>
                                                 <span>Home</span> </a>
                                         </li>
                                         <li class="sub-menu">
                                             <a href="#" class="d-flex align-items-center">
-                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px"
-                                                     height="22px" viewBox="0 0 1024 1024" rotate="0">
+                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px" height="22px"
+                                                     viewBox="0 0 1024 1024" rotate="0">
                                                     <path d="M512 96c-229.8 0-416 186.2-416 416s186.2 416 416 416c229.8 0 416-186.2 416-416s-186.2-416-416-416zM512 893.4c-210.2 0-381.4-171-381.4-381.4 0-210.2 171-381.4 381.4-381.4 210.2 0 381.4 171 381.4 381.4 0 210.2-171.2 381.4-381.4 381.4z M278.6 704l68.4-57.6-49.4-32.4z M684.4 596c-13.6 6.4-30.4 28-7.8 57.2 18.2 23.4 36 17.4 53 50.8 9.6-8.2 18.8-43.4 14.6-71.4-4.8-30.6-24.6-53-59.8-36.6z M503.2 379.2c3.2-5.4 1.2-12.6-4.2-15.8l-30.2-17.2c-5.6-3.2-12.6-1.2-15.8 4.2l-111.8 193.6-33.8 58.4 49.8 30 87.8-152.6 58.2-100.6z M461.2 480l-37 64h178.4l-36.2-64z M702 544h66v-64h-102z M362.2 480h-106.2v64h69.2z M649.2 480l-120-211.6c-3.2-5.6-10.4-7.4-15.8-4.2l-30.2 17.2c-5.6 3.2-7.4 10.2-4.2 15.8l140 247.4 1-0.6 48.8-29.6-19.6-34.4z M686.4 544l-9.8-17.4-49.6 30 26 46 49.8-30.2z"></path>
                                                 </svg>
                                                 <span>RFQ</span> <i class="fa fas-drop fa-angle-down"></i></a>
@@ -45,37 +45,43 @@
                                         </ul>
                                         <li class="">
                                             <a href="#" class="d-flex align-items-center">
-                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px"
-                                                     height="22px" viewBox="0 0 1024 1024" rotate="0">
+                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px" height="22px"
+                                                     viewBox="0 0 1024 1024" rotate="0">
                                                     <path d="M512 224l-320 256v416h224v-256h192v256h224v-416l-320-256zM800 864h-160v-256h-256v256h-160v-368.62l288-230.4 288 230.4v368.62z M512 128l-192 153.6v-89.6h-128v191.998l-64 50.998 23.020 22.768 360.98-288.784 360.98 288.786 23.020-22.77-384-306.996zM288 307.198l-64 51.2v-134.398h64v83.198z"></path>
                                                 </svg>
                                                 <span>Tender</span> </a>
                                         </li>
                                         <li class="">
                                             <a href="product-showcase.php" class="d-flex align-items-center">
-                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px"
-                                                     height="22px" viewBox="0 0 1024 1024" rotate="0">
+                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px" height="22px"
+                                                     viewBox="0 0 1024 1024" rotate="0">
                                                     <path d="M512 224l-320 256v416h224v-256h192v256h224v-416l-320-256zM800 864h-160v-256h-256v256h-160v-368.62l288-230.4 288 230.4v368.62z M512 128l-192 153.6v-89.6h-128v191.998l-64 50.998 23.020 22.768 360.98-288.784 360.98 288.786 23.020-22.77-384-306.996zM288 307.198l-64 51.2v-134.398h64v83.198z"></path>
                                                 </svg>
                                                 <span>Product Showcase</span> </a>
                                         </li>
                                         <li class="">
                                             <a href="#" class="d-flex align-items-center">
-                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px"
-                                                     height="22px" viewBox="0 0 1024 1024" rotate="0">
+                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px" height="22px"
+                                                     viewBox="0 0 1024 1024" rotate="0">
                                                     <path d="M512 224l-320 256v416h224v-256h192v256h224v-416l-320-256zM800 864h-160v-256h-256v256h-160v-368.62l288-230.4 288 230.4v368.62z M512 128l-192 153.6v-89.6h-128v191.998l-64 50.998 23.020 22.768 360.98-288.784 360.98 288.786 23.020-22.77-384-306.996zM288 307.198l-64 51.2v-134.398h64v83.198z"></path>
                                                 </svg>
                                                 <span> My Product</span></a>
                                         </li>
                                         <li class="">
+                                            <a href="chat.php" class="d-flex align-items-center">
+                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px" height="22px"
+                                                     viewBox="0 0 1024 1024" rotate="0">
+                                                    <path d="M512 224l-320 256v416h224v-256h192v256h224v-416l-320-256zM800 864h-160v-256h-256v256h-160v-368.62l288-230.4 288 230.4v368.62z M512 128l-192 153.6v-89.6h-128v191.998l-64 50.998 23.020 22.768 360.98-288.784 360.98 288.786 23.020-22.77-384-306.996zM288 307.198l-64 51.2v-134.398h64v83.198z"></path>
+                                                </svg>
+                                                <span>Chat</span> </a>
+                                        </li>
+                                        <li class="sub-menu1">
                                             <a href="#" class="d-flex align-items-center">
-                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px"
-                                                     height="22px" viewBox="0 0 1024 1024" rotate="0">
+                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px" height="22px"
+                                                     viewBox="0 0 1024 1024" rotate="0">
                                                     <path d="M512 96c-229.8 0-416 186.2-416 416s186.2 416 416 416c229.8 0 416-186.2 416-416s-186.2-416-416-416zM512 893.4c-210.2 0-381.4-171-381.4-381.4 0-210.2 171-381.4 381.4-381.4 210.2 0 381.4 171 381.4 381.4 0 210.2-171.2 381.4-381.4 381.4z M278.6 704l68.4-57.6-49.4-32.4z M684.4 596c-13.6 6.4-30.4 28-7.8 57.2 18.2 23.4 36 17.4 53 50.8 9.6-8.2 18.8-43.4 14.6-71.4-4.8-30.6-24.6-53-59.8-36.6z M503.2 379.2c3.2-5.4 1.2-12.6-4.2-15.8l-30.2-17.2c-5.6-3.2-12.6-1.2-15.8 4.2l-111.8 193.6-33.8 58.4 49.8 30 87.8-152.6 58.2-100.6z M461.2 480l-37 64h178.4l-36.2-64z M702 544h66v-64h-102z M362.2 480h-106.2v64h69.2z M649.2 480l-120-211.6c-3.2-5.6-10.4-7.4-15.8-4.2l-30.2 17.2c-5.6 3.2-7.4 10.2-4.2 15.8l140 247.4 1-0.6 48.8-29.6-19.6-34.4z M686.4 544l-9.8-17.4-49.6 30 26 46 49.8-30.2z"></path>
                                                 </svg>
                                                 <span>Lead</span> <i class="fa fas-drop fa-angle-down"></i></a>
-
-
                                         </li>
                                         <ul class="dropdown-ul1 dropdown-ul-n">
                                             <li><a href="#"> New RFQ </a></li>
@@ -83,15 +89,13 @@
                                             <li><a href="#"> My RFQ </a></li>
                                             <li><a href="#"> My Bidding </a></li>
                                         </ul>
-                                        <li class="sub-menu2 ">
+                                        <li class="sub-menu2">
                                             <a href="#" class="d-flex align-items-center">
-                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px"
-                                                     height="22px" viewBox="0 0 1024 1024" rotate="0">
+                                                <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="22px" height="22px"
+                                                     viewBox="0 0 1024 1024" rotate="0">
                                                     <path d="M512 96c-229.8 0-416 186.2-416 416s186.2 416 416 416c229.8 0 416-186.2 416-416s-186.2-416-416-416zM512 893.4c-210.2 0-381.4-171-381.4-381.4 0-210.2 171-381.4 381.4-381.4 210.2 0 381.4 171 381.4 381.4 0 210.2-171.2 381.4-381.4 381.4z M278.6 704l68.4-57.6-49.4-32.4z M684.4 596c-13.6 6.4-30.4 28-7.8 57.2 18.2 23.4 36 17.4 53 50.8 9.6-8.2 18.8-43.4 14.6-71.4-4.8-30.6-24.6-53-59.8-36.6z M503.2 379.2c3.2-5.4 1.2-12.6-4.2-15.8l-30.2-17.2c-5.6-3.2-12.6-1.2-15.8 4.2l-111.8 193.6-33.8 58.4 49.8 30 87.8-152.6 58.2-100.6z M461.2 480l-37 64h178.4l-36.2-64z M702 544h66v-64h-102z M362.2 480h-106.2v64h69.2z M649.2 480l-120-211.6c-3.2-5.6-10.4-7.4-15.8-4.2l-30.2 17.2c-5.6 3.2-7.4 10.2-4.2 15.8l140 247.4 1-0.6 48.8-29.6-19.6-34.4z M686.4 544l-9.8-17.4-49.6 30 26 46 49.8-30.2z"></path>
                                                 </svg>
                                                 <span>Consultation</span> <i class="fa fas-drop fa-angle-down"></i></a>
-
-
                                         </li>
                                         <ul class="dropdown-ul2 dropdown-ul-n">
                                             <li><a href="#"> New RFQ </a></li>
@@ -107,11 +111,10 @@
                 </aside>
                 <div id="navbar-wrapper1">
                     <div class="navbar-wrapper-bg">
-                        <img src="@/assets/download.svg" alt="">
+                        <img src="assets/images/download.svg" alt="">
                     </div>
                     <div class="navbar-header1">
-                        <a href="#" class="navbar-brand navbrand-bar" ref="sidebar_toggle" id="sidebar-toggle"><i
-                                class="fa fa-bars"></i></a>
+                        <a href="#" class="navbar-brand navbrand-bar" id="sidebar-toggle"><i class="fa fa-bars"></i></a>
                     </div>
                     <div class="relative">
                         <nav class="navbar fixed-top navbar-expand-lg navbar-light  navbar-s-k">
@@ -122,8 +125,7 @@
                             </button>
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <ul class="navbar-nav mr-auto">
-                                </ul>
+
                                 <ul class="ul-nav-right-icon d-flex">
                                     <li>
                                         <svg class="sc-bdVaJa fUuvxv" fill="#000000" width="28px" height="28px"
@@ -135,10 +137,9 @@
                                             </sup> </span>
                                     </li>
                                     <li class="nav-item dropdown p-0">
-                                        <a class="nav-link dropdown-toggle1" href="#" id="navbarDropdown"
-                                           role="button" data-toggle="dropdown" aria-haspopup="true"
-                                           aria-expanded="false">
-                                            <img class="nav-s-k-right" src="@/assets/75.jpg" alt="">
+                                        <a class="nav-link dropdown-toggle1" href="#" id="navbarDropdown" role="button"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img class="nav-s-k-right" src="assets/images/75.jpg" alt="">
                                         </a>
                                         <div class="dropdown-menu dropdown-s-k" aria-labelledby="navbarDropdown">
                                             <a class="dropdown-item" href="#"><i
@@ -160,12 +161,11 @@
                         <section id="content-wrapper">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <div class="row">
-                                        <router-view></router-view>
-                                    </div>
+                                    <router-view></router-view>
                                 </div>
                             </div>
                         </section>
+
                     </div>
                 </div>
             </div>
@@ -266,18 +266,6 @@
 
     #wrapper.toggled #sidebar-wrapper {
         width: 250px;
-    }
-
-    .sidebar-brand {
-        width: 250px;
-        text-align: center;
-        /* padding: 20px 0; */
-        position: fixed;
-
-        background: #fef7f2;
-        padding-top: 1em;
-        transition: all 0.5s ease;
-        z-index: 1;
     }
 
     ul.sidebar-nav li.active:before {
@@ -522,7 +510,6 @@
     #navbar-wrapper {
         width: 100%;
         position: absolute;
-
     }
 
     #wrapper.toggled #navbar-wrapper {
@@ -535,7 +522,6 @@
         font-size: 24px;
         margin-bottom: 0;
         border-radius: 0;
-
         /* box-shadow: 0px 1px 8px 0px rgba(80,80,80, 0.2), 0px 3px 4px 0px rgba(80,80,80, 0.14), 0px 3px 3px -2px rgba(80,80,80, 0.12); */
         background-attachment: fixed;
         position: fixed;
@@ -731,28 +717,6 @@
         display: block;
     }
 
-    /* .result_hover .user-img {
-      display: flex;
-    }
-    .result_hover .user-icon{
-      margin: unset;
-
-    } */
-    /* aside#sidebar-wrapper:hover .user-img {
-      display: block;
-    }
-    aside#sidebar-wrapper:hover.user-icon {
-      margin: 0 auto;
-    } */
-
-
-    /* aside#sidebar-wrapper .user-text{
-      display: block;
-    }
-    aside#sidebar-wrapper .user-img {
-      display: flex;
-    } */
-
     .result_hover #sidebar-wrapper:before {
         display: block;
     }
@@ -784,37 +748,12 @@
         border-radius: 50%;
     }
 
-    /* button.MuiButtonBase-root.MuiButton-root.MuiButton-text {
-      background: none;
-      border: none;
-    } */
-
     .dropdown-toggle1::after {
         display: none;
     }
 
     .dropdown-menu.dropdown-s-k.show {
         left: -80px;
-    }
-
-    /* ul.ul-nav-right-icon.d-flex:before {
-      content: '';
-        border-left: 1px solid #ffffff96;
-        height: 23px;
-        display: flex;
-        position: absolute;
-        top: 24px;
-    } */
-
-    input.form-control.mr-sm-2 {
-        background: #f28642;
-        border-radius: 23px;
-        border: none;
-    }
-
-    input.form-control.mr-sm-2::placeholder {
-        color: #ffffff9e;
-        text-align: center;
     }
 
     ul.ul-nav-right-icon.d-flex sup {
@@ -886,49 +825,6 @@
         background-attachment: fixed;
     }
 
-    .saur-kranti-menu-list {
-        height: 126px;
-        background: #f6f6f6 !important;
-        border-radius: 5px;
-        box-shadow: 0px 1px 3px 0px rgba(142, 142, 142, 0.2), 0px 1px 1px 0px rgba(243, 243, 243, 0.14), 0px 2px 1px -1px rgba(204, 204, 204, 0.12);
-    }
-
-    .saur-kranti-menu-text h6 {
-        color: #361e3b;
-        font-size: 17px;
-        font-weight: 500;
-        width: 100%;
-    }
-
-    .toggled .saur-kranti-menu-text h6 {
-        font-size: 18px;
-    }
-
-    .saur-kranti-menu-icon-img img {
-        width: 70px;
-        opacity: 0.8;
-    }
-
-    .flex-2 {
-        background: rgb(156, 39, 176);
-    }
-
-    .flex-3 {
-        background-color: rgb(3, 169, 244);
-    }
-
-    .flex-4 {
-        background-color: rgb(0, 150, 136);
-    }
-
-    .col-sm-6.bg-w {
-        background: #fff;
-        border-radius: 6px;
-        padding: 0;
-        position: relative;
-        overflow: hidden;
-    }
-
     .container-div {
         padding-left: 15px;
         padding-right: 15px;
@@ -988,62 +884,7 @@
       position: relative;
       overflow: hidden;
     } */
-    .carousel-caption.d-none.d-md-block {
-        position: absolute;
-        bottom: 100px;
-    }
 
-    .toggled .carousel-caption.d-none.d-md-block {
-        top: 25%;
-    }
-
-    .carousel-caption.d-none.d-md-block a {
-        color: #fff;
-        padding: 10px 10px;
-        border-radius: 16px;
-        font-size: 14px;
-        background-image: linear-gradient(-45deg, rgba(3, 1, 76, 1) 0%, rgba(3, 1, 76, 1) 33%, rgba(154, 0, 0, 1) 100%);
-    }
-
-    .carousel-caption.d-none.d-md-block h5 {
-        margin-bottom: 25px;
-        font-weight: 600;
-    }
-
-    .slider-sak .carousel-item:before {
-        content: '';
-        display: block;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(0, 0, 0, 0.9)));
-        background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
-        bottom: 0;
-        left: 0;
-    }
-
-    .carousel-caption.d-none.d-md-block a {
-        color: #fff;
-        padding: 10px 10px;
-        border-radius: 16px;
-        font-size: 14px;
-        background-image: linear-gradient(-45deg, rgba(3, 1, 76, 1) 0%, rgba(3, 1, 76, 1) 33%, rgba(154, 0, 0, 1) 100%);
-    }
-
-    .saur-kranti-menu-icon-img {
-        width: 60px;
-        height: 60px;
-        background-image: linear-gradient(-45deg, rgba(3, 1, 76, 1) 0%, rgba(3, 1, 76, 1) 33%, rgba(154, 0, 0, 1) 100%);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .saur-kranti-menu-icon-img img {
-        width: 40px;
-        opacity: 0.8;
-    }
 
     @-webkit-keyframes fadeInUp {
         from {
@@ -1101,50 +942,12 @@
         margin: 0;
     }
 
-    div#fsModal {
-        padding: 0 !important;
-    }
-
-    .modal-header.rfq-header {
-        background-image: linear-gradient(#0a2b4f, #af1212);
-    }
-
-    span.yellow-c {
-        color: #ffc107;
-    }
-
-    button.close.close-rfq {
-        color: #fff;
-        opacity: 1;
-        font-size: 26px;
-        margin-left: 0;
-        position: absolute;
-        right: 36px;
-    }
 
     .modal-header.rfq-header h1 {
         font-size: 20px;
         color: #FFE;
     }
 
-    .rfq-respond-bg {
-        background: #fff;
-        background-color: #fff;
-        background-clip: border-box;
-        border: 0 solid #e9ecef;
-        padding: 3.25rem;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-        border-radius: 4px;
-    }
-
-    .modal-body.rfq-body {
-        background: #80808014;
-    }
-
-    .tab-rfq-respond {
-        height: 450px;
-        overflow-x: auto;
-    }
 
     .nav-tabs .nav-item {
         margin-bottom: -1px;
@@ -1158,47 +961,6 @@
         font-size: 15px;
     }
 
-    .nav-tabs .nav-link.active {
-        border-color: transparent !important;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-        border-radius: 4px;
-        background-image: linear-gradient(#0a2b4f, #af1212) !important;
-        color: #fff !important;
-    }
-
-    .nav-tabs .nav-link {
-        border-color: transparent !important;
-        background: #fff !important;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-        border-radius: 4px;
-    }
-
-    .tab-content > .active {
-        display: block;
-        background: #fff;
-        height: 454px;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-        border-radius: 4px;
-    }
-
-    .res-tab-text {
-        padding: 30px 20px;
-    }
-
-    .slider-prod-sh {
-        background: #fff;
-        padding: 10px;
-        border-radius: 4px;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    }
-
-    .head-prod-img {
-        width: 60px;
-        height: 60px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
 
     .head-prod-img img {
         width: 60px;
@@ -1206,9 +968,6 @@
         border-radius: 50%;
     }
 
-    .slider-prod-sh-head {
-        margin-bottom: 12px;
-    }
 
     .head-prod-icon h6 {
         font-weight: 600;
@@ -1234,9 +993,6 @@
         float: left;
     }
 
-    .user-text-heart-chat {
-        margin-top: 15px;
-    }
 
     .notebook-user .fa-address-book {
         font-size: 22px;
@@ -1244,28 +1000,11 @@
         justify-content: flex-end;
     }
 
-    .user-review {
-        margin-top: 5px;
-    }
 
     .btn:focus {
         outline: none !important;
     }
 
-    .side-menu-icomn {
-        background: #f6f6f6;
-        border-radius: 4px;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    }
-
-    .side-menu-icomn li {
-        list-style-type: none;
-        padding: 15px 0px;
-        border-bottom: 1px solid;
-
-    }
 
     .side-menu-prod-img {
         background-image: linear-gradient(-45deg, rgba(3, 1, 76, 1) 0%, rgba(3, 1, 76, 1) 33%, rgba(154, 0, 0, 1) 100%);
@@ -1282,10 +1021,6 @@
         width: 35px;
     }
 
-    .side-menu-icomn ul {
-        padding: 0;
-
-    }
 
     .side-menu-icon-img h6 {
         color: #361e3b;
@@ -1296,67 +1031,11 @@
         margin-bottom: 0;
     }
 
-    .tender-div {
-        /* background: #f6f6f6; */
-        background: #fff;
-        padding: 15px 15px;
-        position: relative;
-        overflow: hidden;
-        border-radius: 4px;
-        height: 330px;
-        display: flex;
-        align-items: flex-end;
-    }
-
-    .tender-text .d-flex {
-        margin-top: 0px;
-        padding-top: 30px;
-    }
-
-    .main-sec-2 {
-        margin-top: 40px;
-    }
-
-    .tenter-user {
-        width: 33.33%;
-        text-align: center;
-    }
 
     .main-sec-slider-1 .owl-nav {
         margin-top: 10px;
     }
 
-    .tenter-user .fas {
-        margin-bottom: 10px;
-        background: red;
-        color: #fff;
-        background-image: linear-gradient(#0a2b4f, #af1212);
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 auto;
-    }
-
-    .tenter-user-button a {
-        background-image: linear-gradient(#0a2b4f, #af1212);
-        color: #fff;
-        padding: 6px 15px;
-        border-radius: 20px;
-        text-align: center;
-        font-size: 12px;
-    }
-
-    .tenter-user-button {
-        display: flex;
-        justify-content: center;
-    }
-
-    .tender-text h6 {
-        font-size: 18px;
-    }
 
     .main-sec-slider-1 {
         /* height: 350px; */
@@ -1387,37 +1066,10 @@
         margin-top: 10px;
     }
 
-    .main-2-div {
-        margin-top: 40px;
-        margin-bottom: 40px;
-    }
 
-    .fas-n {
-        color: #575151;
-        font-size: 18px;
-    }
-
-
-    .main-2-div .carousel-inner {
+    /* .main-2-div .carousel-inner {
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    }
-
-    .tender-nav {
-        position: absolute;
-        width: 100%;
-        bottom: 16px;
-    }
-
-    .tenter-user .fas {
-        margin-bottom: 5px;
-    }
-
-    .slider-prod-sh.prod-show-slider {
-        background: unset;
-        padding: 0px;
-        border-radius: 0px;
-        box-shadow: unset;
-    }
+    } */
 
     .head-prod-img.main-2-img img {
         width: 40px;
@@ -1437,46 +1089,11 @@
         font-size: 18px;
     }
 
-    .user-revie.main-2-review {
-        font-size: 14px;
-    }
 
-    .notebook-user.main-2-address {
-        font-size: 18px;
-    }
-
-    .none {
-        display: none;
-    }
-
-    .fade1 {
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-        height: 330px;
-    }
-
-    .main-2-div .slick-dots {
+    /* .main-2-div .slick-dots {
         bottom: -4px;
-    }
+    } */
 
-
-    .input {
-        border: 1px solid #ddd;
-        border-radius: 1px;
-        height: 60px;
-        padding-right: 15px;
-        padding-top: 10px;
-        text-align: right;
-        margin-right: 6px;
-        font-size: 2.5rem;
-        overflow-x: auto;
-        transition: all .2s ease-in-out;
-    }
-
-    .input:hover {
-        border: 1px solid #bbb;
-        -webkit-box-shadow: inset 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
-        box-shadow: inset 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
-    }
 
     .buttons {
     }
@@ -1508,9 +1125,6 @@
         font-weight: bold;
     }
 
-    .leftPanel {
-        display: inline-block;
-    }
 
     .numbers div {
         display: inline-block;
@@ -1536,39 +1150,6 @@
         font-weight: bold;
     }
 
-    div.equal {
-        display: inline-block;
-        border: 1px solid #3079ED;
-        border-radius: 1px;
-        width: 17%;
-        text-align: center;
-        padding: 67px 10px;
-        margin: 10px 6px 10px 0;
-        vertical-align: top;
-        cursor: pointer;
-        color: #FFF;
-        background-color: #4d90fe;
-        transition: all .2s ease-in-out;
-    }
-
-    div.equal:hover {
-        background-color: #307CF9;
-        -webkit-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
-        box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
-        border-color: #1857BB;
-    }
-
-    div.equal:active {
-        font-weight: bold;
-    }
-
-    .col-sm-4.cal {
-
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-        background: #fff;
-        border-radius: 4px;
-        height: 330px;
-    }
 
     @media only screen and (min-width: 1601px) {
         .container-1 {
@@ -1588,7 +1169,6 @@
         .container-1 {
             width: 1170px
         }
-
     }
 
     @media only screen and (min-width: 992px) and (max-width: 1280px) {

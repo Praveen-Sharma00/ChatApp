@@ -9,8 +9,5 @@
 </script>
 
 <style scoped>
-.chatlist{
-background-color: red;
-display: inline-block;
-}
+
 </style>

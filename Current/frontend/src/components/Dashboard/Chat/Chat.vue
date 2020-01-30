@@ -1,56 +1,41 @@
 <template>
-  <div class="container-fluid" >
-    <div class="card d-flex" id="main-container">
-      <div class="row h-100 ">
-        <div class="col-sm-4 chatlist">
-          <chat-list></chat-list>
+    <div>
+        <div class="menu-flex-div  animated animatedFadeInUp fadeInUp">
+            <div class="main-2-div">
+                <div class="row">
+                    <div class="col-sm-12 chat-card">
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-8 msg-area">
-          <message-area></message-area>
-        </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
-import ChatList from "./ChatList";
-import MessageArea from "./MessageArea";
+    import ChatList from "./ChatList";
+    import MessageArea from "./MessageArea";
 
-export default {
-  name: "Chat",
-  components: {
-    "chat-list": ChatList,
-    "message-area": MessageArea
-  }
-};
+    export default {
+        name: "Chat",
+        components: {
+            "chat-list": ChatList,
+            "message-area": MessageArea
+        }
+    };
 </script>
 
-<style scoped >
-.card {
-  margin-top: -37px !important;
-  height: 90vh;
-  width: 100%;
-  background: #f6f6f6 !important;
-  border-radius: 8px;
-  box-shadow: 0px 1px 3px 0px rgba(142, 142, 142, 0.2),
-    0px 1px 1px 0px rgba(243, 243, 243, 0.14),
-    0px 2px 1px -1px rgba(204, 204, 204, 0.12);
-  opacity: 0.9;
-}
-chat-list {
-  width: 40%;
-}
-.chatlist{
-    background-color: red;
-}
-.msg-area{
-    background-color: gray;
-}
-message-area {
-  width: 60%;
-}
-#main-container{
-    padding: 15px;
-}
+<style scoped>
+    .main-2-div {
+        margin-top: -2px;
+    }
+
+    .chat-card {
+        margin-top: -35px !important;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        background: #fff;
+        border-radius: 12px;
+        max-height: 100vh;
+        min-height: 90vh;
+        opacity: 0.98;
+    }
 </style>
