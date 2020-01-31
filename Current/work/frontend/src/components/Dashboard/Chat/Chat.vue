@@ -203,14 +203,11 @@
         height: 600px;
     }
 
-
-
     .body-chat-div-img img {
         width: 40px;
         height: 40px;
         border-radius: 50%;
     }
-
 
     .active-pink-3.active-pink-4 span {
         color: #80808082;

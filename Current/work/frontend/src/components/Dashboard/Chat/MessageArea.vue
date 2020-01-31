@@ -414,9 +414,6 @@
         background: #cbcbcb;
     }
 
-    /*.message-area-body::-webkit-scrollbar{*/
-    /*    width: 5px;*/
-    /*}*/
     .message-area-nav {
         margin-bottom: 20px;
         min-height: 40px !important;
