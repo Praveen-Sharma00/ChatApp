@@ -11,9 +11,8 @@ export default {
             }
             return {success: true, message: "Successfully authenticated !"}
         },
-
         async LogoutCurrentUser() {
-            await this.$store.dispatch('logout')
+            await this.$store.dispatch('Logout')
         }
     }
 }

@@ -28,8 +28,7 @@ export default {
         },
         auth_success(state, payload) {
             state.ActionStatus = 'success'
-            state.Token = payload.token
-            state.CurrentUser = payload.user
+            state.Token = payload
             state.IsLoggedIn = true
             state.AuthStatus = "success"
         },
@@ -64,13 +63,15 @@ export default {
                 const user = result.user
                 localStorage.setItem('token', token)
                 axios.defaults.headers.common['Authorization'] = token
-                context.commit('auth_success', {token, user})
+                context.commit('auth_success', token)
+                context.commit('init_user', user)
             } else {
                 context.commit('auth_error', result.error.message)
                 localStorage.removeItem('token')
             }
         },
-        logout(context) {
+
+        Logout(context) {
             context.commit('logout')
             localStorage.removeItem('token')
             delete axios.defaults.headers.common['Authorization']
