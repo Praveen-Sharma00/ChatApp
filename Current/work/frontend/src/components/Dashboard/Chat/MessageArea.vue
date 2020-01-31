@@ -65,9 +65,7 @@
                             <div class="row">
                                 <div class="col-sm-8 d-flex align-items-center mt-3">
                                     <div class="d-flex align-items-center">
-
                                         <div class="body-chat-div-text pl-4">
-
                                             <h6>
                                                 <span class="chat-pill-uname">Receiver</span>
                                                 <br>
@@ -78,8 +76,81 @@
                                         </div>
                                     </div>
                                 </div>
-
-
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8 d-flex align-items-center mt-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="body-chat-div-text pl-4">
+                                            <h6>
+                                                <span class="chat-pill-uname">Receiver</span>
+                                                <br>
+                                                Lorem ipsum dolor sit amet Lorem
+                                            </h6>
+                                            <br>
+                                            <small>May 29, 2019 04:15 Pm</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8 d-flex align-items-center mt-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="body-chat-div-text pl-4">
+                                            <h6>
+                                                <span class="chat-pill-uname">Receiver</span>
+                                                <br>
+                                                Lorem ipsum dolor sit amet Lorem
+                                            </h6>
+                                            <br>
+                                            <small>May 29, 2019 04:15 Pm</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8 d-flex align-items-center mt-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="body-chat-div-text pl-4">
+                                            <h6>
+                                                <span class="chat-pill-uname">Receiver</span>
+                                                <br>
+                                                Lorem ipsum dolor sit amet Lorem
+                                            </h6>
+                                            <br>
+                                            <small>May 29, 2019 04:15 Pm</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8 d-flex align-items-center mt-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="body-chat-div-text pl-4">
+                                            <h6>
+                                                <span class="chat-pill-uname">Receiver</span>
+                                                <br>
+                                                Lorem ipsum dolor sit amet Lorem
+                                            </h6>
+                                            <br>
+                                            <small>May 29, 2019 04:15 Pm</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8 d-flex align-items-center mt-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="body-chat-div-text pl-4">
+                                            <h6>
+                                                <span class="chat-pill-uname">Receiver</span>
+                                                <br>
+                                                Lorem ipsum dolor sit amet Lorem
+                                            </h6>
+                                            <br>
+                                            <small>May 29, 2019 04:15 Pm</small>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!--END LEFT -->
                             <!-- RIGHT -->
@@ -322,6 +393,30 @@
         overflow-y: scroll;
     }
 
+    .message-area-body::-webkit-scrollbar {
+        width: 8px;
+        background-color: #F5F5F5;
+    }
+
+    .message-area-body::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        background-color: #F5F5F5;
+    }
+
+    .message-area-body::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+        background-color: #555;
+    }
+
+    .message-area-body::-webkit-scrollbar-thumb:hover {
+        background: #cbcbcb;
+    }
+
+    /*.message-area-body::-webkit-scrollbar{*/
+    /*    width: 5px;*/
+    /*}*/
     .message-area-nav {
         margin-bottom: 20px;
         min-height: 40px !important;
@@ -485,6 +580,12 @@
         .card .card-header {
             display: none;
         }
+    }
+
+    .chat-body-user-inf.d-flex p {
+        font-size: 12px;
+        color: #00000082;
+        margin-bottom: -3px;
     }
 
 </style>

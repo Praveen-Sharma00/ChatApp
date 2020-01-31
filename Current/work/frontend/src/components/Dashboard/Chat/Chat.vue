@@ -203,11 +203,7 @@
         height: 600px;
     }
 
-    .chat-body-user-inf.d-flex p {
-        font-size: 12px;
-        color: #00000082;
-        margin-bottom: -3px;
-    }
+
 
     .body-chat-div-img img {
         width: 40px;
