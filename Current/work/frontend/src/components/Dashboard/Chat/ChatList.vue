@@ -8,46 +8,83 @@
                     placeholder="Search"
                     aria-label="Search"
             />
-            <span>6 Contacts</span>
+            <span v-if="_CurrentUser.contacts && _CurrentUser.contacts.length>1">6 Contacts</span>
         </div>
+        <template v-if="!_ChatList || _ChatList.length<1">
+            <p class="text-center" >No contacts</p>
+        </template>
 
-        <li class="nav-item">
+        <template v-else>
+        <li class="nav-item" v-for="contact in _ChatList">
             <a id="tab-A" href="#pane-A" class="nav-link active" data-toggle="tab" role="tab">
                 <div class="d-flex align-items-center">
                     <div class="chat-img">
                         <img src="@/assets/images/75.jpg" alt/>
                     </div>
                     <div class="chat-user align-items-center">
-                        <h6>James Deo</h6>
-                        <p>Admininstrator</p>
+                        <h6>{{contact.name}}</h6>
+                        <p></p>
                     </div>
                 </div>
             </a>
         </li>
-        <li class="nav-item">
-            <a id="tab-B" href="#pane-B" class="nav-link" data-toggle="tab" role="tab">
-                <div class="d-flex align-items-center">
-                    <div class="chat-img">
-                        <img src="assets/images/75.jpg" alt="">
-                    </div>
-                    <div class="chat-user  align-items-center ">
-                        <h6>
-                            James Deo1
-                        </h6>
-                        <p>
-                            Admininstrator
-                        </p>
-                    </div>
-                </div>
-            </a>
-        </li>
+        </template>
+<!--        <li class="nav-item">-->
+<!--            <a id="tab-A" href="#pane-A" class="nav-link active" data-toggle="tab" role="tab">-->
+<!--                <div class="d-flex align-items-center">-->
+<!--                    <div class="chat-img">-->
+<!--                        <img src="@/assets/images/75.jpg" alt/>-->
+<!--                    </div>-->
+<!--                    <div class="chat-user align-items-center">-->
+<!--                        <h6>James Deo</h6>-->
+<!--                        <p>Admininstrator</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </li>-->
+
+<!--        <li class="nav-item">-->
+<!--            <a id="tab-B" href="#pane-B" class="nav-link" data-toggle="tab" role="tab">-->
+<!--                <div class="d-flex align-items-center">-->
+<!--                    <div class="chat-img">-->
+<!--                        <img src="assets/images/75.jpg" alt="">-->
+<!--                    </div>-->
+<!--                    <div class="chat-user  align-items-center ">-->
+<!--                        <h6>-->
+<!--                            James Deo1-->
+<!--                        </h6>-->
+<!--                        <p>-->
+<!--                            Admininstrator-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </li>-->
     </ul>
 
 </template>
 
 <script>
+    import chatDataMixin from "../../../mixins/chatDataMixin";
+
     export default {
-        name: "ChatList"
+        name: "ChatList",
+        mixins: [chatDataMixin],
+        data(){
+            return{
+                ChatListArr:[]
+            }
+        },
+        computed:{
+            _ChatList(){
+                if(this.getCurrentConversationType() === "individual"){
+                    this.ChatListArr=this._CurrentUser.contacts
+                }else{
+                    this.ChatListArr=this._CurrentUserGroupList
+                }
+                return this.ChatListArr
+            }
+        }
     }
 </script>
 
@@ -158,5 +195,9 @@
 
     .chat-user.align-items-center p {
         margin-bottom: 0px;
+    }
+    #tabs{
+        overflow-y:scroll ;
+        max-height:540px;
     }
 </style>

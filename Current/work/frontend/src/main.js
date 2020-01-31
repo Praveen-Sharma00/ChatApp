@@ -12,6 +12,7 @@ import authMixin from "./mixins/authMixin";
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios;
+Vue.prototype.BASE_API_URL='http://localhost:3000/api/v1'
 new Vue({
     router,
     store,
@@ -26,7 +27,7 @@ new Vue({
                 Vue.prototype.$http.defaults.headers.common['Authorization'] = token
                 if (this.$store.getters.isLoggedIn) {
                     this.$store.commit('init_user', response)
-                    // await this.$store.dispatch('GetAllUserGroups', this.$store.getters.getCurrentUser._id)
+                    await this.$store.dispatch('GetAllUserGroups', this.$store.getters.getCurrentUser._id)
                 }
             } else {
                 await this.LogoutCurrentUser()

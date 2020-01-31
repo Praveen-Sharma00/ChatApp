@@ -19,12 +19,12 @@
                 <div class="contact-all">
                     <div class="row w-100 justify-content-center">
                         <div :class="['col-sm-4 tab-title text-center fav-con',{'active':individualTabState}]"
-                             @click="getUserContacts()">
+                             @click="renderUserContacts()">
                             <i class="fas fa-user"></i>
                             Individual
                         </div>
                         <div :class="['col-sm-4 tab-title text-center fav-con',{'active':groupTabState}]"
-                             @click="getUserGroups()">
+                             @click="renderUserGroups()">
                             <i class="fas fa-users"></i>
                             Group
                         </div>
@@ -39,9 +39,11 @@
 <script>
     import ChatList from "./ChatList";
     import MessageArea from "./MessageArea";
+    import chatDataMixin from "../../../mixins/chatDataMixin";
 
     export default {
         name: "Chat",
+        mixins:[chatDataMixin],
         data() {
             return {
                 currentActiveTab: 'individual',
@@ -54,15 +56,17 @@
             "message-area": MessageArea
         },
         methods: {
-            getUserContacts() {
+            renderUserContacts() {
                 this.individualTabState = true
                 this.groupTabState = false
                 this.currentActiveTab = 'individual'
+                this.updateConversationType("individual")
             },
-            getUserGroups() {
+            renderUserGroups() {
                 this.individualTabState = false
                 this.groupTabState = true
                 this.currentActiveTab = 'group'
+                this.updateConversationType("group")
             }
         }
     };

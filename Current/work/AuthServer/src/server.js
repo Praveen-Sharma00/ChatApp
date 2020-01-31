@@ -5,7 +5,7 @@ import UserDetailService from "./services/user";
 
 const _userDetailService = new UserDetailService()
 
-const server = http.crea teServer(app)
+const server = http.createServer(app)
 const io = require('socket.io')(server)
 
 io.on('connection', (socket) => {

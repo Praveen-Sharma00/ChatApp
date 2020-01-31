@@ -12,7 +12,7 @@
                                     </div>
                                     <div class="user-text">
                                         <h4>
-                                            {{CurrentUser.name}}
+                                            {{_CurrentUser.name}}
                                         </h4>
                                         <p>
                                             <span> <i class="user-icon-status"></i> </span>Online
@@ -173,14 +173,14 @@
 </template>
 
 <script>
-    import userDataMixin from "../../mixins/userDataMixin";
+    import chatDataMixin from "../../mixins/chatDataMixin";
 
     export default {
         name: "Dashboard",
         beforeCreate() {
             document.body.className = ""
         },
-        mixins:[userDataMixin],
+        mixins: [chatDataMixin],
         mounted() {
             let sidebarWrapper = document.getElementById('sidebar-wrapper')
             let navbarToggle = document.getElementById('sidebar-toggle');
