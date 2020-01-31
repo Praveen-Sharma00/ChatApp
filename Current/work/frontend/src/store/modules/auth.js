@@ -46,7 +46,7 @@ export default {
         },
     },
     actions: {
-        async authenticate(context, data) {
+        async Authenticate(context, data) {
             context.commit('auth_request')
             let response;
             let baseUrl = 'http://localhost:3000'
