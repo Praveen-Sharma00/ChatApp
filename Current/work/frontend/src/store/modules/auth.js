@@ -9,7 +9,7 @@ export default {
         CurrentUser: {}
     },
     getters: {
-        getLoginStatus: (state) => {
+        isLoggedIn: (state) => {
             return state.IsLoggedIn
         },
         getEventActionStatus: (state) => {
@@ -58,6 +58,7 @@ export default {
             }
             response = await axios({url: url, data: data.user, method: 'POST'})
             const result = response.data
+            console.log("RESPONSE : ", response)
             if (result.success) {
                 const token = result.token
                 const user = result.user
