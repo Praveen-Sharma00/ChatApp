@@ -59,12 +59,13 @@
                 </ul>
                 <div class="contact-all">
                     <div class="row w-100 justify-content-center">
-                        <div class="col-sm-4 tab-title text-center fav-con active">
+                        <div :class="['col-sm-4 tab-title text-center fav-con',{'active':individualTabState}]"
+                             @click="getUserContacts()">
                             <i class="fas fa-user"></i>
                             Individual
                         </div>
-                        <!-- <div class="col-sm-1"></div> -->
-                        <div class="col-sm-4 tab-title text-center fav-con">
+                        <div :class="['col-sm-4 tab-title text-center fav-con',{'active':groupTabState}]"
+                             @click="getUserGroups()">
                             <i class="fas fa-users"></i>
                             Group
                         </div>
@@ -139,7 +140,7 @@
                                                 <div class="body-chat-div-text pl-4">
 
                                                     <h6>
-                                                        <span class="chat-pill-uname">Sender</span>
+                                                        <span class="chat-pill-uname">Receiver</span>
                                                         <br>
                                                         Lorem ipsum dolor sit amet Lorem
                                                     </h6>
@@ -160,7 +161,7 @@
                                                 <div class="body-chat-div-text pl-4 sender">
 
                                                     <h6>
-                                                        <span class="chat-pill-uname">Receiver</span>
+                                                        <span class="chat-pill-uname">Sender</span>
                                                         <br>
                                                         Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
                                                         psum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum
@@ -177,18 +178,6 @@
                                 <div class="chat-input-container container-fluid">
                                     <div class="row">
                                         <div class="col-12">
-                                            <!-- <div class="active-pink-3 active-pink-41 mt-3">
-                                              <input
-                                                class="form-control search-text"
-                                                type="text"
-                                                placeholder="Type a Message"
-                                                aria-label="Search"
-                                              />
-                                              <button class="msg_send_btn">
-                                                <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-                                              </button>
-                                            </div>-->
-
                                             <div class="input-group mb-3">
                                                 <input
                                                         type="text"
@@ -208,10 +197,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <!-- <div class="col-11 mx-auto">
-
-                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -328,9 +313,28 @@
 
     export default {
         name: "Chat",
+        data() {
+            return {
+                currentActiveTab: 'individual',
+                individualTabState: true,
+                groupTabState: false
+            }
+        },
         components: {
             "chat-list": ChatList,
             "message-area": MessageArea
+        },
+        methods: {
+            getUserContacts() {
+                this.individualTabState = true
+                this.groupTabState = false
+                this.currentActiveTab = 'individual'
+            },
+            getUserGroups() {
+                this.individualTabState = false
+                this.groupTabState = true
+                this.currentActiveTab = 'group'
+            }
         }
     };
 </script>
