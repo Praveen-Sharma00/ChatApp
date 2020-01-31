@@ -9,10 +9,10 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import authMixin from "./mixins/authMixin";
-
+export const eventBus = new Vue()
 Vue.config.productionTip = false
 Vue.prototype.$http = axios;
-Vue.prototype.BASE_API_URL='http://localhost:3000/api/v1'
+
 new Vue({
     router,
     store,

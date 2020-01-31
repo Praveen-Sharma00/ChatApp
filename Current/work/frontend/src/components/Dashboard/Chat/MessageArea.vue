@@ -306,8 +306,34 @@
 </template>
 
 <script>
+    import {eventBus} from "../../../main";
+    import chatDataMixin from "../../../mixins/chatDataMixin";
+
     export default {
-        name: "MessageArea"
+        name: "MessageArea",
+        mixins:[chatDataMixin],
+        data(){
+          return{
+              messages:[]
+          }
+        },
+        mounted() {
+            eventBus.$on('load-conversations', async (type) => {
+                if (type === 'individual') {
+                    await this.getConversationBetweenUsers(
+                        this._CurrentUser._id,
+                        this._CurrentRecipient._id
+                    )
+                    this.messages = this._CurrentConversation
+                } else {
+                    await this.getGroupConversations(
+                        this._CurrentRecipient._id
+                    )
+                    this.messages = this._CurrentConversation
+                }
+                console.log("MESSAGES : ",this.messages)
+            })
+        }
     }
 </script>
 

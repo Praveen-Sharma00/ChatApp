@@ -11,76 +11,105 @@
             <span v-if="_CurrentUser.contacts && _CurrentUser.contacts.length>1">6 Contacts</span>
         </div>
         <template v-if="!_ChatList || _ChatList.length<1">
-            <p class="text-center" >No contacts</p>
+            <p class="text-center">No contacts</p>
         </template>
 
         <template v-else>
-        <li class="nav-item" v-for="contact in _ChatList">
-            <a id="tab-A" href="#pane-A" class="nav-link active" data-toggle="tab" role="tab">
-                <div class="d-flex align-items-center">
-                    <div class="chat-img">
-                        <img src="@/assets/images/75.jpg" alt/>
+            <li class="nav-item" v-for="contact in _ChatList" @click="showMessageArea(contact)">
+                <a id="tab-A" href="#pane-A" class="nav-link active" data-toggle="tab" role="tab">
+                    <div class="d-flex align-items-center">
+                        <div class="chat-img">
+                            <img src="@/assets/images/75.jpg" alt/>
+                        </div>
+                        <div class="chat-user align-items-center">
+                            <h6>{{contact.name}}</h6>
+                            <p></p>
+                        </div>
                     </div>
-                    <div class="chat-user align-items-center">
-                        <h6>{{contact.name}}</h6>
-                        <p></p>
-                    </div>
-                </div>
-            </a>
-        </li>
+                </a>
+            </li>
         </template>
-<!--        <li class="nav-item">-->
-<!--            <a id="tab-A" href="#pane-A" class="nav-link active" data-toggle="tab" role="tab">-->
-<!--                <div class="d-flex align-items-center">-->
-<!--                    <div class="chat-img">-->
-<!--                        <img src="@/assets/images/75.jpg" alt/>-->
-<!--                    </div>-->
-<!--                    <div class="chat-user align-items-center">-->
-<!--                        <h6>James Deo</h6>-->
-<!--                        <p>Admininstrator</p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--        </li>-->
+        <!--        <li class="nav-item">-->
+        <!--            <a id="tab-A" href="#pane-A" class="nav-link active" data-toggle="tab" role="tab">-->
+        <!--                <div class="d-flex align-items-center">-->
+        <!--                    <div class="chat-img">-->
+        <!--                        <img src="@/assets/images/75.jpg" alt/>-->
+        <!--                    </div>-->
+        <!--                    <div class="chat-user align-items-center">-->
+        <!--                        <h6>James Deo</h6>-->
+        <!--                        <p>Admininstrator</p>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </a>-->
+        <!--        </li>-->
 
-<!--        <li class="nav-item">-->
-<!--            <a id="tab-B" href="#pane-B" class="nav-link" data-toggle="tab" role="tab">-->
-<!--                <div class="d-flex align-items-center">-->
-<!--                    <div class="chat-img">-->
-<!--                        <img src="assets/images/75.jpg" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="chat-user  align-items-center ">-->
-<!--                        <h6>-->
-<!--                            James Deo1-->
-<!--                        </h6>-->
-<!--                        <p>-->
-<!--                            Admininstrator-->
-<!--                        </p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </a>-->
-<!--        </li>-->
+        <!--        <li class="nav-item">-->
+        <!--            <a id="tab-B" href="#pane-B" class="nav-link" data-toggle="tab" role="tab">-->
+        <!--                <div class="d-flex align-items-center">-->
+        <!--                    <div class="chat-img">-->
+        <!--                        <img src="assets/images/75.jpg" alt="">-->
+        <!--                    </div>-->
+        <!--                    <div class="chat-user  align-items-center ">-->
+        <!--                        <h6>-->
+        <!--                            James Deo1-->
+        <!--                        </h6>-->
+        <!--                        <p>-->
+        <!--                            Admininstrator-->
+        <!--                        </p>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </a>-->
+        <!--        </li>-->
     </ul>
 
 </template>
 
 <script>
     import chatDataMixin from "../../../mixins/chatDataMixin";
+    import {eventBus} from "../../../main";
 
     export default {
         name: "ChatList",
         mixins: [chatDataMixin],
-        data(){
-            return{
-                ChatListArr:[]
+        data() {
+            return {
+                ChatListArr: []
             }
         },
-        computed:{
-            _ChatList(){
-                if(this.getCurrentConversationType() === "individual"){
-                    this.ChatListArr=this._CurrentUser.contacts
-                }else{
-                    this.ChatListArr=this._CurrentUserGroupList
+        methods: {
+            showMessageArea(receiver) {
+                let b = receiver._id
+                let type = this.getCurrentConversationType()
+                if (type === 'individual') {
+                    let a = this._CurrentUser._id
+                    if (a > b)
+                        [a, b] = [b, a]
+                    this.updateCurrentRoom(a + "," + b, type)
+                } else {
+                    this.updateCurrentRoom(b, type)
+                }
+                // this.$socket.joinRoom({
+                //     sender: this.$store.getters.getUser,
+                //     receiver,
+                //     type
+                // })
+                // this.$store.commit('SetMessageAreaState', true)
+                // this.activeItem = receiver._id
+                this.updateRecipientDetails({
+                    _id: receiver._id,
+                    name: receiver.name,
+                    imageUrl: receiver.imageUrl
+                })
+                eventBus.$emit('load-conversations',type)
+                // eventBus.$emit('load-conversations', type)
+            }
+        },
+        computed: {
+            _ChatList() {
+                if (this.getCurrentConversationType() === "individual") {
+                    this.ChatListArr = this._CurrentUser.contacts
+                } else {
+                    this.ChatListArr = this._CurrentUserGroupList
                 }
                 return this.ChatListArr
             }
@@ -196,8 +225,9 @@
     .chat-user.align-items-center p {
         margin-bottom: 0px;
     }
-    #tabs{
-        overflow-y:scroll ;
-        max-height:540px;
+
+    #tabs {
+        overflow-y: scroll;
+        max-height: 540px;
     }
 </style>
