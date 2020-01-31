@@ -1,7 +1,7 @@
 <template>
     <div>
         <h5 class="card-title text-center">Sign In</h5>
-        <form class="form-signin" @submit.prevent="login">
+        <form class="form-signin" @submit.prevent="login()">
             <div class="form-label-group">
                 <input type="email" v-model="email" id="inputEmail" class="form-control"
                        placeholder="Email address"
@@ -50,7 +50,7 @@
                     }
                 })
                 if (this.$store.getters.isLoggedIn) {
-                    this.$router.push('/chat')
+                    this.$router.push('/dashboard/chat')
                 } else {
                     alert(this.$store.getters.getErrorStatus)
                 }
