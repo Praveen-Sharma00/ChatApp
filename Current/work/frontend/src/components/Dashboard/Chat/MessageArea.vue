@@ -1,6 +1,17 @@
 <template>
     <div>
-        <div id="content" class="tab-content" role="tablist">
+        <template v-if="Object.keys(this._CurrentRecipient).length === 0 && this._CurrentRecipient.constructor === Object">
+           <div id="overlay" class="container" style="background: red" >
+               <div class="row">
+                   <div class="col-sm-8">
+                       <div class="card">
+                           hello
+                       </div>
+                   </div>
+               </div>
+           </div>
+        </template>
+        <template v-else> <div id="content" class="tab-content" role="tablist">
             <div
                     id="pane-A"
                     class="card tab-pane fade show active"
@@ -301,7 +312,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> </template>
+
     </div>
 </template>
 
@@ -609,6 +621,9 @@
         font-size: 12px;
         color: #00000082;
         margin-bottom: -3px;
+    }
+    #overlay{
+        background: #0a6ebd !important;
     }
 
 </style>
