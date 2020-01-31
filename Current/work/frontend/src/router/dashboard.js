@@ -5,6 +5,9 @@ import DefaultPage from "../components/Dashboard/Default";
 export default [
     {
         path: '/dashboard', component: Dashboard,
+        meta: {
+            requiresAuth: true
+        },
         children: [
             {path:'chat',component:Chat},
             {path:'main',component:DefaultPage}

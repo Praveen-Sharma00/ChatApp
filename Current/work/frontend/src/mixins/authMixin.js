@@ -10,6 +10,10 @@ export default {
                 return {success: false, message: this.$store.getters.getEventActionStatus}
             }
             return {success: true, message: "Successfully authenticated !"}
+        },
+
+        async LogoutCurrentUser() {
+            await this.$store.dispatch('logout')
         }
     }
 }

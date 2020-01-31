@@ -6,10 +6,30 @@ import store from './store'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import authMixin from "./mixins/authMixin";
+
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    mixins: [authMixin],
+    async created() {
+        const token = localStorage.getItem('token')
+        if (token) {
+            const baseUrl = 'http://localhost:3000'
+            const result = await axios({url: baseUrl + '/verify', data: {token: token}, method: 'POST'})
+            const response = result.data
+            if (response.success) {
+                Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+                if (this.$store.getters.isLoggedIn) {
+                    this.$store.commit('init_user', response)
+                    // await this.$store.dispatch('GetAllUserGroups', this.$store.getters.getCurrentUser._id)
+                }
+            } else {
+                await this.LogoutCurrentUser()
+            }
+        }
+    },
+    render: h => h(App)
 }).$mount('#app')
