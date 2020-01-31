@@ -9,6 +9,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import authMixin from "./mixins/authMixin";
+
 export const eventBus = new Vue()
 Vue.config.productionTip = false
 Vue.prototype.$http = axios;

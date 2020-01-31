@@ -100,7 +100,7 @@
                     name: receiver.name,
                     imageUrl: receiver.imageUrl
                 })
-                eventBus.$emit('load-conversations',type)
+                eventBus.$emit('load-conversations', type)
                 // eventBus.$emit('load-conversations', type)
             }
         },

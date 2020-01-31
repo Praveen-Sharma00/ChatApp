@@ -16,7 +16,7 @@ export default {
         getCurrentRecipient(state) {
             return state.CurrentRecipient
         },
-        getCurrentRoom(state){
+        getCurrentRoom(state) {
             return state.CurrentRoom
         },
         getCurrentConversationType(state) {
@@ -25,7 +25,7 @@ export default {
         getCurrentUserGroupList(state) {
             return state.CurrentUserGroupList
         },
-        getCurrentConversation(state){
+        getCurrentConversation(state) {
             return state.CurrentConversation
         },
         BASE_API_URL(state) {
@@ -50,8 +50,8 @@ export default {
         setCurrentRoom(state, payload) {
             state.CurrentRoom = payload
         },
-        setCurrentConversation(state,payload){
-            state.CurrentConversation=payload
+        setCurrentConversation(state, payload) {
+            state.CurrentConversation = payload
         }
     },
     actions: {

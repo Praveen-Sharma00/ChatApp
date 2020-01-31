@@ -43,7 +43,7 @@
 
     export default {
         name: "Chat",
-        mixins:[chatDataMixin],
+        mixins: [chatDataMixin],
         data() {
             return {
                 currentActiveTab: 'individual',
