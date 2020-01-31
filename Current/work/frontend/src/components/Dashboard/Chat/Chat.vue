@@ -15,49 +15,49 @@
     <div class="chat-div">
         <div class="chat-div-1">
             <div class="d-flex">
-                <ul id="tabs" class="nav nav-tabs chat-tab fadeIn" role="tablist">
-                    <div class="active-pink-3 active-pink-4 mb-2">
-                        <input
-                                class="form-control search-f"
-                                type="text"
-                                placeholder="Search"
-                                aria-label="Search"
-                        />
-                        <span>6 Contacts</span>
-                    </div>
+                <!--                <ul id="tabs" class="nav nav-tabs chat-tab fadeIn" role="tablist">-->
+                <!--                    <div class="active-pink-3 active-pink-4 mb-2">-->
+                <!--                        <input-->
+                <!--                                class="form-control search-f"-->
+                <!--                                type="text"-->
+                <!--                                placeholder="Search"-->
+                <!--                                aria-label="Search"-->
+                <!--                        />-->
+                <!--                        <span>6 Contacts</span>-->
+                <!--                    </div>-->
 
-                    <li class="nav-item">
-                        <a id="tab-A" href="#pane-A" class="nav-link active" data-toggle="tab" role="tab">
-                            <div class="d-flex align-items-center">
-                                <div class="chat-img">
-                                    <img src="@/assets/images/75.jpg" alt/>
-                                </div>
-                                <div class="chat-user align-items-center">
-                                    <h6>James Deo</h6>
-                                    <p>Admininstrator</p>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a id="tab-B" href="#pane-B" class="nav-link" data-toggle="tab" role="tab">
-                            <div class="d-flex align-items-center">
-                                <div class="chat-img">
-                                    <img src="assets/images/75.jpg" alt="">
-                                </div>
-                                <div class="chat-user  align-items-center ">
-                                    <h6>
-                                        James Deo1
-                                    </h6>
-                                    <p>
-                                        Admininstrator
-                                    </p>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-
+                <!--                    <li class="nav-item">-->
+                <!--                        <a id="tab-A" href="#pane-A" class="nav-link active" data-toggle="tab" role="tab">-->
+                <!--                            <div class="d-flex align-items-center">-->
+                <!--                                <div class="chat-img">-->
+                <!--                                    <img src="@/assets/images/75.jpg" alt/>-->
+                <!--                                </div>-->
+                <!--                                <div class="chat-user align-items-center">-->
+                <!--                                    <h6>James Deo</h6>-->
+                <!--                                    <p>Admininstrator</p>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </a>-->
+                <!--                    </li>-->
+                <!--                    <li class="nav-item">-->
+                <!--                        <a id="tab-B" href="#pane-B" class="nav-link" data-toggle="tab" role="tab">-->
+                <!--                            <div class="d-flex align-items-center">-->
+                <!--                                <div class="chat-img">-->
+                <!--                                    <img src="assets/images/75.jpg" alt="">-->
+                <!--                                </div>-->
+                <!--                                <div class="chat-user  align-items-center ">-->
+                <!--                                    <h6>-->
+                <!--                                        James Deo1-->
+                <!--                                    </h6>-->
+                <!--                                    <p>-->
+                <!--                                        Admininstrator-->
+                <!--                                    </p>-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </a>-->
+                <!--                    </li>-->
+                <!--                </ul>-->
+                <chat-list></chat-list>
                 <div class="contact-all">
                     <div class="row w-100 justify-content-center">
                         <div :class="['col-sm-4 tab-title text-center fav-con',{'active':individualTabState}]"
@@ -72,238 +72,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!--                <div id="content" class="tab-content" role="tablist">-->
-                <!--                    <div-->
-                <!--                            id="pane-A"-->
-                <!--                            class="card tab-pane fade show active"-->
-                <!--                            role="tabpanel"-->
-                <!--                            aria-labelledby="tab-A">-->
-                <!--                        <div class="card-header" role="tab" id="heading-A">-->
-                <!--                            <h5 class="mb-0">-->
-                <!--                                <a-->
-                <!--                                        data-toggle="collapse"-->
-                <!--                                        href="#collapse-A"-->
-                <!--                                        data-parent="#content"-->
-                <!--                                        aria-expanded="true"-->
-                <!--                                        aria-controls="collapse-A"-->
-                <!--                                >Collapsible Group Item A</a>-->
-                <!--                            </h5>-->
-                <!--                        </div>-->
-                <!--                        <div id="collapse-A" class="collapse show" role="tabpanel" aria-labelledby="heading-A">-->
-                <!--                            <div class="message-area">-->
-                <!--                                <div class="message-area-nav">-->
-                <!--                                    <div class="row">-->
-                <!--                                        <div class="col-sm-6">-->
-                <!--                                            <div class="chat-body-div">-->
-                <!--                                                <div class="d-flex align-items-center">-->
-                <!--                                                    <div class="chat-body-img">-->
-                <!--                                                        <img src="@/assets/images/75.jpg" alt/>-->
-                <!--                                                    </div>-->
-                <!--                                                    <div class="chat-body-user-inf d-flex align-items-center pl-4">-->
-                <!--                                                        <h2>James Deo</h2>-->
-
-                <!--                                                        <p class="pl-2">-->
-                <!--                                                            <span class="dot-chat pl-2"></span> Online-->
-                <!--                                                        </p>-->
-                <!--                                                    </div>-->
-                <!--                                                </div>-->
-                <!--                                            </div>-->
-                <!--                                        </div>-->
-                <!--                                        <div class="col-sm-6 d-flex align-items-center justify-content-end">-->
-                <!--                                            <div class="chat-body-dots">-->
-                <!--                                                <button class="button-chat sub-menu4">-->
-                <!--                                                    <i class="fas fas-dot-chat fa-ellipsis-v"></i>-->
-                <!--                                                </button>-->
-                <!--                                                <ul class="dropdown-ul4 dropdown-ul-n12">-->
-                <!--                                                    <li>-->
-                <!--                                                        <a href="#">Delete Conversation</a>-->
-                <!--                                                    </li>-->
-                <!--                                                    <li>-->
-                <!--                                                        <a href="#">Option 1</a>-->
-                <!--                                                    </li>-->
-                <!--                                                    <li>-->
-                <!--                                                        <a href="#">Option 2</a>-->
-                <!--                                                    </li>-->
-                <!--                                                    <li>-->
-                <!--                                                        <a href="#">Option 3</a>-->
-                <!--                                                    </li>-->
-                <!--                                                </ul>-->
-                <!--                                            </div>-->
-                <!--                                        </div>-->
-                <!--                                    </div>-->
-                <!--                                </div>-->
-                <!--                                <div class="message-area-body">-->
-                <!--                                    &lt;!&ndash; LEFT &ndash;&gt;-->
-                <!--                                    <div class="row">-->
-                <!--                                        <div class="col-sm-8 d-flex align-items-center mt-3">-->
-                <!--                                            <div class="d-flex align-items-center">-->
-
-                <!--                                                <div class="body-chat-div-text pl-4">-->
-
-                <!--                                                    <h6>-->
-                <!--                                                        <span class="chat-pill-uname">Receiver</span>-->
-                <!--                                                        <br>-->
-                <!--                                                        Lorem ipsum dolor sit amet Lorem-->
-                <!--                                                    </h6>-->
-                <!--                                                    <br>-->
-                <!--                                                    <small>May 29, 2019 04:15 Pm</small>-->
-                <!--                                                </div>-->
-                <!--                                            </div>-->
-                <!--                                        </div>-->
-
-
-                <!--                                    </div>-->
-                <!--                                    &lt;!&ndash;END LEFT &ndash;&gt;-->
-                <!--                                    &lt;!&ndash; RIGHT &ndash;&gt;-->
-                <!--                                    <div class="row justify-content-end">-->
-                <!--                                        <div class="col-sm-8 d-flex align-items-center justify-content-end mt-3">-->
-                <!--                                            <div class="d-flex align-items-center">-->
-
-                <!--                                                <div class="body-chat-div-text pl-4 sender">-->
-
-                <!--                                                    <h6>-->
-                <!--                                                        <span class="chat-pill-uname">Sender</span>-->
-                <!--                                                        <br>-->
-                <!--                                                        Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet-->
-                <!--                                                        psum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum-->
-                <!--                                                        dolor sit amet Lorem ipsum dolor sit amet-->
-                <!--                                                    </h6>-->
-                <!--                                                    <small>May 29, 2019 04:15 Pm</small><br>-->
-                <!--                                                </div>-->
-                <!--                                            </div>-->
-                <!--                                        </div>-->
-
-                <!--                                    </div>-->
-                <!--                                    &lt;!&ndash; END RIGHT&ndash;&gt;-->
-                <!--                                </div>-->
-                <!--                                <div class="chat-input-container container-fluid">-->
-                <!--                                    <div class="row">-->
-                <!--                                        <div class="col-12">-->
-                <!--                                            <div class="input-group mb-3">-->
-                <!--                                                <input-->
-                <!--                                                        type="text"-->
-                <!--                                                        class="form-control msg-input"-->
-                <!--                                                        placeholder="Type your message"-->
-                <!--                                                        aria-describedby="button-addon2"-->
-                <!--                                                />-->
-                <!--                                                <div class="input-group-append">-->
-                <!--                                                    <button-->
-                <!--                                                            class="btn btn-primary send-msg-btn"-->
-                <!--                                                            type="button"-->
-                <!--                                                            id="button-addon2"-->
-                <!--                                                    >-->
-                <!--                                                        <i class="fas fa-paper-plane"></i>-->
-                <!--                                                    </button>-->
-                <!--                                                </div>-->
-                <!--                                            </div>-->
-                <!--                                        </div>-->
-                <!--                                    </div>-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-
-                <!--                    <div id="pane-B" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-B">-->
-                <!--                        <div class="card-header" role="tab" id="heading-B">-->
-                <!--                            <h5 class="mb-0">-->
-                <!--                                <a class="collapsed" data-toggle="collapse" href="#collapse-B" data-parent="#content"-->
-                <!--                                   aria-expanded="false" aria-controls="collapse-B">-->
-                <!--                                    Collapsible Group Item B-->
-                <!--                                </a>-->
-                <!--                            </h5>-->
-                <!--                        </div>-->
-                <!--                        <div id="collapse-B" class="collapse" role="tabpanel" aria-labelledby="heading-B">-->
-                <!--                            <div class="card-body">-->
-                <!--                                <div class="chat-body-saur">-->
-                <!--                                    <div class="chat-body">-->
-                <!--                                        <div class="row">-->
-                <!--                                            <div class="col-sm-6">-->
-                <!--                                                <div class="chat-body-div">-->
-                <!--                                                    <div class="d-flex align-items-center">-->
-                <!--                                                        <div class="chat-body-img">-->
-                <!--                                                            <img src="assets/images/75.jpg" alt="">-->
-                <!--                                                        </div>-->
-                <!--                                                        <div class="chat-body-user-inf d-flex align-items-center pl-4">-->
-                <!--                                                            <h2>-->
-                <!--                                                                James Deo1-->
-                <!--                                                            </h2>-->
-
-                <!--                                                            <p class="pl-2"><span class="dot-chat pl-2"></span> Online-->
-                <!--                                                            </p>-->
-                <!--                                                        </div>-->
-                <!--                                                    </div>-->
-                <!--                                                </div>-->
-                <!--                                            </div>-->
-                <!--                                            <div class="col-sm-6 d-flex align-items-center justify-content-end">-->
-                <!--                                                <div class="chat-body-dots">-->
-                <!--                                                    <button class="button-chat sub-menu4">-->
-                <!--                                                        <i class="fas fas-dot-chat fa-ellipsis-v"></i>-->
-                <!--                                                    </button>-->
-                <!--                                                    <ul class="dropdown-ul4 dropdown-ul-n12">-->
-                <!--                                                        <li><a href="#"> Delete Conversation </a></li>-->
-                <!--                                                        <li><a href="#"> Option 1</a></li>-->
-                <!--                                                        <li><a href="#"> Option 2</a></li>-->
-                <!--                                                        <li><a href="#"> Option 3 </a></li>-->
-                <!--                                                    </ul>-->
-                <!--                                                </div>-->
-                <!--                                            </div>-->
-                <!--                                        </div>-->
-                <!--                                    </div>-->
-                <!--                                    <div class="chat-text-body">-->
-                <!--                                        <div class="row">-->
-                <!--                                            <div class="col-sm-8 d-flex align-items-center mt-3">-->
-                <!--                                                <div class="d-flex align-items-center">-->
-
-                <!--                                                    <div class="body-chat-div-text pl-4">-->
-
-                <!--                                                        <h6>-->
-                <!--                                                            <span class="chat-pill-uname">Sender</span>-->
-                <!--                                                            <br>-->
-                <!--                                                            Lorem ipsum dolor sit amet Lorem-->
-                <!--                                                        </h6>-->
-                <!--                                                        <br>-->
-                <!--                                                        <small>May 29, 2019 04:15 Pm</small>-->
-                <!--                                                    </div>-->
-                <!--                                                </div>-->
-                <!--                                            </div>-->
-
-
-                <!--                                        </div>-->
-                <!--                                        <div class="row justify-content-end">-->
-                <!--                                            <div class="col-sm-8 d-flex align-items-center justify-content-end mt-3">-->
-                <!--                                                <div class="d-flex align-items-center">-->
-
-                <!--                                                    <div class="body-chat-div-text pl-4 sender">-->
-
-                <!--                                                        <h6>-->
-                <!--                                                            <span class="chat-pill-uname">Receiver</span>-->
-                <!--                                                            <br>-->
-                <!--                                                            Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet-->
-                <!--                                                            psum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum-->
-                <!--                                                            dolor sit amet Lorem ipsum dolor sit amet-->
-                <!--                                                        </h6>-->
-                <!--                                                        <small>May 29, 2019 04:15 Pm</small><br>-->
-                <!--                                                    </div>-->
-                <!--                                                </div>-->
-                <!--                                            </div>-->
-
-                <!--                                        </div>-->
-                <!--                                        <div class="search-button">-->
-                <!--                                            <div class="active-pink-3 active-pink-41 mt-3">-->
-                <!--                                                <input class="form-control search-text" type="text"-->
-                <!--                                                       placeholder="Type a Message" aria-label="Search">-->
-                <!--                                                <button class="msg_send_btn">-->
-                <!--                                                    <i class="fa fa-paper-plane-o" aria-hidden="true"></i>-->
-                <!--                                                </button>-->
-                <!--                                            </div>-->
-                <!--                                        </div>-->
-                <!--                                    </div>-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                </div>-->
                 <message-area></message-area>
             </div>
         </div>
@@ -417,16 +185,6 @@
         }
     }
 
-    .chat-img img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-    }
-
-    .chat-user {
-        padding-left: 14px;
-    }
-
     .chat-div {
         opacity: 0.99;
         border-radius: 20px;
@@ -444,21 +202,19 @@
         width: 100%;
         height: 600px;
     }
+
     .chat-body-user-inf.d-flex p {
         font-size: 12px;
         color: #00000082;
         margin-bottom: -3px;
     }
+
     .body-chat-div-img img {
         width: 40px;
         height: 40px;
         border-radius: 50%;
     }
-    input.form-control.search-f {
-        border-radius: 16px;
-        width: 90%;
-        margin: 0 auto;
-    }
+
 
     .active-pink-3.active-pink-4 span {
         color: #80808082;
@@ -467,48 +223,8 @@
         /* margin-top: 5px; */
     }
 
-    .chat-user.align-items-center p {
-        margin-bottom: 0px;
-    }
-
     .active-pink-3.active-pink-41.mt-3 {
         overflow: hidden;
-    }
-
-    .chat-user.align-items-center h6 {
-        color: #00000091;
-        margin-bottom: 2px;
-    }
-
-    .chat-user.align-items-center p {
-        color: #00000091;
-    }
-
-
-    .chat-tab .nav-link.active h6 {
-        box-shadow: unset !important;
-        border-radius: 4px;
-        background-image: unset !important;
-        color: #fff !important;
-        margin-bottom: 2px;
-    }
-
-    .chat-tab .nav-link.active p {
-        box-shadow: unset !important;
-        border-radius: 4px;
-        background-image: unset !important;
-        color: #fff !important;
-    }
-
-    .chat-tab .nav-link {
-        border-color: transparent !important;
-        background: transparent !important;
-        box-shadow: unset !important;
-        border-radius: 4px;
-    }
-
-    .chat-tab a {
-        padding: 10px 20px;
     }
 
     .contact-all {
