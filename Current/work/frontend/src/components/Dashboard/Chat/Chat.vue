@@ -111,22 +111,6 @@
 </script>
 
 <style scoped>
-    /*.main-2-div {*/
-    /*    margin-top: -2px;*/
-    /*}*/
-    /*.container-fluid{*/
-    /*    width:95% !important;*/
-    /*}*/
-    /*.chat-card {*/
-    /*    margin-top: -35px !important;*/
-    /*    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);*/
-    /*    background: #fff;*/
-    /*    border-radius: 12px;*/
-    /*    max-height: 100vh;*/
-    /*    min-height: 90vh;*/
-    /*    opacity: 0.98;*/
-    /*}*/
-
     .nav-tabs {
         display: none;
     }
