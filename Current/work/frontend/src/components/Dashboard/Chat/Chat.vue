@@ -15,48 +15,6 @@
     <div class="chat-div">
         <div class="chat-div-1">
             <div class="d-flex">
-                <!--                <ul id="tabs" class="nav nav-tabs chat-tab fadeIn" role="tablist">-->
-                <!--                    <div class="active-pink-3 active-pink-4 mb-2">-->
-                <!--                        <input-->
-                <!--                                class="form-control search-f"-->
-                <!--                                type="text"-->
-                <!--                                placeholder="Search"-->
-                <!--                                aria-label="Search"-->
-                <!--                        />-->
-                <!--                        <span>6 Contacts</span>-->
-                <!--                    </div>-->
-
-                <!--                    <li class="nav-item">-->
-                <!--                        <a id="tab-A" href="#pane-A" class="nav-link active" data-toggle="tab" role="tab">-->
-                <!--                            <div class="d-flex align-items-center">-->
-                <!--                                <div class="chat-img">-->
-                <!--                                    <img src="@/assets/images/75.jpg" alt/>-->
-                <!--                                </div>-->
-                <!--                                <div class="chat-user align-items-center">-->
-                <!--                                    <h6>James Deo</h6>-->
-                <!--                                    <p>Admininstrator</p>-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                        </a>-->
-                <!--                    </li>-->
-                <!--                    <li class="nav-item">-->
-                <!--                        <a id="tab-B" href="#pane-B" class="nav-link" data-toggle="tab" role="tab">-->
-                <!--                            <div class="d-flex align-items-center">-->
-                <!--                                <div class="chat-img">-->
-                <!--                                    <img src="assets/images/75.jpg" alt="">-->
-                <!--                                </div>-->
-                <!--                                <div class="chat-user  align-items-center ">-->
-                <!--                                    <h6>-->
-                <!--                                        James Deo1-->
-                <!--                                    </h6>-->
-                <!--                                    <p>-->
-                <!--                                        Admininstrator-->
-                <!--                                    </p>-->
-                <!--                                </div>-->
-                <!--                            </div>-->
-                <!--                        </a>-->
-                <!--                    </li>-->
-                <!--                </ul>-->
                 <chat-list></chat-list>
                 <div class="contact-all">
                     <div class="row w-100 justify-content-center">
