@@ -276,6 +276,13 @@
                     })
                     this.$refs.msgText.value = ""
                 }
+                else if(type==='media'){
+                    if(this._CurrentConversationType==='individual'){
+
+                    }else{
+
+                    }
+                }
             }
         }
     }

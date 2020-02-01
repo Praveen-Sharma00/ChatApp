@@ -9,7 +9,7 @@ import store from './store'
 import axios from 'axios'
 import SocketIO from "./utils/socket";
 
-export const eventBus = new Vue()
+export const $eventBus = new Vue()
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios;
