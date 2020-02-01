@@ -92,11 +92,11 @@
                     )
                     this.updateCurrentRoom(b, type)
                 }
-                // this.$socket.joinRoom({
-                //     sender: this.$store.getters.getUser,
-                //     receiver,
-                //     type
-                // })
+                this.$socket.join_room({
+                    sender: this._CurrentUser,
+                    receiver,
+                    type
+                })
                 // this.$store.commit('SetMessageAreaState', true)
                 // this.activeItem = receiver._id
                 this.updateRecipientDetails({

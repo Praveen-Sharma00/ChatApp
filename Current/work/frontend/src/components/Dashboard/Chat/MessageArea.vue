@@ -225,6 +225,20 @@
                     this.messages = this._CurrentConversation.length > 0 ? this._CurrentConversation : []
                 }
             })
+            eventBus.$on("new_message", (data) => {
+                this.messages.push({
+                    sender: {
+                        id: data.sender._id,
+                        name: data.sender.name
+                    },
+                    media: {
+                        type: [], location: []
+                    },
+                    message_type: 'text',
+                    text: data.text,
+                    sentAt: "Today"
+                })
+            })
         },
         methods: {
             sendMessage: function (type, media) {
