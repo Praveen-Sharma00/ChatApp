@@ -35,7 +35,7 @@ export default {
         _CurrentConversation() {
             return this.$store.getters.getCurrentConversation
         },
-        _BASE_URL(){
+        _BASE_URL() {
             return this.$store.getters.BASE_URL
         }
     }

@@ -10,7 +10,7 @@ export default {
 
         Constants: {
             BASE_API_URL: 'http://localhost:3000/api/v1',
-            BASE_URL:'http://localhost:3000'
+            BASE_URL: 'http://localhost:3000'
         }
     },
     getters: {
@@ -32,7 +32,7 @@ export default {
         BASE_API_URL(state) {
             return state.Constants.BASE_API_URL
         },
-        BASE_URL(state){
+        BASE_URL(state) {
             return state.Constants.BASE_URL
         }
 
