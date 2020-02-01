@@ -51,10 +51,12 @@
                                     </div>
                                     <div class="col-sm-6 d-flex align-items-center justify-content-end">
                                         <div class="chat-body-dots">
-                                            <template v-if="(_CurrentConversationType==='group' && !_CurrentUserPermissions['ReadOnly']) || (_CurrentConversationType==='individual')">
+                                            <template
+                                                    v-if="(_CurrentConversationType==='group' && !_CurrentUserPermissions['ReadOnly']) || (_CurrentConversationType==='individual')">
                                                 <i class="navbar-icons fas fa-paperclip pl-2" title="Send a file"></i>
                                             </template>
-                                            <template v-if="(_CurrentConversationType==='group' && _CurrentUserPermissions['isAdmin'])">
+                                            <template
+                                                    v-if="(_CurrentConversationType==='group' && _CurrentUserPermissions['isAdmin'])">
                                                 <i class="navbar-icons fas fa-user-plus  pl-3"
                                                    title="Add members to group"></i>
                                                 <i class="navbar-icons fas fa-clock pl-3"
@@ -87,7 +89,7 @@
                                 <template v-for="msg in _CurrentConversation">
 
                                     <!-- LEFT -->
-                                    <div class="row" v-if="msg.sender._id!==_CurrentUser._id">
+                                    <div class="row" v-if="msg.sender.id!==_CurrentUser._id">
                                         <div class="col-sm-8 d-flex align-items-center mt-3">
                                             <div class="d-flex align-items-center">
                                                 <div class="body-chat-div-text pl-4">
@@ -125,7 +127,7 @@
                                     <!--END LEFT -->
 
                                     <!-- RIGHT -->
-                                    <div class="row justify-content-end" v-else>
+                                    <div class="row justify-content-end" v-else-if="msg.sender.id===_CurrentUser._id">
                                         <div class="col-sm-8 d-flex align-items-center justify-content-end mt-3">
                                             <div class="d-flex align-items-center">
                                                 <div class="body-chat-div-text pl-4 sender">
@@ -152,6 +154,7 @@
                                                             </template>
                                                         </template>
                                                     </h6>
+                                                    <br>
                                                     <small>{{msg.sentAt}}</small><br>
                                                 </div>
                                             </div>
@@ -170,12 +173,14 @@
                                                     class="form-control msg-input"
                                                     placeholder="Type your message"
                                                     aria-describedby="button-addon2"
+                                                    ref="msgText"
                                             />
                                             <div class="input-group-append">
                                                 <button
                                                         class="btn btn-primary send-msg-btn"
                                                         type="button"
                                                         id="button-addon2"
+                                                        @click="sendMessage('text',undefined)"
                                                 >
                                                     <i class="fas fa-paper-plane"></i>
                                                 </button>
@@ -219,12 +224,49 @@
                 if (this._CurrentConversation) {
                     this.messages = this._CurrentConversation.length > 0 ? this._CurrentConversation : []
                 }
-                console.log("MESSAGES : ", this.messages)
             })
+        },
+        methods: {
+            sendMessage: function (type, media) {
+                if (type === 'text') {
+                    this.messages.push({
+                        sender: {
+                            id: this._CurrentUser._id,
+                            name: this._CurrentUser.name
+                        },
+                        media: {
+                            type: [],
+                            location: []
+                        },
+                        message_type: 'text',
+                        text: this.$refs.msgText.value,
+                        sentAt: "Today"
+                    })
+                    this.$socket.emit_message({
+                        room: this._CurrentRoom,
+                        sender: {
+                            name: this._CurrentUser.name,
+                            id: this._CurrentUser._id
+                        },
+                        receiver: {
+                            name: this._CurrentRecipient.name,
+                            id: this._CurrentRecipient._id
+                        },
+                        message_type: type,
+                        text: this.$refs.msgText.value,
+                        media: {
+                            type: [],
+                            location: []
+                        },
+                        sentAt: 'Today'
+                    })
+                    this.$refs.msgText.value = ""
+                }
+            }
         }
     }
 </script>
 
 <style scoped>
-@import "msg-area.css";
+    @import "msg-area.css";
 </style>

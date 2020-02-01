@@ -30,6 +30,9 @@ export default {
         _CurrentConversationType() {
             return this.$store.getters.getCurrentConversationType
         },
+        _CurrentRoom(){
+            return this.$store.getters.getCurrentRoom
+        },
         _CurrentUser() {
             return this.$store.getters.getCurrentUser
         },
