@@ -1,244 +1,49 @@
 <template>
     <div>
-        <template v-if="Object.keys(this._CurrentRecipient).length === 0 && this._CurrentRecipient.constructor === Object">
-           <div id="overlay" class="container" style="background: red" >
-               <div class="row">
-                   <div class="col-sm-8">
-                       <div class="card">
-                           hello
-                       </div>
-                   </div>
-               </div>
-           </div>
-        </template>
-        <template v-else> <div id="content" class="tab-content" role="tablist">
-            <div
-                    id="pane-A"
-                    class="card tab-pane fade show active"
-                    role="tabpanel"
-                    aria-labelledby="tab-A">
-                <div class="card-header" role="tab" id="heading-A">
-                    <h5 class="mb-0">
-                        <a
-                                data-toggle="collapse"
-                                href="#collapse-A"
-                                data-parent="#content"
-                                aria-expanded="true"
-                                aria-controls="collapse-A"
-                        >Collapsible Group Item A</a>
-                    </h5>
-                </div>
-                <div id="collapse-A" class="collapse show" role="tabpanel" aria-labelledby="heading-A">
-                    <div class="message-area">
-                        <div class="message-area-nav">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="chat-body-div">
-                                        <div class="d-flex align-items-center">
-                                            <div class="chat-body-img">
-                                                <img src="@/assets/images/75.jpg" alt/>
-                                            </div>
-                                            <div class="chat-body-user-inf d-flex align-items-center pl-4">
-                                                <h2>James Deo</h2>
-
-                                                <p class="pl-2">
-                                                    <span class="dot-chat pl-2"></span> Online
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 d-flex align-items-center justify-content-end">
-                                    <div class="chat-body-dots">
-                                        <button class="button-chat sub-menu4">
-                                            <i class="fas fas-dot-chat fa-ellipsis-v"></i>
-                                        </button>
-                                        <ul class="dropdown-ul4 dropdown-ul-n12">
-                                            <li>
-                                                <a href="#">Delete Conversation</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Option 1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Option 2</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Option 3</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="message-area-body">
-                            <!-- LEFT -->
-                            <div class="row">
-                                <div class="col-sm-8 d-flex align-items-center mt-3">
-                                    <div class="d-flex align-items-center">
-                                        <div class="body-chat-div-text pl-4">
-                                            <h6>
-                                                <span class="chat-pill-uname">Receiver</span>
-                                                <br>
-                                                Lorem ipsum dolor sit amet Lorem
-                                            </h6>
-                                            <br>
-                                            <small>May 29, 2019 04:15 Pm</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8 d-flex align-items-center mt-3">
-                                    <div class="d-flex align-items-center">
-                                        <div class="body-chat-div-text pl-4">
-                                            <h6>
-                                                <span class="chat-pill-uname">Receiver</span>
-                                                <br>
-                                                Lorem ipsum dolor sit amet Lorem
-                                            </h6>
-                                            <br>
-                                            <small>May 29, 2019 04:15 Pm</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8 d-flex align-items-center mt-3">
-                                    <div class="d-flex align-items-center">
-                                        <div class="body-chat-div-text pl-4">
-                                            <h6>
-                                                <span class="chat-pill-uname">Receiver</span>
-                                                <br>
-                                                Lorem ipsum dolor sit amet Lorem
-                                            </h6>
-                                            <br>
-                                            <small>May 29, 2019 04:15 Pm</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8 d-flex align-items-center mt-3">
-                                    <div class="d-flex align-items-center">
-                                        <div class="body-chat-div-text pl-4">
-                                            <h6>
-                                                <span class="chat-pill-uname">Receiver</span>
-                                                <br>
-                                                Lorem ipsum dolor sit amet Lorem
-                                            </h6>
-                                            <br>
-                                            <small>May 29, 2019 04:15 Pm</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8 d-flex align-items-center mt-3">
-                                    <div class="d-flex align-items-center">
-                                        <div class="body-chat-div-text pl-4">
-                                            <h6>
-                                                <span class="chat-pill-uname">Receiver</span>
-                                                <br>
-                                                Lorem ipsum dolor sit amet Lorem
-                                            </h6>
-                                            <br>
-                                            <small>May 29, 2019 04:15 Pm</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8 d-flex align-items-center mt-3">
-                                    <div class="d-flex align-items-center">
-                                        <div class="body-chat-div-text pl-4">
-                                            <h6>
-                                                <span class="chat-pill-uname">Receiver</span>
-                                                <br>
-                                                Lorem ipsum dolor sit amet Lorem
-                                            </h6>
-                                            <br>
-                                            <small>May 29, 2019 04:15 Pm</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--END LEFT -->
-                            <!-- RIGHT -->
-                            <div class="row justify-content-end">
-                                <div class="col-sm-8 d-flex align-items-center justify-content-end mt-3">
-                                    <div class="d-flex align-items-center">
-
-                                        <div class="body-chat-div-text pl-4 sender">
-
-                                            <h6>
-                                                <span class="chat-pill-uname">Sender</span>
-                                                <br>
-                                                Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
-                                                psum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum
-                                                dolor sit amet Lorem ipsum dolor sit amet
-                                            </h6>
-                                            <small>May 29, 2019 04:15 Pm</small><br>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <!-- END RIGHT-->
-                        </div>
-                        <div class="chat-input-container container-fluid">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="input-group mb-3">
-                                        <input
-                                                type="text"
-                                                class="form-control msg-input"
-                                                placeholder="Type your message"
-                                                aria-describedby="button-addon2"
-                                        />
-                                        <div class="input-group-append">
-                                            <button
-                                                    class="btn btn-primary send-msg-btn"
-                                                    type="button"
-                                                    id="button-addon2"
-                                            >
-                                                <i class="fas fa-paper-plane"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <!--        <template v-if="Object.keys(this._CurrentRecipient).length === 0 && this._CurrentRecipient.constructor === Object">-->
+        <!--           <div id="overlay" class="container" style="background: red" >-->
+        <!--               <div class="row">-->
+        <!--                   <div class="col-sm-8">-->
+        <!--                       <div class="card">-->
+        <!--                           hello-->
+        <!--                       </div>-->
+        <!--                   </div>-->
+        <!--               </div>-->
+        <!--           </div>-->
+        <!--        </template>-->
+        <template>
+            <div id="content" class="tab-content" role="tablist">
+                <div
+                        id="pane-A"
+                        class="card tab-pane fade show active"
+                        role="tabpanel"
+                        aria-labelledby="tab-A">
+                    <div class="card-header" role="tab" id="heading-A">
+                        <h5 class="mb-0">
+                            <a
+                                    data-toggle="collapse"
+                                    href="#collapse-A"
+                                    data-parent="#content"
+                                    aria-expanded="true"
+                                    aria-controls="collapse-A"
+                            >Collapsible Group Item A</a>
+                        </h5>
                     </div>
-                </div>
-            </div>
-
-            <div id="pane-B" class="card tab-pane fade" role="tabpanel" aria-labelledby="tab-B">
-                <div class="card-header" role="tab" id="heading-B">
-                    <h5 class="mb-0">
-                        <a class="collapsed" data-toggle="collapse" href="#collapse-B" data-parent="#content"
-                           aria-expanded="false" aria-controls="collapse-B">
-                            Collapsible Group Item B
-                        </a>
-                    </h5>
-                </div>
-                <div id="collapse-B" class="collapse" role="tabpanel" aria-labelledby="heading-B">
-                    <div class="card-body">
-                        <div class="chat-body-saur">
-                            <div class="chat-body">
+                    <div id="collapse-A" class="collapse show" role="tabpanel" aria-labelledby="heading-A">
+                        <div class="message-area">
+                            <div class="message-area-nav">
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="chat-body-div">
                                             <div class="d-flex align-items-center">
                                                 <div class="chat-body-img">
-                                                    <img src="assets/images/75.jpg" alt="">
+                                                    <img src="@/assets/images/75.jpg" alt/>
                                                 </div>
                                                 <div class="chat-body-user-inf d-flex align-items-center pl-4">
-                                                    <h2>
-                                                        James Deo1
-                                                    </h2>
+                                                    <h2>{{_CurrentRecipient.name}}</h2>
 
-                                                    <p class="pl-2"><span class="dot-chat pl-2"></span> Online
+                                                    <p class="pl-2">
+                                                        <span class="dot-chat pl-2"></span> Online
                                                     </p>
                                                 </div>
                                             </div>
@@ -250,61 +55,117 @@
                                                 <i class="fas fas-dot-chat fa-ellipsis-v"></i>
                                             </button>
                                             <ul class="dropdown-ul4 dropdown-ul-n12">
-                                                <li><a href="#"> Delete Conversation </a></li>
-                                                <li><a href="#"> Option 1</a></li>
-                                                <li><a href="#"> Option 2</a></li>
-                                                <li><a href="#"> Option 3 </a></li>
+                                                <li>
+                                                    <a href="#">Delete Conversation</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Option 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Option 2</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Option 3</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="chat-text-body">
+                            <div class="message-area-body">
+                                <template v-for="msg in _CurrentConversation">
+
+                                    <!-- LEFT -->
+                                    <div class="row" v-if="msg.sender._id!==_CurrentUser._id">
+                                        <div class="col-sm-8 d-flex align-items-center mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="body-chat-div-text pl-4">
+                                                    <h6>
+                                                        <span class="chat-pill-uname">{{msg.sender.name}}</span>
+                                                        <br>
+                                                        <template v-if="msg.message_type==='text'">{{msg.text}}
+                                                        </template>
+                                                        <template v-else-if="msg.message_type==='media'">
+                                                            <template v-for="(type,index) in msg.media.type">
+                                                                <template v-if="type==='pdf'">
+                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]"><img
+                                                                            class="uploaded_media"
+                                                                            src="@/assets/images/pdf.png"></a>
+                                                                </template>
+                                                                <template v-else-if="type==='doc'">
+                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]"><img
+                                                                            class="uploaded_media"
+                                                                            src="@/assets/images/doc.png"></a>
+                                                                </template>
+                                                                <template v-else-if="type==='image'">
+                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]"><img
+                                                                            class="uploaded_media"
+                                                                            src="@/assets/images/pic.png"></a>
+                                                                </template>
+                                                            </template>
+                                                        </template>
+                                                    </h6>
+                                                    <br>
+                                                    <small>{{msg.sentAt}}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--END LEFT -->
+
+                                    <!-- RIGHT -->
+                                    <div class="row justify-content-end" v-else>
+                                        <div class="col-sm-8 d-flex align-items-center justify-content-end mt-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="body-chat-div-text pl-4 sender">
+                                                    <h6>
+                                                        <span class="chat-pill-uname">You</span>
+                                                        <br>
+                                                        <template v-if="msg.message_type==='text'">{{msg.text}}
+                                                        </template>
+                                                        <template v-else-if="msg.message_type==='media'">
+                                                            <template v-for="(type,index) in msg.media.type">
+                                                                <template v-if="type==='pdf'">
+                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]">PDF</a>
+                                                                </template>
+                                                                <template v-else-if="type==='doc'">
+                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]">docx</a>
+                                                                </template>
+                                                                <template v-else-if="type==='image'">
+                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]">Image</a>
+                                                                </template>
+                                                            </template>
+                                                        </template>
+                                                    </h6>
+                                                    <small>{{msg.sentAt}}</small><br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END RIGHT-->
+
+                                </template>
+                            </div>
+                            <div class="chat-input-container container-fluid">
                                 <div class="row">
-                                    <div class="col-sm-8 d-flex align-items-center mt-3">
-                                        <div class="d-flex align-items-center">
-
-                                            <div class="body-chat-div-text pl-4">
-
-                                                <h6>
-                                                    <span class="chat-pill-uname">Sender</span>
-                                                    <br>
-                                                    Lorem ipsum dolor sit amet Lorem
-                                                </h6>
-                                                <br>
-                                                <small>May 29, 2019 04:15 Pm</small>
+                                    <div class="col-12">
+                                        <div class="input-group mb-3">
+                                            <input
+                                                    type="text"
+                                                    class="form-control msg-input"
+                                                    placeholder="Type your message"
+                                                    aria-describedby="button-addon2"
+                                            />
+                                            <div class="input-group-append">
+                                                <button
+                                                        class="btn btn-primary send-msg-btn"
+                                                        type="button"
+                                                        id="button-addon2"
+                                                >
+                                                    <i class="fas fa-paper-plane"></i>
+                                                </button>
                                             </div>
                                         </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="row justify-content-end">
-                                    <div class="col-sm-8 d-flex align-items-center justify-content-end mt-3">
-                                        <div class="d-flex align-items-center">
-
-                                            <div class="body-chat-div-text pl-4 sender">
-
-                                                <h6>
-                                                    <span class="chat-pill-uname">Receiver</span>
-                                                    <br>
-                                                    Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
-                                                    psum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum
-                                                    dolor sit amet Lorem ipsum dolor sit amet
-                                                </h6>
-                                                <small>May 29, 2019 04:15 Pm</small><br>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="search-button">
-                                    <div class="active-pink-3 active-pink-41 mt-3">
-                                        <input class="form-control search-text" type="text"
-                                               placeholder="Type a Message" aria-label="Search">
-                                        <button class="msg_send_btn">
-                                            <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -312,8 +173,7 @@
                     </div>
                 </div>
             </div>
-        </div> </template>
-
+        </template>
     </div>
 </template>
 
@@ -323,11 +183,11 @@
 
     export default {
         name: "MessageArea",
-        mixins:[chatDataMixin],
-        data(){
-          return{
-              messages:[]
-          }
+        mixins: [chatDataMixin],
+        data() {
+            return {
+                messages: []
+            }
         },
         mounted() {
             eventBus.$on('load-conversations', async (type) => {
@@ -336,14 +196,15 @@
                         this._CurrentUser._id,
                         this._CurrentRecipient._id
                     )
-                    this.messages = this._CurrentConversation
                 } else {
                     await this.getGroupConversations(
                         this._CurrentRecipient._id
                     )
-                    this.messages = this._CurrentConversation
                 }
-                console.log("MESSAGES : ",this.messages)
+                if (this._CurrentConversation) {
+                    this.messages = this._CurrentConversation.length > 0 ? this._CurrentConversation : []
+                }
+                console.log("MESSAGES : ", this.messages)
             })
         }
     }
@@ -426,6 +287,8 @@
 
     .message-area-body {
         height: 460px;
+        min-width: 780px;
+        max-width: 780px;
         position: relative;
         overflow: hidden;
         overflow-y: scroll;
@@ -450,6 +313,16 @@
 
     .message-area-body::-webkit-scrollbar-thumb:hover {
         background: #cbcbcb;
+    }
+
+    .uploaded_media {
+        width: 45px;
+        height: 45px;
+    }
+
+    .uploaded_media:hover {
+        transform: scale(1.08);
+        transition: all 0.1s ease-in-out;
     }
 
     .message-area-nav {
@@ -622,7 +495,8 @@
         color: #00000082;
         margin-bottom: -3px;
     }
-    #overlay{
+
+    #overlay {
         background: #0a6ebd !important;
     }
 
