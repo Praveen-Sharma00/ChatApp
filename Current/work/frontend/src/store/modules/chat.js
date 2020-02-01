@@ -7,6 +7,7 @@ export default {
         CurrentConversationType: "individual",
         CurrentUserGroupList: [],
         CurrentConversation: [],
+        CurrentUserPermissions: {},
 
         Constants: {
             BASE_API_URL: 'http://localhost:3000/api/v1',
@@ -19,6 +20,9 @@ export default {
         },
         getCurrentRoom(state) {
             return state.CurrentRoom
+        },
+        getCurrentUserPermission(state) {
+            return state.CurrentUserPermissions
         },
         getCurrentConversationType(state) {
             return state.CurrentConversationType
@@ -56,6 +60,9 @@ export default {
         },
         setCurrentConversation(state, payload) {
             state.CurrentConversation = payload
+        },
+        setCurrentUserPermission(state, payload) {
+            state.CurrentUserPermissions = payload
         }
     },
     actions: {
@@ -80,5 +87,13 @@ export default {
             })
             context.commit('setCurrentConversation', response.data.messages)
         },
+        async GetUserPermissions(context, payload) {
+            console.log("PAYLOAD : ",payload)
+            let response = await axios({
+                url: context.getters.BASE_API_URL + '/user/' + payload.userId + '/group/' + payload.groupId + '/permissions',
+                method: 'GET'
+            })
+            context.commit('setCurrentUserPermission', response.data.permissions)
+        }
     }
 }

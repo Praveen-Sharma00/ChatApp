@@ -51,23 +51,34 @@
                                     </div>
                                     <div class="col-sm-6 d-flex align-items-center justify-content-end">
                                         <div class="chat-body-dots">
-                                            <button class="button-chat sub-menu4">
-                                                <i class="fas fas-dot-chat fa-ellipsis-v"></i>
-                                            </button>
-                                            <ul class="dropdown-ul4 dropdown-ul-n12">
-                                                <li>
-                                                    <a href="#">Delete Conversation</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Option 1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Option 2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Option 3</a>
-                                                </li>
-                                            </ul>
+                                            <template v-if="(_CurrentConversationType==='group' && !_CurrentUserPermissions['ReadOnly']) || (_CurrentConversationType==='individual')">
+                                                <i class="navbar-icons fas fa-paperclip pl-2" title="Send a file"></i>
+                                            </template>
+                                            <template v-if="(_CurrentConversationType==='group' && _CurrentUserPermissions['isAdmin'])">
+                                                <i class="navbar-icons fas fa-user-plus  pl-3"
+                                                   title="Add members to group"></i>
+                                                <i class="navbar-icons fas fa-clock pl-3"
+                                                   title="Pending upload approvals"></i>
+                                            </template>
+
+
+                                            <!--                                            <button class="button-chat sub-menu4">-->
+                                            <!--                                                <i class="fas fas-dot-chat fa-ellipsis-v"></i>-->
+                                            <!--                                            </button>-->
+                                            <!--                                            <ul class="dropdown-ul4 dropdown-ul-n12">-->
+                                            <!--                                                <li>-->
+                                            <!--                                                    <a href="#">Delete Conversation</a>-->
+                                            <!--                                                </li>-->
+                                            <!--                                                <li>-->
+                                            <!--                                                    <a href="#">Option 1</a>-->
+                                            <!--                                                </li>-->
+                                            <!--                                                <li>-->
+                                            <!--                                                    <a href="#">Option 2</a>-->
+                                            <!--                                                </li>-->
+                                            <!--                                                <li>-->
+                                            <!--                                                    <a href="#">Option 3</a>-->
+                                            <!--                                                </li>-->
+                                            <!--                                            </ul>-->
                                         </div>
                                     </div>
                                 </div>
@@ -88,19 +99,19 @@
                                                         <template v-else-if="msg.message_type==='media'">
                                                             <template v-for="(type,index) in msg.media.type">
                                                                 <template v-if="type==='pdf'">
-                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]"><img
-                                                                            class="uploaded_media"
-                                                                            src="@/assets/images/pdf.png"></a>
+                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]">
+                                                                        <i class="far fa-file-pdf"></i>
+                                                                    </a>
                                                                 </template>
                                                                 <template v-else-if="type==='doc'">
-                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]"><img
-                                                                            class="uploaded_media"
-                                                                            src="@/assets/images/doc.png"></a>
+                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]">
+                                                                        <i class="far fa-file-word"></i>
+                                                                    </a>
                                                                 </template>
                                                                 <template v-else-if="type==='image'">
-                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]"><img
-                                                                            class="uploaded_media"
-                                                                            src="@/assets/images/pic.png"></a>
+                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]">
+                                                                        <i class="far fa-file-image"></i>
+                                                                    </a>
                                                                 </template>
                                                             </template>
                                                         </template>
@@ -126,13 +137,17 @@
                                                         <template v-else-if="msg.message_type==='media'">
                                                             <template v-for="(type,index) in msg.media.type">
                                                                 <template v-if="type==='pdf'">
-                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]">PDF</a>
+                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]">
+                                                                        <i class="far fa-file-pdf"></i>
+                                                                    </a>
                                                                 </template>
                                                                 <template v-else-if="type==='doc'">
-                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]">docx</a>
+                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]"><i
+                                                                            class="far fa-file-word"></i></a>
                                                                 </template>
                                                                 <template v-else-if="type==='image'">
-                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]">Image</a>
+                                                                    <a :href="_BASE_URL+'/uploads/'+msg.media.location[index]"><i
+                                                                            class="far fa-file-image"></i></a>
                                                                 </template>
                                                             </template>
                                                         </template>
@@ -315,16 +330,6 @@
         background: #cbcbcb;
     }
 
-    .uploaded_media {
-        width: 45px;
-        height: 45px;
-    }
-
-    .uploaded_media:hover {
-        transform: scale(1.08);
-        transition: all 0.1s ease-in-out;
-    }
-
     .message-area-nav {
         margin-bottom: 20px;
         min-height: 40px !important;
@@ -500,4 +505,32 @@
         background: #0a6ebd !important;
     }
 
+    .chat-body-dots {
+        padding-right: 15px;
+    }
+
+    .navbar-icons {
+        cursor: pointer !important;
+    }
+
+    .fa-file-image {
+        color: mediumseagreen;
+        font-size: 40px;
+    }
+
+    .fa-file-image:hover, .fa-file-word:hover, .fa-file-pdf:hover {
+        /*font-size:50px;*/
+        transform: scale(1.08);
+        transition: all 0.2s ease-in-out;
+    }
+
+    .fa-file-word {
+        font-size: 40px;
+        color: dodgerblue;
+    }
+
+    .fa-file-pdf {
+        font-size: 40px;
+        color: red;
+    }
 </style>

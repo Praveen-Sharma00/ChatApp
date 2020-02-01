@@ -19,14 +19,24 @@ export default {
         },
         async getGroupConversations(id) {
             await this.$store.dispatch('GetGroupConversations', {_id: id})
+        },
+        async getCurrentUserPermission(userId, groupId) {
+            await this.$store.dispatch('GetUserPermissions', {
+                userId, groupId
+            })
         }
     },
     computed: {
+        _CurrentConversationType() {
+            return this.$store.getters.getCurrentConversationType
+        },
         _CurrentUser() {
             return this.$store.getters.getCurrentUser
         },
+        _CurrentUserPermissions() {
+            return this.$store.getters.getCurrentUserPermission
+        },
         _CurrentRecipient() {
-            console.log("___", this.$store.getters.getCurrentRecipient)
             return this.$store.getters.getCurrentRecipient
         },
         _CurrentUserGroupList() {

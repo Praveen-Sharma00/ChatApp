@@ -77,7 +77,7 @@
             }
         },
         methods: {
-            showMessageArea(receiver) {
+            async showMessageArea(receiver) {
                 let b = receiver._id
                 let type = this.getCurrentConversationType()
                 if (type === 'individual') {
@@ -86,6 +86,10 @@
                         [a, b] = [b, a]
                     this.updateCurrentRoom(a + "," + b, type)
                 } else {
+                    await this.getCurrentUserPermission(
+                        this._CurrentUser._id,
+                        receiver._id
+                    )
                     this.updateCurrentRoom(b, type)
                 }
                 // this.$socket.joinRoom({
