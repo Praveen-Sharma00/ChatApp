@@ -9,10 +9,13 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import authMixin from "./mixins/authMixin";
+import SocketIO from "./utils/socket";
 
 export const eventBus = new Vue()
+
 Vue.config.productionTip = false
 Vue.prototype.$http = axios;
+Vue.prototype.$socket = new SocketIO(store)
 
 new Vue({
     router,
