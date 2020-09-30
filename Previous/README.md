@@ -1,5 +1,5 @@
 # Ping.io
-A Simple ChatApp
+A Simple ChatApp with interective design and an amazing UI
 ![Chat Window](rsz_chat.png)
 Format: ![Chat Window](url)
 
