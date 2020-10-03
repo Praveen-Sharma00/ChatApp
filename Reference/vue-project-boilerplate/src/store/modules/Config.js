@@ -51,7 +51,7 @@ const state = {
 
         }else{
 
-            return 'https://api.ijiots.com'
+            return 'YOUR_URL'
 
         } 
       },
